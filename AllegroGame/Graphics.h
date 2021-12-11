@@ -8,4 +8,8 @@ extern ALLEGRO_DISPLAY* main_display;
 
 void init_graphics();
 
+void init_window();
+
+void config_window();
+
 void destroy_graphics();

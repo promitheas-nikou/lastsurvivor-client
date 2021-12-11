@@ -13,20 +13,95 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\CppReflections">
+      <UniqueIdentifier>{54ac8374-8c81-4bb3-8845-c4ce2fb67f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CppReflections">
+      <UniqueIdentifier>{b80c3c7d-e614-48d9-a650-e949048715cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{9ee4c608-0010-4888-8dec-ea71b15ed2a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{323e50d5-ca90-4ba0-8767-eb21adff9dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles">
+      <UniqueIdentifier>{3800d73a-3a3c-4398-aaa3-355d6ca6fe29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tiles">
+      <UniqueIdentifier>{abfc2815-e84e-4ce6-a477-78d26cedbd3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{5fe905cf-f8e5-4055-8c76-26373afda311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data">
+      <UniqueIdentifier>{bee39314-7088-4462-b494-5f7499265509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{2cb7b838-4d0e-46d9-a474-d6adea4e98d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data">
+      <UniqueIdentifier>{e544ab06-a238-4edd-bd70-a7fc0d07f225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities">
+      <UniqueIdentifier>{0f4a26c5-2f59-402e-9729-b17cfa9e499c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities">
+      <UniqueIdentifier>{92473baa-a593-4992-9d80-66e22e1580a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\World">
+      <UniqueIdentifier>{0e33bb5a-6bf5-4566-9583-5e431476f9be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\World">
+      <UniqueIdentifier>{1a116064-6840-4b3c-a850-f056649bf61f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Reflection.cpp">
+      <Filter>Source Files\CppReflections</Filter>
+    </ClCompile>
     <ClCompile Include="Graphics.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="ResourceLoader.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="MathUtils.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldChunk.cpp">
+      <Filter>Source Files\Game\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files\Game\World</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerEntity.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="simple_shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="simple_shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="FONT.ttf">
@@ -35,10 +110,45 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Header Files\Data</Filter>
     </ClInclude>
     <ClInclude Include="ResourceLoader.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection.h">
+      <Filter>Header Files\CppReflections</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldChunk.h">
+      <Filter>Header Files\Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerEntity.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="data.json">
+      <Filter>Resource Files</Filter>
+    </Xsd>
   </ItemGroup>
 </Project>
