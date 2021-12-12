@@ -35,5 +35,6 @@ public:
 	World();
 
 	friend WorldChunk;
+	friend int main();
 };
 

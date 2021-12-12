@@ -7,8 +7,8 @@
   "shaders": [
     {
       "id": 1,
-      "vertex": "simple_shader.vert",
-      "fragment": "simple_shader.frag"
+      "vertex": "world_shader.vert",
+      "fragment": "world_shader.frag"
     }
   ],
   "textures": [
@@ -83,7 +83,7 @@
     {
       "id": 18,
       "filename": "player.png"
-    }
+    } 
   ],
   "cursors": [
     {

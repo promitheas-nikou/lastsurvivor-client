@@ -1,4 +1,5 @@
 #include "World.h"
+#include "ResourceLoader.h"
 #include "MathUtils.h"
 
 void World::RefreshEntityVector()
@@ -13,7 +14,7 @@ void World::RefreshEntityVector()
 
 Tile* World::GenerateTile(int x, int y)
 {
-    return MakeTile(1, x, y);
+    return MakeTile(((rand()%10)/9)+1, x, y);
 }
 
 WorldChunk* World::GetChunk(int x, int y)
@@ -50,6 +51,7 @@ ALLEGRO_TRANSFORM draw_transform;
 
 void World::Draw()
 {
+    loaded_shaders[1]->Use();
     int offset_x = player->getXpos() * 128;
     int offset_y = player->getYpos() * 128;
     int drawBeginX = floor(player->getXpos()) - 10;
@@ -61,6 +63,8 @@ void World::Draw()
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
             GetTile(x, y)->Draw();
+    al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
+    al_use_transform(&draw_transform);
     player->xpos+=.01;
 }
 

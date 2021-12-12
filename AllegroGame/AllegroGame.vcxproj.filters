@@ -55,6 +55,12 @@
     <Filter Include="Header Files\Game\World">
       <UniqueIdentifier>{1a116064-6840-4b3c-a850-f056649bf61f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\GUI">
+      <UniqueIdentifier>{97310782-4213-4225-b4c0-07576b1b825c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI">
+      <UniqueIdentifier>{a924a83b-4256-49ff-8cd5-25b63ee58270}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -93,13 +99,22 @@
     <ClCompile Include="GrassTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="DirtTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="simple_shader.frag">
+    <None Include="world_shader.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="simple_shader.vert">
+    <None Include="world_shader.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -144,6 +159,15 @@
     </ClInclude>
     <ClInclude Include="GrassTile.h">
       <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DirtTile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

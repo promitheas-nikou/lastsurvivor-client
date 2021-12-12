@@ -1,5 +1,7 @@
 #include "Tile.h"
 #include "GrassTile.h"
+#include "StoneTile.h"
+#include "DirtTile.h"
 #include "allegro5/allegro_font.h"
 #include <iostream>
 #include <format>
@@ -53,5 +55,9 @@ Tile* MakeTile(int id, int x, int y)
     {
     case GrassTile::ID:
         return new GrassTile(x, y);
+    case DirtTile::ID:
+        return new DirtTile(x, y);
+    case StoneTile::ID:
+        return new StoneTile(x, y);
     }
 }

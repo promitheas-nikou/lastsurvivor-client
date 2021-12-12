@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "json.h"
 #include <allegro5/allegro.h>
 
 class Tile

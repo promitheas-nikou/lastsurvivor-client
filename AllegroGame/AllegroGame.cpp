@@ -10,6 +10,14 @@
 
 #include "Shader.h"
 
+//ALLEGRO_THREAD* 
+
+void EXIT_GAME()
+{
+	destroy_graphics();
+	exit(EXIT_SUCCESS);
+}
+
 int main()
 {
 	if (!al_init())
@@ -28,20 +36,77 @@ int main()
 	config_window();
 	printf("\n======= LOADING SHADERS =======\n\n");
 	load_shaders();
-	printf("\n\n===============================\nINITIALIZING GAME\n===============================\n\n");
+	//printf("\n\n======	=========================\nINITIALIZING GAME\n===============================\n\n");
 	printf("\n======= INITIALIZING TILES =======\n\n");
 	init_tiles();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 
-	loaded_shaders[1]->Use();
+	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
 	World world;
-	world.GetTile(-17, -5);
 	while (true)
 	{
+		while (GetNextEvent())
+		{
+			switch (NEXT_EVENT.type)
+			{
+			case ALLEGRO_EVENT_DISPLAY_CLOSE: //WINDOW CLOSED
+				EXIT_GAME();
+				break;
+			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+				break;
+			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+				break;
+			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
+				break;
+			case ALLEGRO_EVENT_KEY_CHAR:
+				break;
+			case ALLEGRO_EVENT_KEY_DOWN:
+			{
+				switch (NEXT_EVENT.keyboard.keycode)
+				{
+				case ALLEGRO_KEY_W:
+					keys_pressed |= 0b00001000;
+					break;
+				case ALLEGRO_KEY_A:
+					keys_pressed |= 0b00000100;
+					break;
+				case ALLEGRO_KEY_S:
+					keys_pressed |= 0b00000010;
+					break;
+				case ALLEGRO_KEY_D:
+					keys_pressed |= 0b00000001;
+					break;
+				}
+			}
+				break;
+			case ALLEGRO_EVENT_KEY_UP:
+			{
+				switch (NEXT_EVENT.keyboard.keycode)
+				{
+				case ALLEGRO_KEY_W:
+					keys_pressed &= 0b11110111;
+					break;
+				case ALLEGRO_KEY_A:
+					keys_pressed &= 0b11111011;
+					break;
+				case ALLEGRO_KEY_S:
+					keys_pressed &= 0b11111101;
+					break;
+				case ALLEGRO_KEY_D:
+					keys_pressed &= 0b11111110;
+					break;
+				}
+			}
+			break;
+				break;
+			}
+		}
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		world.Draw();
+		loaded_shaders[0]->Use();
+		world.player->DrawGUI();
 		al_flip_display();
 	}
 

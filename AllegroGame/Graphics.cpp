@@ -2,6 +2,8 @@
 #include "ResourceLoader.h"
 #include <allegro5/allegro_image.h>
 
+ALLEGRO_EVENT_QUEUE* event_queue;
+
 ALLEGRO_DISPLAY* main_display;
 
 void init_graphics()
@@ -20,13 +22,26 @@ void init_window()
 {
 	printf("CREATING DISPLAY...\n");
 	al_set_new_display_flags(ALLEGRO_OPENGL | ALLEGRO_PROGRAMMABLE_PIPELINE);
-	main_display = al_create_display(1000, 700);
+	main_display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (main_display == NULL)
 	{
 		printf("FAILED TO INITIALIZE DISPLAY...\nABORTING...\n");
 		exit(EXIT_FAILURE);
 	}
+	if (!al_install_keyboard()) {
+		printf("FAILED TO INITIALIZE KEYBOARD...\nABORTING...\n");
+		exit(EXIT_FAILURE);
+	}
+	event_queue = al_create_event_queue();
+	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(event_queue, al_get_display_event_source(main_display));
 	printf("DISPLAY SUCCESSFULLY CREATED!\n");
+}
+
+ALLEGRO_EVENT NEXT_EVENT;
+bool GetNextEvent()
+{
+	return al_get_next_event(event_queue, &NEXT_EVENT);
 }
 
 void config_window()
