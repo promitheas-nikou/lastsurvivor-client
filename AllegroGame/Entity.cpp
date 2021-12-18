@@ -21,3 +21,15 @@ bool Entity::shouldBeRemoved() const
 {
     return dead;
 }
+
+void Entity::warpAbsolute(float x, float y)
+{
+    xpos = x;
+    ypos = y;
+}
+
+void Entity::warpRelative(float dx, float dy)
+{
+    xpos += dx;
+    ypos += dy;
+}

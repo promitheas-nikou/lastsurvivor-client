@@ -16,6 +16,8 @@ private:
 
 public:
 
+	void Tick();
+
 	Tile* GetTile(int x, int y);
 
 	WorldChunk(int x, int y);

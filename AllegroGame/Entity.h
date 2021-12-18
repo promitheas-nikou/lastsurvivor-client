@@ -22,6 +22,12 @@ public:
 	float getXpos() const;
 	float getYpos() const;
 
+	void applyForce(float dx, float dy); //TODO
+	void setSpeed(float dx, float dy); //TODO
+
+	void warpAbsolute(float x, float y);
+	void warpRelative(float dx, float dy);
+
 	virtual std::string getName() const;
 	virtual bool shouldBeRemoved() const;
 

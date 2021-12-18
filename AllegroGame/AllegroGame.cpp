@@ -4,11 +4,15 @@
 #include <Windows.h>
 #include "World.h"
 #include <cstdio>
+#include "MathUtils.h"
 #include "Graphics.h"
 #include "ResourceLoader.h"
 #include "Reflection.h"
 
 #include "Shader.h"
+
+static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
+static const float PLAYER_SPEED = .5f;
 
 //ALLEGRO_THREAD* 
 
@@ -103,7 +107,36 @@ int main()
 				break;
 			}
 		}
+		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
+		switch (keys_pressed & 0b00001111)
+		{
+		case 0b0001:
+			world.player->warpRelative(PLAYER_SPEED, 0);
+			break;
+		case 0b0010:
+			world.player->warpRelative(0, PLAYER_SPEED);
+			break;
+		case 0b0011:
+			world.player->warpRelative(PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED*DIAG_MOD);
+			break;
+		case 0b0100:
+			world.player->warpRelative(-PLAYER_SPEED, 0);
+			break;
+		case 0b0110:
+			world.player->warpRelative(-PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED * DIAG_MOD);
+			break;
+		case 0b1000:
+			world.player->warpRelative(0, -PLAYER_SPEED);
+			break;
+		case 0b1001:
+			world.player->warpRelative(PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
+			break;
+		case 0b1100:
+			world.player->warpRelative(-PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
+			break;
+		}
+		world.Tick();
 		world.Draw();
 		loaded_shaders[0]->Use();
 		world.player->DrawGUI();

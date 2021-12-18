@@ -9,6 +9,7 @@
 class World
 {
 private:
+	const static int ENTITY_UPDATE_RATE = 5;
 	bool dynamicWorldGen;
 	std::map<int, std::map<int, WorldChunk*>> chunks;
 
@@ -16,13 +17,17 @@ private:
 	int entityUpdates;
 	std::vector<Entity*> entities;
 
-	void RefreshEntityVector();
+	int loadedChunkCount;
+
+	void UpdateEntityVector();
 
 	PlayerEntity* player;
 
 	static Tile* GenerateTile(int x, int y);
 public:
 	inline WorldChunk* GetChunk(int x, int y);
+
+	void Tick();
 
 	void GenerateChunk(int x, int y);
 

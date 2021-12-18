@@ -2,7 +2,7 @@
 #include "ResourceLoader.h"
 #include "MathUtils.h"
 
-void World::RefreshEntityVector()
+void World::UpdateEntityVector()
 {
     std::vector<Entity*> new_entities;
     for (int i = 0; i < entities.size(); i++)
@@ -17,9 +17,29 @@ Tile* World::GenerateTile(int x, int y)
     return MakeTile(((rand()%10)/9)+1, x, y);
 }
 
-WorldChunk* World::GetChunk(int x, int y)
+WorldChunk* World::GetChunk(int x, int y)   
 {
     return chunks[y][x];
+}
+
+void World::Tick()
+{
+    static int tick_counter=0;
+    loadedChunkCount = 0;
+
+    double BEGIN_TIME = al_get_time();
+    for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
+        for (const std::pair<int, WorldChunk*>& wc : m.second)
+        {
+            wc.second->Tick();
+            loadedChunkCount++;
+        }
+    double END_TIME = al_get_time();
+    printf("UPDATED %d CHUNKS IN %.3lf SECONDS\n", loadedChunkCount, END_TIME - BEGIN_TIME);
+
+    if (tick_counter++ % ENTITY_UPDATE_RATE)
+        UpdateEntityVector();
+    
 }
 
 void World::GenerateChunk(int x, int y)
@@ -30,13 +50,14 @@ void World::GenerateChunk(int x, int y)
 
 Tile* World::GetTile(int x, int y)
 {
-    int xdif = (x < 0)*16;
-    int ydif = (y < 0)*16;
-    int chunkX = util_floor(x / CHUNK_SIZE_Xf);
-    int chunkY = util_floor(y / CHUNK_SIZE_Yf);
+    int subX = positive_modulo(x,16);
+    int subY = positive_modulo(y,16);
+    int chunkX = (x-subX) / CHUNK_SIZE_X;
+    int chunkY = (y-subY) / CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
         GenerateChunk(chunkX, chunkY);
-    return GetChunk(util_floor(x / CHUNK_SIZE_Xf), util_floor(y / CHUNK_SIZE_Yf))->GetTile(x % CHUNK_SIZE_X + xdif, y % CHUNK_SIZE_Y + ydif);
+    auto t = GetChunk(chunkX, chunkY)->GetTile(subX, subY);
+    return t;
 }
 
 bool World::IsChunkGenerated(int x, int y)
@@ -65,12 +86,9 @@ void World::Draw()
             GetTile(x, y)->Draw();
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
     al_use_transform(&draw_transform);
-    player->xpos+=.01;
 }
 
-World::World()
-{
-    player = new PlayerEntity();
-}
+World::World(): dynamicWorldGen(false), entityUpdates(0), loadedChunkCount(0), player(new PlayerEntity())
+{}
 
 

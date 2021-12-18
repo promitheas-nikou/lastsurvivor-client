@@ -99,14 +99,14 @@
     <ClCompile Include="GrassTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
-    <ClCompile Include="GUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StoneTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="DirtTile.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files\Game\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

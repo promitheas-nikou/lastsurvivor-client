@@ -9,5 +9,6 @@ public:
 	void DrawGUI() final;
 	friend WorldChunk;
 	friend World;
+	friend int main();
 };
 

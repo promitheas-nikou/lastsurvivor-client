@@ -42,6 +42,7 @@ void Tile::TileUpdate()
 void Tile::Draw() const
 {
     al_draw_bitmap(GetTexture(), xpos*128, ypos*128, 0);
+    //al_draw_text(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, std::format("{}:{}", xpos, ypos).c_str());
 }
 
 int Tile::GetMiningResistance() const
