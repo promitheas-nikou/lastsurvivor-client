@@ -17,7 +17,6 @@ void WorldChunk::Tick()
 
 Tile* WorldChunk::GetTile(int x, int y)
 {
-    printf("SUB%d:%d\n", x, y);
     return tiles[y][x];
 }
 

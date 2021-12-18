@@ -12,7 +12,7 @@
 #include "Shader.h"
 
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
-static const float PLAYER_SPEED = .5f;
+static const float PLAYER_SPEED = .1f;
 
 //ALLEGRO_THREAD* 
 

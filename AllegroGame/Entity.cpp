@@ -33,3 +33,4 @@ void Entity::warpRelative(float dx, float dy)
     xpos += dx;
     ypos += dy;
 }
+

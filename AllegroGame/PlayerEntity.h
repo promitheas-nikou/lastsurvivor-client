@@ -7,6 +7,7 @@ class PlayerEntity :
 {
 public:
 	void DrawGUI() final;
+	void Draw() final;
 	friend WorldChunk;
 	friend World;
 	friend int main();

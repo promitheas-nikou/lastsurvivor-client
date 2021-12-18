@@ -13,3 +13,10 @@ void PlayerEntity::DrawGUI()
 	al_draw_filled_rectangle(SCREEN_WIDTH/2-200, 200, SCREEN_WIDTH/2+200, 450, al_map_rgba(0, 150, 255, 150));
 	al_set_blender(a, b, c);
 }
+
+void PlayerEntity::Draw()
+{
+	int x = floor(getXpos() * 128) + SCREEN_WIDTH / 2 - 64;
+	int y = floor(getYpos() * 128) + SCREEN_HEIGHT / 2 - 64;
+	al_draw_bitmap(loaded_bitmaps[18], x, y, 0);
+}

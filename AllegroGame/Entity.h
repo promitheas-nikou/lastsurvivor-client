@@ -28,6 +28,8 @@ public:
 	void warpAbsolute(float x, float y);
 	void warpRelative(float dx, float dy);
 
+	virtual void Draw() = 0;
+
 	virtual std::string getName() const;
 	virtual bool shouldBeRemoved() const;
 

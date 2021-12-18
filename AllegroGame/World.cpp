@@ -72,9 +72,10 @@ ALLEGRO_TRANSFORM draw_transform;
 
 void World::Draw()
 {
+    //DRAW TILES
     loaded_shaders[1]->Use();
-    int offset_x = player->getXpos() * 128;
-    int offset_y = player->getYpos() * 128;
+    int offset_x = floor(player->getXpos() * 128);
+    int offset_y = floor(player->getYpos() * 128);
     int drawBeginX = floor(player->getXpos()) - 10;
     int drawEndX = drawBeginX + 20;
     int drawBeginY = floor(player->getYpos()) - 10;
@@ -84,6 +85,12 @@ void World::Draw()
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
             GetTile(x, y)->Draw();
+
+    //DRAW ENTITIES
+    for (Entity* e : entities)
+        //if(!e->shouldBeRemoved())
+            e->Draw();
+    player->Draw();
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
     al_use_transform(&draw_transform);
 }
