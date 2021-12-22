@@ -1,5 +1,5 @@
 #pragma once
-#include "Tile.h"
+#include "GroundTile.h"
 
 #define CHUNK_SIZE_X (16)
 #define CHUNK_SIZE_Y (16)
@@ -9,7 +9,7 @@
 class WorldChunk
 {
 private:
-	Tile* tiles[CHUNK_SIZE_Y][CHUNK_SIZE_X];
+	GroundTile* groundTiles[CHUNK_SIZE_Y][CHUNK_SIZE_X];
 	int chunkX, chunkY;
 
 	void Generate();
@@ -18,7 +18,7 @@ public:
 
 	void Tick();
 
-	Tile* GetTile(int x, int y);
+	GroundTile* GetTile(int x, int y);
 
 	WorldChunk(int x, int y);
 

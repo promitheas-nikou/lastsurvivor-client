@@ -23,7 +23,8 @@ private:
 
 	PlayerEntity* player;
 
-	static Tile* GenerateTile(int x, int y);
+	static GroundTile* GenerateGroundTile(int x, int y);
+
 public:
 	inline WorldChunk* GetChunk(int x, int y);
 
@@ -31,7 +32,7 @@ public:
 
 	void GenerateChunk(int x, int y);
 
-	Tile* GetTile(int x, int y);
+	GroundTile* GetTile(int x, int y);
 
 	bool IsChunkGenerated(int x, int y);
 

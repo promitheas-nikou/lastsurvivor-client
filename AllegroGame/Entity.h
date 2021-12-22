@@ -30,6 +30,8 @@ public:
 
 	virtual void Draw() = 0;
 
+	virtual void Tick();
+
 	virtual std::string getName() const;
 	virtual bool shouldBeRemoved() const;
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "Tile.h"
+#include "GroundTile.h"
 #include "json.h"
 
-class GrassTile:
-	public Tile
+class GrassGroundTile:
+	public GroundTile
 {
 private:
 	static std::string NAME;
@@ -13,7 +13,7 @@ public:
 
 	int GetID() const final;
 
-	GrassTile(int x, int y);
+	GrassGroundTile(int x, int y);
 	
 	static void Init(nlohmann::json data);
 	ALLEGRO_BITMAP* GetTexture() const final;

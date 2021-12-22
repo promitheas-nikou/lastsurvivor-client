@@ -163,18 +163,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AirTile.cpp" />
     <ClCompile Include="AllegroGame.cpp" />
-    <ClCompile Include="DirtTile.cpp" />
+    <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="GrassTile.cpp" />
+    <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="Reflection.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="StoneTile.cpp" />
+    <ClCompile Include="StoneGroundTile.cpp" />
+    <ClCompile Include="GroundTile.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
@@ -188,10 +190,11 @@
     <Font Include="FONT.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirtTile.h" />
+    <ClInclude Include="AirTile.h" />
+    <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Graphics.h" />
-    <ClInclude Include="GrassTile.h" />
+    <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="MathUtils.h" />
@@ -199,7 +202,8 @@
     <ClInclude Include="Reflection.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="StoneTile.h" />
+    <ClInclude Include="StoneGroundTile.h" />
+    <ClInclude Include="GroundTile.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />

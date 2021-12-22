@@ -13,7 +13,7 @@ void init_graphics()
 		exit(EXIT_FAILURE);
 	if(!al_init_ttf_addon())
 		exit(EXIT_FAILURE);
-	if(!al_init_image_addon())
+	if (!al_init_image_addon())
 		exit(EXIT_FAILURE);
 	printf("ALL GRAPHICS COMPONENTS SUCCESSFULLY INITIALIZED!\n");
 }
@@ -32,8 +32,13 @@ void init_window()
 		printf("FAILED TO INITIALIZE KEYBOARD...\nABORTING...\n");
 		exit(EXIT_FAILURE);
 	}
+	if (!al_install_mouse()) {
+		printf("FAILED TO INITIALIZE MOUSE...\nABORTING...\n");
+		exit(EXIT_FAILURE);
+	}
 	event_queue = al_create_event_queue();
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(event_queue, al_get_mouse_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(main_display));
 	printf("DISPLAY SUCCESSFULLY CREATED!\n");
 }

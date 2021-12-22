@@ -1,7 +1,7 @@
 #pragma once
-#include "Tile.h"
-class DirtTile :
-    public Tile
+#include "GroundTile.h"
+class DirtGroundTile :
+    public GroundTile
 {
 private:
 	static std::string NAME;
@@ -11,7 +11,7 @@ public:
 
 	int GetID() const final;
 
-	DirtTile(int x, int y);
+	DirtGroundTile(int x, int y);
 
 	static void Init(nlohmann::json data);
 	ALLEGRO_BITMAP* GetTexture() const final;

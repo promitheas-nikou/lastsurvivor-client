@@ -3,9 +3,9 @@
 #include <fstream>
 #include <iostream>
 #include <Windows.h>
-#include "GrassTile.h"
-#include "DirtTile.h"
-#include "StoneTile.h"
+#include "GrassGroundTile.h"
+#include "DirtGroundTile.h"
+#include "StoneGroundTile.h"
 
 nlohmann::json json_data;
 
@@ -83,9 +83,9 @@ void init_tiles()
 	{
 		printf("LOADED TILE #%d (\"%s\")\n",pair.first, ((std::string)pair.second["name"]).c_str());
 	}
-	GrassTile::Init(tile_data[GrassTile::ID]);
-	DirtTile::Init(tile_data[DirtTile::ID]);
-	StoneTile::Init(tile_data[StoneTile::ID]);
+	GrassGroundTile::Init(tile_data[GrassGroundTile::ID]);
+	DirtGroundTile::Init(tile_data[DirtGroundTile::ID]);
+	StoneGroundTile::Init(tile_data[StoneGroundTile::ID]);
 }
 
 void free_resources()

@@ -1,5 +1,6 @@
 #include "World.h"
 #include "ResourceLoader.h"
+#include "Graphics.h"
 #include "MathUtils.h"
 
 void World::UpdateEntityVector()
@@ -12,9 +13,9 @@ void World::UpdateEntityVector()
     entities = new_entities;
 }
 
-Tile* World::GenerateTile(int x, int y)
+GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    return MakeTile(((rand()%10)/9)+1, x, y);
+    return MakeGroundTile(((rand()%10)/9)+1, x, y);
 }
 
 WorldChunk* World::GetChunk(int x, int y)   
@@ -27,17 +28,18 @@ void World::Tick()
     static int tick_counter=0;
     loadedChunkCount = 0;
 
-    double BEGIN_TIME = al_get_time();
     for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
         for (const std::pair<int, WorldChunk*>& wc : m.second)
         {
             wc.second->Tick();
             loadedChunkCount++;
         }
-    double END_TIME = al_get_time();
-    printf("UPDATED %d CHUNKS IN %.3lf SECONDS\n", loadedChunkCount, END_TIME - BEGIN_TIME);
 
-    if (tick_counter++ % ENTITY_UPDATE_RATE)
+    for (Entity* const &e : entities)
+        e->Tick();
+    player->Tick();
+
+    if ((tick_counter++ % ENTITY_UPDATE_RATE)!=0)
         UpdateEntityVector();
     
 }
@@ -48,7 +50,7 @@ void World::GenerateChunk(int x, int y)
     chunks[y][x] = new WorldChunk(x, y);
 }
 
-Tile* World::GetTile(int x, int y)
+GroundTile* World::GetTile(int x, int y)
 {
     int subX = positive_modulo(x,16);
     int subY = positive_modulo(y,16);
@@ -74,8 +76,8 @@ void World::Draw()
 {
     //DRAW TILES
     loaded_shaders[1]->Use();
-    int offset_x = floor(player->getXpos() * 128);
-    int offset_y = floor(player->getYpos() * 128);
+    int offset_x = floor(player->getXpos() * 128) - SCREEN_WIDTH / 2;
+    int offset_y = floor(player->getYpos() * 128) - SCREEN_HEIGHT / 2;
     int drawBeginX = floor(player->getXpos()) - 10;
     int drawEndX = drawBeginX + 20;
     int drawBeginY = floor(player->getYpos()) - 10;

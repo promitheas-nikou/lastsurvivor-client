@@ -2,33 +2,32 @@
 #include <string>
 #include "json.h"
 #include <allegro5/allegro.h>
-
 class Tile
 {
-protected:
+	protected:
 
-	const int xpos, ypos;
+		const int xpos, ypos;
 
-	std::string name;
+		std::string name;
 
-	Tile(int x, int y, std::string n);
+		Tile(int x, int y, std::string n);
 
-	virtual ALLEGRO_BITMAP* GetTexture() const;
+		virtual ALLEGRO_BITMAP* GetTexture() const;
 
-public:
-	virtual int GetID() const = 0;
+	public:
+		virtual int GetID() const = 0;
 
-	virtual std::string GetName() const;
+		virtual std::string GetName() const;
 
-	virtual void TickUpdate();
-	virtual void TileUpdate();
+		virtual void TickUpdate();
+		virtual void TileUpdate();
 
-	virtual void Draw() const;
+		virtual void Draw() const;
 
-	virtual int GetMiningResistance() const;
+		virtual int GetMiningResistance() const;
 
-	int GetXpos() const;
-	int GetYpos() const;
-};
+		int GetXpos() const;
+		int GetYpos() const;
+	};
 
-Tile* MakeTile(int id, int x, int y);
+Tile* MakeGroundTile(int id, int x, int y);

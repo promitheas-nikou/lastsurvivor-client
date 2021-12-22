@@ -25,12 +25,6 @@
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{323e50d5-ca90-4ba0-8767-eb21adff9dd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Tiles">
-      <UniqueIdentifier>{3800d73a-3a3c-4398-aaa3-355d6ca6fe29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Tiles">
-      <UniqueIdentifier>{abfc2815-e84e-4ce6-a477-78d26cedbd3a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{5fe905cf-f8e5-4055-8c76-26373afda311}</UniqueIdentifier>
     </Filter>
@@ -61,6 +55,18 @@
     <Filter Include="Header Files\Game\GUI">
       <UniqueIdentifier>{a924a83b-4256-49ff-8cd5-25b63ee58270}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\GroundTiles">
+      <UniqueIdentifier>{abfc2815-e84e-4ce6-a477-78d26cedbd3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GroundTiles">
+      <UniqueIdentifier>{3800d73a-3a3c-4398-aaa3-355d6ca6fe29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles">
+      <UniqueIdentifier>{a95f9249-f3ff-4371-9ed3-9692ebbfce0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tiles">
+      <UniqueIdentifier>{f271faf0-500a-4d29-8103-6cc222393760}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -75,8 +81,8 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\Game\Tiles</Filter>
+    <ClCompile Include="GroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
     </ClCompile>
     <ClCompile Include="ResourceLoader.cpp">
       <Filter>Source Files\Data</Filter>
@@ -96,17 +102,23 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="GrassTile.cpp">
-      <Filter>Source Files\Game\Tiles</Filter>
+    <ClCompile Include="GrassGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
     </ClCompile>
-    <ClCompile Include="StoneTile.cpp">
-      <Filter>Source Files\Game\Tiles</Filter>
-    </ClCompile>
-    <ClCompile Include="DirtTile.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="StoneGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
     </ClCompile>
     <ClCompile Include="GUI.cpp">
       <Filter>Source Files\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DirtGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="AirTile.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,8 +151,8 @@
     <ClInclude Include="Reflection.h">
       <Filter>Header Files\CppReflections</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Game\Tiles</Filter>
+    <ClInclude Include="GroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
     </ClInclude>
     <ClInclude Include="MathUtils.h">
       <Filter>Header Files</Filter>
@@ -157,17 +169,23 @@
     <ClInclude Include="Entity.h">
       <Filter>Header Files\Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="GrassTile.h">
+    <ClInclude Include="GrassGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DirtGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
       <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AirTile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StoneTile.h">
-      <Filter>Header Files\Game\Tiles</Filter>
-    </ClInclude>
-    <ClInclude Include="DirtTile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

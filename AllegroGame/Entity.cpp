@@ -12,6 +12,11 @@ float Entity::getYpos() const
     return ypos;
 }
 
+void Entity::Tick()
+{
+    return;
+}
+
 std::string Entity::getName() const
 {
     return name;

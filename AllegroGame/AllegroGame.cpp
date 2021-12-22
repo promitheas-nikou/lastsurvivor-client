@@ -11,9 +11,6 @@
 
 #include "Shader.h"
 
-static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
-static const float PLAYER_SPEED = .1f;
-
 //ALLEGRO_THREAD* 
 
 void EXIT_GAME()
@@ -53,89 +50,10 @@ int main()
 	{
 		while (GetNextEvent())
 		{
-			switch (NEXT_EVENT.type)
-			{
-			case ALLEGRO_EVENT_DISPLAY_CLOSE: //WINDOW CLOSED
-				EXIT_GAME();
-				break;
-			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-				break;
-			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-				break;
-			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-				break;
-			case ALLEGRO_EVENT_KEY_CHAR:
-				break;
-			case ALLEGRO_EVENT_KEY_DOWN:
-			{
-				switch (NEXT_EVENT.keyboard.keycode)
-				{
-				case ALLEGRO_KEY_W:
-					keys_pressed |= 0b00001000;
-					break;
-				case ALLEGRO_KEY_A:
-					keys_pressed |= 0b00000100;
-					break;
-				case ALLEGRO_KEY_S:
-					keys_pressed |= 0b00000010;
-					break;
-				case ALLEGRO_KEY_D:
-					keys_pressed |= 0b00000001;
-					break;
-				}
-			}
-				break;
-			case ALLEGRO_EVENT_KEY_UP:
-			{
-				switch (NEXT_EVENT.keyboard.keycode)
-				{
-				case ALLEGRO_KEY_W:
-					keys_pressed &= 0b11110111;
-					break;
-				case ALLEGRO_KEY_A:
-					keys_pressed &= 0b11111011;
-					break;
-				case ALLEGRO_KEY_S:
-					keys_pressed &= 0b11111101;
-					break;
-				case ALLEGRO_KEY_D:
-					keys_pressed &= 0b11111110;
-					break;
-				}
-			}
-			break;
-				break;
-			}
+			world.player->HandleEvent(NEXT_EVENT);
 		}
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-		switch (keys_pressed & 0b00001111)
-		{
-		case 0b0001:
-			world.player->warpRelative(PLAYER_SPEED, 0);
-			break;
-		case 0b0010:
-			world.player->warpRelative(0, PLAYER_SPEED);
-			break;
-		case 0b0011:
-			world.player->warpRelative(PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED*DIAG_MOD);
-			break;
-		case 0b0100:
-			world.player->warpRelative(-PLAYER_SPEED, 0);
-			break;
-		case 0b0110:
-			world.player->warpRelative(-PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED * DIAG_MOD);
-			break;
-		case 0b1000:
-			world.player->warpRelative(0, -PLAYER_SPEED);
-			break;
-		case 0b1001:
-			world.player->warpRelative(PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
-			break;
-		case 0b1100:
-			world.player->warpRelative(-PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
-			break;
-		}
 		world.Tick();
 		world.Draw();
 		loaded_shaders[0]->Use();
