@@ -7,7 +7,7 @@
 #include <format>
 #include "ResourceLoader.h"
 
-GroundTile::GroundTile(int x, int y, std::string n): xpos(x), ypos(y), name(n) {}
+GroundTile::GroundTile(World* w, int x, int y, std::string n): world(w), xpos(x), ypos(y), name(n) {}
 
 ALLEGRO_BITMAP* GroundTile::GetTexture() const
 {
@@ -42,7 +42,7 @@ void GroundTile::TileUpdate()
 void GroundTile::Draw() const
 {
     al_draw_bitmap(GetTexture(), xpos*128, ypos*128, 0);
-    //al_draw_text(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, std::format("{}:{}", xpos, ypos).c_str());
+    //al_draw_textf(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, "%d:%d", xpos, ypos);
 }
 
 int GroundTile::GetMiningResistance() const
@@ -50,15 +50,15 @@ int GroundTile::GetMiningResistance() const
     return 0;
 }
 
-GroundTile* MakeGroundTile(int id, int x, int y)
+GroundTile* MakeGroundTile(World* world, int id, int x, int y)
 {
     switch (id)
     {
     case GrassGroundTile::ID:
-        return new GrassGroundTile(x, y);
+        return new GrassGroundTile(world, x, y);
     case DirtGroundTile::ID:
-        return new DirtGroundTile(x, y);
+        return new DirtGroundTile(world, x, y);
     case StoneGroundTile::ID:
-        return new StoneGroundTile(x, y);
+        return new StoneGroundTile(world, x, y);
     }
 }

@@ -50,7 +50,14 @@ int main()
 	{
 		while (GetNextEvent())
 		{
-			world.player->HandleEvent(NEXT_EVENT);
+			switch (NEXT_EVENT.type)
+			{
+			case ALLEGRO_EVENT_DISPLAY_CLOSE:
+				EXIT_GAME();
+				break;
+			default:
+				world.player->HandleEvent(NEXT_EVENT);
+			}
 		}
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));

@@ -118,7 +118,7 @@
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="AirTile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,11 +181,11 @@
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Game\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="AirTile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GUI.h">
       <Filter>Header Files\Game\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AirTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

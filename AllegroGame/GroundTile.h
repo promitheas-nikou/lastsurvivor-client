@@ -3,15 +3,19 @@
 #include "json.h"
 #include <allegro5/allegro.h>
 
+class World;
+
 class GroundTile
 {
 protected:
+
+	World* world;
 
 	const int xpos, ypos;
 
 	std::string name;
 
-	GroundTile(int x, int y, std::string n);
+	GroundTile(World* w, int x, int y, std::string n);
 
 	virtual ALLEGRO_BITMAP* GetTexture() const;
 
@@ -31,4 +35,4 @@ public:
 	int GetYpos() const;
 };
 
-GroundTile* MakeGroundTile(int id, int x, int y);
+GroundTile* MakeGroundTile(World* world, int id, int x, int y);

@@ -6,6 +6,9 @@ ALLEGRO_EVENT_QUEUE* event_queue;
 
 ALLEGRO_DISPLAY* main_display;
 
+int SCREEN_WIDTH = 1000;
+int SCREEN_HEIGHT = 600;
+
 void init_graphics()
 {
 	printf("INITIALIZING GRAPHICS COMPONENTS...\n");
@@ -21,8 +24,12 @@ void init_graphics()
 void init_window()
 {
 	printf("CREATING DISPLAY...\n");
-	al_set_new_display_flags(ALLEGRO_OPENGL | ALLEGRO_PROGRAMMABLE_PIPELINE);
+	al_set_new_display_flags(ALLEGRO_OPENGL | ALLEGRO_PROGRAMMABLE_PIPELINE | ALLEGRO_FULLSCREEN_WINDOW);
+	//al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
+	//al_set_new_display_option(ALLEGRO_SWAP_METHOD, 1, ALLEGRO_REQUIRE);
 	main_display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
+	SCREEN_WIDTH = al_get_display_width(main_display);
+	SCREEN_HEIGHT = al_get_display_height(main_display);
 	if (main_display == NULL)
 	{
 		printf("FAILED TO INITIALIZE DISPLAY...\nABORTING...\n");

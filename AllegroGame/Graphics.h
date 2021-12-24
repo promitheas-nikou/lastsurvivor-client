@@ -6,8 +6,8 @@
 
 extern ALLEGRO_DISPLAY* main_display;
 
-const int SCREEN_WIDTH = 1000;
-const int SCREEN_HEIGHT = 700;
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 
 void init_graphics();
 

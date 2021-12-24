@@ -9,7 +9,7 @@ int GrassGroundTile::GetID() const
 	return ID;
 }
 
-GrassGroundTile::GrassGroundTile(int x, int y) : GroundTile(x, y, NAME)
+GrassGroundTile::GrassGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME)
 {}
 
 void GrassGroundTile::Init(nlohmann::json data)

@@ -24,7 +24,7 @@ public:
 
 	void Tick() final;
 
-	PlayerEntity() = default;
+	PlayerEntity(World* world);
 
 	friend WorldChunk;
 	friend World;

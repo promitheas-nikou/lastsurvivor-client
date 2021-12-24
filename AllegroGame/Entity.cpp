@@ -1,4 +1,4 @@
-#include "Entity.h"
+ #include "Entity.h"
 
 const float Entity::MIN_HEALTH = 0.f;
 
@@ -26,6 +26,9 @@ bool Entity::shouldBeRemoved() const
 {
     return dead;
 }
+
+Entity::Entity(World* w): containingWorld(w)
+{}
 
 void Entity::warpAbsolute(float x, float y)
 {

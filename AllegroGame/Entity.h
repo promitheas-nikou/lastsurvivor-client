@@ -17,6 +17,9 @@ private:
 	float health;
 	static const float MIN_HEALTH;
 
+protected:
+	World* containingWorld;
+
 public:
 
 	float getXpos() const;
@@ -35,6 +38,7 @@ public:
 	virtual std::string getName() const;
 	virtual bool shouldBeRemoved() const;
 
+	Entity(World* w);
 
 	friend WorldChunk;
 	friend World;

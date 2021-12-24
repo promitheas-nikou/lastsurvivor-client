@@ -2,15 +2,19 @@
 #include <string>
 #include "json.h"
 #include <allegro5/allegro.h>
+
+class World;
+
 class Tile
 {
 	protected:
+		World* world;
 
 		const int xpos, ypos;
 
 		std::string name;
 
-		Tile(int x, int y, std::string n);
+		Tile(World* w, int x, int y, std::string n);
 
 		virtual ALLEGRO_BITMAP* GetTexture() const;
 
@@ -24,10 +28,15 @@ class Tile
 
 		virtual void Draw() const;
 
+		virtual bool IsTransparent() const;
+		virtual bool IsEmpty() const;
+
+
+
 		virtual int GetMiningResistance() const;
 
 		int GetXpos() const;
 		int GetYpos() const;
 	};
 
-Tile* MakeGroundTile(int id, int x, int y);
+Tile* MakeTile(World* world, int id, int x, int y);

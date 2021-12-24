@@ -3,6 +3,7 @@
 #include "allegro5/allegro_primitives.h"
 #include "ResourceLoader.h"
 #include "Graphics.h"
+#include "World.h"
 
 int a, b, c;
 
@@ -10,7 +11,8 @@ void PlayerEntity::DrawThisGUI()
 {
 	al_get_blender(&a, &b, &c);
 	al_set_separate_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA, ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
-	al_draw_filled_rectangle(SCREEN_WIDTH/2-200, 200, SCREEN_WIDTH/2+200, 450, al_map_rgba(0, 150, 255, 150));
+	al_draw_filled_rectangle(SCREEN_WIDTH/2-200, 50, SCREEN_WIDTH/2+200, 250, al_map_rgba(0, 150, 255, 150));
+	al_draw_textf(loaded_font, al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 180), 60, 0, "%lf,%lf: %s", getXpos(), getYpos(), containingWorld->GetGroundTile(floor(getXpos()), floor(getYpos()))->GetName().c_str());
 	al_set_blender(a, b, c);
 }
 
@@ -72,7 +74,7 @@ void PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 }
 
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
-static const float PLAYER_SPEED = .1f;
+static const float PLAYER_SPEED = .025f;
 
 void PlayerEntity::Tick()
 {
@@ -104,3 +106,6 @@ void PlayerEntity::Tick()
 		break;
 	}
 }
+
+PlayerEntity::PlayerEntity(World* world): Entity(world)
+{}

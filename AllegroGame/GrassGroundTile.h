@@ -13,7 +13,7 @@ public:
 
 	int GetID() const final;
 
-	GrassGroundTile(int x, int y);
+	GrassGroundTile(World* w, int x, int y);
 	
 	static void Init(nlohmann::json data);
 	ALLEGRO_BITMAP* GetTexture() const final;
