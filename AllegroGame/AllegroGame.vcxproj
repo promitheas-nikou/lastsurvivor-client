@@ -170,6 +170,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="Reflection.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="StoneGroundTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Tool.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
   </ItemGroup>
@@ -196,6 +198,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="PlayerEntity.h" />
@@ -205,6 +208,7 @@
     <ClInclude Include="StoneGroundTile.h" />
     <ClInclude Include="GroundTile.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tool.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />
   </ItemGroup>

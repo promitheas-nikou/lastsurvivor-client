@@ -1,7 +1,10 @@
 #include "Tile.h"
 #include "AirTile.h"
 
-Tile::Tile(World* w, int x, int y, std::string n) : world(w), xpos(x), ypos(y), name(n)
+Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w), xpos(x), ypos(y), optimalToolType(t), miningResistance(m), name(n)
+{}
+
+Tile::Tile(World* w, int x, int y): world(w), xpos(x), ypos(y)
 {}
 
 ALLEGRO_BITMAP* Tile::GetTexture() const
@@ -40,9 +43,33 @@ bool Tile::IsEmpty() const
 	return false;
 }
 
+Item* Tile::MineTile()
+{
+	return nullptr;
+}
+
+bool Tile::MineWithTool(Tool* tool)
+{
+	if ((tool!=nullptr)&&(tool->GetMiningType() == optimalToolType))
+		miningDamageDone += tool->GetMiningDamage();
+	else
+		miningDamageDone++;
+	return miningDamageDone >= miningResistance;
+}
+
 int Tile::GetMiningResistance() const
 {
-	return 1;
+	return miningResistance;
+}
+
+int Tile::GetMiningDamageDone() const
+{
+	return miningDamageDone;
+}
+
+ToolType Tile::GetOptimalToolType() const
+{
+	return optimalToolType;
 }
 
 int Tile::GetXpos() const

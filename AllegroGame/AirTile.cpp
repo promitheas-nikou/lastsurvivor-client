@@ -20,5 +20,5 @@ bool AirTile::IsEmpty() const
 	return true;
 }
 
-AirTile::AirTile(World* w, int x, int y): Tile(w, x, y, "")
+AirTile::AirTile(World* w, int x, int y): Tile(w, x, y, ToolType::NONE, 10, "Air")
 {}

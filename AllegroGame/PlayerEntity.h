@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Tool.h"
 #include "GUI.h"
 
 static enum GUI_STATE {WORLD};
@@ -11,6 +12,12 @@ class PlayerEntity :
 private:
 	GUI_STATE guistate;
 	char keys_pressed;
+
+	Tool* pickaxeTool;
+	Tool* axeTool;
+	Tool* shovelTool;
+	Tool* pumpTool;
+
 public:
 	void DrawThisGUI() final;
 	void Draw() final;
@@ -21,6 +28,9 @@ public:
 	void MouseButtonDown(ALLEGRO_MOUSE_EVENT &event) final;
 	void MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
 	void MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
+
+	void PlaceTile(int x, int y);
+	void MineTile(int x, int y);
 
 	void Tick() final;
 

@@ -67,6 +67,18 @@
     <Filter Include="Header Files\Game\Tiles">
       <UniqueIdentifier>{f271faf0-500a-4d29-8103-6cc222393760}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Items">
+      <UniqueIdentifier>{158fce04-5de8-4ef7-b200-eed9606616a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items">
+      <UniqueIdentifier>{8de98921-93c5-4379-8c96-220f3da0da7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tools">
+      <UniqueIdentifier>{7048981d-7b42-4a5f-b914-218e2a1c902f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tools">
+      <UniqueIdentifier>{20ec4f6d-20ae-4a87-b82d-de764e5c6f34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -119,6 +131,12 @@
     </ClCompile>
     <ClCompile Include="AirTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +204,12 @@
     </ClInclude>
     <ClInclude Include="AirTile.h">
       <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

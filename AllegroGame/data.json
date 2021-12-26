@@ -111,7 +111,7 @@
       "hoty": 5
     }
   ],
-  "tiles": [
+  "ground_tiles": [
     {
       "id": 1,
       "name": "Grass",
@@ -175,13 +175,7 @@
   "fonts": [
     {
       "id": 1,
-      "font": "Berlin Sans FB Regular.ttf",
-      "size": 20
-    },
-    {
-      "id": 2,
-      "font": "Roboto-Medium.ttf",
-      "size": 20
+      "font": "FONT.ttf"
     }
   ],
   "recipes": [

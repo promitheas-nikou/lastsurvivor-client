@@ -28,6 +28,17 @@ WorldChunk* World::GetChunk(int x, int y)
     return chunks[y][x];
 }
 
+void World::RemoveTile(int x, int y)
+{
+    int subX = positive_modulo(x, 16);
+    int subY = positive_modulo(y, 16);
+    int chunkX = (x - subX) / CHUNK_SIZE_X;
+    int chunkY = (y - subY) / CHUNK_SIZE_Y;
+    if (!IsChunkGenerated(chunkX, chunkY))
+        GenerateChunk(chunkX, chunkY);
+    GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
+}
+
 void World::Tick()
 {
     static int tick_counter=0;

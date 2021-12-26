@@ -25,6 +25,7 @@ public:
 	GroundTile* GetGroundTile(int x, int y) const;
 
 	Tile* GetTile(int x, int y) const;
+	void RemoveTile(int x, int y);
 
 	WorldChunk(World* w, int x, int y);
 

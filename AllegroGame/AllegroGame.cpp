@@ -46,6 +46,11 @@ int main()
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
 	World world;
+	double tick;
+	double worldDraw;
+	double playerGUIdraw;
+	double drawEnd;
+	printf("\n");
 	while (true)
 	{
 		while (GetNextEvent())
@@ -61,11 +66,19 @@ int main()
 		}
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
+		tick = al_get_time();
 		world.Tick();
+		worldDraw = al_get_time();
 		world.Draw();
+		playerGUIdraw = al_get_time();
 		loaded_shaders[0]->Use();
 		world.player->DrawGUI();
+		drawEnd = al_get_time();
 		al_flip_display();
+		tick = worldDraw - tick;
+		worldDraw = playerGUIdraw - worldDraw;
+		playerGUIdraw = drawEnd - playerGUIdraw;
+		printf("\rTICK: %.3lf WORLD: %.3lf GUI: %.3lf", tick, worldDraw, playerGUIdraw);
 	}
 
 	free_resources();

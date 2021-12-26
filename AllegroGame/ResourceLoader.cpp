@@ -9,9 +9,10 @@
 
 nlohmann::json json_data;
 
-std::map<int, ALLEGRO_BITMAP*> loaded_bitmaps;
 std::map<int, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
+std::map<int, ALLEGRO_BITMAP*> loaded_bitmaps;
 std::map<int, Shader*> loaded_shaders;
+std::map<int, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 
 using json = nlohmann::json;
 
@@ -23,8 +24,6 @@ int game_version_major;
 int game_version_minor;
 
 ALLEGRO_BITMAP* window_icon;
-
-ALLEGRO_FONT* loaded_font;
 
 void load_resources()
 {
@@ -51,8 +50,17 @@ void load_resources()
 	window_icon = loaded_bitmaps[(int)json_data["WINDOW_ICON"]];
 	printf("WINDOW ICON IS TEXTURE #%d\n", (int)json_data["WINDOW_ICON"]);
 
-	printf("\nLOADING 1 FONT(S)...\n");
-	loaded_font = al_load_font("FONT.ttf", 10, 0);
+	nlohmann::json fonts_data = json_data["fonts"];
+	printf("\nLOADING %d FONT(S)...\n", fonts_data.size());
+
+	for (nlohmann::json font : fonts_data)
+	{
+		int id = font["id"];
+		std::string fn = font["font"];
+		printf("LOADING FONT #%d\n", id);
+		for(int i=10;i<=80;i++)
+			loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
+	}
 
 }
 
@@ -75,8 +83,8 @@ void load_shaders()
 void init_tiles()
 {
 	printf("PARSING TILE DATA...\n");
-	json __tiles = json_data["tiles"];
-	for (json td : __tiles)
+	json __ground_tiles = json_data["ground_tiles"];
+	for (json td : __ground_tiles)
 		tile_data[td["id"]] = td;
 	printf("LOADING %d TILES...\n", tile_data.size());
 	for (std::pair<int, json> pair : tile_data)
@@ -97,8 +105,10 @@ void free_resources()
 	for (std::pair<int, ALLEGRO_MOUSE_CURSOR*> p : loaded_cursors)
 		al_destroy_mouse_cursor(p.second);
 	loaded_cursors.clear();
-	al_destroy_font(loaded_font);
-	loaded_font = NULL;
+	for(auto m: loaded_fonts)
+		for(auto f: m.second)
+			al_destroy_font(f.second);
+	loaded_fonts.clear();
 	for (std::pair<int, Shader*> p : loaded_shaders)
 	{
 		p.second->Delete();
