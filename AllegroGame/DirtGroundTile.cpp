@@ -9,7 +9,7 @@ int DirtGroundTile::GetID() const
 	return ID;
 }
 
-DirtGroundTile::DirtGroundTile(int x, int y) : GroundTile(x, y, NAME)
+DirtGroundTile::DirtGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME)
 {}
 
 void DirtGroundTile::Init(nlohmann::json data)

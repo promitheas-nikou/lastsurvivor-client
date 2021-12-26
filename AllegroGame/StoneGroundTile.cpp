@@ -9,7 +9,7 @@ int StoneGroundTile::GetID() const
 	return ID;
 }
 
-StoneGroundTile::StoneGroundTile(int x, int y) : GroundTile(x, y, NAME)
+StoneGroundTile::StoneGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME)
 {}
 
 void StoneGroundTile::Init(nlohmann::json data)

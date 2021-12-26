@@ -11,7 +11,7 @@ public:
 
 	int GetID() const final;
 
-	StoneGroundTile(int x, int y);
+	StoneGroundTile(World* w, int x, int y);
 
 	static void Init(nlohmann::json data);
 	ALLEGRO_BITMAP* GetTexture() const final;

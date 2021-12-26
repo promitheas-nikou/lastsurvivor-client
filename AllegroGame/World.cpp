@@ -15,12 +15,28 @@ void World::UpdateEntityVector()
 
 GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    return MakeGroundTile(((rand()%10)/9)+1, x, y);
+    return MakeGroundTile(this, ((rand()%10)/9)+1, x, y);
+}
+
+Tile* World::GenerateTile(int x, int y)
+{
+    return MakeTile(this, 0, x, y);
 }
 
 WorldChunk* World::GetChunk(int x, int y)   
 {
     return chunks[y][x];
+}
+
+void World::RemoveTile(int x, int y)
+{
+    int subX = positive_modulo(x, 16);
+    int subY = positive_modulo(y, 16);
+    int chunkX = (x - subX) / CHUNK_SIZE_X;
+    int chunkY = (y - subY) / CHUNK_SIZE_Y;
+    if (!IsChunkGenerated(chunkX, chunkY))
+        GenerateChunk(chunkX, chunkY);
+    GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
 }
 
 void World::Tick()
@@ -47,15 +63,27 @@ void World::Tick()
 void World::GenerateChunk(int x, int y)
 {
     //printf("Generating worldchunk %d:%d\n", x, y);
-    chunks[y][x] = new WorldChunk(x, y);
+    chunks[y][x] = new WorldChunk(this, x, y);
 }
 
-GroundTile* World::GetTile(int x, int y)
+GroundTile* World::GetGroundTile(int x, int y)
 {
     int subX = positive_modulo(x,16);
     int subY = positive_modulo(y,16);
     int chunkX = (x-subX) / CHUNK_SIZE_X;
     int chunkY = (y-subY) / CHUNK_SIZE_Y;
+    if (!IsChunkGenerated(chunkX, chunkY))
+        GenerateChunk(chunkX, chunkY);
+    auto t = GetChunk(chunkX, chunkY)->GetGroundTile(subX, subY);
+    return t;
+}
+
+Tile* World::GetTile(int x, int y)
+{
+    int subX = positive_modulo(x, 16);
+    int subY = positive_modulo(y, 16);
+    int chunkX = (x - subX) / CHUNK_SIZE_X;
+    int chunkY = (y - subY) / CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
         GenerateChunk(chunkX, chunkY);
     auto t = GetChunk(chunkX, chunkY)->GetTile(subX, subY);
@@ -86,6 +114,9 @@ void World::Draw()
     al_use_transform(&draw_transform);
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
+            GetGroundTile(x, y)->Draw();
+    for (int x = drawBeginX; x < drawEndX; x++)
+        for (int y = drawBeginY; y < drawEndY; y++)
             GetTile(x, y)->Draw();
 
     //DRAW ENTITIES
@@ -97,7 +128,7 @@ void World::Draw()
     al_use_transform(&draw_transform);
 }
 
-World::World(): dynamicWorldGen(false), entityUpdates(0), loadedChunkCount(0), player(new PlayerEntity())
+World::World(): dynamicWorldGen(false), entityUpdates(0), loadedChunkCount(0), player(new PlayerEntity(this)), SEED(0)
 {}
 
 
