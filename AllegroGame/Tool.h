@@ -1,6 +1,12 @@
 #pragma once
 
-enum class ToolType {NONE, PICKAXE, AXE, SHOVEL, PUMP};
+enum class ToolType : char {
+	NONE = 0b0000,
+	PICKAXE = 0b0001,
+	AXE = 0b0010,
+	SHOVEL = 0b0100,
+	PUMP = 0b1000
+};
 
 class Tool
 {

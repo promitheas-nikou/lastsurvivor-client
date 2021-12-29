@@ -2,6 +2,7 @@
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_primitives.h"
 #include "ResourceLoader.h"
+#include "SimpleButtonUIComponent.h"
 #include "Graphics.h"
 #include "World.h"
 
@@ -188,5 +189,5 @@ void PlayerEntity::Tick()
 	}
 }
 
-PlayerEntity::PlayerEntity(World* world): Entity(world)
+PlayerEntity::PlayerEntity(World* world) : Entity(world), axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ GUI_STATE::WORLD }, keys_pressed{0b00000000}
 {}

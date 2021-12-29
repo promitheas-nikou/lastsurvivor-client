@@ -33,7 +33,7 @@ private:
 public:
 	inline WorldChunk* GetChunk(int x, int y);
 
-	void RemoveTile(int x, int y);
+	Tile* RemoveTile(int x, int y);
 
 	void Tick();
 

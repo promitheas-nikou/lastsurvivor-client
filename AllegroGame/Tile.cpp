@@ -50,7 +50,7 @@ Item* Tile::MineTile()
 
 bool Tile::MineWithTool(Tool* tool)
 {
-	if ((tool!=nullptr)&&(tool->GetMiningType() == optimalToolType))
+	if ((tool!=nullptr)&&(static_cast<char>(tool->GetMiningType()) & static_cast<char>(optimalToolType)))
 		miningDamageDone += tool->GetMiningDamage();
 	else
 		miningDamageDone++;

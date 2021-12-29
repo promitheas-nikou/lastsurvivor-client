@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="AirTile.cpp" />
     <ClCompile Include="AllegroGame.cpp" />
+    <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -172,14 +173,23 @@
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
+    <ClCompile Include="RectangularUIComponent.cpp" />
     <ClCompile Include="Reflection.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShovelToolItem.cpp" />
+    <ClCompile Include="SimpleButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleToolItem.cpp" />
+    <ClCompile Include="SimpleUIComponent.cpp" />
     <ClCompile Include="StoneGroundTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
+    <ClCompile Include="StoneItem.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="ToolItem.cpp" />
+    <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
   </ItemGroup>
@@ -193,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
+    <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Graphics.h" />
@@ -201,14 +212,23 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
+    <ClInclude Include="RectangularUIComponent.h" />
     <ClInclude Include="Reflection.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShovelToolItem.h" />
+    <ClInclude Include="SimpleButtonUIComponent.h" />
+    <ClInclude Include="SimpleToolItem.h" />
+    <ClInclude Include="SimpleUIComponent.h" />
     <ClInclude Include="StoneGroundTile.h" />
     <ClInclude Include="GroundTile.h" />
+    <ClInclude Include="StoneItem.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tool.h" />
+    <ClInclude Include="ToolItem.h" />
+    <ClInclude Include="UIComponent.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />
   </ItemGroup>

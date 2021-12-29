@@ -28,7 +28,7 @@ WorldChunk* World::GetChunk(int x, int y)
     return chunks[y][x];
 }
 
-void World::RemoveTile(int x, int y)
+Tile* World::RemoveTile(int x, int y)
 {
     int subX = positive_modulo(x, 16);
     int subY = positive_modulo(y, 16);
@@ -36,7 +36,7 @@ void World::RemoveTile(int x, int y)
     int chunkY = (y - subY) / CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
         GenerateChunk(chunkX, chunkY);
-    GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
+    return GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
 }
 
 void World::Tick()
@@ -100,16 +100,21 @@ bool World::IsChunkGenerated(int x, int y)
 
 ALLEGRO_TRANSFORM draw_transform;
 
+int OPTION_DRAW_TILES_LEFT = 11;
+int OPTION_DRAW_TILES_RIGHT = 12;
+int OPTION_DRAW_TILES_UP = 6;
+int OPTION_DRAW_TILES_DOWN = 7;
+
 void World::Draw()
 {
     //DRAW TILES
     loaded_shaders[1]->Use();
     int offset_x = floor(player->getXpos() * 128) - SCREEN_WIDTH / 2;
     int offset_y = floor(player->getYpos() * 128) - SCREEN_HEIGHT / 2;
-    int drawBeginX = floor(player->getXpos()) - 10;
-    int drawEndX = drawBeginX + 20;
-    int drawBeginY = floor(player->getYpos()) - 10;
-    int drawEndY = drawBeginY + 20;
+    int drawBeginX = floor(player->getXpos()) - OPTION_DRAW_TILES_LEFT;
+    int drawEndX = floor(player->getXpos()) + OPTION_DRAW_TILES_RIGHT;
+    int drawBeginY = floor(player->getYpos()) - OPTION_DRAW_TILES_UP;
+    int drawEndY = floor(player->getYpos()) + OPTION_DRAW_TILES_DOWN;
     al_build_transform(&draw_transform, -offset_x, -offset_y, 1, 1, 0);
     al_use_transform(&draw_transform);
     for (int x = drawBeginX; x < drawEndX; x++)

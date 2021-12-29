@@ -31,9 +31,6 @@
     <Filter Include="Header Files\Data">
       <UniqueIdentifier>{bee39314-7088-4462-b494-5f7499265509}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{2cb7b838-4d0e-46d9-a474-d6adea4e98d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Data">
       <UniqueIdentifier>{e544ab06-a238-4edd-bd70-a7fc0d07f225}</UniqueIdentifier>
     </Filter>
@@ -78,6 +75,45 @@
     </Filter>
     <Filter Include="Source Files\Game\Tools">
       <UniqueIdentifier>{20ec4f6d-20ae-4a87-b82d-de764e5c6f34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems">
+      <UniqueIdentifier>{26854926-a858-46df-a7a8-6217e5b37689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems\PickaxeToolItems">
+      <UniqueIdentifier>{1a4aa84e-d04a-4379-bf5f-fa941b5f065c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems">
+      <UniqueIdentifier>{6c1df708-3c91-4754-a18a-45f1866a39df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems\ShovelToolItems">
+      <UniqueIdentifier>{8ac0694f-b3c1-4ec9-bfa2-952a3ce31fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems\PickaxeToolItems">
+      <UniqueIdentifier>{23408dae-57a5-4478-b80a-6888a4542039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems\ShovelToolItems">
+      <UniqueIdentifier>{710cfc3e-5a8a-4628-b8a8-127aa9e86e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ResourceItems">
+      <UniqueIdentifier>{ba4ee3d3-ebba-4796-a2ce-02be695d38c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ResourceItems">
+      <UniqueIdentifier>{0c64ce5c-6d51-4913-b768-5157f4a4d61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents">
+      <UniqueIdentifier>{24ae7c38-7a0d-42ab-907a-4a792e7b244f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents">
+      <UniqueIdentifier>{d733548f-64f8-4b63-be10-b7e12df1607c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{2cb7b838-4d0e-46d9-a474-d6adea4e98d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents">
+      <UniqueIdentifier>{244e323f-19b0-4fe7-8a19-833837f5b47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents">
+      <UniqueIdentifier>{d607a566-c917-4c82-9183-f8a5174fe0b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,8 +171,38 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Game\Items</Filter>
     </ClCompile>
+    <ClCompile Include="ToolItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems</Filter>
+    </ClCompile>
     <ClCompile Include="Tool.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleToolItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="PickaxeToolItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="ShovelToolItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\ShovelToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangularUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleButtonUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,8 +274,38 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files\Game\Items</Filter>
     </ClInclude>
+    <ClInclude Include="ToolItem.h">
+      <Filter>Header Files\Game\Items\ToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="PickaxeToolItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleToolItem.h">
+      <Filter>Header Files\Game\Items\ToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="ShovelToolItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\ShovelToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
     <ClInclude Include="Tool.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangularUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

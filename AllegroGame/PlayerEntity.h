@@ -3,7 +3,7 @@
 #include "Tool.h"
 #include "GUI.h"
 
-static enum GUI_STATE {WORLD};
+enum GUI_STATE {WORLD};
 
 class PlayerEntity :
     public Entity,

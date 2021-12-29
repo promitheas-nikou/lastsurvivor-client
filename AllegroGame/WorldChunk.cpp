@@ -31,9 +31,11 @@ Tile* WorldChunk::GetTile(int x, int y) const
     return tiles[y][x];
 }
 
-void WorldChunk::RemoveTile(int x, int y)
+Tile* WorldChunk::RemoveTile(int x, int y)
 {
+    Tile* tmp = tiles[y][x];
     tiles[y][x] = MakeTile(world, 0, x, y);
+    return tmp;
 }
 
 WorldChunk::WorldChunk(World* w, int x, int y): world(w), chunkX(x), chunkY(y)
