@@ -13,8 +13,35 @@
 
 //ALLEGRO_THREAD* 
 
+
+static const float TPS = 50.f;
+
+static ALLEGRO_MUTEX* worldMutex;
+static ALLEGRO_THREAD* worldTickerThread;
+
+void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
+{
+	World* world = (World*)_world;
+	ALLEGRO_TIMER* timer = al_create_timer(1/TPS);
+	ALLEGRO_EVENT evt;
+	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
+	al_register_event_source(queue, al_get_timer_event_source(timer));
+	al_start_timer(timer);
+	while (!al_get_thread_should_stop(thr))
+	{
+		al_wait_for_event(queue, &evt);
+		al_lock_mutex(worldMutex);
+		world->Tick();
+		al_unlock_mutex(worldMutex);
+	}
+	return NULL;
+}
+
 void EXIT_GAME()
 {
+	
+	al_set_thread_should_stop(worldTickerThread);
+	al_join_thread(worldTickerThread, NULL);
 	destroy_graphics();
 	exit(EXIT_SUCCESS);
 }
@@ -40,6 +67,8 @@ int main()
 	//printf("\n\n======	=========================\nINITIALIZING GAME\n===============================\n\n");
 	printf("\n======= INITIALIZING TILES =======\n\n");
 	init_tiles();
+	printf("\n======= INITIALIZING ITEMS =======\n\n");
+	init_items();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 
@@ -51,6 +80,9 @@ int main()
 	double playerGUIdraw;
 	double drawEnd;
 	printf("\n");
+	worldMutex = al_create_mutex();
+	worldTickerThread = al_create_thread(&WorldTickerFunc, &world);
+	al_start_thread(worldTickerThread);
 	while (true)
 	{
 		while (GetNextEvent())
@@ -67,18 +99,23 @@ int main()
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		tick = al_get_time();
-		world.Tick();
 		worldDraw = al_get_time();
+		
+		al_lock_mutex(worldMutex);
+		
 		world.Draw();
 		playerGUIdraw = al_get_time();
 		loaded_shaders[0]->Use();
 		world.player->DrawGUI();
+
+		al_unlock_mutex(worldMutex);
+
 		drawEnd = al_get_time();
 		al_flip_display();
 		tick = worldDraw - tick;
 		worldDraw = playerGUIdraw - worldDraw;
 		playerGUIdraw = drawEnd - playerGUIdraw;
-		printf("\rTICK: %.3lf WORLD: %.3lf GUI: %.3lf", tick, worldDraw, playerGUIdraw);
+		//printf("\rTICK: %.3lf WORLD: %.3lf GUI: %.3lf", tick, worldDraw, playerGUIdraw);
 	}
 
 	free_resources();

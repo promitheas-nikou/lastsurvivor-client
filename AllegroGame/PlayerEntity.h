@@ -1,24 +1,50 @@
 #pragma once
 #include "Entity.h"
+#include "InventoryGUI.h"
+#include "GroundTileMiner.h"
+#include "ItemInventory.h"
+#include "SimpleInventoryGUI.h"
+#include <list>
 #include "Tool.h"
 #include "GUI.h"
 
-enum GUI_STATE {WORLD};
+enum class PLAYER_GUI_STATE {WORLD, INVENTORY};
+
+class PlayerNotification
+{
+private:
+	ALLEGRO_BITMAP* content;
+	int timer;
+
+	PlayerNotification(int t, int w, int h);
+
+public:
+	void Draw(int x, int y, int width, int height, int new_timer);
+	bool ShouldBeRemoved(int new_timer);
+	static PlayerNotification* MakeTextNotification(std::string txt, int w, int h, int t);
+};
 
 class PlayerEntity :
     public Entity,
-	public GUI
+	public GUI,
+	private GroundTileMiner
 {
 private:
-	GUI_STATE guistate;
+	enum class PLAYER_GUI_STATE guistate;
+	int GUItimer;
 	char keys_pressed;
-
+	InventoryGUI* inventoryGUI;
+	InventoryGUI* hotbarGUI;
+	ItemInventory* inventory;
 	Tool* pickaxeTool;
 	Tool* axeTool;
 	Tool* shovelTool;
 	Tool* pumpTool;
 
+	std::list<PlayerNotification*> notifications;
+
 public:
+
 	void DrawThisGUI() final;
 	void Draw() final;
 
@@ -32,9 +58,13 @@ public:
 	void PlaceTile(int x, int y);
 	void MineTile(int x, int y);
 
+	void AddItem(Item* item) override;
+
 	void Tick() final;
 
-	PlayerEntity(World* world);
+	PlayerEntity(World* world, float xpos, float ypos);
+
+	virtual ~PlayerEntity() = default;
 
 	friend WorldChunk;
 	friend World;

@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "AirTile.h"
+#include "TreeTile.h"
 
 Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w), xpos(x), ypos(y), optimalToolType(t), miningResistance(m), name(n)
 {}
@@ -22,6 +23,11 @@ void Tile::TickUpdate()
 	return;
 }
 
+void Tile::RandomTickUpdate()
+{
+	return;
+}
+
 void Tile::TileUpdate()
 {
 	return;
@@ -31,6 +37,21 @@ void Tile::Draw() const
 {
 	al_draw_bitmap(GetTexture(), xpos * 128, ypos * 128, 0);
 	//al_draw_text(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, std::format("{}:{}", xpos, ypos).c_str());
+}
+
+bool Tile::canWalkThrough() const
+{
+	return this->IsEmpty();
+}
+
+bool Tile::canSwimThrough() const
+{
+	return false;
+}
+
+bool Tile::canFlyThrough() const
+{
+	return true;
 }
 
 bool Tile::IsTransparent() const
@@ -84,5 +105,11 @@ int Tile::GetYpos() const
 
 Tile* MakeTile(World* world, int id, int x, int y)
 {
-	return new AirTile(world, x, y);
+	switch (id)
+	{
+	case AirTile::ID:
+		return new AirTile(world, x, y);
+	case TreeTile::ID:
+		return new TreeTile(world, x, y);
+	}
 }

@@ -6,6 +6,18 @@
 #include "GrassGroundTile.h"
 #include "DirtGroundTile.h"
 #include "StoneGroundTile.h"
+#include "TreeTile.h"
+#include "StoneItem.h"
+#include "DirtItem.h"
+
+const std::string DATA_JSON_TEXTURE_KEY = "texture";
+const std::string DATA_JSON_TEXTURE_LIST_KEY = "textures";
+const std::string DATA_JSON_MINING_RESISTANCE_KEY = "mining_resistance";
+const std::string DATA_JSON_TOOL_TYPE_KEY = "tool_type";
+const std::string DATA_JSON_NAME_KEY = "name";
+const std::string DATA_JSON_DESCRIPTION_KEY = "description";
+const std::string DATA_JSON_DROP_KEY = "drops";
+const std::string DATA_JSON_ID_KEY = "id";
 
 nlohmann::json json_data;
 
@@ -16,7 +28,9 @@ std::map<int, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 
 using json = nlohmann::json;
 
+std::map<int, json> ground_tile_data;
 std::map<int, json> tile_data;
+std::map<int, json> item_data;
 
 std::string game_name;
 std::string game_version_name;
@@ -57,9 +71,9 @@ void load_resources()
 	{
 		int id = font["id"];
 		std::string fn = font["font"];
-		printf("LOADING FONT #%d\n", id);
 		for(int i=10;i<=80;i++)
 			loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
+		printf("SUCCESSFULLY LOADED FONT #%d(%s)...\n", id,fn.c_str());
 	}
 
 }
@@ -84,16 +98,41 @@ void init_tiles()
 {
 	printf("PARSING TILE DATA...\n");
 	json __ground_tiles = json_data["ground_tiles"];
+	json __tiles = json_data["tiles"];
 	for (json td : __ground_tiles)
+		ground_tile_data[td[DATA_JSON_ID_KEY]] = td;
+	for (json td : __tiles)
 		tile_data[td["id"]] = td;
-	printf("LOADING %d TILES...\n", tile_data.size());
+	printf("FOUND DATA FOR %d GROUND TILES...\n", ground_tile_data.size());
+	for (std::pair<int, json> pair : ground_tile_data)
+	{
+		printf("FOUND DATA FOR GROUND TILE #%d (\"%s\")\n", pair.first, ((std::string)pair.second["name"]).c_str());
+	}
+	printf("FOUND DATA FOR %d  TILES...\n", tile_data.size());
 	for (std::pair<int, json> pair : tile_data)
 	{
-		printf("LOADED TILE #%d (\"%s\")\n",pair.first, ((std::string)pair.second["name"]).c_str());
+		printf("FOUND DATA FOR TILE #%d (\"%s\")\n", pair.first, ((std::string)pair.second["name"]).c_str());
 	}
-	GrassGroundTile::Init(tile_data[GrassGroundTile::ID]);
-	DirtGroundTile::Init(tile_data[DirtGroundTile::ID]);
-	StoneGroundTile::Init(tile_data[StoneGroundTile::ID]);
+	GrassGroundTile::Init(ground_tile_data[GrassGroundTile::ID]);
+	DirtGroundTile::Init(ground_tile_data[DirtGroundTile::ID]);
+	StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
+
+	TreeTile::Init(tile_data[TreeTile::ID]);
+}
+
+void init_items()
+{
+	printf("PARSING ITEM DATA...\n");
+	json __items = json_data["items"];
+	for (json i : __items)
+		item_data[i["id"]] = i;
+	printf("LOADING %d ITEMS...\n", ground_tile_data.size());
+	for (std::pair<int, json> pair : ground_tile_data)
+	{
+		printf("LOADED ITEM #%d (\"%s\")\n", pair.first, ((std::string)pair.second["name"]).c_str());
+	}
+	StoneItem::Init(item_data[StoneItem::ID]);
+	DirtItem::Init(item_data[DirtItem::ID]);
 }
 
 void free_resources()

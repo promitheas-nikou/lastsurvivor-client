@@ -33,10 +33,14 @@ class Tile
 		virtual std::string GetName() const;
 
 		virtual void TickUpdate();
+		virtual void RandomTickUpdate();
 		virtual void TileUpdate();
 
 		virtual void Draw() const;
 
+		virtual bool canWalkThrough() const;
+		virtual bool canSwimThrough() const;
+		virtual bool canFlyThrough() const;
 		virtual bool IsTransparent() const;
 		virtual bool IsEmpty() const;
 
@@ -50,6 +54,8 @@ class Tile
 
 		int GetXpos() const;
 		int GetYpos() const;
+
+		virtual ~Tile() = default;
 	};
 
 Tile* MakeTile(World* world, int id, int x, int y);

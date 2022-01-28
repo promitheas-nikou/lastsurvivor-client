@@ -12,8 +12,13 @@ int StoneItem::GetID() const
 StoneItem::StoneItem(): Item(NAME)
 {}
 
+ALLEGRO_BITMAP* StoneItem::GetTexture() const
+{
+	return TEXTURE;
+}
+
 void StoneItem::Init(nlohmann::json data)
 {
-	NAME = data["name"];
-	TEXTURE = loaded_bitmaps[data["texture_id"]];
+	NAME = data[DATA_JSON_NAME_KEY];
+	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

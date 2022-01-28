@@ -6,6 +6,8 @@ class DirtGroundTile :
 private:
 	static std::string NAME;
 	static ALLEGRO_BITMAP* TEXTURE;
+	static int DROP;
+	static int MINING_RESISTANCE;
 public:
 	static const int ID = 2;
 
@@ -16,5 +18,10 @@ public:
 	static void Init(nlohmann::json data);
 	ALLEGRO_BITMAP* GetTexture() const final;
 
+	Item* GetMiningResult(Tool* tool) const final;
+
+	int GetMiningResistance() const final;
+
+	virtual ~DirtGroundTile() = default;
 };
 

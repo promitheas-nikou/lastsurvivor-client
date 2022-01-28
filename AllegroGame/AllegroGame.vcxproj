@@ -89,6 +89,7 @@
     <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
     <Allegro_AddonDialog>true</Allegro_AddonDialog>
     <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -139,10 +140,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -167,11 +170,15 @@
     <ClCompile Include="AllegroGame.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
+    <ClCompile Include="DirtItem.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
+    <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="InventoryGUI.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
@@ -181,6 +188,8 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleInventoryGUI.cpp" />
+    <ClCompile Include="SimpleItemInventory.cpp" />
     <ClCompile Include="SimpleToolItem.cpp" />
     <ClCompile Include="SimpleUIComponent.cpp" />
     <ClCompile Include="StoneGroundTile.cpp" />
@@ -189,6 +198,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="ToolItem.cpp" />
+    <ClCompile Include="TreeTile.cpp" />
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
@@ -205,11 +215,15 @@
     <ClInclude Include="AirTile.h" />
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="DirtGroundTile.h" />
+    <ClInclude Include="DirtItem.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassGroundTile.h" />
+    <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="InventoryGUI.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemInventory.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="PickaxeToolItem.h" />
@@ -220,6 +234,8 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
+    <ClInclude Include="SimpleInventoryGUI.h" />
+    <ClInclude Include="SimpleItemInventory.h" />
     <ClInclude Include="SimpleToolItem.h" />
     <ClInclude Include="SimpleUIComponent.h" />
     <ClInclude Include="StoneGroundTile.h" />
@@ -228,6 +244,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="ToolItem.h" />
+    <ClInclude Include="TreeTile.h" />
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />

@@ -15,12 +15,12 @@ void World::UpdateEntityVector()
 
 GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    return MakeGroundTile(this, ((rand()%10)/9)+1, x, y);
+    return MakeGroundTile(this, (rand()%3)+1, x, y);
 }
 
 Tile* World::GenerateTile(int x, int y)
 {
-    return MakeTile(this, 0, x, y);
+    return MakeTile(this, (rand()%1000)/500, x, y);
 }
 
 WorldChunk* World::GetChunk(int x, int y)   
@@ -100,9 +100,9 @@ bool World::IsChunkGenerated(int x, int y)
 
 ALLEGRO_TRANSFORM draw_transform;
 
-int OPTION_DRAW_TILES_LEFT = 11;
+int OPTION_DRAW_TILES_LEFT = 12;
 int OPTION_DRAW_TILES_RIGHT = 12;
-int OPTION_DRAW_TILES_UP = 6;
+int OPTION_DRAW_TILES_UP = 7;
 int OPTION_DRAW_TILES_DOWN = 7;
 
 void World::Draw()
@@ -124,6 +124,9 @@ void World::Draw()
         for (int y = drawBeginY; y < drawEndY; y++)
             GetTile(x, y)->Draw();
 
+    for (Entity* e : entities)
+        e->Tick();
+
     //DRAW ENTITIES
     for (Entity* e : entities)
         //if(!e->shouldBeRemoved())
@@ -133,7 +136,9 @@ void World::Draw()
     al_use_transform(&draw_transform);
 }
 
-World::World(): dynamicWorldGen(false), entityUpdates(0), loadedChunkCount(0), player(new PlayerEntity(this)), SEED(0)
-{}
+World::World() : dynamicWorldGen(false), entityUpdates{ 0 }, loadedChunkCount{ 0 }, SEED{ 0 }
+{
+    player = new PlayerEntity(this, 0, 0);
+}
 
 

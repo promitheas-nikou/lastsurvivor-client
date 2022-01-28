@@ -16,5 +16,7 @@ public:
 
     virtual ToolType GetMiningType() const final;
     virtual int GetMiningDamage() const override;
+
+    virtual ~PickaxeToolItem() = default;
 };
 

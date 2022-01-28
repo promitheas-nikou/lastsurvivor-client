@@ -14,6 +14,7 @@ private:
 	const uint64_t SEED;
 	const static int ENTITY_UPDATE_RATE = 5; //HOW MANY TICKS BEFORE CALLING `UpdateEntityVector()`
 	bool dynamicWorldGen;
+
 	std::map<int, std::map<int, WorldChunk*>> chunks;
 
 	static const float entityUpdatesUntilRefresh;

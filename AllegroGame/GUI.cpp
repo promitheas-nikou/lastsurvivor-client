@@ -54,95 +54,89 @@ void GUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 
 void GUI::HandleEvent(ALLEGRO_EVENT& event)
 {
-	if (activeSubGUI == nullptr)
+	for (int i = 0; i < UIcomponents.size(); i++)
 	{
-			for (int i = 0; i < UIcomponents.size(); i++)
+		UIComponent* tmp = UIcomponents[i];
+		ALLEGRO_MOUSE_STATE state;
+		al_get_mouse_state(&state);
+		if(tmp->ContainsPoint(state.x, state.y))
 		{
-			UIComponent* tmp = UIcomponents[i];
-			ALLEGRO_MOUSE_STATE state;
-			al_get_mouse_state(&state);
-			if(tmp->ContainsPoint(state.x, state.y))
+			switch (event.type)
 			{
-				switch (event.type)
+			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+				switch (event.mouse.button)
 				{
-				case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-					switch (event.mouse.button)
-					{
-					case 1:
-						tmp->ClickLeftDown(event.mouse.x, event.mouse.y);
-						break;
-					case 2:
-						tmp->ClickRightDown(event.mouse.x, event.mouse.y);
-						break;
-					}
+				case 1:
+					tmp->ClickLeftDown(event.mouse.x, event.mouse.y);
 					break;
-				case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-					switch (event.mouse.button)
-					{
-					case 1:
-						tmp->ClickLeftUp(event.mouse.x, event.mouse.y);
-						break;
-					case 2:
-						tmp->ClickRightUp(event.mouse.x, event.mouse.y);
-						break;
-					}
-					break;
-				case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-					tmp->Hover(state.x, state.y);
-					break;
-					//		case ALLEGRO_EVENT_KEY_CHAR:
-					//			break;
-				case ALLEGRO_EVENT_KEY_DOWN:
-					tmp->KeyDown(event.keyboard.keycode);
-					break;
-				case ALLEGRO_EVENT_KEY_UP:
-					tmp->KeyUp(event.keyboard.keycode);
+				case 2:
+					tmp->ClickRightDown(event.mouse.x, event.mouse.y);
 					break;
 				}
+				break;
+			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+				switch (event.mouse.button)
+				{
+				case 1:
+					tmp->ClickLeftUp(event.mouse.x, event.mouse.y);
+					break;
+				case 2:
+					tmp->ClickRightUp(event.mouse.x, event.mouse.y);
+					break;
+				}
+				break;
+			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
+				tmp->Hover(state.x, state.y);
+				break;
+				//		case ALLEGRO_EVENT_KEY_CHAR:
+				//			break;
+			case ALLEGRO_EVENT_KEY_DOWN:
+				tmp->KeyDown(event.keyboard.keycode);
+				break;
+			case ALLEGRO_EVENT_KEY_UP:
+				tmp->KeyUp(event.keyboard.keycode);
+				break;
 			}
 		}
-		switch (event.type)
-		{
-		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-			MouseButtonDown(event.mouse);
-			break;
-		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-			MouseButtonUp(event.mouse);
-			break;
-		case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-			MouseButtonMove(event.mouse);
-			break;
+	}
+	switch (event.type)
+	{
+	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+		MouseButtonDown(event.mouse);
+		break;
+	case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+		MouseButtonUp(event.mouse);
+		break;
+	case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
+		MouseButtonMove(event.mouse);
+		break;
 //		case ALLEGRO_EVENT_KEY_CHAR:
 //			break;
-		case ALLEGRO_EVENT_KEY_DOWN:
-			KeyDown(event.keyboard);
-			break;
-		case ALLEGRO_EVENT_KEY_UP:
-			KeyUp(event.keyboard);
-			break;
-		}
+	case ALLEGRO_EVENT_KEY_DOWN:
+		KeyDown(event.keyboard);
+		break;
+	case ALLEGRO_EVENT_KEY_UP:
+		KeyUp(event.keyboard);
+		break;
 	}
-	else
+	if(activeSubGUI!=nullptr)
 		activeSubGUI->HandleEvent(event);
 }
 
 
 void GUI::DrawGUI()
 {
-	if (activeSubGUI == nullptr)
+	DrawThisGUI();
+	ALLEGRO_TRANSFORM temp_gui_transform = *al_get_current_transform();
+	for (int i = 0; i < UIcomponents.size(); i++)
 	{
-		DrawThisGUI();
-		ALLEGRO_TRANSFORM temp_gui_transform = *al_get_current_transform();;
-		for (int i = 0; i < UIcomponents.size(); i++)
-		{
-			UIComponent* tmp = UIcomponents[i];
-			al_translate_transform(&temp_gui_transform, tmp->GetXpos(), tmp->GetYpos());
-			al_use_transform(&temp_gui_transform);
-			UIcomponents[i]->Draw();
-			al_translate_transform(&temp_gui_transform, -tmp->GetXpos(), -tmp->GetYpos());
-		}
+		UIComponent* tmp = UIcomponents[i];
+		al_translate_transform(&temp_gui_transform, tmp->GetXpos(), tmp->GetYpos());
 		al_use_transform(&temp_gui_transform);
+		UIcomponents[i]->Draw();
+		al_translate_transform(&temp_gui_transform, -tmp->GetXpos(), -tmp->GetYpos());
 	}
-	else
+	al_use_transform(&temp_gui_transform);
+	if (activeSubGUI != nullptr)
 		activeSubGUI->DrawGUI();
 }

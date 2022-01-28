@@ -12,11 +12,13 @@ private:
 
 public:
 
-    static const int ID = 1;
+    static const int ID = 3;
 
     int GetID() const final;
 
     StoneItem();
+
+    ALLEGRO_BITMAP* GetTexture() const final;
 
     static void Init(nlohmann::json data);
 

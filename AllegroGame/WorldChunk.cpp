@@ -18,7 +18,11 @@ void WorldChunk::Tick()
 {
     for (int y = 0; y < CHUNK_SIZE_Y; y++)
         for (int x = 0; x < CHUNK_SIZE_X; x++)
+        {
             groundTiles[y][x]->TickUpdate();
+            tiles[y][x]->TickUpdate();
+        }
+    tiles[rand() % CHUNK_SIZE_X][rand() % CHUNK_SIZE_Y]->RandomTickUpdate();
 }
 
 GroundTile* WorldChunk::GetGroundTile(int x, int y) const

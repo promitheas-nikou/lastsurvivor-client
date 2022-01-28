@@ -12,5 +12,7 @@ protected:
 public:
     virtual ToolType GetMiningType() const override;
     virtual int GetMiningDamage() const override;
+
+    virtual ~SimpleToolItem() = default;
 };
 

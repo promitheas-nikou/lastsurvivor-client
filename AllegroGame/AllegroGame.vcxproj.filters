@@ -115,6 +115,12 @@
     <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents">
       <UniqueIdentifier>{d607a566-c917-4c82-9183-f8a5174fe0b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\GUI\DefaultGUIs">
+      <UniqueIdentifier>{8f48ee45-22a5-41f1-8d43-745ffa618b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\DefaultGUIs">
+      <UniqueIdentifier>{f56fd56d-a3bf-4563-96ab-39af5f72a2f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -203,6 +209,27 @@
     </ClCompile>
     <ClCompile Include="SimpleButtonUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventory.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryGUI.cpp">
+      <Filter>Source Files\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleInventoryGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventory.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundTileMiner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="DirtItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +333,27 @@
     </ClInclude>
     <ClInclude Include="ButtonUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleInventoryGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryGUI.h">
+      <Filter>Header Files\Game\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventory.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventory.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundTileMiner.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DirtItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

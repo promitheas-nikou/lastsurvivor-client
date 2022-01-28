@@ -9,6 +9,6 @@ class ToolItem:
 {
 protected:
 	ToolItem(std::string name);
-
+	virtual ~ToolItem() = default;
 };
 

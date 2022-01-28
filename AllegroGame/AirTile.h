@@ -11,6 +11,8 @@ public:
     bool IsTransparent() const final;
     bool IsEmpty() const final;
 
+    virtual ~AirTile() = default;
+    
     AirTile(World* w, int x, int y);
 };
 

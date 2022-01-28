@@ -7,7 +7,7 @@
 #include <format>
 #include "ResourceLoader.h"
 
-GroundTile::GroundTile(World* w, int x, int y, std::string n): world(w), xpos(x), ypos(y), name(n) {}
+GroundTile::GroundTile(World* w, int x, int y, std::string n) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ ToolType::PICKAXE } {}
 
 ALLEGRO_BITMAP* GroundTile::GetTexture() const
 {
@@ -47,7 +47,24 @@ void GroundTile::Draw() const
 
 int GroundTile::GetMiningResistance() const
 {
-    return 0;
+    return 3;  
+}
+
+ToolType GroundTile::GetRequiredToolType() const
+{
+    return requiredTool;
+}
+
+int GroundTile::GetDamageDealtByTool(Tool* tool) const
+{
+    if (tool == nullptr)
+        return 1;
+    return (static_cast<char>(tool->GetMiningType()) & static_cast<char>(GetRequiredToolType())) ? tool->GetMiningDamage() : 1;
+}
+
+Item* GroundTile::GetMiningResult(Tool* tool) const
+{
+    return nullptr;
 }
 
 GroundTile* MakeGroundTile(World* world, int id, int x, int y)

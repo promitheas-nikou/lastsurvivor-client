@@ -3,5 +3,7 @@
 class ShovelToolItem :
     public ToolItem
 {
+public:
+    virtual ~ShovelToolItem() = default;
 };
 
