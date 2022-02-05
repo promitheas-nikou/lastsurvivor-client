@@ -10,6 +10,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+ALLEGRO_BITMAP* PlayerEntity::TEXTURE;
+
 int a, b, c;
 
 #define GET_MOUSE_XPOS(E) (E.x / 128.f + getXpos() - (SCREEN_WIDTH / 256.f))
@@ -22,17 +24,18 @@ void PlayerEntity::DrawThisGUI()
 	al_get_blender(&a, &b, &c);
 	al_set_separate_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA, ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	al_draw_filled_rectangle(SCREEN_WIDTH/2-250, 50, SCREEN_WIDTH/2+250, 250, al_map_rgba(0, 150, 255, 150));
+
 	float x = GET_MOUSE_XPOS(mouseState);
 	float y = GET_MOUSE_YPOS(mouseState);
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", getXpos());
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", getYpos());
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", getXpos());
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", getYpos());
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
 	Tile* targetedTile = containingWorld->GetTile(floor(x), floor(y));
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s",targetedTile->GetName().c_str());
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s",targetedTile->GetName().c_str());
 	if (targetedTile->IsEmpty())
 	{
 		GroundTile* targetedGroundTile = containingWorld->GetGroundTile(floor(x), floor(y));
@@ -48,8 +51,8 @@ void PlayerEntity::DrawThisGUI()
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 0, 0, 150));
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedTile->GetMiningDamageDone() / (float)targetedTile->GetMiningResistance())), 175, al_map_rgba(255, 0, 0, 150));
 	}
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
-	al_draw_textf(loaded_fonts[1][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", containingWorld->GetGroundTile(floor(x),floor(y))->GetName().c_str());
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", containingWorld->GetGroundTile(floor(x),floor(y))->GetName().c_str());
 	al_set_blender(a, b, c);
 
 	int yn = SCREEN_HEIGHT - 20;
@@ -79,7 +82,7 @@ void PlayerEntity::Draw()
 {
 	int x = floor(getXpos() * 128);
 	int y = floor(getYpos() * 128);
-	al_draw_rotated_bitmap(loaded_bitmaps[18], 64, 64, x, y, getRotation(), 0);
+	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, getRotation(), 0);
 }
 
 void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
@@ -260,6 +263,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 18, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 27, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
 	}
+	TEXTURE = loaded_bitmaps["tex.entities.player"];
 }
 
 PlayerNotification::PlayerNotification(int t, int w, int h)
@@ -287,7 +291,7 @@ PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, in
 	PlayerNotification* p = new PlayerNotification(t, w, h);
 	al_set_target_bitmap(p->content);
 	al_draw_filled_rectangle(0, 0, w, h, al_map_rgba(200, 200, 20, 170));
-	al_draw_multiline_text(loaded_fonts[1][30], al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
+	al_draw_multiline_text(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	return p;
 }

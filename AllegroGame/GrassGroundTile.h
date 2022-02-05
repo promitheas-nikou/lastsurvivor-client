@@ -11,14 +11,14 @@ private:
 	static int DROP;
 	static int MINING_RESISTANCE;
 public:
-	static const int ID = 1;
+	static const std::string ID;
 
-	int GetID() const final;
+	std::string GetID() const final;
 
 	GrassGroundTile(World* w, int x, int y);
 	
 	static void Init(nlohmann::json data);
-	ALLEGRO_BITMAP* GetTexture() const final;
+	void Draw() const final;
 
 	Item* GetMiningResult(Tool* tool) const final;
 

@@ -15,12 +15,12 @@ void World::UpdateEntityVector()
 
 GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    return MakeGroundTile(this, (rand()%3)+1, x, y);
+    return MakeGroundTile(this, "gtiles.stone", x, y);
 }
 
 Tile* World::GenerateTile(int x, int y)
 {
-    return MakeTile(this, (rand()%1000)/500, x, y);
+    return MakeTile(this, "tiles.tree", x, y);
 }
 
 WorldChunk* World::GetChunk(int x, int y)   
@@ -108,7 +108,7 @@ int OPTION_DRAW_TILES_DOWN = 7;
 void World::Draw()
 {
     //DRAW TILES
-    loaded_shaders[1]->Use();
+    loaded_shaders["world"]->Use();
     int offset_x = floor(player->getXpos() * 128) - SCREEN_WIDTH / 2;
     int offset_y = floor(player->getYpos() * 128) - SCREEN_HEIGHT / 2;
     int drawBeginX = floor(player->getXpos()) - OPTION_DRAW_TILES_LEFT;

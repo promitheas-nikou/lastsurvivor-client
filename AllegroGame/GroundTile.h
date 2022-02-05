@@ -21,17 +21,15 @@ protected:
 
 	GroundTile(World* w, int x, int y, std::string n);
 
-	virtual ALLEGRO_BITMAP* GetTexture() const;
-
 public:
-	virtual int GetID() const = 0;
+	virtual std::string GetID() const = 0;
 
 	virtual std::string GetName() const;
 
 	virtual void TickUpdate();
 	virtual void TileUpdate();
 
-	virtual void Draw() const;
+	virtual void Draw() const = 0;
 
 	virtual int GetMiningResistance() const;
 
@@ -47,4 +45,4 @@ public:
 	virtual ~GroundTile() = default;
 };
 
-GroundTile* MakeGroundTile(World* world, int id, int x, int y);
+GroundTile* MakeGroundTile(World* world, std::string id, int x, int y);

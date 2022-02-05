@@ -5,8 +5,10 @@ std::string DirtGroundTile::NAME;
 ALLEGRO_BITMAP* DirtGroundTile::TEXTURE;
 int DirtGroundTile::DROP;
 int DirtGroundTile::MINING_RESISTANCE;
+const std::string DirtGroundTile::ID = "gtiles.dirt";
 
-int DirtGroundTile::GetID() const
+
+std::string DirtGroundTile::GetID() const
 {
 	return ID;
 }
@@ -22,14 +24,15 @@ void DirtGroundTile::Init(nlohmann::json data)
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 }
 
-ALLEGRO_BITMAP* DirtGroundTile::GetTexture() const
+void DirtGroundTile::Draw() const
 {
-	return TEXTURE;
+	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
 Item* DirtGroundTile::GetMiningResult(Tool* tool) const
 {
-	return MakeItem(DROP);
+	//return MakeItem(DROP);
+	return nullptr;
 }
 
 int DirtGroundTile::GetMiningResistance() const

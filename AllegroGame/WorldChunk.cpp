@@ -38,7 +38,7 @@ Tile* WorldChunk::GetTile(int x, int y) const
 Tile* WorldChunk::RemoveTile(int x, int y)
 {
     Tile* tmp = tiles[y][x];
-    tiles[y][x] = MakeTile(world, 0, x, y);
+    tiles[y][x] = MakeTile(world, "tiles.air", x, y);
     return tmp;
 }
 

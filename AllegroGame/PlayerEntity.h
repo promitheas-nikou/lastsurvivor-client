@@ -30,6 +30,8 @@ class PlayerEntity :
 	private GroundTileMiner
 {
 private:
+	static ALLEGRO_BITMAP* TEXTURE;
+
 	enum class PLAYER_GUI_STATE guistate;
 	int GUItimer;
 	char keys_pressed;

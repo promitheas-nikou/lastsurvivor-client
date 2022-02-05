@@ -12,13 +12,13 @@ private:
 
 public:
 
-    static const int ID = 2;
+    static const std::string ID;
 
-    int GetID() const final;
+    std::string GetID() const final;
 
     DirtItem();
 
-    ALLEGRO_BITMAP* GetTexture() const final;
+    void Draw(int x, int y, int width, int height) const final;
 
     static void Init(nlohmann::json data);
 

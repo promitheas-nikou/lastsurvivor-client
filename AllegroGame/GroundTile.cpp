@@ -9,10 +9,6 @@
 
 GroundTile::GroundTile(World* w, int x, int y, std::string n) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ ToolType::PICKAXE } {}
 
-ALLEGRO_BITMAP* GroundTile::GetTexture() const
-{
-    return nullptr;
-}
 
 std::string GroundTile::GetName() const
 {
@@ -39,12 +35,6 @@ void GroundTile::TileUpdate()
     return;
 }
 
-void GroundTile::Draw() const
-{
-    al_draw_bitmap(GetTexture(), xpos*128, ypos*128, 0);
-    //al_draw_textf(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, "%d:%d", xpos, ypos);
-}
-
 int GroundTile::GetMiningResistance() const
 {
     return 3;  
@@ -67,15 +57,12 @@ Item* GroundTile::GetMiningResult(Tool* tool) const
     return nullptr;
 }
 
-GroundTile* MakeGroundTile(World* world, int id, int x, int y)
+GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
 {
-    switch (id)
-    {
-    case GrassGroundTile::ID:
+    if (id == GrassGroundTile::ID)
         return new GrassGroundTile(world, x, y);
-    case DirtGroundTile::ID:
+    else if (id == DirtGroundTile::ID)
         return new DirtGroundTile(world, x, y);
-    case StoneGroundTile::ID:
+    else if (id == StoneGroundTile::ID)
         return new StoneGroundTile(world, x, y);
-    }
 }

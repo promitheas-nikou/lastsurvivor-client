@@ -1,11 +1,13 @@
 #include "AirTile.h"
 
+const std::string AirTile::ID = "tiles.air";
+
 void AirTile::Draw() const
 {
 	return;
 }
 
-int AirTile::GetID() const
+std::string AirTile::GetID() const
 {
 	return ID;
 }

@@ -4,9 +4,9 @@ class AirTile :
     public Tile
 {
 public:
-    static const int ID = 0;
+    static const std::string ID;
     void Draw() const final;
-    int GetID() const final;
+    std::string GetID() const final;
 
     bool IsTransparent() const final;
     bool IsEmpty() const final;

@@ -33,7 +33,7 @@ void InventoryGUI::ClickLeftDown(int x, int y)
 
 void InventoryGUI::DrawSlot(const SlotDisplayConfiguration& data)
 {
-	ALLEGRO_BITMAP* bmp = loaded_bitmaps[12];
+	ALLEGRO_BITMAP* bmp = loaded_bitmaps["tex.gui.hotbar_slot"];
 	al_draw_scaled_bitmap(bmp, 0, 0, al_get_bitmap_width(bmp), al_get_bitmap_height(bmp), data.xpos - 2, data.ypos - 2, data.width + 4, data.height + 4, 0);
 	Item* i = this->GetItem(data.itemID);
 	if (i != nullptr)
@@ -47,7 +47,7 @@ void InventoryGUI::DrawThisGUI()
 	int x, y;
 	al_get_mouse_cursor_position(&x,&y);
 	if(swapTemp!=nullptr)
-		swapTemp->Draw(x, y, 128, 128);
+		swapTemp->Draw(x-64, y-64, 128, 128);
 }
 
 void InventoryGUI::AddSlotDisplayConfiguration(SlotDisplayConfiguration slot)

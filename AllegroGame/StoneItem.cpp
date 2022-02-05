@@ -3,8 +3,9 @@
 
 std::string StoneItem::NAME;
 ALLEGRO_BITMAP* StoneItem::TEXTURE;
+const std::string StoneItem::ID = "items.stone";
 
-int StoneItem::GetID() const
+std::string StoneItem::GetID() const
 {
     return ID;
 }
@@ -12,9 +13,10 @@ int StoneItem::GetID() const
 StoneItem::StoneItem(): Item(NAME)
 {}
 
-ALLEGRO_BITMAP* StoneItem::GetTexture() const
+void StoneItem::Draw(int x, int y, int width, int height) const
 {
-	return TEXTURE;
+	al_draw_scaled_bitmap(TEXTURE, 0, 0, al_get_bitmap_width(TEXTURE), al_get_bitmap_height(TEXTURE), x, y, width, height, 0);
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgb(255, 0, 0), x + width - 40, y + height - 40, 0, "%d", GetAmount());
 }
 
 void StoneItem::Init(nlohmann::json data)

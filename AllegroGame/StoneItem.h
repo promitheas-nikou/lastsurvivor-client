@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Item.h"
-#include "json.h"
 
 class StoneItem :
     public Item
@@ -12,13 +11,13 @@ private:
 
 public:
 
-    static const int ID = 3;
+    static const std::string ID;
 
-    int GetID() const final;
+    std::string GetID() const final;
 
     StoneItem();
 
-    ALLEGRO_BITMAP* GetTexture() const final;
+    void Draw(int x, int y, int width, int height) const final;
 
     static void Init(nlohmann::json data);
 

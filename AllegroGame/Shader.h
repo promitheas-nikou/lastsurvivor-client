@@ -1,17 +1,18 @@
 #pragma once
 
 #include <allegro5/allegro.h>
+#include <string>
 
 class Shader
 {
 public:
 	
 	ALLEGRO_SHADER* shader;
-	const int ID;
+	const std::string ID;
 
-	Shader(int id);
+	Shader(std::string id);
 
-	Shader(int id, const char* vert_filename, const char* frag_filename);
+	Shader(std::string id, const char* vert_filename, const char* frag_filename);
 
 	void Delete();
 

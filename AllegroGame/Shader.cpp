@@ -1,20 +1,20 @@
 #include "Shader.h"
 #include <cstdio>
 
-Shader::Shader(int id): ID(id)
+Shader::Shader(std::string id): ID(id)
 {
 	shader = al_create_shader(ALLEGRO_SHADER_GLSL);
 	al_attach_shader_source(shader, ALLEGRO_VERTEX_SHADER, al_get_default_shader_source(ALLEGRO_SHADER_GLSL, ALLEGRO_VERTEX_SHADER));
 	al_attach_shader_source(shader, ALLEGRO_PIXEL_SHADER, al_get_default_shader_source(ALLEGRO_SHADER_GLSL, ALLEGRO_PIXEL_SHADER));
 	al_build_shader(shader);
-	printf("COMPILING SHADER #%d:\n\tSUCCESSFULLY COMPILED DEFAULT SHADER #%d\n", ID, ID);
+	printf("COMPILING SHADER \"%s\":\n\tSUCCESSFULLY COMPILED DEFAULT SHADER \"%s\"\n", ID.c_str(), ID.c_str());
 }
 
-Shader::Shader(int id, const char* vert_filename, const char* frag_filename): ID(id)
+Shader::Shader(std::string id, const char* vert_filename, const char* frag_filename): ID(id)
 {
 	shader = al_create_shader(ALLEGRO_SHADER_GLSL);
 	
-	printf("COMPILING SHADER #%d:\n", ID);
+	printf("COMPILING SHADER \"%s\":\n", ID.c_str());
 
 	if (al_attach_shader_source_file(shader, ALLEGRO_VERTEX_SHADER, vert_filename))
 		printf("\tSUCCESSFULLY ATTACHED VERTEX SHADER SOURCE FILE: \"%s\"\n", vert_filename);
@@ -37,7 +37,7 @@ Shader::Shader(int id, const char* vert_filename, const char* frag_filename): ID
 
 
 	if (al_build_shader(shader))
-		printf("\tSUCCESSFULLY COMPILED SHADER #%d\n", ID);
+		printf("\tSUCCESSFULLY COMPILED SHADER \"%d\"\n", ID.c_str());
 	else
 	{
 		printf("\tFAILED TO COMPILE SHADER!!!\nERROR: %s\n", al_get_shader_log(shader));

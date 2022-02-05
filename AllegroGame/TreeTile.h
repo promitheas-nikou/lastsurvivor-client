@@ -11,12 +11,12 @@ private:
 
     int growthTimer;
 public:
-    static const int ID = 1;
-    int GetID() const final;
+    static const std::string ID;
+    std::string GetID() const final;
 
     bool IsTransparent() const final;
 
-    ALLEGRO_BITMAP* GetTexture() const final;
+    void Draw() const final;
 
     void RandomTickUpdate() final;
 

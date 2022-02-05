@@ -25,10 +25,8 @@ class Tile
 
 		Tile(World* w, int x, int y);
 
-		virtual ALLEGRO_BITMAP* GetTexture() const;
-
 	public:
-		virtual int GetID() const = 0;
+		virtual std::string GetID() const = 0;
 
 		virtual std::string GetName() const;
 
@@ -36,7 +34,7 @@ class Tile
 		virtual void RandomTickUpdate();
 		virtual void TileUpdate();
 
-		virtual void Draw() const;
+		virtual void Draw() const = 0;
 
 		virtual bool canWalkThrough() const;
 		virtual bool canSwimThrough() const;
@@ -58,4 +56,4 @@ class Tile
 		virtual ~Tile() = default;
 	};
 
-Tile* MakeTile(World* world, int id, int x, int y);
+Tile* MakeTile(World* world, std::string id, int x, int y);

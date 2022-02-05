@@ -176,6 +176,7 @@
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="HostileEntity.cpp" />
     <ClCompile Include="InventoryGUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
@@ -183,7 +184,6 @@
     <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
-    <ClCompile Include="Reflection.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
@@ -192,6 +192,7 @@
     <ClCompile Include="SimpleItemInventory.cpp" />
     <ClCompile Include="SimpleToolItem.cpp" />
     <ClCompile Include="SimpleUIComponent.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="StoneGroundTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
     <ClCompile Include="StoneItem.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="HostileEntity.h" />
     <ClInclude Include="InventoryGUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInventory.h" />
@@ -229,7 +231,6 @@
     <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
     <ClInclude Include="RectangularUIComponent.h" />
-    <ClInclude Include="Reflection.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
@@ -238,6 +239,7 @@
     <ClInclude Include="SimpleItemInventory.h" />
     <ClInclude Include="SimpleToolItem.h" />
     <ClInclude Include="SimpleUIComponent.h" />
+    <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="StoneGroundTile.h" />
     <ClInclude Include="GroundTile.h" />
     <ClInclude Include="StoneItem.h" />

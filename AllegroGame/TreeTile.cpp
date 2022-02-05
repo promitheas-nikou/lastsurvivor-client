@@ -5,9 +5,9 @@ int TreeTile::MINING_RESISTANCE;
 ToolType TreeTile::TOOL_TYPE;
 std::string TreeTile::NAME;
 ALLEGRO_BITMAP* TreeTile::TEXTURES[4];
+const std::string TreeTile::ID = "tiles.tree";
 
-
-int TreeTile::GetID() const
+std::string TreeTile::GetID() const
 {
     return ID;
 }
@@ -17,14 +17,14 @@ bool TreeTile::IsTransparent() const
     return true;
 }
 
-ALLEGRO_BITMAP* TreeTile::GetTexture() const
-{
-    return TEXTURES[growthTimer/150];
-}
-
 void TreeTile::RandomTickUpdate()
 {
     growthTimer = std::min(600-1, growthTimer+20);
+}
+
+void TreeTile::Draw() const
+{
+    al_draw_bitmap(TEXTURES[TreeTile::growthTimer/200], xpos * 128, ypos * 128, 0);
 }
 
 void TreeTile::Init(nlohmann::json data)

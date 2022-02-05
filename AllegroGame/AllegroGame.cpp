@@ -7,7 +7,6 @@
 #include "MathUtils.h"
 #include "Graphics.h"
 #include "ResourceLoader.h"
-#include "Reflection.h"
 
 #include "Shader.h"
 
@@ -102,10 +101,11 @@ int main()
 		worldDraw = al_get_time();
 		
 		al_lock_mutex(worldMutex);
-		
+
+		loaded_shaders["world"]->Use();
 		world.Draw();
 		playerGUIdraw = al_get_time();
-		loaded_shaders[0]->Use();
+		loaded_shaders["default"]->Use();
 		world.player->DrawGUI();
 
 		al_unlock_mutex(worldMutex);

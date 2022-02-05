@@ -46,20 +46,10 @@ int Item::AddAmount(int a)
     return 0;
 }
 
-void Item::Draw(int x, int y, int width, int height) const
+Item* MakeItem(std::string id)
 {
-    ALLEGRO_BITMAP* tex = GetTexture();
-    al_draw_scaled_bitmap(tex, 0, 0, al_get_bitmap_width(tex), al_get_bitmap_height(tex), x, y, width, height, 0);
-    al_draw_textf(loaded_fonts[1][30], al_map_rgb(255, 0, 0), x + width - 40, y + height - 40, 0, "%d", GetAmount());
-}
-
-Item* MakeItem(int id)
-{
-    switch (id)
-    {
-    case StoneItem::ID:
-        return new StoneItem();
-    case DirtItem::ID:
+    if (id == DirtItem::ID)
         return new DirtItem();
-    }
+    if (id == StoneItem::ID)
+        return new StoneItem();
 }

@@ -8,11 +8,6 @@ Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w),
 Tile::Tile(World* w, int x, int y): world(w), xpos(x), ypos(y)
 {}
 
-ALLEGRO_BITMAP* Tile::GetTexture() const
-{
-	return nullptr;
-}
-
 std::string Tile::GetName() const
 {
 	return name;
@@ -31,12 +26,6 @@ void Tile::RandomTickUpdate()
 void Tile::TileUpdate()
 {
 	return;
-}
-
-void Tile::Draw() const
-{
-	al_draw_bitmap(GetTexture(), xpos * 128, ypos * 128, 0);
-	//al_draw_text(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, std::format("{}:{}", xpos, ypos).c_str());
 }
 
 bool Tile::canWalkThrough() const
@@ -103,13 +92,10 @@ int Tile::GetYpos() const
 	return ypos;
 }
 
-Tile* MakeTile(World* world, int id, int x, int y)
+Tile* MakeTile(World* world, std::string id, int x, int y)
 {
-	switch (id)
-	{
-	case AirTile::ID:
+	if (id == AirTile::ID)
 		return new AirTile(world, x, y);
-	case TreeTile::ID:
+	if (id == TreeTile::ID)
 		return new TreeTile(world, x, y);
-	}
 }

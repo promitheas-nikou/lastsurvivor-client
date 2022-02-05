@@ -5,8 +5,9 @@ std::string GrassGroundTile::NAME;
 ALLEGRO_BITMAP* GrassGroundTile::TEXTURE;
 int GrassGroundTile::DROP;
 int GrassGroundTile::MINING_RESISTANCE;
+const std::string GrassGroundTile::ID = "gtiles.grass";
 
-int GrassGroundTile::GetID() const
+std::string GrassGroundTile::GetID() const
 {
 	return ID;
 }
@@ -22,14 +23,15 @@ void GrassGroundTile::Init(nlohmann::json data)
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 }
 
-ALLEGRO_BITMAP* GrassGroundTile::GetTexture() const
+void GrassGroundTile::Draw() const
 {
-	return TEXTURE;
+	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
 Item* GrassGroundTile::GetMiningResult(Tool* tool) const
 {
-	return MakeItem(DROP);
+	//return MakeItem(DROP);
+	return nullptr;
 }
 
 int GrassGroundTile::GetMiningResistance() const

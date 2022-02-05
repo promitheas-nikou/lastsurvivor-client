@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <allegro5/allegro5.h>
+#include "json.h"
 
 
 class Item
@@ -12,11 +13,9 @@ protected:
 
 public:
 
-	virtual int GetID() const = 0;
+	virtual std::string GetID() const = 0;
 
 	virtual std::string GetName() const;
-
-	virtual ALLEGRO_BITMAP* GetTexture() const = 0;
 
 	virtual int GetAmount() const;
 	virtual void SetAmount(int a);
@@ -26,9 +25,9 @@ public:
 
 	virtual int AddAmount(int a);
 
-	virtual void Draw(int x, int y, int width, int height) const;
+	virtual void Draw(int x, int y, int width, int height) const = 0;
 
 	~Item() = default;
 };
 
-Item* MakeItem(int id);
+Item* MakeItem(std::string id);

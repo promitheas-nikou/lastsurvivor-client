@@ -3,8 +3,9 @@
 
 std::string DirtItem::NAME;
 ALLEGRO_BITMAP* DirtItem::TEXTURE;
+const std::string DirtItem::ID = "items.dirt";
 
-int DirtItem::GetID() const
+std::string DirtItem::GetID() const
 {
 	return ID;
 }
@@ -12,9 +13,10 @@ int DirtItem::GetID() const
 DirtItem::DirtItem() : Item(NAME)
 {}
 
-ALLEGRO_BITMAP* DirtItem::GetTexture() const
+void DirtItem::Draw(int x, int y, int width, int height) const
 {
-	return TEXTURE;
+	al_draw_scaled_bitmap(TEXTURE, 0, 0, al_get_bitmap_width(TEXTURE), al_get_bitmap_height(TEXTURE), x, y, width, height, 0);
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgb(255, 0, 0), x + width - 40, y + height - 40, 0, "%d", GetAmount());
 }
 
 void DirtItem::Init(nlohmann::json data)
