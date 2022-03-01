@@ -5,6 +5,8 @@
 #include "Tool.h"
 #include <allegro5/allegro.h>
 
+#include "ItemBundle.h"
+
 class World;
 
 class Tile
@@ -42,9 +44,9 @@ class Tile
 		virtual bool IsTransparent() const;
 		virtual bool IsEmpty() const;
 
-		virtual Item* MineTile();
-
 		virtual bool MineWithTool(Tool* tool);
+
+		virtual const ItemBundle* GetMiningResult(Tool* tool) const;
 
 		virtual int GetMiningResistance() const;
 		virtual int GetMiningDamageDone() const;

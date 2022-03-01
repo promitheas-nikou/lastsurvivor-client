@@ -8,6 +8,7 @@ private:
     static ToolType TOOL_TYPE;
     static std::string NAME;
     static ALLEGRO_BITMAP* TEXTURES[4];
+    static const ItemBundle* DROP;
 
     int growthTimer;
 public:
@@ -19,6 +20,8 @@ public:
     void Draw() const final;
 
     void RandomTickUpdate() final;
+
+    const ItemBundle* GetMiningResult(Tool* tool) const override;
 
     static void Init(nlohmann::json data);
 

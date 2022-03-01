@@ -1,3 +1,5 @@
+
+#define _CRT_SECURE_NO_WARNINGS
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -7,6 +9,7 @@
 #include "MathUtils.h"
 #include "Graphics.h"
 #include "ResourceLoader.h"
+#include "SimpleHostileEntity.h"
 
 #include "Shader.h"
 
@@ -45,6 +48,8 @@ void EXIT_GAME()
 	exit(EXIT_SUCCESS);
 }
 
+#include <iostream>
+
 int main()
 {
 	if (!al_init())
@@ -64,16 +69,17 @@ int main()
 	printf("\n======= LOADING SHADERS =======\n\n");
 	load_shaders();
 	//printf("\n\n======	=========================\nINITIALIZING GAME\n===============================\n\n");
-	printf("\n======= INITIALIZING TILES =======\n\n");
-	init_tiles();
 	printf("\n======= INITIALIZING ITEMS =======\n\n");
 	init_items();
+	printf("\n======= INITIALIZING TILES =======\n\n");
+	init_tiles();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
 	World world;
+	world.entities.push_back(new SimpleHostileEntity(&world, 0.f, 0.f));
 	double tick;
 	double worldDraw;
 	double playerGUIdraw;

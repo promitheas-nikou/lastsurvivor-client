@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "json.h"
+#include "ItemBundle.h"
 #include <allegro5/allegro.h>
 #include "Tool.h"
 #include "Item.h"
@@ -37,7 +38,7 @@ public:
 
 	virtual int GetDamageDealtByTool(Tool* tool) const;
 
-	virtual Item* GetMiningResult(Tool* tool) const;
+	virtual const ItemBundle* GetMiningResult(Tool* tool) const;
 
 	int GetXpos() const;
 	int GetYpos() const;

@@ -5,12 +5,17 @@
 
 const float Entity::MIN_HEALTH = 0.f;
 
-float Entity::getXpos() const
+void Entity::SetRotation(float rot)
+{
+    rotation = rot;
+}
+
+float Entity::GetXpos() const
 {
     return xpos;
 }
 
-float Entity::getYpos() const
+float Entity::GetYpos() const
 {
     return ypos;
 }
@@ -40,6 +45,16 @@ float Entity::getRotation() const
     return rotation;
 }
 
+bool Entity::IsHostile() const
+{
+    return false;
+}
+
+bool Entity::IsPassive() const
+{
+    return true;
+}
+
 void Entity::applyForce(float dx, float dy)
 {
     xvel += dx / mass;
@@ -58,6 +73,8 @@ void Entity::Tick()
     ypos += yvel;
     xvel *= getFriction();
     yvel *= getFriction();
+    if (health <= 0)
+        dead = true;
 }
 
 std::string Entity::getName() const

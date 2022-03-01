@@ -10,6 +10,11 @@ std::string DirtItem::GetID() const
 	return ID;
 }
 
+Item* DirtItem::Clone() const
+{
+	return new DirtItem(*this);
+}
+
 DirtItem::DirtItem() : Item(NAME)
 {}
 

@@ -24,6 +24,10 @@ void GUI::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
 {
 }
 
+void GUI::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
+{
+}
+
 void GUI::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 {
 	switch (event.button)
@@ -110,19 +114,33 @@ void GUI::HandleEvent(ALLEGRO_EVENT& event)
 	case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
 		MouseButtonMove(event.mouse);
 		break;
-//		case ALLEGRO_EVENT_KEY_CHAR:
-//			break;
+	case ALLEGRO_EVENT_KEY_CHAR:
+		if(IsTyping())
+			CharTyped(event.keyboard);
+		break;
 	case ALLEGRO_EVENT_KEY_DOWN:
-		KeyDown(event.keyboard);
+		if (!IsTyping())
+			KeyDown(event.keyboard);
 		break;
 	case ALLEGRO_EVENT_KEY_UP:
-		KeyUp(event.keyboard);
+		if (!IsTyping())
+			KeyUp(event.keyboard);
 		break;
 	}
 	if(activeSubGUI!=nullptr)
 		activeSubGUI->HandleEvent(event);
 }
 
+
+bool GUI::IsTyping() const
+{
+	return typing;
+}
+
+void GUI::ToggleTyping()
+{
+	typing = !typing;
+}
 
 void GUI::DrawGUI()
 {

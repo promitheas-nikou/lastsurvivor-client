@@ -1,6 +1,6 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 0.0.2",
+  "VERSION": "ALPHA 0.2",
   "VER_MINOR": 0,
   "VER_MAJOR": 0,
   "WINDOW_ICON": "icon",
@@ -109,6 +109,44 @@
       "filename": "rock.png"
     }
   ],
+  "loot_bundles": [
+    {
+      "id": "gtiles.grass.mine.any",
+      "items": [
+        {
+          "id": "items.dirt",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "gtiles.dirt.mine.any",
+      "items": [
+        {
+          "id": "items.dirt",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "gtiles.stone.mine.any",
+      "items": [
+        {
+          "id": "items.stone",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "tiles.tree.mine.any",
+      "items": [
+        {
+          "id": "items.dirt",
+          "amount": 7
+        }
+      ]
+    }
+  ],
   "cursors": [
     {
       "id": 3,
@@ -150,6 +188,7 @@
         "tex.tiles.tree/2",
         "tex.tiles.tree/3"
       ],
+      "drops": "tiles.tree.mine.any",
       "mining_resistance": 5
     }
   ],
@@ -159,7 +198,7 @@
       "name": "Grass",
       "type": 1,
       "mining_resistance": 3,
-      "drops": 2,
+      "drops": "gtiles.grass.mine.any",
       "texture": "tex.gtiles.grass"
     },
     {
@@ -167,7 +206,7 @@
       "name": "Dirt",
       "type": 1,
       "mining_resistance": 2,
-      "drops": 2,
+      "drops": "gtiles.dirt.mine.any",
       "texture": "tex.gtiles.dirt"
     },
     {
@@ -175,7 +214,7 @@
       "name": "Stone",
       "type": 0,
       "mining_resistance": 4,
-      "drops": 3,
+      "drops": "gtiles.stone.mine.any",
       "texture": "tex.gtiles.stone"
     }
   ],
@@ -224,12 +263,25 @@
       "font": "ALTFONT.ttf"
     }
   ],
-  "recipes": [
-    {
-      "input_items": [],
-      "output_items": []
-    }
-  ],
+  "recipes": {
+    "smelting": [
+      {
+        "id": "dirt_from_stone",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 1
+          }
+        ],
+        "output": [
+          {
+            "id": "items.dirt",
+            "amount": 1
+          }
+        ]
+      }
+    ]
+  },
   "quests": [
     {
       "id": 1,

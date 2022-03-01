@@ -17,6 +17,8 @@ public:
 
     StoneItem();
 
+    virtual Item* Clone() const override;
+
     void Draw(int x, int y, int width, int height) const final;
 
     static void Init(nlohmann::json data);

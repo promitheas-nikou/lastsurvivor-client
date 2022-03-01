@@ -13,6 +13,11 @@ std::string StoneItem::GetID() const
 StoneItem::StoneItem(): Item(NAME)
 {}
 
+Item* StoneItem::Clone()const
+{
+	return new StoneItem(*this);
+}
+
 void StoneItem::Draw(int x, int y, int width, int height) const
 {
 	al_draw_scaled_bitmap(TEXTURE, 0, 0, al_get_bitmap_width(TEXTURE), al_get_bitmap_height(TEXTURE), x, y, width, height, 0);

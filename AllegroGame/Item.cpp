@@ -2,6 +2,7 @@
 #include "StoneItem.h"
 #include "DirtItem.h"
 #include "ResourceLoader.h"
+#include "World.h"
 #include <allegro5/allegro_font.h>
 
 Item::Item(std::string n) : name{ n }, amount{ 1 }
@@ -17,6 +18,13 @@ int Item::GetAmount() const
     return amount;
 }
 
+int Item::RemoveAmount(int targetAmount)
+{
+    int removeAmount = std::min(targetAmount, amount);
+    amount -= removeAmount;
+    return removeAmount;
+}
+
 void Item::SetAmount(int a)
 {
     amount = a;
@@ -29,27 +37,40 @@ bool Item::Equals(const Item& item) const
 
 bool Item::Equals(const Item* item) const
 {
+    if (item == nullptr)
+        return false;
     return item->GetID()==GetID();
 }
-
-constexpr int STACK_SIZE = 24;
 
 int Item::AddAmount(int a)
 {
     amount += a;
-    if (amount > STACK_SIZE)
+    if (amount > MAX_AMOUNT)
     {
-        int tmp = amount - STACK_SIZE;
-        amount = STACK_SIZE;
+        int tmp = amount - MAX_AMOUNT;
+        amount = MAX_AMOUNT;
         return tmp;
     }
     return 0;
 }
 
-Item* MakeItem(std::string id)
+void Item::UseOnTile(World* world, int x, int y)
+{
+    return;
+}
+
+Item* MakeItemFromID(std::string id)
 {
     if (id == DirtItem::ID)
         return new DirtItem();
     if (id == StoneItem::ID)
         return new StoneItem();
+    return nullptr;
+}
+
+Item* MakeItemFromJSON(nlohmann::json data)
+{
+    Item* item = MakeItemFromID(data["id"]);
+    item->SetAmount(data["amount"]);
+    return item;
 }

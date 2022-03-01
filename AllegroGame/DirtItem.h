@@ -16,6 +16,8 @@ public:
 
     std::string GetID() const final;
 
+    virtual Item* Clone() const override;
+
     DirtItem();
 
     void Draw(int x, int y, int width, int height) const final;

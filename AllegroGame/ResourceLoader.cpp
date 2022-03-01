@@ -3,12 +3,14 @@
 #include <fstream>
 #include <iostream>
 #include <Windows.h>
+#include "ItemBundle.h"
 #include "GrassGroundTile.h"
 #include "DirtGroundTile.h"
 #include "StoneGroundTile.h"
 #include "TreeTile.h"
 #include "StoneItem.h"
 #include "DirtItem.h"
+#include "SimpleItemBundle.h"
 #include <iostream>
 
 const std::string DATA_JSON_TEXTURE_KEY = "texture";
@@ -25,6 +27,7 @@ nlohmann::json json_data;
 std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
 std::unordered_map<std::string, Shader*> loaded_shaders;
+std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
 std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 
 using json = nlohmann::json;
@@ -42,41 +45,49 @@ ALLEGRO_BITMAP* window_icon;
 
 void load_resources()
 {
-	json_data = json::parse(std::ifstream("data.json"));
-
-	game_name = json_data["NAME"];
-	game_version_name = json_data["VERSION"];
-
-	json textures = json_data["textures"];
-	
-	printf("CURRENT DIRECTORY: \"%s\"\n\n", al_get_current_directory());
-
-	printf("LOADING %d TEXTURE(S):\n", textures.size());
-
-	for (json texture_data : textures)
+	try
 	{
-		std::string id = texture_data["id"];
-		std::string filename = texture_data["filename"];
-		if ((loaded_bitmaps[id] = al_load_bitmap(filename.c_str())) == NULL)
-			printf("\tFAILED TO LOAD TEXTURE #%d(\"%s\")...\n", id, filename.c_str());
-		else
-			printf("\tSUCCESSFULLY LOADED TEXTURE #%d(\"%s\")...\n", id, filename.c_str());
+		json_data = json::parse(std::ifstream("data.json"));
+
+		game_name = json_data["NAME"];
+		game_version_name = json_data["VERSION"];
+
+		json textures = json_data["textures"];
+
+		printf("CURRENT DIRECTORY: \"%s\"\n\n", al_get_current_directory());
+
+		printf("LOADING %d TEXTURE(S):\n", textures.size());
+
+		for (json texture_data : textures)
+		{
+			std::string id = texture_data["id"];
+			std::string filename = texture_data["filename"];
+			if ((loaded_bitmaps[id] = al_load_bitmap(filename.c_str())) == NULL)
+				printf("\tFAILED TO LOAD TEXTURE #%d(\"%s\")...\n", id, filename.c_str());
+			else
+				printf("\tSUCCESSFULLY LOADED TEXTURE #%d(\"%s\")...\n", id, filename.c_str());
+		}
+		window_icon = loaded_bitmaps[(std::string)json_data["WINDOW_ICON"]];
+		printf("WINDOW ICON IS TEXTURE #%d\n", (std::string)json_data["WINDOW_ICON"]);
+
+		nlohmann::json fonts_data = json_data["fonts"];
+		printf("\nLOADING %d FONT(S)...\n", fonts_data.size());
+
+		for (nlohmann::json font : fonts_data)
+		{
+			std::string id = font["id"];
+			std::string fn = font["font"];
+			for (int i = 10; i <= 80; i++)
+				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
+			printf("SUCCESSFULLY LOADED FONT #%d(%s)...\n", id, fn.c_str());
+		}
 	}
-	window_icon = loaded_bitmaps[(std::string)json_data["WINDOW_ICON"]];
-	printf("WINDOW ICON IS TEXTURE #%d\n", (std::string)json_data["WINDOW_ICON"]);
-
-	nlohmann::json fonts_data = json_data["fonts"];
-	printf("\nLOADING %d FONT(S)...\n", fonts_data.size());
-
-	for (nlohmann::json font : fonts_data)
+	catch (const nlohmann::detail::parse_error& err)
 	{
-		std::string id = font["id"];
-		std::string fn = font["font"];
-		for(int i=10;i<=80;i++)
-			loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
-		printf("SUCCESSFULLY LOADED FONT #%d(%s)...\n", id,fn.c_str());
+		fprintf(stderr,"ERROR PARSING \'data.json\'!!!\nDETAILS:\n");
+		fputs(err.what(),stderr);
+		exit(EXIT_FAILURE);
 	}
-
 }
 
 void load_shaders()
@@ -97,43 +108,68 @@ void load_shaders()
 
 void init_tiles()
 {
-	printf("PARSING TILE DATA...\n");
-	json __ground_tiles = json_data["ground_tiles"];
-	json __tiles = json_data["tiles"];
-	for (json td : __ground_tiles)
-		ground_tile_data[td[DATA_JSON_ID_KEY]] = td;
-	for (json td : __tiles)
-		tile_data[td["id"]] = td;
-	printf("FOUND DATA FOR %d GROUND TILES...\n", ground_tile_data.size());
-	for (std::pair<std::string, json> pair : ground_tile_data)
-	{
-		printf("FOUND DATA FOR GROUND TILE #%d (\"%s\")\n", pair.first, ((std::string)pair.second["name"]).c_str());
-	}
-	printf("FOUND DATA FOR %d  TILES...\n", tile_data.size());
-	for (std::pair<std::string, json> pair : tile_data)
-	{
-		printf("FOUND DATA FOR TILE #%d (\"%s\")\n", pair.first, ((std::string)pair.second["name"]).c_str());
-	}
-	GrassGroundTile::Init(ground_tile_data[GrassGroundTile::ID]);
-	DirtGroundTile::Init(ground_tile_data[DirtGroundTile::ID]);
-	StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
+	try {
+		printf("PARSING TILE DATA...\n");
+		json __ground_tiles = json_data["ground_tiles"];
+		json __tiles = json_data["tiles"];
+		for (json td : __ground_tiles)
+			ground_tile_data[td[DATA_JSON_ID_KEY]] = td;
+		for (json td : __tiles)
+			tile_data[td["id"]] = td;
+		printf("FOUND DATA FOR %d GROUND TILES...\n", ground_tile_data.size());
+		for (std::pair<std::string, json> pair : ground_tile_data)
+		{
+			printf("FOUND DATA FOR GROUND TILE \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+		}
+		printf("FOUND DATA FOR %d TILES...\n", tile_data.size());
+		for (std::pair<std::string, json> pair : tile_data)
+		{
+			printf("FOUND DATA FOR TILE \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+		}
+		GrassGroundTile::Init(ground_tile_data[GrassGroundTile::ID]);
+		DirtGroundTile::Init(ground_tile_data[DirtGroundTile::ID]);
+		StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
 
-	TreeTile::Init(tile_data[TreeTile::ID]);
+		TreeTile::Init(tile_data[TreeTile::ID]);
+	}
+	catch (const nlohmann::json::type_error& err)
+	{
+		fprintf(stderr,"ERROR LOADING TILES!!!\nDETAILS:\n");
+		fputs(err.what(), stderr);
+		fprintf(stderr, "\n\nEXITING!!!\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void init_items()
 {
-	printf("PARSING ITEM DATA...\n");
-	json __items = json_data["items"];
-	for (json i : __items)
-		item_data[i["id"]] = i;
-	printf("LOADING %d ITEMS...\n", ground_tile_data.size());
-	for (std::pair<std::string, json> pair : ground_tile_data)
-	{
-		printf("LOADED ITEM \"%s\" (\"%s\")\n", pair.first.c_str(), ((std::string)pair.second["name"]).c_str());
+	try {
+		printf("PARSING ITEM DATA...\n");
+		json __items = json_data["items"];
+		json __loot_bundles = json_data["loot_bundles"];
+		for (json i : __items)
+			item_data[i["id"]] = i;
+		printf("LOADING %d ITEMS...\n", item_data.size());
+		for (std::pair<std::string, json> pair : item_data)
+		{
+			printf("FOUND DATA FOR ITEM \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+		}
+		StoneItem::Init(item_data[StoneItem::ID]);
+		DirtItem::Init(item_data[DirtItem::ID]);
+		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
+		for (nlohmann::json data : __loot_bundles)
+		{
+			loaded_loot_bundles[data["id"]] = SimpleItemBundle::CreateFromJSON(data);
+			printf("FOUND DATA FOR LOOT BUNDLE \"%s\"\n", ((std::string)data["id"]).c_str());
+		}
 	}
-	StoneItem::Init(item_data[StoneItem::ID]);
-	DirtItem::Init(item_data[DirtItem::ID]);
+	catch (const nlohmann::json::type_error& err)
+	{
+		fprintf(stderr, "ERROR LOADING ITEMS!!!\nDETAILS:\n");
+		fputs(err.what(), stderr);
+		fprintf(stderr, "\n\nEXITING!!!\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void free_resources()

@@ -28,15 +28,20 @@ private:
 protected:
 	World* containingWorld;
 
+	void SetRotation(float rot);
+
 public:
 
-	float getXpos() const;
-	float getYpos() const;
+	float GetXpos() const;
+	float GetYpos() const;
 	float getXvel() const;
 	float getYvel() const;
 	float getXsize() const;
 	float getYsize() const;
 	float getRotation() const;
+
+	virtual bool IsHostile() const;
+	virtual bool IsPassive() const;
 
 	void applyForce(float dx, float dy);
 	void setSpeed(float dx, float dy);

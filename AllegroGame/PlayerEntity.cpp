@@ -14,9 +14,10 @@ ALLEGRO_BITMAP* PlayerEntity::TEXTURE;
 
 int a, b, c;
 
-#define GET_MOUSE_XPOS(E) (E.x / 128.f + getXpos() - (SCREEN_WIDTH / 256.f))
-#define GET_MOUSE_YPOS(E) (E.y / 128.f + getYpos() - (SCREEN_HEIGHT / 256.f))
+#define GET_MOUSE_XPOS(E) (E.x / 128.f + GetXpos() - (SCREEN_WIDTH / 256.f))
+#define GET_MOUSE_YPOS(E) (E.y / 128.f + GetYpos() - (SCREEN_HEIGHT / 256.f))
 
+std::string buf = "";
 void PlayerEntity::DrawThisGUI()
 {
 	static ALLEGRO_MOUSE_STATE mouseState;
@@ -28,8 +29,8 @@ void PlayerEntity::DrawThisGUI()
 	float x = GET_MOUSE_XPOS(mouseState);
 	float y = GET_MOUSE_YPOS(mouseState);
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", getXpos());
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", getYpos());
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", GetXpos());
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", GetYpos());
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
@@ -76,12 +77,14 @@ void PlayerEntity::DrawThisGUI()
 	else
 		inventoryGUI->DrawGUI();
 	GUItimer++;
+
+	al_draw_text(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 255), 500, SCREEN_HEIGHT - 500, 0, buf.c_str());
 }
 
 void PlayerEntity::Draw()
 {
-	int x = floor(getXpos() * 128);
-	int y = floor(getYpos() * 128);
+	int x = floor(GetXpos() * 128);
+	int y = floor(GetYpos() * 128);
 	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, getRotation(), 0);
 }
 
@@ -100,6 +103,9 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		break;
 	case ALLEGRO_KEY_D:
 		keys_pressed |= 0b00000001;
+		break;
+	case ALLEGRO_KEY_T:
+		typing=!typing;
 		break;
 	case ALLEGRO_KEY_E:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
@@ -163,14 +169,33 @@ void PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 	//rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)) , ((float)event.x - (SCREEN_WIDTH / 2)))+M_PI/2);
 }
 
-void PlayerEntity::AddItem(Item* item)
+
+void PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
+{
+	if (event.keycode == ALLEGRO_KEY_ESCAPE)
+	{
+		ToggleTyping();
+		return;
+	}
+	if (event.keycode == ALLEGRO_KEY_BACKSPACE)
+	{
+		if (buf.size())
+			buf.pop_back();
+		return;
+	}
+	buf.push_back(event.unichar);
+}
+
+/*
+void PlayerEntity::AddConstItem(Item* item)
 {
 	if (item == nullptr)
 		return;
 	notifications.push_back(PlayerNotification::MakeTextNotification(std::format("+{} {}",item->GetAmount(), item->GetName()), 200, 70, GUItimer+500));
-	inventory->AddItem(item);
+	inventory->AddConstItem(item);
 	return;
 }
+*/
 
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
 static const float PLAYER_SPEED = 0.01f;
@@ -212,7 +237,7 @@ void PlayerEntity::MineTile(int x, int y)
 	}
 	if (success)
 	{
-		AddItem(tile->MineTile());
+		inventory->AddConstItemBundle(tile->GetMiningResult(nullptr));
 		containingWorld->RemoveTile(x, y);
 	}
 }

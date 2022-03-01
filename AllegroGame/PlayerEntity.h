@@ -57,10 +57,10 @@ public:
 	void MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
 	void MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
 
+	void CharTyped(ALLEGRO_KEYBOARD_EVENT& event) override;
+
 	void PlaceTile(int x, int y);
 	void MineTile(int x, int y);
-
-	void AddItem(Item* item) override;
 
 	void Tick() final;
 

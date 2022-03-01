@@ -52,7 +52,7 @@ int GroundTile::GetDamageDealtByTool(Tool* tool) const
     return (static_cast<char>(tool->GetMiningType()) & static_cast<char>(GetRequiredToolType())) ? tool->GetMiningDamage() : 1;
 }
 
-Item* GroundTile::GetMiningResult(Tool* tool) const
+const ItemBundle* GroundTile::GetMiningResult(Tool* tool) const
 {
     return nullptr;
 }
@@ -65,4 +65,5 @@ GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
         return new DirtGroundTile(world, x, y);
     else if (id == StoneGroundTile::ID)
         return new StoneGroundTile(world, x, y);
+    return nullptr;
 }

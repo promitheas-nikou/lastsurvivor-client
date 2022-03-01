@@ -89,7 +89,8 @@
     <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
     <Allegro_AddonDialog>true</Allegro_AddonDialog>
     <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\promitheas\source\repos\AllegroGame\lib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\promitheas\source\repos\AllegroGame\lib\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -141,11 +142,12 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;archive.lib;archive_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -179,19 +181,26 @@
     <ClCompile Include="HostileEntity.cpp" />
     <ClCompile Include="InventoryGUI.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemBundle.cpp" />
+    <ClCompile Include="ItemIndex.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
+    <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
+    <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleHostileEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
+    <ClCompile Include="SimpleItemBundle.cpp" />
     <ClCompile Include="SimpleItemInventory.cpp" />
     <ClCompile Include="SimpleToolItem.cpp" />
     <ClCompile Include="SimpleUIComponent.cpp" />
+    <ClCompile Include="SimplexNoise.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="StoneGroundTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
@@ -203,6 +212,7 @@
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
+    <ClCompile Include="zip.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -225,20 +235,28 @@
     <ClInclude Include="HostileEntity.h" />
     <ClInclude Include="InventoryGUI.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemBundle.h" />
+    <ClInclude Include="ItemIndex.h" />
     <ClInclude Include="ItemInventory.h" />
     <ClInclude Include="json.h" />
+    <ClInclude Include="LuaInterface.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="miniz.h" />
     <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
+    <ClInclude Include="Recipe.h" />
     <ClInclude Include="RectangularUIComponent.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
+    <ClInclude Include="SimpleHostileEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
+    <ClInclude Include="SimpleItemBundle.h" />
     <ClInclude Include="SimpleItemInventory.h" />
     <ClInclude Include="SimpleToolItem.h" />
     <ClInclude Include="SimpleUIComponent.h" />
+    <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="StoneGroundTile.h" />
     <ClInclude Include="GroundTile.h" />
@@ -250,6 +268,7 @@
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />
+    <ClInclude Include="zip.h" />
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">
@@ -263,6 +282,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" />
     <Import Project="..\packages\Allegro.5.2.7.1\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.7.1\build\native\Allegro.targets')" />
+    <Import Project="..\packages\lua.5.4.4\build\native\Lua.targets" Condition="Exists('..\packages\lua.5.4.4\build\native\Lua.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -270,6 +290,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets'))" />
     <Error Condition="!Exists('..\packages\Allegro.5.2.7.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.7.1\build\native\Allegro.targets'))" />
+    <Error Condition="!Exists('..\packages\lua.5.4.4\build\native\Lua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\lua.5.4.4\build\native\Lua.targets'))" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>

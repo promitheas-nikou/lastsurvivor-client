@@ -115,6 +115,24 @@
     <Filter Include="Source Files\Game\GUI\DefaultGUIs">
       <UniqueIdentifier>{f56fd56d-a3bf-4563-96ab-39af5f72a2f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Items\ItemBundles">
+      <UniqueIdentifier>{8d6d839b-0096-4388-99e3-3176bebee5cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ItemBundles">
+      <UniqueIdentifier>{72208e2e-c6ea-4303-ab04-92a9739550cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua">
+      <UniqueIdentifier>{d4657ef7-8fb1-4a2d-8645-868d2cd911a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua">
+      <UniqueIdentifier>{d83c37e6-50bf-43e0-bfa7-f7325d4145bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Recipes">
+      <UniqueIdentifier>{4798f04d-1169-4bfe-8503-9773a0241dfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Recipes">
+      <UniqueIdentifier>{31dc2f07-6d1c-4f2c-b188-f4310bf62371}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -213,20 +231,44 @@
     <ClCompile Include="SimpleItemInventory.cpp">
       <Filter>Source Files\Game\Items</Filter>
     </ClCompile>
-    <ClCompile Include="GroundTileMiner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TreeTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="DirtItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
-    <ClCompile Include="HostileEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteSheet.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundTileMiner.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="HostileEntity.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexNoise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleHostileEntity.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaInterface.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemIndex.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Recipe.cpp">
+      <Filter>Source Files\Game\Recipes</Filter>
+    </ClCompile>
+    <ClCompile Include="zip.c">
+      <Filter>Source Files\Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,11 +391,38 @@
     <ClInclude Include="DirtItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
-    <ClInclude Include="HostileEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteSheet.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="HostileEntity.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleHostileEntity.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaInterface.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemIndex.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Recipe.h">
+      <Filter>Header Files\Game\Recipes</Filter>
+    </ClInclude>
+    <ClInclude Include="zip.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="miniz.h">
+      <Filter>Header Files\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -53,11 +53,6 @@ bool Tile::IsEmpty() const
 	return false;
 }
 
-Item* Tile::MineTile()
-{
-	return nullptr;
-}
-
 bool Tile::MineWithTool(Tool* tool)
 {
 	if ((tool!=nullptr)&&(static_cast<char>(tool->GetMiningType()) & static_cast<char>(optimalToolType)))
@@ -65,6 +60,11 @@ bool Tile::MineWithTool(Tool* tool)
 	else
 		miningDamageDone++;
 	return miningDamageDone >= miningResistance;
+}
+
+const ItemBundle* Tile::GetMiningResult(Tool* tool) const
+{
+	return nullptr;
 }
 
 int Tile::GetMiningResistance() const
@@ -98,4 +98,5 @@ Tile* MakeTile(World* world, std::string id, int x, int y)
 		return new AirTile(world, x, y);
 	if (id == TreeTile::ID)
 		return new TreeTile(world, x, y);
+	return nullptr;
 }

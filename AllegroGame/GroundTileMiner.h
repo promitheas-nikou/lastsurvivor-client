@@ -25,8 +25,6 @@ public:
 
 	void ResetProgress();
 
-	virtual void AddItem(Item* item);
-
 	void Mine();
 
 	GroundTileMiner(Tool* t, ItemInventory* inv);
