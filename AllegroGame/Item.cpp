@@ -8,6 +8,16 @@
 Item::Item(std::string n) : name{ n }, amount{ 1 }
 {}
 
+void Item::LoadAdditionalDataFromFile(std::ifstream &file)
+{
+    return;
+}
+
+void Item::WriteAdditionalDataToFile(std::ofstream& file)
+{
+    return;
+}
+
 std::string Item::GetName() const
 {
     return name;

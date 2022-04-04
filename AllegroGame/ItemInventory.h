@@ -11,7 +11,7 @@ public:
 	virtual Item* GetItem(int itemID) const = 0;
 	virtual void SetItem(int itemID, Item* item) = 0;
 	virtual int AddItemToSlot(Item* item, int itemID);
-	virtual void AddConstItem(Item* item);
+	virtual void AddConstItem(const Item* item);
 	virtual Item* AddItem(Item* item);
 	virtual void AddConstItemBundle(const ItemBundle* bundle);
 	virtual bool ContainsItem(const Item* item) const;

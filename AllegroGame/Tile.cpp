@@ -8,6 +8,16 @@ Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w),
 Tile::Tile(World* w, int x, int y): world(w), xpos(x), ypos(y)
 {}
 
+void Tile::LoadAdditionalDataFromFile(std::ifstream &file)
+{
+	return;
+}
+
+void Tile::WriteAdditionalDataToFile(std::ofstream& file)
+{
+	return;
+}
+
 std::string Tile::GetName() const
 {
 	return name;

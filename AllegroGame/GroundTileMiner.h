@@ -23,12 +23,14 @@ public:
 	void SetTarget(GroundTile* newTarget);
 	GroundTile* GetTarget() const;
 
+	virtual void AddResult(const ItemBundle* b);
+
 	void ResetProgress();
 
 	void Mine();
 
 	GroundTileMiner(Tool* t, ItemInventory* inv);
 
-	~GroundTileMiner() = default;
+	virtual ~GroundTileMiner() = default;
 };
 

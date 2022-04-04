@@ -1,8 +1,19 @@
 #pragma once
 #include <lua.hpp>
+#include <string>
+class World;
 
-lua_State* CONSOLE_LUA_STATE;
+class LuaInterface
+{
+private:
+	World* world;
+	lua_State* state;
+public:
+	LuaInterface(World* world, bool privileged = false);
 
-void init_privileged_lua_interface(lua_State* state);
+	void dostring(std::string str);
 
-void init_unprivileged_lua_interface(lua_State* state);
+	static int lua_GiveItem(lua_State* state);
+	static int lua_SetTile(lua_State* state);
+	static int lua_SetGroundTile(lua_State* state);
+};

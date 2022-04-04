@@ -78,15 +78,16 @@ int main()
 
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
-	World world;
-	world.entities.push_back(new SimpleHostileEntity(&world, 0.f, 0.f));
+	World *world = World::CreateNewWorld("testworld");
+	world->GenerateChunk(0, 0);
+	world->SaveToFile("./testworld.zip");
 	double tick;
 	double worldDraw;
 	double playerGUIdraw;
 	double drawEnd;
 	printf("\n");
 	worldMutex = al_create_mutex();
-	worldTickerThread = al_create_thread(&WorldTickerFunc, &world);
+	worldTickerThread = al_create_thread(&WorldTickerFunc, world);
 	al_start_thread(worldTickerThread);
 	while (true)
 	{
@@ -98,7 +99,7 @@ int main()
 				EXIT_GAME();
 				break;
 			default:
-				world.player->HandleEvent(NEXT_EVENT);
+				world->player->HandleEvent(NEXT_EVENT);
 			}
 		}
 		
@@ -109,10 +110,10 @@ int main()
 		al_lock_mutex(worldMutex);
 
 		loaded_shaders["world"]->Use();
-		world.Draw();
+		world->Draw();
 		playerGUIdraw = al_get_time();
 		loaded_shaders["default"]->Use();
-		world.player->DrawGUI();
+		world->player->DrawGUI();
 
 		al_unlock_mutex(worldMutex);
 
@@ -123,6 +124,8 @@ int main()
 		playerGUIdraw = drawEnd - playerGUIdraw;
 		//printf("\rTICK: %.3lf WORLD: %.3lf GUI: %.3lf", tick, worldDraw, playerGUIdraw);
 	}
+
+	delete world;
 
 	free_resources();
 	destroy_graphics();

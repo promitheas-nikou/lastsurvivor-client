@@ -16,6 +16,9 @@ public:
 
 	static constexpr int MAX_AMOUNT = 128;
 
+	virtual void LoadAdditionalDataFromFile(std::ifstream &file);
+	virtual void WriteAdditionalDataToFile(std::ofstream& file);
+
 	virtual std::string GetID() const = 0;
 
 	virtual std::string GetName() const;

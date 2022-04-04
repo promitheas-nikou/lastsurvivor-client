@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 0.2",
-  "VER_MINOR": 0,
+  "VERSION": "ALPHA 0.4",
+  "VER_MINOR": 4,
   "VER_MAJOR": 0,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -9,6 +9,12 @@
       "id": "world",
       "vertex": "world_shader.vert",
       "fragment": "world_shader.frag"
+    }
+  ],
+  "audio": [
+    {
+      "id": "main_music",
+      "filename": "main_music.ogg"
     }
   ],
   "textures": [
@@ -59,6 +65,10 @@
     {
       "id": "tex.gui.hotbar_slot",
       "filename": "hotbar_slot.png"
+    },
+    {
+      "id": "tex.gui.crafting_arrow",
+      "filename": "crafting_arrow.png"
     },
     {
       "id": "tex.gui.hotbar_slot_selected",
@@ -196,7 +206,7 @@
     {
       "id": "gtiles.grass",
       "name": "Grass",
-      "type": 1,
+      "type": "shovel",
       "mining_resistance": 3,
       "drops": "gtiles.grass.mine.any",
       "texture": "tex.gtiles.grass"
@@ -204,7 +214,7 @@
     {
       "id": "gtiles.dirt",
       "name": "Dirt",
-      "type": 1,
+      "tool": "shovel",
       "mining_resistance": 2,
       "drops": "gtiles.dirt.mine.any",
       "texture": "tex.gtiles.dirt"
@@ -212,7 +222,15 @@
     {
       "id": "gtiles.stone",
       "name": "Stone",
-      "type": 0,
+      "tool": "pickaxe",
+      "mining_resistance": 4,
+      "drops": "gtiles.stone.mine.any",
+      "texture": "tex.gtiles.stone"
+    },
+    {
+      "id": "gtiles.sand",
+      "name": "Sand",
+      "tool": "shovel",
       "mining_resistance": 4,
       "drops": "gtiles.stone.mine.any",
       "texture": "tex.gtiles.stone"
@@ -264,18 +282,22 @@
     }
   ],
   "recipes": {
-    "smelting": [
+    "crafting": [
       {
-        "id": "dirt_from_stone",
+        "id": "dirt_to_stone",
         "input": [
           {
+            "id": "items.dirt",
+            "amount": 5
+          },
+          {
             "id": "items.stone",
-            "amount": 1
+            "amount": 41
           }
         ],
         "output": [
           {
-            "id": "items.dirt",
+            "id": "items.stone",
             "amount": 1
           }
         ]

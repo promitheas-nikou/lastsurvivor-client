@@ -142,7 +142,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,6 +159,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -189,8 +190,10 @@
     <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="Recipe.cpp" />
+    <ClCompile Include="RecipeListGUI.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
+    <ClCompile Include="SandGroundTile.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
@@ -198,6 +201,7 @@
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
     <ClCompile Include="SimpleItemInventory.cpp" />
+    <ClCompile Include="SimpleRecipeListGUI.cpp" />
     <ClCompile Include="SimpleToolItem.cpp" />
     <ClCompile Include="SimpleUIComponent.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
@@ -215,6 +219,7 @@
     <ClCompile Include="zip.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LuaDefault.lua" />
     <None Include="packages.config" />
     <None Include="world_shader.frag" />
     <None Include="world_shader.vert" />
@@ -225,6 +230,7 @@
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
     <ClInclude Include="ButtonUIComponent.h" />
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="DirtItem.h" />
     <ClInclude Include="Entity.h" />
@@ -245,8 +251,10 @@
     <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
     <ClInclude Include="Recipe.h" />
+    <ClInclude Include="RecipeListGUI.h" />
     <ClInclude Include="RectangularUIComponent.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="SandGroundTile.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
@@ -254,6 +262,7 @@
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />
     <ClInclude Include="SimpleItemInventory.h" />
+    <ClInclude Include="SimpleRecipeListGUI.h" />
     <ClInclude Include="SimpleToolItem.h" />
     <ClInclude Include="SimpleUIComponent.h" />
     <ClInclude Include="SimplexNoise.h" />

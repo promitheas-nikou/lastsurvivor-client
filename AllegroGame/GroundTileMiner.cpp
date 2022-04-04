@@ -39,6 +39,11 @@ GroundTile* GroundTileMiner::GetTarget() const
     return target;
 }
 
+void GroundTileMiner::AddResult(const ItemBundle* b)
+{
+    inventory->AddConstItemBundle(b);
+}
+
 void GroundTileMiner::ResetProgress()
 {
     miningDamageDone = 0;
@@ -53,7 +58,7 @@ void GroundTileMiner::Mine()
     if (miningDamageDone >= tmp)
     {
         for(int i=0;i<miningDamageDone/tmp;i++)
-            inventory->AddConstItemBundle(target->GetMiningResult(tool));
+            this->AddResult(target->GetMiningResult(tool));
         miningDamageDone %= tmp;
     }
 }

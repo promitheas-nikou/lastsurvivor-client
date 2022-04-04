@@ -4,9 +4,11 @@
 #include "GroundTileMiner.h"
 #include "ItemInventory.h"
 #include "SimpleInventoryGUI.h"
+#include "RecipeListGUI.h"
 #include <list>
 #include "Tool.h"
 #include "GUI.h"
+#include "LuaInterface.h"
 
 enum class PLAYER_GUI_STATE {WORLD, INVENTORY};
 
@@ -31,11 +33,12 @@ class PlayerEntity :
 {
 private:
 	static ALLEGRO_BITMAP* TEXTURE;
-
+	LuaInterface* luaInterface;
 	enum class PLAYER_GUI_STATE guistate;
 	int GUItimer;
 	char keys_pressed;
 	InventoryGUI* inventoryGUI;
+	RecipeListGUI* recipeGUI;
 	InventoryGUI* hotbarGUI;
 	ItemInventory* inventory;
 	Tool* pickaxeTool;
@@ -44,6 +47,8 @@ private:
 	Tool* pumpTool;
 
 	std::list<PlayerNotification*> notifications;
+
+	virtual void AddResult(const ItemBundle* b) override;
 
 public:
 
@@ -61,6 +66,8 @@ public:
 
 	void PlaceTile(int x, int y);
 	void MineTile(int x, int y);
+
+	void GiveConstItem(const Item* item);
 
 	void Tick() final;
 

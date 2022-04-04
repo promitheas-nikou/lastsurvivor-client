@@ -15,7 +15,7 @@ int ItemInventory::AddItemToSlot(Item* item, int itemID)
     return item->GetAmount();
 }
 
-void ItemInventory::AddConstItem(Item* item)
+void ItemInventory::AddConstItem(const Item* item)
 {
     if (item == nullptr)
         return;

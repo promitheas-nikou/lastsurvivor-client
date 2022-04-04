@@ -1,6 +1,7 @@
 #pragma once
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
 #include "ItemBundle.h"
 #include <unordered_map>
 #include <string>
@@ -29,8 +30,17 @@ extern ALLEGRO_BITMAP* window_icon;
 extern std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 extern std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
 extern std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
+extern std::unordered_map<std::string, ALLEGRO_SAMPLE*> loaded_audio_samples;
 extern std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 extern std::unordered_map<std::string, Shader*> loaded_shaders;
+
+
+extern std::map<uint32_t, std::string> tile_ids_to_keys;
+extern std::map<uint32_t, std::string> gtile_ids_to_keys;
+extern std::map<uint32_t, std::string> item_ids_to_keys;
+extern std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> item_keys_to_ids;
 
 void load_resources();
 

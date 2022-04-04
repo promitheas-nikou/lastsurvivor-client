@@ -1,5 +1,6 @@
- #include "Entity.h"
+#include "Entity.h"
 #include "World.h"
+#include "MathUtils.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -70,9 +71,33 @@ void Entity::setSpeed(float dx, float dy)
 void Entity::Tick()
 {
     xpos += xvel;
+    if (!(
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough()))
+    {
+        xpos -= xvel;
+        xvel = 0;
+    }
+    else
+    {
+        xvel *= getFriction();
+    }
     ypos += yvel;
-    xvel *= getFriction();
-    yvel *= getFriction();
+    if (!(
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough()))
+    {
+        ypos -= yvel;
+        yvel = 0;
+    }
+    else
+    {
+        yvel *= getFriction();
+    }
     if (health <= 0)
         dead = true;
 }

@@ -7,6 +7,9 @@
 #include "SimpleInventoryGUI.h"
 #include "Graphics.h"
 #include "World.h"
+#include "RecipeListGUI.h"
+#include "SimpleRecipeListGUI.h"
+#include "LuaInterface.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -18,6 +21,13 @@ int a, b, c;
 #define GET_MOUSE_YPOS(E) (E.y / 128.f + GetYpos() - (SCREEN_HEIGHT / 256.f))
 
 std::string buf = "";
+
+void PlayerEntity::AddResult(const ItemBundle* b)
+{
+	for (int i = 0; i < b->GetSize(); i++)
+		GiveConstItem(b->GetItem(i));
+}
+
 void PlayerEntity::DrawThisGUI()
 {
 	static ALLEGRO_MOUSE_STATE mouseState;
@@ -75,8 +85,15 @@ void PlayerEntity::DrawThisGUI()
 	if(guistate==PLAYER_GUI_STATE::WORLD)
 		hotbarGUI->DrawGUI();
 	else
+	{
+		al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
 		inventoryGUI->DrawGUI();
+		recipeGUI->DrawGUI();
+	}
 	GUItimer++;
+
+	//if(IsTyping())
+		//al_draw_filled_rectangle(500, SCREEN_HEIGHT - 510,800,)
 
 	al_draw_text(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 255), 500, SCREEN_HEIGHT - 500, 0, buf.c_str());
 }
@@ -183,6 +200,12 @@ void PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
 			buf.pop_back();
 		return;
 	}
+	if (event.keycode == ALLEGRO_KEY_ENTER)
+	{
+		luaInterface->dostring(buf);
+		buf.clear();
+		return;
+	}
 	buf.push_back(event.unichar);
 }
 
@@ -237,9 +260,17 @@ void PlayerEntity::MineTile(int x, int y)
 	}
 	if (success)
 	{
-		inventory->AddConstItemBundle(tile->GetMiningResult(nullptr));
+		const ItemBundle* b = tile->GetMiningResult(nullptr);
+		for (int i = 0; i < b->GetSize(); i++)
+			GiveConstItem(b->GetItem(i));
 		containingWorld->RemoveTile(x, y);
 	}
+}
+
+void PlayerEntity::GiveConstItem(const Item* item)
+{
+	notifications.push_back(PlayerNotification::MakeTextNotification(std::format("+{} {}", item->GetAmount(), item->GetName()), 200, 70, GUItimer + 500));
+	inventory->AddConstItem(item);
 }
 
 void PlayerEntity::Tick()
@@ -276,6 +307,7 @@ void PlayerEntity::Tick()
 
 PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 1), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr)
 {
+	luaInterface = new LuaInterface(world,true);
 	inventory = new SimpleItemInventory(36);
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new SimpleInventoryGUI(inventory);
@@ -288,6 +320,8 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 18, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 27, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
 	}
+	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
+	recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];
 }
 

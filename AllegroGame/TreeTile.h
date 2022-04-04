@@ -16,6 +16,7 @@ public:
     std::string GetID() const final;
 
     bool IsTransparent() const final;
+    bool canWalkThrough() const final;
 
     void Draw() const final;
 

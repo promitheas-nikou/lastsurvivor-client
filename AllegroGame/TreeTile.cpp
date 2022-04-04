@@ -15,12 +15,17 @@ std::string TreeTile::GetID() const
 
 bool TreeTile::IsTransparent() const
 {
-    return true;
+    return false;
+}
+
+bool TreeTile::canWalkThrough() const
+{
+    return false;
 }
 
 void TreeTile::RandomTickUpdate()
 {
-    growthTimer = std::min(600-1, growthTimer+20);
+    growthTimer = std::min(600, growthTimer+20);
 }
 
 const ItemBundle* TreeTile::GetMiningResult(Tool* tool) const
@@ -43,7 +48,7 @@ void TreeTile::Init(nlohmann::json data)
     DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 }
 
-TreeTile::TreeTile(World* w, int x, int y): Tile(w, x, y, TOOL_TYPE, MINING_RESISTANCE, NAME), growthTimer{0}
+TreeTile::TreeTile(World* w, int x, int y): Tile(w, x, y, TOOL_TYPE, MINING_RESISTANCE, NAME), growthTimer{600}
 {
 
 }

@@ -10,6 +10,16 @@
 GroundTile::GroundTile(World* w, int x, int y, std::string n) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ ToolType::PICKAXE } {}
 
 
+void GroundTile::LoadAdditionalDataFromFile(std::ifstream &file)
+{
+    return;
+}
+
+void GroundTile::WriteAdditionalDataToFile(std::ofstream& file)
+{
+    return;
+}
+
 std::string GroundTile::GetName() const
 {
     return name;

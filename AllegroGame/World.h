@@ -5,12 +5,23 @@
 #include "PlayerEntity.h"
 #include "GroundTile.h"
 #include "Tile.h"
+#include "SimplexNoise.h"
 #include <vector>
 #include <map>
+
+class LuaInterface;
 
 class World
 {
 private:
+	int WorldGameVersionMinor;
+	int WorldGameVersionMajor;
+	std::string WorldGameVersionName;
+
+	SimplexNoise randgen;
+
+	std::string worldname;
+
 	const uint64_t SEED;
 	const static int ENTITY_UPDATE_RATE = 5; //HOW MANY TICKS BEFORE CALLING `UpdateEntityVector()`
 	bool doDynamicWorldGen;
@@ -33,6 +44,8 @@ private:
 	float GenerateGetLevelTemperature(int x, int y);
 	float GenerateGetLevelHumidity(int x, int y);
 
+	World(bool w, const uint64_t s, std::string name, std::string n, int min, int maj);
+
 	Tile* GenerateTile(int x, int y);
 
 public:
@@ -47,8 +60,10 @@ public:
 	void GenerateChunk(int x, int y);
 
 	GroundTile* GetGroundTile(int x, int y);
+	GroundTile* SetGroundTile(GroundTile* gtile, int x, int y);
 
 	Tile* GetTile(int x, int y);
+	Tile* SetTile(Tile* tile, int x, int y);
 
 	bool IsChunkGenerated(int x, int y);
 
@@ -58,9 +73,10 @@ public:
 
 	void SaveToFile(std::string filename);
 
-	World();
+	static World* CreateNewWorld(std::string name);
 
 	friend WorldChunk;
+	friend LuaInterface;
 	friend int main();
 };
 

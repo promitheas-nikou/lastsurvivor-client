@@ -270,6 +270,15 @@
     <ClCompile Include="zip.c">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
+    <ClCompile Include="SandGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeListGUI.cpp">
+      <Filter>Source Files\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleRecipeListGUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -277,6 +286,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="world_shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="LuaDefault.lua">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -423,6 +435,18 @@
     </ClInclude>
     <ClInclude Include="miniz.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SandGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeListGUI.h">
+      <Filter>Header Files\Game\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleRecipeListGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "Graphics.h"
 #include "ResourceLoader.h"
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
 
 ALLEGRO_EVENT_QUEUE* event_queue;
 
@@ -19,6 +20,12 @@ void init_graphics()
 	if (!al_init_image_addon())
 		exit(EXIT_FAILURE);
 	printf("ALL GRAPHICS COMPONENTS SUCCESSFULLY INITIALIZED!\n");
+}
+
+void init_sound()
+{
+	if (!al_install_audio())
+		printf("FAILED TO INSTALL AUDIO!!!\nWILL PROCEED INITIALIZATION WITH NO AUDIO\n");
 }
 
 void init_window()
