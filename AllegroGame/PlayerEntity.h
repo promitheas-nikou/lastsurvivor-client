@@ -6,6 +6,7 @@
 #include "SimpleInventoryGUI.h"
 #include "RecipeListGUI.h"
 #include <list>
+#include <deque>
 #include "Tool.h"
 #include "GUI.h"
 #include "LuaInterface.h"
@@ -23,7 +24,7 @@ private:
 public:
 	void Draw(int x, int y, int width, int height, int new_timer);
 	bool ShouldBeRemoved(int new_timer);
-	static PlayerNotification* MakeTextNotification(std::string txt, int w, int h, int t);
+	static PlayerNotification* MakeTextNotification(std::string txt, int w, int h, int t, int fontsize = 30);
 };
 
 class PlayerEntity :
@@ -32,6 +33,8 @@ class PlayerEntity :
 	private GroundTileMiner
 {
 private:
+	std::string buf;
+	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
 	static ALLEGRO_BITMAP* TEXTURE;
 	LuaInterface* luaInterface;
 	enum class PLAYER_GUI_STATE guistate;
@@ -52,6 +55,8 @@ private:
 
 public:
 
+	void LogToConsole(std::string txt) const;
+
 	void DrawThisGUI() final;
 	void Draw() final;
 
@@ -70,6 +75,8 @@ public:
 	void GiveConstItem(const Item* item);
 
 	void Tick() final;
+
+	void PushNotification(std::string txt, int fontsize = 30);
 
 	PlayerEntity(World* world, float xpos, float ypos);
 

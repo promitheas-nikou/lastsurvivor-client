@@ -8,9 +8,12 @@
 #include "DirtGroundTile.h"
 #include "StoneGroundTile.h"
 #include "SandGroundTile.h"
+#include "WaterGroundTile.h"
 #include "TreeTile.h"
 #include "StoneItem.h"
 #include "DirtItem.h"
+#include "StickItem.h"
+#include "SandItem.h"
 #include "SimpleItemBundle.h"
 
 #include "Recipe.h"
@@ -20,7 +23,7 @@
 const std::string DATA_JSON_TEXTURE_KEY = "texture";
 const std::string DATA_JSON_TEXTURE_LIST_KEY = "textures";
 const std::string DATA_JSON_MINING_RESISTANCE_KEY = "mining_resistance";
-const std::string DATA_JSON_TOOL_TYPE_KEY = "tool_type";
+const std::string DATA_JSON_TOOL_TYPE_KEY = "tool";
 const std::string DATA_JSON_NAME_KEY = "name";
 const std::string DATA_JSON_DESCRIPTION_KEY = "description";
 const std::string DATA_JSON_DROP_KEY = "drops";
@@ -132,7 +135,7 @@ void load_shaders()
 
 void init_tiles()
 {
-	try {
+	//try {
 		printf("PARSING TILE DATA...\n");
 		json __ground_tiles = json_data["ground_tiles"];
 		json __tiles = json_data["tiles"];
@@ -160,16 +163,17 @@ void init_tiles()
 		DirtGroundTile::Init(ground_tile_data[DirtGroundTile::ID]);
 		StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
 		SandGroundTile::Init(ground_tile_data[SandGroundTile::ID]);
+		WaterGroundTile::Init(ground_tile_data[WaterGroundTile::ID]);
 
 		TreeTile::Init(tile_data[TreeTile::ID]);
-	}
+	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
 		fprintf(stderr,"ERROR LOADING TILES!!!\nDETAILS:\n");
 		fputs(err.what(), stderr);
 		fprintf(stderr, "\n\nEXITING!!!\n");
 		exit(EXIT_FAILURE);
-	}
+	}*/
 }
 
 void init_items()
@@ -191,6 +195,8 @@ void init_items()
 		}
 		StoneItem::Init(item_data[StoneItem::ID]);
 		DirtItem::Init(item_data[DirtItem::ID]);
+		StickItem::Init(item_data[StickItem::ID]);
+		SandItem::Init(item_data[SandItem::ID]);
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

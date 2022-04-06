@@ -23,5 +23,7 @@ public:
 
     static void Init(nlohmann::json data);
 
+    virtual ~StoneItem() = default;
+
 };
 

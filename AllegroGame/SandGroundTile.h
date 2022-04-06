@@ -10,6 +10,7 @@ private:
 	static ALLEGRO_BITMAP* TEXTURE;
 	static const ItemBundle* DROP;
 	static int MINING_RESISTANCE;
+	static ToolType TOOL_TYPE;
 public:
 	static const std::string ID;
 

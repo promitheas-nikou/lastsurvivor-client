@@ -1,6 +1,8 @@
 #include "Item.h"
 #include "StoneItem.h"
 #include "DirtItem.h"
+#include "StickItem.h"
+#include "SandItem.h"
 #include "ResourceLoader.h"
 #include "World.h"
 #include <allegro5/allegro_font.h>
@@ -75,12 +77,18 @@ Item* MakeItemFromID(std::string id)
         return new DirtItem();
     if (id == StoneItem::ID)
         return new StoneItem();
+    if (id == StickItem::ID)
+        return new StickItem();
+    if (id == SandItem::ID)
+        return new SandItem();
     return nullptr;
 }
 
 Item* MakeItemFromJSON(nlohmann::json data)
 {
     Item* item = MakeItemFromID(data["id"]);
+    if(item==nullptr)
+        return nullptr;
     item->SetAmount(data["amount"]);
     return item;
 }

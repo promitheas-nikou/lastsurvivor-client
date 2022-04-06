@@ -54,6 +54,7 @@ void init_window()
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(main_display));
+	al_set_separate_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA, ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	printf("DISPLAY SUCCESSFULLY CREATED!\n");
 }
 

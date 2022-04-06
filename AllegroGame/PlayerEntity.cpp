@@ -14,26 +14,30 @@
 #include <math.h>
 
 ALLEGRO_BITMAP* PlayerEntity::TEXTURE;
+ALLEGRO_BITMAP* HEART_ICON;
 
 int a, b, c;
 
 #define GET_MOUSE_XPOS(E) (E.x / 128.f + GetXpos() - (SCREEN_WIDTH / 256.f))
 #define GET_MOUSE_YPOS(E) (E.y / 128.f + GetYpos() - (SCREEN_HEIGHT / 256.f))
 
-std::string buf = "";
-
 void PlayerEntity::AddResult(const ItemBundle* b)
 {
+	if (b == nullptr)
+		return;
 	for (int i = 0; i < b->GetSize(); i++)
 		GiveConstItem(b->GetItem(i));
+}
+
+void PlayerEntity::LogToConsole(std::string txt) const
+{
+	history.push_front(std::make_pair(al_map_rgba(110, 110, 110, 255), txt));
 }
 
 void PlayerEntity::DrawThisGUI()
 {
 	static ALLEGRO_MOUSE_STATE mouseState;
 	al_get_mouse_state(&mouseState);
-	al_get_blender(&a, &b, &c);
-	al_set_separate_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA, ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	al_draw_filled_rectangle(SCREEN_WIDTH/2-250, 50, SCREEN_WIDTH/2+250, 250, al_map_rgba(0, 150, 255, 150));
 
 	float x = GET_MOUSE_XPOS(mouseState);
@@ -64,7 +68,6 @@ void PlayerEntity::DrawThisGUI()
 	}
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", containingWorld->GetGroundTile(floor(x),floor(y))->GetName().c_str());
-	al_set_blender(a, b, c);
 
 	int yn = SCREEN_HEIGHT - 20;
 	for (std::list<PlayerNotification*>::iterator it = notifications.begin(); it!=notifications.end();)
@@ -92,10 +95,17 @@ void PlayerEntity::DrawThisGUI()
 	}
 	GUItimer++;
 
-	//if(IsTyping())
-		//al_draw_filled_rectangle(500, SCREEN_HEIGHT - 510,800,)
-
-	al_draw_text(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 255), 500, SCREEN_HEIGHT - 500, 0, buf.c_str());
+	if (IsTyping())
+	{
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 510, SCREEN_HEIGHT - 870, SCREEN_WIDTH / 2 + 510, SCREEN_HEIGHT - 410, al_map_rgba(100, 100, 100, 100));
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 510, SCREEN_HEIGHT - 410, SCREEN_WIDTH / 2 + 510, SCREEN_HEIGHT - 375, al_map_rgba(50, 50, 50, 150));
+		al_draw_text(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 410, 0, buf.c_str());
+		for(int i=0;i<history.size();i++)
+			al_draw_text(loaded_fonts["default"][30], history.at(i).first, SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 445 - i*30, 0, history.at(i).second.c_str());
+	}
+	al_draw_scaled_bitmap(HEART_ICON, 0, 0, al_get_bitmap_width(HEART_ICON), al_get_bitmap_height(HEART_ICON), 200, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+	al_draw_filled_rectangle(200, SCREEN_HEIGHT / 2 - 300, 264, SCREEN_HEIGHT / 2 + 300, al_map_rgba(64, 0, 0, 200));
+	al_draw_filled_rectangle(200, SCREEN_HEIGHT / 2 + 300 - GetHealth()*6.f, 264, SCREEN_HEIGHT / 2 + 300, al_map_rgba(192, 0, 0, 200));
 }
 
 void PlayerEntity::Draw()
@@ -107,6 +117,8 @@ void PlayerEntity::Draw()
 
 void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 {
+	ALLEGRO_KEYBOARD_STATE s;
+	al_get_keyboard_state(&s);
 	switch (event.keycode)
 	{
 	case ALLEGRO_KEY_W:
@@ -116,6 +128,11 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		keys_pressed |= 0b00000100;
 		break;
 	case ALLEGRO_KEY_S:
+		if (al_key_down(&s, ALLEGRO_KEY_LCTRL) || al_key_down(&s, ALLEGRO_KEY_RCTRL))
+		{
+			containingWorld->SaveToFile("./new_world.zip");
+			PushNotification("SAVED WORLD!!!",24);
+		}
 		keys_pressed |= 0b00000010;
 		break;
 	case ALLEGRO_KEY_D:
@@ -183,7 +200,7 @@ void PlayerEntity::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
 
 void PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
-	//rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)) , ((float)event.x - (SCREEN_WIDTH / 2)))+M_PI/2);
+	rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)) , ((float)event.x - (SCREEN_WIDTH / 2)))+M_PI/2);
 }
 
 
@@ -202,7 +219,10 @@ void PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
 	}
 	if (event.keycode == ALLEGRO_KEY_ENTER)
 	{
+		history.push_front(std::make_pair(al_map_rgba(200, 0, 0, 255), buf));
 		luaInterface->dostring(buf);
+		while (history.size() > 15)
+			history.pop_back();
 		buf.clear();
 		return;
 	}
@@ -266,10 +286,12 @@ void PlayerEntity::MineTile(int x, int y)
 		containingWorld->RemoveTile(x, y);
 	}
 }
-
+	
 void PlayerEntity::GiveConstItem(const Item* item)
 {
-	notifications.push_back(PlayerNotification::MakeTextNotification(std::format("+{} {}", item->GetAmount(), item->GetName()), 200, 70, GUItimer + 500));
+	if (item == nullptr)
+		return;
+	PushNotification(std::format("+{} {}", item->GetAmount(), item->GetName()));
 	inventory->AddConstItem(item);
 }
 
@@ -305,7 +327,12 @@ void PlayerEntity::Tick()
 	Entity::Tick();
 }
 
-PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 1), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr)
+void PlayerEntity::PushNotification(std::string txt, int fontsize)
+{
+	notifications.push_back(PlayerNotification::MakeTextNotification(txt, 200, 70, GUItimer + 500, fontsize));
+}
+
+PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr)
 {
 	luaInterface = new LuaInterface(world,true);
 	inventory = new SimpleItemInventory(36);
@@ -323,6 +350,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];
+	HEART_ICON = loaded_bitmaps["tex.gui.health_icon"];
 }
 
 PlayerNotification::PlayerNotification(int t, int w, int h)
@@ -333,11 +361,7 @@ PlayerNotification::PlayerNotification(int t, int w, int h)
 
 void PlayerNotification::Draw(int x, int y, int width, int height, int new_timer)
 {
-	al_get_blender(&a, &b, &c);
-	al_set_separate_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA, ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	al_draw_scaled_bitmap(content, 0, 0, al_get_bitmap_width(content), al_get_bitmap_height(content), x, y, width, height, 0);
-	
-	al_set_blender(a, b, c);
 }
 
 bool PlayerNotification::ShouldBeRemoved(int new_timer)
@@ -345,12 +369,12 @@ bool PlayerNotification::ShouldBeRemoved(int new_timer)
 	return timer<new_timer;
 }
 
-PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, int w, int h, int t)
+PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, int w, int h, int t, int fontsize)
 {
 	PlayerNotification* p = new PlayerNotification(t, w, h);
 	al_set_target_bitmap(p->content);
 	al_draw_filled_rectangle(0, 0, w, h, al_map_rgba(200, 200, 20, 170));
-	al_draw_multiline_text(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
+	al_draw_multiline_text(loaded_fonts["default"][fontsize], al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	return p;
 }

@@ -160,6 +160,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -189,15 +190,17 @@
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
+    <ClCompile Include="Quest.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RecipeListGUI.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="SandGroundTile.cpp" />
+    <ClCompile Include="SandItem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
-    <ClCompile Include="SimpleHostileEntity.cpp" />
+    <ClCompile Include="ZombieEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
     <ClCompile Include="SimpleItemInventory.cpp" />
@@ -206,6 +209,7 @@
     <ClCompile Include="SimpleUIComponent.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="StickItem.cpp" />
     <ClCompile Include="StoneGroundTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
     <ClCompile Include="StoneItem.cpp" />
@@ -214,6 +218,7 @@
     <ClCompile Include="ToolItem.cpp" />
     <ClCompile Include="TreeTile.cpp" />
     <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="WaterGroundTile.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
     <ClCompile Include="zip.c" />
@@ -250,15 +255,17 @@
     <ClInclude Include="miniz.h" />
     <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
+    <ClInclude Include="Quest.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeListGUI.h" />
     <ClInclude Include="RectangularUIComponent.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="SandGroundTile.h" />
+    <ClInclude Include="SandItem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
-    <ClInclude Include="SimpleHostileEntity.h" />
+    <ClInclude Include="ZombieEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />
     <ClInclude Include="SimpleItemInventory.h" />
@@ -267,6 +274,7 @@
     <ClInclude Include="SimpleUIComponent.h" />
     <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="StickItem.h" />
     <ClInclude Include="StoneGroundTile.h" />
     <ClInclude Include="GroundTile.h" />
     <ClInclude Include="StoneItem.h" />
@@ -275,6 +283,7 @@
     <ClInclude Include="ToolItem.h" />
     <ClInclude Include="TreeTile.h" />
     <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="WaterGroundTile.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />
     <ClInclude Include="zip.h" />

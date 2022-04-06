@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Item.h"
-#include "json.h"
 
-class DirtItem :
+class SandItem :
     public Item
 {
 private:
@@ -16,15 +15,15 @@ public:
 
     std::string GetID() const final;
 
-    virtual Item* Clone() const override;
+    SandItem();
 
-    DirtItem();
+    virtual Item* Clone() const override;
 
     void Draw(int x, int y, int width, int height) const final;
 
     static void Init(nlohmann::json data);
 
-    virtual ~DirtItem() = default;
+    virtual ~SandItem() = default;
 
 };
 

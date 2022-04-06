@@ -133,6 +133,12 @@
     <Filter Include="Source Files\Game\Recipes">
       <UniqueIdentifier>{31dc2f07-6d1c-4f2c-b188-f4310bf62371}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Quests">
+      <UniqueIdentifier>{4d248cfe-7ec3-4278-afe6-a9ae4ed3686b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Quests">
+      <UniqueIdentifier>{8420b426-ef3a-4737-a826-af410028b48b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -255,7 +261,7 @@
     <ClCompile Include="SimpleItemBundle.cpp">
       <Filter>Source Files\Game\Items\ItemBundles</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleHostileEntity.cpp">
+    <ClCompile Include="ZombieEntity.cpp">
       <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
     <ClCompile Include="LuaInterface.cpp">
@@ -277,6 +283,18 @@
       <Filter>Source Files\Game\GUI</Filter>
     </ClCompile>
     <ClCompile Include="SimpleRecipeListGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="StickItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SandItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Quest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -418,7 +436,7 @@
     <ClInclude Include="SimpleItemBundle.h">
       <Filter>Header Files\Game\Items\ItemBundles</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleHostileEntity.h">
+    <ClInclude Include="ZombieEntity.h">
       <Filter>Header Files\Game\Entities</Filter>
     </ClInclude>
     <ClInclude Include="LuaInterface.h">
@@ -447,6 +465,18 @@
     </ClInclude>
     <ClInclude Include="SimpleRecipeListGUI.h">
       <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="SandItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="StickItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Quest.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

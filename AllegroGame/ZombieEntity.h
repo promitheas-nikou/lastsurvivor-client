@@ -1,15 +1,16 @@
 #pragma once
 #include "HostileEntity.h"
 
-class SimpleHostileEntity :
+class ZombieEntity :
     public HostileEntity
 {
 private:
-    float speed = .05f;
+    float speed = .0005f;
+    float reach = 0.4f;
 public:
     virtual void Tick() override;
     virtual void Draw() override;
 
-    SimpleHostileEntity(World* world, float xpos, float ypos);
+    ZombieEntity(World* world, float xpos, float ypos);
 };
 

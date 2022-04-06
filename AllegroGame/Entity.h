@@ -22,8 +22,8 @@ private:
 	float xsize;
 	float ysize;
 	float rotation;
-	float health;
-	static const float MIN_HEALTH;
+	mutable float health;
+	float maxHealth;
 
 protected:
 	World* containingWorld;
@@ -43,6 +43,8 @@ public:
 	virtual bool IsHostile() const;
 	virtual bool IsPassive() const;
 
+	int GetHealth() const;
+
 	void applyForce(float dx, float dy);
 	void setSpeed(float dx, float dy);
 
@@ -58,11 +60,13 @@ public:
 	virtual std::string getName() const;
 	virtual bool shouldBeRemoved() const;
 
+	virtual void DoDamage(float dmg) const;
+
 	virtual float getFriction() const;
 
-	Entity(World* w, float xpos, float ypos, float mass, float initialVelocityX, float initialVelocityY);
-	Entity(World* w, float xpos, float ypos, float mass);
-	Entity(World* w, float xpos, float ypos);
+	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY);
+	Entity(World* w, float xpos, float ypos, float maxHealth, float mass);
+	Entity(World* w, float xpos, float ypos, float maxHealth);
 
 	virtual ~Entity() = default;
 

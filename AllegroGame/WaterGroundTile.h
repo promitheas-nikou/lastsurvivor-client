@@ -1,6 +1,8 @@
 #pragma once
 #include "GroundTile.h"
-class StoneGroundTile:
+#include "ItemBundle.h"
+
+class WaterGroundTile :
 	public GroundTile
 {
 private:
@@ -14,16 +16,16 @@ public:
 
 	std::string GetID() const final;
 
-	StoneGroundTile(World* w, int x, int y);
+	WaterGroundTile(World* w, int x, int y);
 
 	static void Init(nlohmann::json data);
-
 	void Draw() const final;
 
 	const ItemBundle* GetMiningResult(Tool* tool) const final;
 
 	int GetMiningResistance() const final;
 
-	virtual ~StoneGroundTile() = default;
-};
+    float GetFrictionModifier() const final;
 
+	virtual ~WaterGroundTile() = default;
+};

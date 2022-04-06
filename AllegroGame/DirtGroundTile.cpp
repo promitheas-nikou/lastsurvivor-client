@@ -5,6 +5,7 @@ std::string DirtGroundTile::NAME;
 ALLEGRO_BITMAP* DirtGroundTile::TEXTURE;
 const ItemBundle* DirtGroundTile::DROP;
 int DirtGroundTile::MINING_RESISTANCE;
+ToolType DirtGroundTile::TOOL_TYPE;
 const std::string DirtGroundTile::ID = "gtiles.dirt";
 
 
@@ -22,6 +23,7 @@ void DirtGroundTile::Init(nlohmann::json data)
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
+	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 }
 
 void DirtGroundTile::Draw() const

@@ -5,6 +5,7 @@ std::string SandGroundTile::NAME;
 ALLEGRO_BITMAP* SandGroundTile::TEXTURE;
 const ItemBundle* SandGroundTile::DROP;
 int SandGroundTile::MINING_RESISTANCE;
+ToolType SandGroundTile::TOOL_TYPE;
 const std::string SandGroundTile::ID = "gtiles.sand";
 
 
@@ -22,6 +23,7 @@ void SandGroundTile::Init(nlohmann::json data)
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
+	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 }
 
 void SandGroundTile::Draw() const

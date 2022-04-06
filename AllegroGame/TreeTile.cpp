@@ -43,7 +43,7 @@ void TreeTile::Init(nlohmann::json data)
     for (int i = 0; i < 4; i++)
         TEXTURES[i] = loaded_bitmaps[data[DATA_JSON_TEXTURE_LIST_KEY][i]];
     MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
-    TOOL_TYPE = Tool::GetToolTypeFromString((std::string)data[DATA_JSON_TOOL_TYPE_KEY]);
+    TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
     NAME = data[DATA_JSON_NAME_KEY];
     DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 }

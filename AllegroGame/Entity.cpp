@@ -4,8 +4,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-const float Entity::MIN_HEALTH = 0.f;
-
 void Entity::SetRotation(float rot)
 {
     rotation = rot;
@@ -56,6 +54,11 @@ bool Entity::IsPassive() const
     return true;
 }
 
+int Entity::GetHealth() const
+{
+    return health;
+}
+
 void Entity::applyForce(float dx, float dy)
 {
     xvel += dx / mass;
@@ -82,7 +85,7 @@ void Entity::Tick()
     }
     else
     {
-        xvel *= getFriction();
+        xvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
     }
     ypos += yvel;
     if (!(
@@ -96,7 +99,7 @@ void Entity::Tick()
     }
     else
     {
-        yvel *= getFriction();
+        yvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
     }
     if (health <= 0)
         dead = true;
@@ -112,22 +115,28 @@ bool Entity::shouldBeRemoved() const
     return dead;
 }
 
+void Entity::DoDamage(float dmg) const
+{
+    health -= dmg;
+}
+
 float Entity::getFriction() const
 {
     return .8f;
 }
 
-Entity::Entity(World* w, float x, float y, float mass, float initialVelocityX, float initialVelocityY) : containingWorld{ w }, xpos{ x }, ypos{ y }, mass{ mass }, xvel{ initialVelocityX }, yvel{ initialVelocityY }, health{1.f}
+Entity::Entity(World* w, float x, float y, float maxHealth, float mass, float initialVelocityX, float initialVelocityY) : containingWorld{ w }, xpos{ x }, ypos{ y }, mass{ mass }, xvel{ initialVelocityX }, yvel{ initialVelocityY }, health{ maxHealth }, maxHealth{ maxHealth }
 {}
 
-Entity::Entity(World* w, float x, float y, float mass) : Entity(w, x, y, mass, 0, 0)
+Entity::Entity(World* w, float x, float y, float maxHealth, float mass) : Entity(w, x, y, maxHealth, mass, 0, 0)
 {}
 
-Entity::Entity(World * w, float xpos, float ypos): Entity(w, xpos, ypos, 1.f)
+Entity::Entity(World * w, float xpos, float ypos, float maxHealth): Entity(w, xpos, ypos, maxHealth, 1.f)
 {}
 
 void Entity::rotateTo(float r)
 {
+    rotation = r;
 }
 
 void Entity::warpAbsolute(float x, float y)

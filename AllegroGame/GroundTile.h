@@ -47,6 +47,8 @@ public:
 	int GetXpos() const;
 	int GetYpos() const;
 
+    virtual float GetFrictionModifier() const;
+
 	virtual ~GroundTile() = default;
 };
 

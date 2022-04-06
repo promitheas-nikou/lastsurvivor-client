@@ -9,7 +9,7 @@
 #include "MathUtils.h"
 #include "Graphics.h"
 #include "ResourceLoader.h"
-#include "SimpleHostileEntity.h"
+#include "ZombieEntity.h"
 
 #include "Shader.h"
 
@@ -29,11 +29,16 @@ void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
 	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_start_timer(timer);
+	double a, b;
+	a = al_get_time();
 	while (!al_get_thread_should_stop(thr))
 	{
 		al_wait_for_event(queue, &evt);
 		al_lock_mutex(worldMutex);
 		world->Tick();
+		b = al_get_time();
+		printf("\rTICK: %lf",b-a);
+		a = b;
 		al_unlock_mutex(worldMutex);
 	}
 	return NULL;
@@ -78,9 +83,8 @@ int main()
 
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
-	World *world = World::CreateNewWorld("testworld");
-	world->GenerateChunk(0, 0);
-	world->SaveToFile("./testworld.zip");
+	World* world = World::CreateNewWorld("New World");
+	world->entities.push_back(new ZombieEntity(world, 10, 10));
 	double tick;
 	double worldDraw;
 	double playerGUIdraw;

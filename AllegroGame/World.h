@@ -40,7 +40,7 @@ private:
 
 	GroundTile* GenerateGroundTile(int x, int y);
 
-	float GenerateGetLevelHight(int x, int y);
+	float GenerateGetLevelHeight(int x, int y);
 	float GenerateGetLevelTemperature(int x, int y);
 	float GenerateGetLevelHumidity(int x, int y);
 

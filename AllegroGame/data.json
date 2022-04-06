@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 0.4",
-  "VER_MINOR": 4,
+  "VERSION": "ALPHA 0.5",
+  "VER_MINOR": 5,
   "VER_MAJOR": 0,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -37,6 +37,14 @@
     {
       "id": "tex.gtiles.limestone",
       "filename": "limestone.png"
+    },
+    {
+      "id": "tex.gtiles.sand",
+      "filename": "sand.png"
+    },
+    {
+      "id": "tex.gtiles.water",
+      "filename": "water.png"
     },
     {
       "id": "tex.gtiles.iron_ore",
@@ -87,12 +95,16 @@
       "filename": "quest_icon_selected.png"
     },
     {
-      "id": "tex.gui.main_menu",
-      "filename": "background_main_menu.png"
+      "id": "tex.gui.health_icon",
+      "filename": "heart_icon.png"
     },
     {
       "id": "tex.entities.player",
       "filename": "player.png"
+    },
+    {
+      "id": "tex.entities.zombie",
+      "filename": "zombie.png"
     },
     {
       "id": "tex.tiles.tree/0",
@@ -117,9 +129,27 @@
     {
       "id": "tex.items.stone",
       "filename": "rock.png"
+    },
+    {
+      "id": "tex.items.sand",
+      "filename": "sand_pile.png"
+    },
+    {
+      "id": "tex.items.stick",
+      "filename": "stick.png"
+    }
+  ],
+  "entities": [
+    {
+      "id": "entities.zombie",
+      "max_health": 100
     }
   ],
   "loot_bundles": [
+    {
+      "id": "none",
+      "items": []
+    },
     {
       "id": "gtiles.grass.mine.any",
       "items": [
@@ -148,10 +178,19 @@
       ]
     },
     {
+      "id": "gtiles.sand.mine.any",
+      "items": [
+        {
+          "id": "items.sand",
+          "amount": 1
+        }
+      ]
+    },
+    {
       "id": "tiles.tree.mine.any",
       "items": [
         {
-          "id": "items.dirt",
+          "id": "items.stick",
           "amount": 7
         }
       ]
@@ -191,7 +230,7 @@
     {
       "id": "tiles.tree",
       "name": "Tree",
-      "tool_type": "pickaxe",
+      "tool": "pickaxe",
       "textures": [
         "tex.tiles.tree/0",
         "tex.tiles.tree/1",
@@ -206,7 +245,7 @@
     {
       "id": "gtiles.grass",
       "name": "Grass",
-      "type": "shovel",
+      "tool": "shovel",
       "mining_resistance": 3,
       "drops": "gtiles.grass.mine.any",
       "texture": "tex.gtiles.grass"
@@ -232,8 +271,16 @@
       "name": "Sand",
       "tool": "shovel",
       "mining_resistance": 4,
-      "drops": "gtiles.stone.mine.any",
-      "texture": "tex.gtiles.stone"
+      "drops": "gtiles.sand.mine.any",
+      "texture": "tex.gtiles.sand"
+    },
+    {
+      "id": "gtiles.water",
+      "name": "Water",
+      "tool": "none",
+      "mining_resistance": 4,
+      "drops": "none",
+      "texture": "tex.gtiles.water"
     }
   ],
   "items": [
@@ -251,6 +298,16 @@
       "id": "items.stone",
       "name": "Stone",
       "texture": "tex.items.stone"
+    },
+    {
+      "id": "items.stick",
+      "name": "Stick",
+      "texture": "tex.items.stick"
+    },
+    {
+      "id": "items.sand",
+      "name": "Sand",
+      "texture": "tex.items.sand"
     },
     {
       "id": "items.tools.pickaxe",
@@ -306,70 +363,29 @@
   },
   "quests": [
     {
-      "id": 1,
-      "name": "MINE EVERY TILE TYPE",
+      "id": "quests.whatever",
+      "name": "A RANDOM QUEST",
       "unlocked": true,
       "completed": false,
-      "tile_mine": [
+      "requirements": [
         {
-          "id": 1,
-          "goal": 1
+          "type": "tile_mine",
+          "tile": "tiles.tree",
+          "count": 10
         },
         {
-          "id": 2,
-          "goal": 1
+          "type": "gtile_mine",
+          "gtile": "gtiles.dirt",
+          "count": 10
         },
         {
-          "id": 3,
-          "goal": 1
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "MINE 10 GRASS",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
+          "type": "kill_entity",
+          "entity": "entities.zombie",
+          "count": 3
+        },
         {
-          "id": 1,
-          "goal": 10
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "MINE 10 DIRT",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 2,
-          "goal": 10
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "MINE 10 STONE",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 3,
-          "goal": 10
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "name": "QUEST WITH A REALLY LONG NAME",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 1,
-          "goal": 1
+          "type": "complete_quest",
+          "questid": "quests.someotherquest"
         }
       ]
     }

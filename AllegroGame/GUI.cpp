@@ -106,25 +106,25 @@ void GUI::HandleEvent(ALLEGRO_EVENT& event)
 	switch (event.type)
 	{
 	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-		MouseButtonDown(event.mouse);
+		this->MouseButtonDown(event.mouse);
 		break;
 	case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-		MouseButtonUp(event.mouse);
+		this->MouseButtonUp(event.mouse);
 		break;
 	case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-		MouseButtonMove(event.mouse);
+		this->MouseButtonMove(event.mouse);
 		break;
 	case ALLEGRO_EVENT_KEY_CHAR:
 		if(IsTyping())
-			CharTyped(event.keyboard);
+			this->CharTyped(event.keyboard);
 		break;
 	case ALLEGRO_EVENT_KEY_DOWN:
 		if (!IsTyping())
-			KeyDown(event.keyboard);
+			this->KeyDown(event.keyboard);
 		break;
 	case ALLEGRO_EVENT_KEY_UP:
 		if (!IsTyping())
-			KeyUp(event.keyboard);
+			this->KeyUp(event.keyboard);
 		break;
 	}
 	if(activeSubGUI!=nullptr)

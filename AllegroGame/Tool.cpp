@@ -12,3 +12,4 @@ ToolType Tool::GetToolTypeFromString(std::string str)
 		return ToolType::NONE;
 	return ToolType::NONE;
 }
+

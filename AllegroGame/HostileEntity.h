@@ -3,11 +3,17 @@
 class HostileEntity :
     public Entity
 {
-
+private:
+	int damageCooldown = 0;
 protected:
     virtual bool IsHostile() const final;
-	HostileEntity(World* w, float xpos, float ypos, float mass, float initialVelocityX, float initialVelocityY);
-	HostileEntity(World* w, float xpos, float ypos, float mass);
-	HostileEntity(World* w, float xpos, float ypos);
+	virtual void Tick() override;
+
+	bool CooldownReady() const;
+	void ResetCooldown(int val);
+
+	HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY);
+	HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass);
+	HostileEntity(World* w, float xpos, float ypos, float maxHealth);
 };
 

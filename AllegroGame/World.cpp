@@ -8,6 +8,8 @@
 #include "MathUtils.h"
 #include "SimplexNoise.h"
 
+#define DEBUG
+
 
 #define WORLD_SAVE_MANIFEST_FILENAME "world_manifest.json"
 #define WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY "DO_DYNAMIC_WORLDGEN"
@@ -38,12 +40,20 @@ void World::UpdateEntityVector()
 
 GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    if (GenerateGetLevelHight(x, y) < .7)
+    if (GenerateGetLevelHeight(x, y) < .7)
     {
-        if (GenerateGetLevelTemperature(x, y) < 0)
+        if (GenerateGetLevelHeight(x, y) < -.4)
         {
-            if (GenerateGetLevelHumidity(x, y) < -.4)
-                return MakeGroundTile(this, "gtiles.dirt", x, y);
+            if (GenerateGetLevelHeight(x, y) < -.6)
+            {
+                return MakeGroundTile(this, "gtiles.water", x, y);
+            }
+            return MakeGroundTile(this, "gtiles.sand", x, y);
+        }
+        if (GenerateGetLevelTemperature(x, y) < .5)
+        {
+            if (GenerateGetLevelHumidity(x, y) < -.5)
+                return MakeGroundTile(this, "gtiles.sand", x, y);
             else
                 return MakeGroundTile(this, "gtiles.grass", x, y);
         }
@@ -54,7 +64,7 @@ GroundTile* World::GenerateGroundTile(int x, int y)
         return MakeGroundTile(this, "gtiles.stone", x, y);
 }
 
-float World::GenerateGetLevelHight(int x, int y)
+float World::GenerateGetLevelHeight(int x, int y)
 {
     return randgen.fractal(3, x / 20.f, y / 20.f);
 }
@@ -71,11 +81,11 @@ float World::GenerateGetLevelHumidity(int x, int y)
 
 Tile* World::GenerateTile(int x, int y)
 {
-    if (GenerateGetLevelHight(x, y) < 0)
+    if ((GenerateGetLevelHeight(x, y) < .5)&&(GenerateGetLevelHeight(x, y) > -.3))
     {
-        if (GenerateGetLevelTemperature(x, y) < 0)
+        if (GenerateGetLevelTemperature(x, y) < .3)
         {
-            if (GenerateGetLevelHumidity(x, y) < 0)
+            if (GenerateGetLevelHumidity(x, y) < .3)
                 return MakeTile(this, "tiles.air", x, y);
             else
                 return MakeTile(this, "tiles.tree", x, y);
@@ -235,8 +245,10 @@ World* World::LoadWorldFromFile(std::string filename)
 {
     std::filesystem::path dir = std::filesystem::temp_directory_path() / "LastSurvivorTemp";
     World* world = nullptr;
+#ifndef DEBUG
     try
     {
+#endif //DEBUG
         zip_extract(filename.c_str(), dir.string().c_str(), NULL, NULL);
         nlohmann::json manifest = nlohmann::json::parse(std::ifstream(dir / WORLD_SAVE_MANIFEST_FILENAME));
 
@@ -286,6 +298,7 @@ World* World::LoadWorldFromFile(std::string filename)
                 }
             world->chunks[cx][cy] = chunk;
         }
+#ifndef DEBUG
     }
     catch (std::exception e)
     {
@@ -295,6 +308,7 @@ World* World::LoadWorldFromFile(std::string filename)
             delete world;
         world = nullptr;
     }
+#endif //DEBUG
     try
     {
         //std::filesystem::remove_all(dir);
@@ -344,6 +358,8 @@ void World::SaveToFile(std::string filename)
     manifest[WORLD_SAVE_MANIFEST_CHUNK_X_SIZE_KEY] = WorldChunk::CHUNK_SIZE_X;
     manifest[WORLD_SAVE_MANIFEST_CHUNK_Y_SIZE_KEY] = WorldChunk::CHUNK_SIZE_Y;
     manifest[WORLD_SAVE_MANIFEST_VERSION_KEY] = game_version_name;
+    manifest[WORLD_SAVE_MANIFEST_VER_MAJOR_KEY] = game_version_major;
+    manifest[WORLD_SAVE_MANIFEST_VER_MINOR_KEY] = game_version_minor;
     manifest[WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY] = doDynamicWorldGen;
     manifest[WORLD_SAVE_MANIFEST_SEED_KEY] = SEED;
     for (const std::pair<int, std::string>& p : item_ids_to_keys)

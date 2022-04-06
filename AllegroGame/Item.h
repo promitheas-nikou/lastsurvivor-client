@@ -38,7 +38,7 @@ public:
 
 	virtual void Draw(int x, int y, int width, int height) const = 0;
 
-	~Item() = default;
+	virtual ~Item() = default;
 };
 
 Item* MakeItemFromID(std::string id);

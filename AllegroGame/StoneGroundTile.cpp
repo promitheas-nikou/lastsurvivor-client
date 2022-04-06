@@ -5,6 +5,7 @@ std::string StoneGroundTile::NAME;
 ALLEGRO_BITMAP* StoneGroundTile::TEXTURE;
 int StoneGroundTile::MINING_RESISTANCE;
 const ItemBundle* StoneGroundTile::DROP;
+ToolType StoneGroundTile::TOOL_TYPE;
 
 const std::string StoneGroundTile::ID = "gtiles.stone";
 
@@ -22,6 +23,7 @@ void StoneGroundTile::Init(nlohmann::json data)
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
+	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 }
 
 void StoneGroundTile::Draw() const

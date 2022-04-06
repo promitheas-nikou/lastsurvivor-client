@@ -2,6 +2,8 @@
 #include "GrassGroundTile.h"
 #include "StoneGroundTile.h"
 #include "DirtGroundTile.h"
+#include "SandGroundTile.h"
+#include "WaterGroundTile.h"
 #include "allegro5/allegro_font.h"
 #include <iostream>
 #include <format>
@@ -47,7 +49,7 @@ void GroundTile::TileUpdate()
 
 int GroundTile::GetMiningResistance() const
 {
-    return 3;  
+    return 10;
 }
 
 ToolType GroundTile::GetRequiredToolType() const
@@ -67,6 +69,11 @@ const ItemBundle* GroundTile::GetMiningResult(Tool* tool) const
     return nullptr;
 }
 
+float GroundTile::GetFrictionModifier() const
+{
+    return 1.0f;
+}
+
 GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
 {
     if (id == GrassGroundTile::ID)
@@ -75,5 +82,9 @@ GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
         return new DirtGroundTile(world, x, y);
     else if (id == StoneGroundTile::ID)
         return new StoneGroundTile(world, x, y);
+    else if (id == SandGroundTile::ID)
+        return new SandGroundTile(world, x, y);
+    else if (id == WaterGroundTile::ID)
+        return new WaterGroundTile(world, x, y);
     return nullptr;
 }
