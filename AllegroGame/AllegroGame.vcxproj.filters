@@ -40,9 +40,6 @@
     <Filter Include="Header Files\Game\World">
       <UniqueIdentifier>{1a116064-6840-4b3c-a850-f056649bf61f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\GUI">
-      <UniqueIdentifier>{97310782-4213-4225-b4c0-07576b1b825c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\GUI">
       <UniqueIdentifier>{a924a83b-4256-49ff-8cd5-25b63ee58270}</UniqueIdentifier>
     </Filter>
@@ -97,23 +94,14 @@
     <Filter Include="Header Files\Game\GUI\UIComponents">
       <UniqueIdentifier>{24ae7c38-7a0d-42ab-907a-4a792e7b244f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\GUI\UIComponents">
-      <UniqueIdentifier>{d733548f-64f8-4b63-be10-b7e12df1607c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{2cb7b838-4d0e-46d9-a474-d6adea4e98d9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents">
       <UniqueIdentifier>{244e323f-19b0-4fe7-8a19-833837f5b47d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents">
-      <UniqueIdentifier>{d607a566-c917-4c82-9183-f8a5174fe0b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\GUI\DefaultGUIs">
       <UniqueIdentifier>{8f48ee45-22a5-41f1-8d43-745ffa618b85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\GUI\DefaultGUIs">
-      <UniqueIdentifier>{f56fd56d-a3bf-4563-96ab-39af5f72a2f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Items\ItemBundles">
       <UniqueIdentifier>{8d6d839b-0096-4388-99e3-3176bebee5cd}</UniqueIdentifier>
@@ -138,6 +126,36 @@
     </Filter>
     <Filter Include="Header Files\Game\Quests">
       <UniqueIdentifier>{8420b426-ef3a-4737-a826-af410028b48b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI">
+      <UniqueIdentifier>{97310782-4213-4225-b4c0-07576b1b825c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents">
+      <UniqueIdentifier>{d733548f-64f8-4b63-be10-b7e12df1607c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents">
+      <UniqueIdentifier>{d607a566-c917-4c82-9183-f8a5174fe0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\DefaultGUIs">
+      <UniqueIdentifier>{f56fd56d-a3bf-4563-96ab-39af5f72a2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Weapons">
+      <UniqueIdentifier>{e9f5aa29-de0e-4286-9ba8-8a5670ed9172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Weapons">
+      <UniqueIdentifier>{0f1c23e4-17a1-4589-a267-33ff06c31c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\WeaponItems">
+      <UniqueIdentifier>{b6eef291-5c32-4df4-9d5e-0ae49aa78760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\WeaponItems">
+      <UniqueIdentifier>{ea1c721d-7d5a-4f65-ba85-73e0a50fc232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities\Projectiles">
+      <UniqueIdentifier>{e5f57002-7e05-42a2-8386-d203535065d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities\Projectiles">
+      <UniqueIdentifier>{15f9ffff-6dda-4eb2-be13-83bbbfcaa3c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -294,8 +312,50 @@
     <ClCompile Include="SandItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
+    <ClCompile Include="QuestCollection.cpp">
+      <Filter>Source Files\Game\Quests</Filter>
+    </ClCompile>
     <ClCompile Include="Quest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Quests</Filter>
+    </ClCompile>
+    <ClCompile Include="DeathGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Source Files\Game\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMeleeWeapon.cpp">
+      <Filter>Source Files\Game\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMeleeWeaponItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleSword.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeaponItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeaponItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="GunItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTool.cpp">
+      <Filter>Source Files\Game\Items\ToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\Game\Entities\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Game\Entities\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleBullet.cpp">
+      <Filter>Source Files\Game\Entities\Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -476,7 +536,49 @@
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
     <ClInclude Include="Quest.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestCollection.h">
+      <Filter>Header Files\Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Header Files\Game\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMeleeWeapon.h">
+      <Filter>Header Files\Game\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTool.h">
+      <Filter>Header Files\Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeaponItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMeleeWeaponItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleSword.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Header Files\Game\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="GunItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeaponItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleBullet.h">
+      <Filter>Header Files\Game\Entities\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Game\Entities\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\Game\Entities\Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

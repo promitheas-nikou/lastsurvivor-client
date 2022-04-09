@@ -27,7 +27,7 @@ public:
 
 	void ResetProgress();
 
-	void Mine();
+	bool Mine();
 
 	GroundTileMiner(Tool* t, ItemInventory* inv);
 

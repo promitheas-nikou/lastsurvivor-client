@@ -4,8 +4,8 @@
 #include "Item.h"
 
 class ToolItem:
-	public Tool,
-	public Item
+	public virtual Tool,
+	public virtual Item
 {
 protected:
 	ToolItem(std::string name);

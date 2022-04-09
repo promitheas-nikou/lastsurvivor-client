@@ -26,6 +26,7 @@ void init_sound()
 {
 	if (!al_install_audio())
 		printf("FAILED TO INSTALL AUDIO!!!\nWILL PROCEED INITIALIZATION WITH NO AUDIO\n");
+	al_reserve_samples(128);
 }
 
 void init_window()

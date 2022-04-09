@@ -147,7 +147,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>box2d.lib;archive.lib;archive_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,7 +172,9 @@
   <ItemGroup>
     <ClCompile Include="AirTile.cpp" />
     <ClCompile Include="AllegroGame.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
+    <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="DirtItem.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -180,6 +182,7 @@
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="GunItem.cpp" />
     <ClCompile Include="HostileEntity.cpp" />
     <ClCompile Include="InventoryGUI.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -188,9 +191,14 @@
     <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="MeleeWeaponItem.cpp" />
     <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Quest.cpp" />
+    <ClCompile Include="QuestCollection.cpp" />
+    <ClCompile Include="RangedWeapon.cpp" />
+    <ClCompile Include="RangedWeaponItem.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RecipeListGUI.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
@@ -199,7 +207,13 @@
     <ClCompile Include="SandItem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
+    <ClCompile Include="SimpleBullet.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleMeleeWeapon.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="SimpleMeleeWeaponItem.cpp" />
+    <ClCompile Include="SimpleSword.cpp" />
+    <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
@@ -234,7 +248,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="ButtonUIComponent.h" />
+    <ClInclude Include="DeathGUI.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="DirtItem.h" />
@@ -243,6 +259,7 @@
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="GunItem.h" />
     <ClInclude Include="HostileEntity.h" />
     <ClInclude Include="InventoryGUI.h" />
     <ClInclude Include="Item.h" />
@@ -252,10 +269,15 @@
     <ClInclude Include="json.h" />
     <ClInclude Include="LuaInterface.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="MeleeWeaponItem.h" />
     <ClInclude Include="miniz.h" />
     <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Quest.h" />
+    <ClInclude Include="QuestCollection.h" />
+    <ClInclude Include="RangedWeapon.h" />
+    <ClInclude Include="RangedWeaponItem.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeListGUI.h" />
     <ClInclude Include="RectangularUIComponent.h" />
@@ -264,7 +286,13 @@
     <ClInclude Include="SandItem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
+    <ClInclude Include="SimpleBullet.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
+    <ClInclude Include="SimpleMeleeWeapon.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="SimpleMeleeWeaponItem.h" />
+    <ClInclude Include="SimpleSword.h" />
+    <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="ZombieEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />

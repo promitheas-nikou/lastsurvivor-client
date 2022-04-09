@@ -32,7 +32,7 @@ void World::UpdateEntityVector()
 {
     std::vector<Entity*> new_entities;
     for (int i = 0; i < entities.size(); i++)
-        if (!entities[i]->shouldBeRemoved())
+        if (!entities[i]->IsDead())
             new_entities.push_back(entities[i]);
     entityUpdates = 0;
     entities = new_entities;
@@ -113,6 +113,11 @@ Tile* World::RemoveTile(int x, int y)
     return GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
 }
 
+void World::AddEntity(Entity* e)
+{
+    entities.push_back(e);
+}
+
 void World::Tick()
 {
     static int tick_counter=0;
@@ -125,13 +130,13 @@ void World::Tick()
             loadedChunkCount++;
         }
 
-    for (Entity* const &e : entities)
-        e->Tick();
+    for (int i=0;i<entities.size();i++)
+        if(entities[i]!=nullptr)
+            entities[i]->Tick();
     player->Tick();
 
     if ((tick_counter++ % ENTITY_UPDATE_RATE)!=0)
-        UpdateEntityVector();
-    
+        UpdateEntityVector();    
 }
 
 const PlayerEntity* World::GetPlayer() const
@@ -197,6 +202,28 @@ bool World::IsChunkGenerated(int x, int y)
     if (row == chunks.end())
         return false;
     return chunks[y].find(x) != chunks[y].end();
+}
+
+Entity* World::GetEntityAtPos(float x, float y) const
+{
+    for (Entity* e : entities)
+        if (e->ContainsPos(x, y))
+            return e;
+    if (player->ContainsPos(x, y))
+        return player;
+    return nullptr;
+}
+
+Entity* World::GetEntityAtPos(float x, float y, Entity* ignore) const
+{
+    for (Entity* e : entities)
+        if (e != ignore)
+            if (e->ContainsPos(x, y))
+                return e;
+    if (player != ignore)
+        if (player->ContainsPos(x, y))
+                return player;
+    return nullptr;
 }
 
 ALLEGRO_TRANSFORM draw_transform;

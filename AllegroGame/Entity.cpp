@@ -9,6 +9,42 @@ void Entity::SetRotation(float rot)
     rotation = rot;
 }
 
+void Entity::SetName(std::string n)
+{
+    name = n;
+}
+
+void Entity::SetShouldBounce(bool b)
+{
+    bounce = b;
+}
+
+void Entity::SetHasFriction(bool b)
+{
+    hasFriction = b;
+}
+
+bool Entity::GetHasFriction() const
+{
+    return hasFriction;
+}
+
+void Entity::Revive()
+{
+    SetHealth(GetMaxHealth());
+    dead = false;
+}
+
+void Entity::Kill()
+{
+    dead = true;
+}
+
+void Entity::SetHealth(float health)
+{
+    Entity::health = health;
+}
+
 float Entity::GetXpos() const
 {
     return xpos;
@@ -44,6 +80,16 @@ float Entity::getRotation() const
     return rotation;
 }
 
+bool Entity::DoesBounce() const
+{
+    return bounce;
+}
+
+bool Entity::ContainsPos(float x, float y)
+{
+    return (xpos - xsize / 2 <= x) && (x <= xpos + xsize / 2) && (ypos - ysize / 2 <= y) && (y <= ypos + ysize / 2);
+}
+
 bool Entity::IsHostile() const
 {
     return false;
@@ -54,9 +100,14 @@ bool Entity::IsPassive() const
     return true;
 }
 
-int Entity::GetHealth() const
+float Entity::GetHealth() const
 {
     return health;
+}
+
+float Entity::GetMaxHealth() const
+{
+    return maxHealth;
 }
 
 void Entity::applyForce(float dx, float dy)
@@ -73,6 +124,8 @@ void Entity::setSpeed(float dx, float dy)
 
 void Entity::Tick()
 {
+    if (this->IsDead())
+        return;
     xpos += xvel;
     if (!(
         containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
@@ -81,11 +134,12 @@ void Entity::Tick()
         containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough()))
     {
         xpos -= xvel;
-        xvel = 0;
+        xvel = DoesBounce()?-xvel:0;
     }
     else
     {
-        xvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
+        if(GetHasFriction())
+            xvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
     }
     ypos += yvel;
     if (!(
@@ -95,24 +149,30 @@ void Entity::Tick()
         containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough()))
     {
         ypos -= yvel;
-        yvel = 0;
+        yvel = DoesBounce() ? -yvel : 0;
     }
     else
     {
-        yvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
+        if (GetHasFriction())
+            yvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
     }
     if (health <= 0)
         dead = true;
 }
 
-std::string Entity::getName() const
+std::string Entity::GetName() const
 {
     return name;
 }
 
-bool Entity::shouldBeRemoved() const
+bool Entity::IsDead() const
 {
     return dead;
+}
+
+void Entity::DoDamage(MeleeWeapon* w) const
+{
+    DoDamage((w==nullptr)?1:w->GetDamage());
 }
 
 void Entity::DoDamage(float dmg) const
@@ -124,6 +184,9 @@ float Entity::getFriction() const
 {
     return .8f;
 }
+
+Entity::Entity(World* w, float x, float y, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys) : containingWorld{ w }, xpos{ x }, ypos{ y }, mass{ mass }, xvel{ initialVelocityX }, yvel{ initialVelocityY }, health{ maxHealth }, maxHealth{ maxHealth }, xsize{ xs }, ysize{ ys }
+{}
 
 Entity::Entity(World* w, float x, float y, float maxHealth, float mass, float initialVelocityX, float initialVelocityY) : containingWorld{ w }, xpos{ x }, ypos{ y }, mass{ mass }, xvel{ initialVelocityX }, yvel{ initialVelocityY }, health{ maxHealth }, maxHealth{ maxHealth }
 {}

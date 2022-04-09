@@ -1,17 +1,14 @@
 #pragma once
+#include "SimpleTool.h"
 #include "ToolItem.h"
+
 class SimpleToolItem :
-    public ToolItem
+    public virtual SimpleTool,
+    public virtual ToolItem
 {
-protected:
-    int miningDamage;
-    ToolType toolType;
-
-    SimpleToolItem(std::string name, int miningDmg, ToolType type);
-
 public:
-    virtual ToolType GetMiningType() const override;
-    virtual int GetMiningDamage() const override;
+     
+    SimpleToolItem(std::string name, int miningDmg, ToolType type);
 
     virtual ~SimpleToolItem() = default;
 };

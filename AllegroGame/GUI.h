@@ -7,7 +7,7 @@
 class GUI
 {
 protected:
-	GUI* activeSubGUI;
+	GUI* activeSubGUI = nullptr;
 	bool typing = false;
 	std::vector<UIComponent*> UIcomponents;
 public:

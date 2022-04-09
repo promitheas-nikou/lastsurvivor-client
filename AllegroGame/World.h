@@ -53,6 +53,8 @@ public:
 
 	Tile* RemoveTile(int x, int y);
 
+	void AddEntity(Entity* e);
+
 	void Tick();
 
 	const PlayerEntity* GetPlayer() const;
@@ -66,6 +68,9 @@ public:
 	Tile* SetTile(Tile* tile, int x, int y);
 
 	bool IsChunkGenerated(int x, int y);
+
+	Entity* GetEntityAtPos(float x, float y) const;
+	Entity* GetEntityAtPos(float x, float y, Entity* ignore) const;
 
 	void Draw();
 

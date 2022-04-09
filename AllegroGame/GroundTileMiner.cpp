@@ -49,18 +49,22 @@ void GroundTileMiner::ResetProgress()
     miningDamageDone = 0;
 }
 
-void GroundTileMiner::Mine()
+bool GroundTileMiner::Mine()
 {
     if (target == nullptr)
-        return;
+        return false;
     miningDamageDone += target->GetDamageDealtByTool(tool);
     int tmp = target->GetMiningResistance();
     if (miningDamageDone >= tmp)
     {
-        for(int i=0;i<miningDamageDone/tmp;i++)
+        for (int i = 0; i < miningDamageDone / tmp; i++)
             this->AddResult(target->GetMiningResult(tool));
         miningDamageDone %= tmp;
+        return true;
     }
+    else
+        return false;
+    
 }
 
 GroundTileMiner::GroundTileMiner(Tool* t, ItemInventory* inv) : tool{ t }, inventory{ inv }, miningDamageDone{ 0 }, target{ nullptr }

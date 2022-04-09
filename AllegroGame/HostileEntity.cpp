@@ -21,6 +21,9 @@ void HostileEntity::ResetCooldown(int val)
     damageCooldown = val;
 }
 
+HostileEntity::HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys) : Entity(w, xpos, ypos, maxHealth, mass, initialVelocityX, initialVelocityY, xs, ys)
+{}
+
 HostileEntity::HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY): Entity(w, xpos, ypos, maxHealth, mass, initialVelocityX, initialVelocityY)
 {}
 

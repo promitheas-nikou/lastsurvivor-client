@@ -12,6 +12,7 @@ protected:
 	bool CooldownReady() const;
 	void ResetCooldown(int val);
 
+	HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys);
 	HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY);
 	HostileEntity(World* w, float xpos, float ypos, float maxHealth, float mass);
 	HostileEntity(World* w, float xpos, float ypos, float maxHealth);

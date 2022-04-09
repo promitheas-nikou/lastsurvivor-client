@@ -37,7 +37,7 @@ void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
 		al_lock_mutex(worldMutex);
 		world->Tick();
 		b = al_get_time();
-		printf("\rTICK: %lf",b-a);
+		//printf("\rTICK: %lf",b-a);
 		a = b;
 		al_unlock_mutex(worldMutex);
 	}
@@ -78,6 +78,8 @@ int main()
 	init_items();
 	printf("\n======= INITIALIZING TILES =======\n\n");
 	init_tiles();
+	printf("\n======= INITIALIZING QUESTS =======\n\n");
+	init_quests();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 

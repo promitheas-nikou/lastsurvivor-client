@@ -14,13 +14,21 @@
 #include "DirtItem.h"
 #include "StickItem.h"
 #include "SandItem.h"
+#include "SimpleSword.h"
+#include "GunItem.h"
 #include "SimpleItemBundle.h"
 
 #include "Recipe.h"
 
+#define DEBUG
+
 #include <iostream>
 
 const std::string DATA_JSON_TEXTURE_KEY = "texture";
+const std::string DATA_JSON_TEXTURE0_KEY = "texture0";
+const std::string DATA_JSON_TEXTURE1_KEY = "texture1";
+const std::string DATA_JSON_TEXTURE2_KEY = "texture2";
+const std::string DATA_JSON_TEXTURE3_KEY = "texture3";
 const std::string DATA_JSON_TEXTURE_LIST_KEY = "textures";
 const std::string DATA_JSON_MINING_RESISTANCE_KEY = "mining_resistance";
 const std::string DATA_JSON_TOOL_TYPE_KEY = "tool";
@@ -28,15 +36,20 @@ const std::string DATA_JSON_NAME_KEY = "name";
 const std::string DATA_JSON_DESCRIPTION_KEY = "description";
 const std::string DATA_JSON_DROP_KEY = "drops";
 const std::string DATA_JSON_ID_KEY = "id";
+const std::string DATA_JSON_DAMAGE_KEY = "damage";
+const std::string DATA_JSON_FIRE_SPEED_KEY = "fire_speed";
 
 nlohmann::json json_data;
 
 std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
 std::unordered_map<std::string, ALLEGRO_SAMPLE*> loaded_audio_samples;
+std::unordered_map<std::string, ALLEGRO_SAMPLE_INSTANCE*> loaded_audio_sample_instances;
 std::unordered_map<std::string, Shader*> loaded_shaders;
 std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
 std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
+
+QuestCollection* quest_collection;
 
 using json = nlohmann::json;
 
@@ -77,7 +90,7 @@ void load_resources()
 		{
 			std::string id = texture_data["id"];
 			std::string filename = texture_data["filename"];
-			if ((loaded_bitmaps[id] = al_load_bitmap(filename.c_str())) == NULL)
+			if ((loaded_bitmaps[id] = al_load_bitmap(("textures/"+filename).c_str())) == NULL)
 				printf("\tFAILED TO LOAD TEXTURE #s(\"%s\")...\n", id.c_str(), filename.c_str());
 			else
 				printf("\tSUCCESSFULLY LOADED TEXTURE #%s(\"%s\")...\n", id.c_str(), filename.c_str());
@@ -94,7 +107,10 @@ void load_resources()
 			if((loaded_audio_samples[id] = al_load_sample(fn.c_str()))==NULL)
 				printf("\tFAILED TO LOAD AUDIO SAMPLE #s(\"%s\")...\n", id.c_str(), fn.c_str());
 			else
+			{
 				printf("\tSUCCESSFULLY LOADED AUDIO SAMPLE #%s(\"%s\")...\n", id.c_str(), fn.c_str());
+				loaded_audio_sample_instances[id] = al_create_sample_instance(loaded_audio_samples[id]);
+			}
 		}
 
 		nlohmann::json fonts_data = json_data["fonts"];
@@ -178,7 +194,9 @@ void init_tiles()
 
 void init_items()
 {
+#ifndef DEBUG
 	try {
+#endif //DEBUG
 		printf("PARSING ITEM DATA...\n");
 		json __items = json_data["items"];
 		json __loot_bundles = json_data["loot_bundles"];
@@ -197,6 +215,8 @@ void init_items()
 		DirtItem::Init(item_data[DirtItem::ID]);
 		StickItem::Init(item_data[StickItem::ID]);
 		SandItem::Init(item_data[SandItem::ID]);
+		SimpleSword::Init(item_data[SimpleSword::ID]);
+		GunItem::Init(item_data[GunItem::ID]);
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
@@ -205,6 +225,7 @@ void init_items()
 		}
 
 		Recipe::LoadRecipes(__crafting_recipes);
+#ifndef DEBUG
 	}
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -213,6 +234,12 @@ void init_items()
 		fprintf(stderr, "\n\nEXITING!!!\n");
 		exit(EXIT_FAILURE);
 	}
+#endif //DEBUG
+}
+
+void init_quests()
+{
+	quest_collection = QuestCollection::MakeFromJSON(json_data["quests"]);
 }
 
 void free_resources()

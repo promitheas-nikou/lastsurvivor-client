@@ -3,6 +3,8 @@
 #include "DirtItem.h"
 #include "StickItem.h"
 #include "SandItem.h"
+#include "SimpleSword.h"
+#include "GunItem.h"
 #include "ResourceLoader.h"
 #include "World.h"
 #include <allegro5/allegro_font.h>
@@ -81,6 +83,10 @@ Item* MakeItemFromID(std::string id)
         return new StickItem();
     if (id == SandItem::ID)
         return new SandItem();
+    if (id == SimpleSword::ID)
+        return new SimpleSword();
+    if (id == GunItem::ID)
+        return new GunItem();
     return nullptr;
 }
 

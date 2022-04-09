@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 0.5",
-  "VER_MINOR": 5,
+  "VERSION": "ALPHA 0.6",
+  "VER_MINOR": 6,
   "VER_MAJOR": 0,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -99,12 +99,32 @@
       "filename": "heart_icon.png"
     },
     {
+      "id": "tex.gui.death",
+      "filename": "death.png"
+    },
+    {
       "id": "tex.entities.player",
       "filename": "player.png"
     },
     {
       "id": "tex.entities.zombie",
       "filename": "zombie.png"
+    },
+    {
+      "id": "tex.entities.magmaboss",
+      "filename": "magmaboss.png"
+    },
+    {
+      "id": "tex.entities.red_bullet",
+      "filename": "red_bullet.png"
+    },
+    {
+      "id": "tex.entities.blue_bullet",
+      "filename": "blue_bullet.png"
+    },
+    {
+      "id": "tex.entities.green_bullet",
+      "filename": "green_bullet.png"
     },
     {
       "id": "tex.tiles.tree/0",
@@ -133,6 +153,10 @@
     {
       "id": "tex.items.sand",
       "filename": "sand_pile.png"
+    },
+    {
+      "id": "tex.items.sword",
+      "filename": "sword.png"
     },
     {
       "id": "tex.items.stick",
@@ -326,6 +350,20 @@
       "name": "Axe",
       "texture": "tex.items.axe",
       "mine_damage": 2
+    },
+    {
+      "id": "items.sword",
+      "name": "Sword",
+      "texture": "tex.items.sword",
+      "damage": 10
+    },
+    {
+      "id": "items.gun",
+      "name": "Gun",
+      "texture": "tex.items.stone",
+      "texture0": "tex.entities.red_bullet",
+      "damage": 2.5,
+      "fire_speed": 0.01
     }
   ],
   "fonts": [
@@ -385,9 +423,48 @@
         },
         {
           "type": "complete_quest",
-          "questid": "quests.someotherquest"
+          "quest": "quests.whatever"
+        }
+      ]
+    },
+    {
+      "id": "quests.break10trees",
+      "name": "Break 10 trees",
+      "unlocked": true,
+      "completed": false,
+      "requirements": [
+        {
+          "type": "tile_mine",
+          "tile": "tiles.tree",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "quests.Break20sand",
+      "name": "Break 20 sand",
+      "unlocked": true,
+      "completed": false,
+      "requirements": [
+        {
+          "type": "gtile_mine",
+          "gtile": "gtiles.sand",
+          "count": 20
+        }
+      ]
+    },
+    {
+      "id": "quests.Eliminate1zombie",
+      "name": "Eliminate 1 zombie",
+      "unlocked": true,
+      "completed": false,
+      "requirements": [
+        {
+          "type": "kill_entity",
+          "entity": "entities.zombie",
+          "count": 1
         }
       ]
     }
   ]
-}
+} 

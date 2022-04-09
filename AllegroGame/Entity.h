@@ -2,14 +2,15 @@
 
 #include <string>
 #include <allegro5/allegro5.h>
+#include "MeleeWeapon.h"
 
 class World;
 class WorldChunk;
+class PlayerEntity;
 
 class Entity
 {
 private:
-
 	std::string name;
 
 	bool dead = false;
@@ -19,16 +20,29 @@ private:
 	float xvel;
 	float yvel;
 	float mass;
-	float xsize;
-	float ysize;
+	float xsize = .5f;
+	float ysize = .5f;
 	float rotation;
 	mutable float health;
 	float maxHealth;
+	bool bounce = false;
+	bool hasFriction = true;
 
 protected:
 	World* containingWorld;
 
 	void SetRotation(float rot);
+
+	void SetName(std::string n);
+
+	void SetShouldBounce(bool b);
+
+	void SetHasFriction(bool b);
+
+	void Revive();
+	void Kill();
+
+	void SetHealth(float health);
 
 public:
 
@@ -40,10 +54,17 @@ public:
 	float getYsize() const;
 	float getRotation() const;
 
+	bool DoesBounce() const;
+
+	bool GetHasFriction() const;
+
+	virtual bool ContainsPos(float x, float y);
+	
 	virtual bool IsHostile() const;
 	virtual bool IsPassive() const;
 
-	int GetHealth() const;
+	float GetHealth() const;
+	float GetMaxHealth() const;
 
 	void applyForce(float dx, float dy);
 	void setSpeed(float dx, float dy);
@@ -57,13 +78,16 @@ public:
 
 	virtual void Tick();
 
-	virtual std::string getName() const;
-	virtual bool shouldBeRemoved() const;
+	virtual std::string GetName() const;
+	virtual std::string GetID() const = 0;
+	virtual bool IsDead() const;
 
+	virtual void DoDamage(MeleeWeapon* w) const;
 	virtual void DoDamage(float dmg) const;
 
 	virtual float getFriction() const;
 
+	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys);
 	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY);
 	Entity(World* w, float xpos, float ypos, float maxHealth, float mass);
 	Entity(World* w, float xpos, float ypos, float maxHealth);
@@ -72,5 +96,6 @@ public:
 
 	friend WorldChunk;
 	friend World;
+	friend PlayerEntity;
 };
 
