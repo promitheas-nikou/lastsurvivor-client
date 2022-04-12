@@ -10,6 +10,7 @@
 #include "Graphics.h"
 #include "ResourceLoader.h"
 #include "ZombieEntity.h"
+#include "CactusBossEntity.h"
 
 #include "Shader.h"
 
@@ -34,10 +35,12 @@ void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
 	while (!al_get_thread_should_stop(thr))
 	{
 		al_wait_for_event(queue, &evt);
+		if (evt.type != ALLEGRO_EVENT_TIMER)
+			continue;
 		al_lock_mutex(worldMutex);
 		world->Tick();
 		b = al_get_time();
-		//printf("\rTICK: %lf",b-a);
+		printf("\rTICK: %lf",b-a);
 		a = b;
 		al_unlock_mutex(worldMutex);
 	}
@@ -46,7 +49,6 @@ void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
 
 void EXIT_GAME()
 {
-	
 	al_set_thread_should_stop(worldTickerThread);
 	al_join_thread(worldTickerThread, NULL);
 	destroy_graphics();
@@ -66,6 +68,8 @@ int main()
 	printf("LOADING...\n\n\n");
 	printf("\n======= GRAPHICS =======\n\n");
 	init_graphics();
+	printf("\n======= AUDIO =======\n\n");
+	init_sound();
 	printf("\n======= LOADING RESOURCES =======\n\n");
 	load_resources();
 	printf("\n======= PREPARING DISPLAY =======\n\n");
@@ -78,6 +82,8 @@ int main()
 	init_items();
 	printf("\n======= INITIALIZING TILES =======\n\n");
 	init_tiles();
+	printf("\n======= INITIALIZING ENTITIES =======\n\n");
+	init_entities();
 	printf("\n======= INITIALIZING QUESTS =======\n\n");
 	init_quests();
 	double LOAD_TIME = al_get_time();
@@ -86,7 +92,7 @@ int main()
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
 	World* world = World::CreateNewWorld("New World");
-	world->entities.push_back(new ZombieEntity(world, 10, 10));
+	world->entities.push_back(new CactusBossEntity(world, 10, 10));
 	double tick;
 	double worldDraw;
 	double playerGUIdraw;

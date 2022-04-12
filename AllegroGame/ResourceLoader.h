@@ -5,6 +5,7 @@
 #include "ItemBundle.h"
 #include "QuestCollection.h"
 #include <unordered_map>
+#include "AudioMultiTrack.h"
 #include <string>
 
 #include "json.h"
@@ -21,9 +22,16 @@ const extern std::string DATA_JSON_TOOL_TYPE_KEY;
 const extern std::string DATA_JSON_NAME_KEY;
 const extern std::string DATA_JSON_DESCRIPTION_KEY;
 const extern std::string DATA_JSON_DROP_KEY;
+const extern std::string DATA_JSON_COLLECT_KEY;
 const extern std::string DATA_JSON_ID_KEY;
+const extern std::string DATA_JSON_AUDIO_COLLECTION_KEY;
+const extern std::string DATA_JSON_SOUND_TYPE_KEY;
+const extern std::string DATA_JSON_RANGESQ_KEY;
 const extern std::string DATA_JSON_DAMAGE_KEY;
 const extern std::string DATA_JSON_FIRE_SPEED_KEY;
+const extern std::string DATA_JSON_HEALTH_KEY;
+const extern std::string DATA_JSON_HUNGER_KEY;
+const extern std::string DATA_JSON_WATER_KEY;
 
 extern nlohmann::json json_data;
 
@@ -37,8 +45,9 @@ extern ALLEGRO_BITMAP* window_icon;
 extern std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 extern std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
 extern std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
-extern std::unordered_map<std::string, ALLEGRO_SAMPLE*> loaded_audio_samples;
-extern std::unordered_map<std::string, ALLEGRO_SAMPLE_INSTANCE*> loaded_audio_sample_instances;
+extern std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
+extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_samples;
+extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;
 extern std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 extern std::unordered_map<std::string, Shader*> loaded_shaders;
 
@@ -56,6 +65,7 @@ void load_resources();
 void init_tiles();
 void init_items();
 void init_quests();
+void init_entities();
 
 void load_shaders();
 

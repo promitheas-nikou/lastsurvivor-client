@@ -11,6 +11,6 @@ private:
 	ALLEGRO_BITMAP* TEXTURE;
 public:
 	DeathGUI(PlayerEntity* p);
-	void DrawThisGUI() final;
+	virtual void DrawThisGUI() final;
 };
 

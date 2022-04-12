@@ -17,7 +17,7 @@ std::string GunItem::GetID() const
 
 void GunItem::Fire(World* world, float xpos, float ypos, float rot, Entity* owner)
 {
-	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), BULLET_TEXTURE);
+	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), &BULLET_TEXTURE, 1);
 	b->SetOwnerEntity(owner);
 	world->AddEntity(b);
 }

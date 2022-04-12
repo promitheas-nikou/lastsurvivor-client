@@ -53,6 +53,7 @@ public:
 	float getXsize() const;
 	float getYsize() const;
 	float getRotation() const;
+	float getMass() const;
 
 	bool DoesBounce() const;
 
@@ -84,6 +85,7 @@ public:
 
 	virtual void DoDamage(MeleeWeapon* w) const;
 	virtual void DoDamage(float dmg) const;
+	virtual void Heal(float hl) const;
 
 	virtual float getFriction() const;
 

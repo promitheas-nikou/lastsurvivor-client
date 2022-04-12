@@ -9,8 +9,7 @@
 #include <format>
 #include "ResourceLoader.h"
 
-GroundTile::GroundTile(World* w, int x, int y, std::string n) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ ToolType::PICKAXE } {}
-
+GroundTile::GroundTile(World* w, int x, int y, std::string n, ToolType t) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ t } {}
 
 void GroundTile::LoadAdditionalDataFromFile(std::ifstream &file)
 {
@@ -64,6 +63,9 @@ int GroundTile::GetDamageDealtByTool(Tool* tool) const
     return (static_cast<char>(tool->GetMiningType()) & static_cast<char>(GetRequiredToolType())) ? tool->GetMiningDamage() : 1;
 }
 
+void GroundTile::Use(PlayerEntity* p)
+{}
+
 const ItemBundle* GroundTile::GetMiningResult(Tool* tool) const
 {
     return nullptr;
@@ -73,6 +75,9 @@ float GroundTile::GetFrictionModifier() const
 {
     return 1.0f;
 }
+
+void GroundTile::PlaySound(SoundType t) const
+{}
 
 GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
 {

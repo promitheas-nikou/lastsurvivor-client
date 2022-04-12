@@ -9,7 +9,7 @@ class SimpleMeleeWeaponItem:
 {
 public:
 
-	SimpleMeleeWeaponItem(std::string name, float dmg);
+	SimpleMeleeWeaponItem(std::string name, float dmg, float rng);
 
 	virtual ~SimpleMeleeWeaponItem() = default;
 };

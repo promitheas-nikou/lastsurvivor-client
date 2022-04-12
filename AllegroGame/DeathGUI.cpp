@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "ResourceLoader.h"
 #include "PlayerEntity.h"
+#include <allegro5/allegro_primitives.h>
 
 PlayerEntity* player;
 
@@ -18,4 +19,6 @@ DeathGUI::DeathGUI(PlayerEntity* p) : TEXTURE{ loaded_bitmaps["tex.gui.death"] }
 }
 
 void DeathGUI::DrawThisGUI()
-{}
+{
+	al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(255,0,0,100));
+}

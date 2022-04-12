@@ -157,6 +157,21 @@
     <Filter Include="Header Files\Game\Entities\Projectiles">
       <UniqueIdentifier>{15f9ffff-6dda-4eb2-be13-83bbbfcaa3c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Consumables">
+      <UniqueIdentifier>{b410703f-37b4-44ec-8c66-42c1e1ebd889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Consumables">
+      <UniqueIdentifier>{60c3c52b-9795-4622-81b7-af78ffd8874e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ConsumableItems">
+      <UniqueIdentifier>{44e43d30-97bd-4a81-95a4-b328bc291263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ConsumableItems">
+      <UniqueIdentifier>{c6e67361-db15-4d69-aa72-14efb2deeea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Audio">
+      <UniqueIdentifier>{2e57a837-2047-4c7a-8708-8cbaff4a19b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -356,6 +371,39 @@
     </ClCompile>
     <ClCompile Include="SimpleBullet.cpp">
       <Filter>Source Files\Game\Entities\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Consumable.cpp">
+      <Filter>Source Files\Game\Consumables</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleConsumable.cpp">
+      <Filter>Source Files\Game\Consumables</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsumableItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BerryItem.cpp">
+      <Filter>Source Files\Game\Consumables</Filter>
+    </ClCompile>
+    <ClCompile Include="BerryBushTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioMultiTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioMultiTrackCollection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CactusBossEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RattleLauncher.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -579,6 +627,39 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\Game\Entities\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleConsumable.h">
+      <Filter>Header Files\Game\Consumables</Filter>
+    </ClInclude>
+    <ClInclude Include="Consumable.h">
+      <Filter>Header Files\Game\Consumables</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsumableItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleConsumableItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BerryItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BerryBushTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioMultiTrack.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioMultiTrackCollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CactusBossEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RattleLauncher.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

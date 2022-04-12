@@ -2,7 +2,7 @@
 #include "World.h"
 #include "MathUtils.h"
 
-Bullet::Bullet(World* w, float dmg, float x, float y, float velx, float vely): damage{dmg},Projectile(w, x, y, velx, vely)
+Bullet::Bullet(World* w, float x, float y, float velx, float vely): Projectile(w, x, y, velx, vely)
 {}
 
 void Bullet::Tick()
@@ -11,17 +11,18 @@ void Bullet::Tick()
         return;
     warpRelative(getXvel(), getYvel());
     if (!(
-        containingWorld->GetTile(util_floor(GetXpos() - getXsize() / 2), util_floor(GetYpos() - getYsize() / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(GetXpos() + getXsize() / 2), util_floor(GetYpos() - getYsize() / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(GetXpos() - getXsize() / 2), util_floor(GetYpos() + getYsize() / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(GetXpos() + getXsize() / 2), util_floor(GetYpos() + getYsize() / 2))->canWalkThrough()))
+        containingWorld->GetTile(util_floor(GetXpos() - getXsize() / 2), util_floor(GetYpos() - getYsize() / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(GetXpos() + getXsize() / 2), util_floor(GetYpos() - getYsize() / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(GetXpos() - getXsize() / 2), util_floor(GetYpos() + getYsize() / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(GetXpos() + getXsize() / 2), util_floor(GetYpos() + getYsize() / 2))->CanWalkThrough()))
     {
         Kill();
     }
 	Entity* e = containingWorld->GetEntityAtPos(GetXpos(), GetYpos(), this);
     if ((e != nullptr) && (e != owner))
     {
-        e->DoDamage(damage);
+        e->DoDamage(GetDamage());
+        e->applyForce(getMass() * getXvel(), getMass() * getYvel());
         Kill();
     }
 }

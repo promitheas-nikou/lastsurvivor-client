@@ -72,9 +72,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>true</Allegro_AddonVideo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>true</Allegro_AddonVideo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -172,8 +194,15 @@
   <ItemGroup>
     <ClCompile Include="AirTile.cpp" />
     <ClCompile Include="AllegroGame.cpp" />
+    <ClCompile Include="AudioMultiTrack.cpp" />
+    <ClCompile Include="AudioMultiTrackCollection.cpp" />
+    <ClCompile Include="BerryBushTile.cpp" />
+    <ClCompile Include="BerryItem.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
+    <ClCompile Include="CactusBossEntity.cpp" />
+    <ClCompile Include="Consumable.cpp" />
+    <ClCompile Include="ConsumableItem.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="DirtItem.cpp" />
@@ -199,6 +228,7 @@
     <ClCompile Include="QuestCollection.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="RangedWeaponItem.cpp" />
+    <ClCompile Include="RattleLauncher.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RecipeListGUI.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
@@ -209,11 +239,14 @@
     <ClCompile Include="ShovelToolItem.cpp" />
     <ClCompile Include="SimpleBullet.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleConsumable.cpp" />
+    <ClCompile Include="SimpleConsumableItem.cpp" />
     <ClCompile Include="SimpleMeleeWeapon.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="SimpleMeleeWeaponItem.cpp" />
     <ClCompile Include="SimpleSword.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
+    <ClCompile Include="SoundType.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
@@ -248,8 +281,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
+    <ClInclude Include="AudioMultiTrack.h" />
+    <ClInclude Include="AudioMultiTrackCollection.h" />
+    <ClInclude Include="BerryBushTile.h" />
+    <ClInclude Include="BerryItem.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="ButtonUIComponent.h" />
+    <ClInclude Include="CactusBossEntity.h" />
+    <ClInclude Include="Consumable.h" />
+    <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="DeathGUI.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
@@ -278,6 +318,7 @@
     <ClInclude Include="QuestCollection.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="RangedWeaponItem.h" />
+    <ClInclude Include="RattleLauncher.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeListGUI.h" />
     <ClInclude Include="RectangularUIComponent.h" />
@@ -288,11 +329,14 @@
     <ClInclude Include="ShovelToolItem.h" />
     <ClInclude Include="SimpleBullet.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
+    <ClInclude Include="SimpleConsumable.h" />
+    <ClInclude Include="SimpleConsumableItem.h" />
     <ClInclude Include="SimpleMeleeWeapon.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="SimpleMeleeWeaponItem.h" />
     <ClInclude Include="SimpleSword.h" />
     <ClInclude Include="SimpleTool.h" />
+    <ClInclude Include="SoundType.h" />
     <ClInclude Include="ZombieEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />

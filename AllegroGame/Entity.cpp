@@ -3,6 +3,7 @@
 #include "MathUtils.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "ResourceLoader.h"
 
 void Entity::SetRotation(float rot)
 {
@@ -80,6 +81,11 @@ float Entity::getRotation() const
     return rotation;
 }
 
+float Entity::getMass() const
+{
+    return mass;
+}
+
 bool Entity::DoesBounce() const
 {
     return bounce;
@@ -128,10 +134,10 @@ void Entity::Tick()
         return;
     xpos += xvel;
     if (!(
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough()))
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough()))
     {
         xpos -= xvel;
         xvel = DoesBounce()?-xvel:0;
@@ -143,10 +149,10 @@ void Entity::Tick()
     }
     ypos += yvel;
     if (!(
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->canWalkThrough()))
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough()))
     {
         ypos -= yvel;
         yvel = DoesBounce() ? -yvel : 0;
@@ -158,6 +164,11 @@ void Entity::Tick()
     }
     if (health <= 0)
         dead = true;
+    if (!IsDead())
+        if (xvel || yvel)
+        {
+            containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->PlaySound(SoundType::WALK);
+        }
 }
 
 std::string Entity::GetName() const
@@ -178,6 +189,11 @@ void Entity::DoDamage(MeleeWeapon* w) const
 void Entity::DoDamage(float dmg) const
 {
     health -= dmg;
+}
+
+void Entity::Heal(float hl) const
+{
+    health = std::min(health + hl, GetMaxHealth());
 }
 
 float Entity::getFriction() const

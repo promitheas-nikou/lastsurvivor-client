@@ -5,10 +5,20 @@ void SimpleMeleeWeapon::SetDamage(float dmg)
 	damage = dmg;
 }
 
-SimpleMeleeWeapon::SimpleMeleeWeapon(float dmg) : damage{ dmg }, MeleeWeapon()
+void SimpleMeleeWeapon::SetRangeSQ(float rng)
+{
+	range = rng;
+}
+
+SimpleMeleeWeapon::SimpleMeleeWeapon(float dmg, float rng) : damage{ dmg }, range{ rng }, MeleeWeapon()
 {}
 
 float SimpleMeleeWeapon::GetDamage() const
 {
 	return damage;
+}
+
+float SimpleMeleeWeapon::GetRangeSQ() const
+{
+	return range;
 }

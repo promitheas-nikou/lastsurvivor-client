@@ -10,6 +10,8 @@
 
 class World;
 
+class PlayerEntity;
+
 class Tile
 {
 	protected:
@@ -17,7 +19,7 @@ class Tile
 
 		const int xpos, ypos;
 
-		ToolType optimalToolType;
+		ToolType optimalToolType = ToolType::AXE;
 
 		int miningResistance;
 		mutable int miningDamageDone;
@@ -42,11 +44,13 @@ class Tile
 
 		virtual void Draw() const = 0;
 
-		virtual bool canWalkThrough() const;
+		virtual bool CanWalkThrough() const;
 		virtual bool canSwimThrough() const;
 		virtual bool canFlyThrough() const;
 		virtual bool IsTransparent() const;
 		virtual bool IsEmpty() const;
+
+		virtual void Use(PlayerEntity* user);
 
 		virtual bool MineWithTool(Tool* tool);
 

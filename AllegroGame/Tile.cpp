@@ -1,6 +1,7 @@
 #include "Tile.h"
 #include "AirTile.h"
 #include "TreeTile.h"
+#include "BerryBushTile.h"
 
 Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w), xpos(x), ypos(y), optimalToolType(t), miningResistance(m), name(n)
 {}
@@ -38,7 +39,7 @@ void Tile::TileUpdate()
 	return;
 }
 
-bool Tile::canWalkThrough() const
+bool Tile::CanWalkThrough() const
 {
 	return this->IsEmpty();
 }
@@ -62,6 +63,9 @@ bool Tile::IsEmpty() const
 {
 	return false;
 }
+
+void Tile::Use(PlayerEntity* user)
+{}
 
 bool Tile::MineWithTool(Tool* tool)
 {
@@ -108,5 +112,7 @@ Tile* MakeTile(World* world, std::string id, int x, int y)
 		return new AirTile(world, x, y);
 	if (id == TreeTile::ID)
 		return new TreeTile(world, x, y);
+	if (id == BerryBushTile::ID)
+		return new BerryBushTile(world, x, y);
 	return nullptr;
 }

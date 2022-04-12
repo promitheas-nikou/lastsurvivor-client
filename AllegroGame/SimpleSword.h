@@ -8,6 +8,7 @@ class SimpleSword :
 private:
     static std::string NAME;
     static float DAMAGE;
+    static float RANGESQ;
     static ALLEGRO_BITMAP* TEXTURE;
 
 public:

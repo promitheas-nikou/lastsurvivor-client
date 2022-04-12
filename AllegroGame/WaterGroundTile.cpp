@@ -1,5 +1,6 @@
 #include "WaterGroundTile.h"
 #include "ResourceLoader.h"
+#include "PlayerEntity.h"
 
 std::string WaterGroundTile::NAME;
 ALLEGRO_BITMAP* WaterGroundTile::TEXTURE;
@@ -13,7 +14,7 @@ std::string WaterGroundTile::GetID() const
 	return ID;
 }
 
-WaterGroundTile::WaterGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME)
+WaterGroundTile::WaterGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME, TOOL_TYPE)
 {}
 
 void WaterGroundTile::Init(nlohmann::json data)
@@ -28,6 +29,11 @@ void WaterGroundTile::Init(nlohmann::json data)
 void WaterGroundTile::Draw() const
 {
 	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
+}
+
+void WaterGroundTile::Use(PlayerEntity* p)
+{
+	p->water = std::min(p->MAX_WATER, p->water+5);
 }
 
 const ItemBundle* WaterGroundTile::GetMiningResult(Tool* tool) const

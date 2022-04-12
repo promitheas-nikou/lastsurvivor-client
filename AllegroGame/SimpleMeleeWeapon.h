@@ -5,11 +5,14 @@ class SimpleMeleeWeapon :
 {
 private:
     float damage;
+    float range;
 protected:
     void SetDamage(float dmg);
+    void SetRangeSQ(float rng);
 public:
-    SimpleMeleeWeapon(float dmg);
+    SimpleMeleeWeapon(float dmg, float rng);
 
     virtual float GetDamage() const final;
+    virtual float GetRangeSQ() const final;
 };
 

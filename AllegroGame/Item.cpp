@@ -3,6 +3,7 @@
 #include "DirtItem.h"
 #include "StickItem.h"
 #include "SandItem.h"
+#include "BerryItem.h"
 #include "SimpleSword.h"
 #include "GunItem.h"
 #include "ResourceLoader.h"
@@ -87,6 +88,8 @@ Item* MakeItemFromID(std::string id)
         return new SimpleSword();
     if (id == GunItem::ID)
         return new GunItem();
+    if (id == BerryItem::ID)
+        return new BerryItem();
     return nullptr;
 }
 

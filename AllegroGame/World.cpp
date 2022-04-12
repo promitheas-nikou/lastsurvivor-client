@@ -79,16 +79,38 @@ float World::GenerateGetLevelHumidity(int x, int y)
     return randgen.fractal(3,x/40.f+925,y/40.f-461);
 }
 
+float World::GenerateGetLevelTileRandomness(int x, int y)
+{
+    return randgen.fractal(3, x * 46.77335f + 925, y *843.91275f - 461);
+}
+
 Tile* World::GenerateTile(int x, int y)
 {
-    if ((GenerateGetLevelHeight(x, y) < .5)&&(GenerateGetLevelHeight(x, y) > -.3))
+    if (GenerateGetLevelHeight(x, y) < .7)
     {
-        if (GenerateGetLevelTemperature(x, y) < .3)
+        if (GenerateGetLevelHeight(x, y) < -.4)
         {
-            if (GenerateGetLevelHumidity(x, y) < .3)
+            if (GenerateGetLevelHeight(x, y) < -.6)
+            {
                 return MakeTile(this, "tiles.air", x, y);
+            }
+            return MakeTile(this, "tiles.air", x, y);
+        }
+        if (GenerateGetLevelTemperature(x, y) < .5)
+        {
+            if (GenerateGetLevelHumidity(x, y) < -.5)
+                return MakeTile(this, "tiles.air", x, y);
+            else if (GenerateGetLevelHumidity(x, y) < .4)
+            {
+                if(GenerateGetLevelTileRandomness(x,y)>.8)
+                    return MakeTile(this, "tiles.berry_bush", x, y);
+                else
+                    return MakeTile(this, "tiles.air", x, y);
+            }
             else
+            {
                 return MakeTile(this, "tiles.tree", x, y);
+            }
         }
         else
             return MakeTile(this, "tiles.air", x, y);
@@ -132,11 +154,12 @@ void World::Tick()
 
     for (int i=0;i<entities.size();i++)
         if(entities[i]!=nullptr)
-            entities[i]->Tick();
+            if(!entities[i]->IsDead())
+                entities[i]->Tick();
     player->Tick();
 
-    if ((tick_counter++ % ENTITY_UPDATE_RATE)!=0)
-        UpdateEntityVector();    
+    if ((tick_counter++ % ENTITY_UPDATE_RATE)==0)
+        UpdateEntityVector();
 }
 
 const PlayerEntity* World::GetPlayer() const
@@ -206,9 +229,9 @@ bool World::IsChunkGenerated(int x, int y)
 
 Entity* World::GetEntityAtPos(float x, float y) const
 {
-    for (Entity* e : entities)
+    for(Entity* e: entities)
         if (e->ContainsPos(x, y))
-            return e;
+                return e;
     if (player->ContainsPos(x, y))
         return player;
     return nullptr;
@@ -224,6 +247,29 @@ Entity* World::GetEntityAtPos(float x, float y, Entity* ignore) const
         if (player->ContainsPos(x, y))
                 return player;
     return nullptr;
+}
+
+std::vector<Entity*> World::GetEntitiesAtPos(float x, float y) const
+{
+    std::vector<Entity*> t;
+    for (Entity* e : entities)
+        if (e->ContainsPos(x, y))
+            t.push_back(e);
+    return t;
+}
+
+std::vector<Entity*> World::GetEntitiesNearPos(float x, float y, float dist) const
+{
+    std::vector<Entity*> t;
+    dist *= dist;
+    for (Entity* e : entities)
+    {
+        float a = x - e->GetXpos();
+        float b = y - e->GetYpos();
+        if (a * a + b * b < dist)
+            t.push_back(e);
+    }
+    return t;
 }
 
 ALLEGRO_TRANSFORM draw_transform;
@@ -252,12 +298,9 @@ void World::Draw()
         for (int y = drawBeginY; y < drawEndY; y++)
             GetTile(x, y)->Draw();
 
-    for (Entity* e : entities)
-        e->Tick();
-
     //DRAW ENTITIES
     for (Entity* e : entities)
-        //if(!e->shouldBeRemoved())
+        if(!e->IsDead())
             e->Draw();
     player->Draw();
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);

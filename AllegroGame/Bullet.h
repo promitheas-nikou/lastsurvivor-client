@@ -5,12 +5,13 @@ class Bullet :
     public Projectile
 {
 private:
-    float damage;
     Entity* owner;
 public:
-    Bullet(World* w, float dmg, float x, float y, float velx, float vely);
+    Bullet(World* w, float x, float y, float velx, float vely);
     void Tick() override;
     
+    virtual float GetDamage() const = 0;
+
     void SetOwnerEntity(Entity* entity);
 
     virtual ~Bullet() = default;

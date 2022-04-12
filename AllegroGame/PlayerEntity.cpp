@@ -12,11 +12,16 @@
 #include "LuaInterface.h"
 #include "SimpleSword.h"
 #include "GunItem.h"
+#include "Consumable.h"
+#include "BerryItem.h"
+#include "Graphics.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 ALLEGRO_BITMAP* PlayerEntity::TEXTURE;
-ALLEGRO_BITMAP* HEART_ICON;
+ALLEGRO_BITMAP* HEALTH_ICON;
+ALLEGRO_BITMAP* HUNGER_ICON;
+ALLEGRO_BITMAP* WATER_ICON;
 
 int a, b, c;
 
@@ -70,9 +75,10 @@ void PlayerEntity::DrawThisGUI()
 	Tile* targetedTile = containingWorld->GetTile(floor(x), floor(y));
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s",targetedTile->GetName().c_str());
+	GroundTile* targetedGroundTile = nullptr;
 	if (targetedTile->IsEmpty())
 	{
-		GroundTile* targetedGroundTile = containingWorld->GetGroundTile(floor(x), floor(y));
+		targetedGroundTile = containingWorld->GetGroundTile(floor(x), floor(y));
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 150, 150, 150));
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 0, 0, 150));
 		//printf("%p::%p\n", GroundTileMiner::GetTarget(), targetedGroundTile);
@@ -88,12 +94,12 @@ void PlayerEntity::DrawThisGUI()
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", containingWorld->GetGroundTile(floor(x),floor(y))->GetName().c_str());
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
-	Entity* e = containingWorld->GetEntityAtPos(x, y);
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (e!=nullptr)?e->GetName().c_str():"None");
-	if (e != nullptr)
+	Entity* targetedEntity = containingWorld->GetEntityAtPos(x, y);
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity!=nullptr)?targetedEntity->GetName().c_str():"None");
+	if (targetedEntity != nullptr)
 	{
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 0, 0, 150));
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190 * (e->GetHealth() / e->maxHealth)), 205, al_map_rgba(255, 0, 0, 150));
+		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedEntity->GetHealth() / targetedEntity->maxHealth)), 205, al_map_rgba(255, 0, 0, 150));
 	}
 	else
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 150, 150, 150));
@@ -113,13 +119,77 @@ void PlayerEntity::DrawThisGUI()
 			it++;
 		}
 	}
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "Current weapon: %s", useRangedWeapon?"RANGED":"MELEE");
+	const char* m = "";
+	switch (mode)
+	{
+	case PlayerActionMode::MELEE:
+		m = "MELEE";
+		break;
+	case PlayerActionMode::RANGED:
+		m = "RANGED";
+		break;
+	case PlayerActionMode::MINING:
+		m = "MINING";
+		break;
+	case PlayerActionMode::CONFIGURATION:
+		m = "CONFIGURATION";
+		break;
+	}
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s", m);
 	switch(guistate)
 	{
 	case PLAYER_GUI_STATE::WORLD:
+	{
+		switch (mode)
+		{
+		case PlayerActionMode::MELEE:
+		{
+			if (targetedEntity == nullptr)
+				al_set_mouse_cursor(main_display, loaded_cursors["error"]);
+			else
+				al_set_mouse_cursor(main_display, loaded_cursors["melee"]);
+			break;
+		}
+		case PlayerActionMode::CONFIGURATION:
+			al_set_mouse_cursor(main_display, loaded_cursors["wrench"]);
+			break;
+		case PlayerActionMode::MINING:
+		{
+			float a = x - GetXpos();
+			float b = y - GetYpos();
+			if (a * a + b * b > REACHSQ)
+			{
+				al_set_mouse_cursor(main_display, loaded_cursors["error"]);
+				break;
+			}
+			ToolType t;
+			if (targetedTile->IsEmpty())
+				t = targetedGroundTile->GetRequiredToolType();
+			else
+				t = targetedTile->GetOptimalToolType();
+			switch (t)
+			{
+			case ToolType::PICKAXE:
+				al_set_mouse_cursor(main_display, loaded_cursors["pickaxe"]);
+				break;
+			case ToolType::SHOVEL:
+				al_set_mouse_cursor(main_display, loaded_cursors["shovel"]);
+				break;
+			case ToolType::AXE:
+				al_set_mouse_cursor(main_display, loaded_cursors["axe"]);
+				break;
+			}
+			break;
+		}
+		case PlayerActionMode::RANGED:
+			al_set_mouse_cursor(main_display, loaded_cursors["ranged"]);
+			break;
+		}
 		hotbarGUI->DrawGUI();
 		break;
+	}
 	case PLAYER_GUI_STATE::INVENTORY:
+		al_set_system_mouse_cursor(main_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
 		al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
 		inventoryGUI->DrawGUI();
 		recipeGUI->DrawGUI();
@@ -137,9 +207,15 @@ void PlayerEntity::DrawThisGUI()
 			for (int i = 0; i < history.size(); i++)
 				al_draw_text(loaded_fonts["default"][30], history.at(i).first, SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 445 - i * 30, 0, history.at(i).second.c_str());
 		}
-		al_draw_scaled_bitmap(HEART_ICON, 0, 0, al_get_bitmap_width(HEART_ICON), al_get_bitmap_height(HEART_ICON), 200, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
-		al_draw_filled_rectangle(200, SCREEN_HEIGHT / 2 - 300, 264, SCREEN_HEIGHT / 2 + 300, al_map_rgba(64, 0, 0, 200));
-		al_draw_filled_rectangle(200, SCREEN_HEIGHT / 2 + 300 - (GetHealth() / 100.f) * 600.f, 264, SCREEN_HEIGHT / 2 + 300, al_map_rgba(192, 0, 0, 200));
+		al_draw_scaled_bitmap(HEALTH_ICON, 0, 0, al_get_bitmap_width(HEALTH_ICON), al_get_bitmap_height(HEALTH_ICON), 0, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 - 300, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(64, 0, 0, 200));
+		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 + 300 - (GetHealth() / 100.f) * 600.f, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(192, 0, 0, 200));
+		al_draw_scaled_bitmap(HUNGER_ICON, 0, 0, al_get_bitmap_width(HUNGER_ICON), al_get_bitmap_height(HUNGER_ICON), 64, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(64, SCREEN_HEIGHT / 2 - 300, 128, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 64, 0, 200));
+		al_draw_filled_rectangle(64, SCREEN_HEIGHT / 2 + 300 - (hunger / MAX_HUNGER) * 600.f, 128, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 192, 0, 200));
+		al_draw_scaled_bitmap(WATER_ICON, 0, 0, al_get_bitmap_width(WATER_ICON), al_get_bitmap_height(WATER_ICON), 128, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 - 300, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 64, 200));
+		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 + 300 - (water / MAX_WATER) * 600.f, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 192, 200));
 	}
 	GUItimer++;
 
@@ -147,9 +223,16 @@ void PlayerEntity::DrawThisGUI()
 
 void PlayerEntity::Draw()
 {
-	int x = floor(GetXpos() * 128);
-	int y = floor(GetYpos() * 128);
+	int x = floor((GetXpos()) * 128);
+	int y = floor((GetYpos()) * 128);
 	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, getRotation(), 0);
+}
+
+void PlayerEntity::Consume(Consumable* c)
+{
+	Heal(c->GetHealthBoost());
+	hunger = std::max(0.f, std::min(MAX_HUNGER, hunger + c->GetFoodBoost()));
+	water = std::max(0.f, std::min(MAX_WATER, water + c->GetWaterBoost()));
 }
 
 void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
@@ -168,7 +251,7 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		if (al_key_down(&s, ALLEGRO_KEY_LCTRL) || al_key_down(&s, ALLEGRO_KEY_RCTRL))
 		{
 			containingWorld->SaveToFile("./new_world.zip");
-			PushNotification("SAVED WORLD!!!",24);
+			PushNotification("SAVED WORLD!!!", 24);
 		}
 		keys_pressed |= 0b00000010;
 		break;
@@ -179,8 +262,12 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		typing = !typing;
 		break;
 	case ALLEGRO_KEY_R:
-		useRangedWeapon = !useRangedWeapon;
+	{
+		char a = al_key_down(&s, ALLEGRO_KEY_LSHIFT);
+		a = a ? 3 : 1;
+		mode = (mode + a) % 4;
 		break;
+	}
 	case ALLEGRO_KEY_E:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
@@ -221,28 +308,92 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 	{
 		float x = GET_MOUSE_XPOS(event);
 		float y = GET_MOUSE_YPOS(event);
-		switch (event.button)
+		switch (mode)
 		{
-		case 1:
-		{
-			if (useRangedWeapon)
+			case PlayerActionMode::MELEE:
 			{
-				if (rangedWeapon != nullptr)
-					rangedWeapon->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI / 2, this);
+				switch (event.button)
+				{
+					case 1:
+					{
+						Entity* e = containingWorld->GetEntityAtPos(x, y, this);
+						if (e != nullptr)
+						{
+							if (meleeWeapon != nullptr)
+							{
+								float a = e->GetXpos() - GetXpos();
+								float b = e->GetYpos() - GetYpos();
+								if (a * a + b * b <= meleeWeapon->GetRangeSQ())
+									e->DoDamage(meleeWeapon);
+							}
+						}
+					}
+					break;
+					case 2:
+					{
+						UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
+						break;
+					}
+				}
+				break;
 			}
-			else
+			case PlayerActionMode::RANGED:
 			{
-				Entity* e = containingWorld->GetEntityAtPos(x, y, this);
-				if (e == nullptr)
-					MineTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
-				else
-					e->DoDamage(meleeWeapon);
+				switch (event.button)
+				{
+					case 1:
+					{
+						if (rangedWeapon != nullptr)
+							rangedWeapon->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI / 2, this);
+					}
+					break;
+					case 2:
+					{
+						UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
+						break;
+					}
+				}
+				break;
 			}
-		}
-			break;
-		case 2:
-			PlaceTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
-			break;
+			case PlayerActionMode::MINING:
+			{
+
+				switch (event.button)
+				{
+					case 1:
+					{
+						float a = x - GetXpos();
+						float b = y - GetYpos();
+						if(a*a+b*b<=REACHSQ)
+							MineTile(floor(x), floor(y));
+						break;
+					}
+					case 2:
+					{
+						UseTile(floor(x), floor(y));
+						break;
+					}
+				}
+				break;
+			}
+			case PlayerActionMode::CONFIGURATION:
+			{
+
+				switch (event.button)
+				{
+				case 1:
+				{
+					UseTile(floor(x), floor(y));
+					break;
+				}
+				case 2:
+				{
+					UseTile(floor(x), floor(y));
+					break;
+				}
+				}
+				break;
+			}
 		}
 	}
 	else if (guistate == PLAYER_GUI_STATE::INVENTORY)
@@ -299,19 +450,28 @@ void PlayerEntity::AddConstItem(Item* item)
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
 static const float PLAYER_SPEED = 0.01f;
 
-const float PlayerEntity::REACH = 9.f;
+const float PlayerEntity::REACHSQ = 9.f;
 
-void PlayerEntity::PlaceTile(int x, int y)
+void PlayerEntity::UseTile(int x, int y)
 {
-	//printf("PLACING TILE %d:%d\n", x, y);
+	float a = GetXpos() - x;
+	float b = GetYpos() - y;
+	if (a * a + b * b > REACHSQ)
+		return;
+	Tile* tile = containingWorld->GetTile(x, y);
+	if (tile->IsEmpty())
+	{
+		GroundTile* gtile = containingWorld->GetGroundTile(x, y);
+		gtile->Use(this);
+	}
+	else
+		tile->Use(this);
 }
 
 void PlayerEntity::MineTile(int x, int y)
 {
 	float a = xpos - x;
 	float b = ypos - y;
-	if (a * a + b * b > REACH)
-		return;
 	Tile* tile = containingWorld->GetTile(x, y);
 	if (tile->IsEmpty())
 	{
@@ -357,6 +517,12 @@ void PlayerEntity::GiveConstItem(const Item* item)
 	inventory->AddConstItem(item);
 }
 
+void PlayerEntity::GiveConstItemBundle(const ItemBundle* bundle)
+{
+	for (int i = 0; i < bundle->GetSize(); i++)
+		GiveConstItem(bundle->GetItem(i));
+}
+
 void PlayerEntity::Tick()
 {
 
@@ -394,6 +560,16 @@ void PlayerEntity::Tick()
 			applyForce(-PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
 			break;
 		}
+		hunger = std::max(0.f, hunger - HUNGER_LOSS_PER_TICK);
+		if (hunger == 0.f)
+		{
+			DoDamage(HEALTH_LOSS_FROM_HUNGER_PER_TICK);
+		}
+		water = std::max(0.f, water - WATER_LOSS_PER_TICK);
+		if (water == 0.f)
+		{
+			DoDamage(HEALTH_LOSS_FROM_WATER_PER_TICK);
+		}
 		Entity::Tick();
 	}
 }
@@ -403,6 +579,8 @@ void PlayerEntity::ResetAfterDeath()
 	this->guistate = PLAYER_GUI_STATE::WORLD;
 	activeSubGUI = nullptr;
 	warpAbsolute(0, 0);
+	hunger = MAX_HUNGER;
+	water = MAX_WATER;
 	Revive();
 }
 
@@ -411,14 +589,30 @@ void PlayerEntity::PushNotification(std::string txt, int fontsize)
 	notifications.push_back(PlayerNotification::MakeTextNotification(txt, 200, 70, GUItimer + 500, fontsize));
 }
 
-PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr)
+PlayerEntity* PlayerEntity::current_player;
+
+bool PlayerEntity::ConsumeItemCallback(Item* i)
 {
+	Consumable* c = dynamic_cast<Consumable*>(i);
+	if (c == nullptr)
+		return false;
+	PlayerEntity::current_player->Consume(c);
+	i->RemoveAmount(1);
+	return i->GetAmount() <= 0;
+}
+
+PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr), mode{ PlayerActionMode::MINING }
+{
+	current_player = this;
+	hunger = MAX_HUNGER;
+	water = MAX_WATER;
 	SetName("Player");
 	luaInterface = new LuaInterface(world,true);
 	inventory = new SimpleItemInventory(36);
 	inventory->AddConstItem(new SimpleSword());
 	meleeWeapon = new SimpleSword();
 	inventory->AddConstItem(new GunItem());
+	inventory->AddConstItem(new BerryItem());
 	rangedWeapon = new GunItem();
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new SimpleInventoryGUI(inventory);
@@ -432,10 +626,13 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 18, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 27, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
 	}
+	inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(ConsumeItemCallback, SCREEN_HEIGHT-200, SCREEN_WIDTH/2));
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];
-	HEART_ICON = loaded_bitmaps["tex.gui.health_icon"];
+	HEALTH_ICON = loaded_bitmaps["tex.gui.health_icon"];
+	HUNGER_ICON = loaded_bitmaps["tex.gui.hunger_icon"];
+	WATER_ICON = loaded_bitmaps["tex.gui.water_icon"];
 }
 
 PlayerNotification::PlayerNotification(int t, int w, int h)

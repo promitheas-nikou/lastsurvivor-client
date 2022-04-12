@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 ALLEGRO_EVENT_QUEUE* event_queue;
 
@@ -26,7 +27,10 @@ void init_sound()
 {
 	if (!al_install_audio())
 		printf("FAILED TO INSTALL AUDIO!!!\nWILL PROCEED INITIALIZATION WITH NO AUDIO\n");
-	al_reserve_samples(128);
+	al_reserve_samples(4);
+	if(!al_init_acodec_addon())
+		printf("FAILED TO INSTALL AUDIO!!!\nWILL PROCEED INITIALIZATION WITH NO AUDIO\n");
+	printf("AUDIO SUCCESSFULLY INITIALIZED!\n");
 }
 
 void init_window()

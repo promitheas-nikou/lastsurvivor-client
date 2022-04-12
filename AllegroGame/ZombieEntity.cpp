@@ -16,7 +16,7 @@ void ZombieEntity::Tick()
 		if (xdif * xdif + ydif * ydif < reach)
 		{
 			containingWorld->GetPlayer()->DoDamage(5.f);
-			ResetCooldown(25);
+			ResetCooldown(50);
 		}
 }
 

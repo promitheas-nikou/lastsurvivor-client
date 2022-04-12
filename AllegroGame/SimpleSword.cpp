@@ -4,6 +4,7 @@
 std::string SimpleSword::NAME;
 ALLEGRO_BITMAP* SimpleSword::TEXTURE;
 float SimpleSword::DAMAGE;
+float SimpleSword::RANGESQ;
 const std::string SimpleSword::ID = "items.sword";
 
 std::string SimpleSword::GetID() const
@@ -11,7 +12,7 @@ std::string SimpleSword::GetID() const
 	return ID;
 }
 
-SimpleSword::SimpleSword() : SimpleMeleeWeaponItem(NAME, DAMAGE)
+SimpleSword::SimpleSword() : SimpleMeleeWeaponItem(NAME, DAMAGE, RANGESQ)
 {}
 
 Item* SimpleSword::Clone() const
@@ -29,5 +30,6 @@ void SimpleSword::Init(nlohmann::json data)
 	NAME = data[DATA_JSON_NAME_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 	DAMAGE = data[DATA_JSON_DAMAGE_KEY];
+	RANGESQ = data[DATA_JSON_RANGESQ_KEY];
 }
 

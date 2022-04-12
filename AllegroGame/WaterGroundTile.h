@@ -21,6 +21,8 @@ public:
 	static void Init(nlohmann::json data);
 	void Draw() const final;
 
+	virtual void Use(PlayerEntity* p) override;
+
 	const ItemBundle* GetMiningResult(Tool* tool) const final;
 
 	int GetMiningResistance() const final;

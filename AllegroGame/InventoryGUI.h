@@ -4,6 +4,8 @@
 
 class InventoryGUI;
 
+enum SLOT_DISPLAY_CONFIGURATION_TYPE { STORAGE, FUNCTION };
+
 class SlotDisplayConfiguration
 {
 private:
@@ -12,11 +14,21 @@ private:
     int ypos;
     int width;
     int height;
+    bool (*callback)(Item*);
+    SLOT_DISPLAY_CONFIGURATION_TYPE type;
 public:
+
     SlotDisplayConfiguration(int s, int x, int y);
     SlotDisplayConfiguration(int s, int x, int y, int w, int h);
 
+    SlotDisplayConfiguration(bool (*c)(Item*), int x, int y);
+    SlotDisplayConfiguration(bool (*c)(Item*), int x, int y, int w, int h);
+
     bool contains(int x, int y) const;
+
+    SLOT_DISPLAY_CONFIGURATION_TYPE getType() const;
+
+    bool execute(Item* item) const;
 
     friend InventoryGUI;
 };
@@ -37,7 +49,7 @@ protected:
 
     virtual void DrawSlot(const SlotDisplayConfiguration& data);
 
-    InventoryGUI() = default;
+    InventoryGUI();
     
 public:
 

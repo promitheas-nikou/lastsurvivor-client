@@ -1,8 +1,8 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 0.6",
-  "VER_MINOR": 6,
-  "VER_MAJOR": 0,
+  "VERSION": "ALPHA 1.0",
+  "VER_MINOR": 0,
+  "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
   "shaders": [
     {
@@ -14,7 +14,15 @@
   "audio": [
     {
       "id": "main_music",
-      "filename": "main_music.ogg"
+      "filenames": [
+        "main_music.ogg"
+      ]
+    },
+    {
+      "id": "gtiles.dirt.walk",
+      "filenames": [
+        "dirt_walk.wav"
+      ]
     }
   ],
   "textures": [
@@ -71,16 +79,16 @@
       "filename": "hammer_cursor.png"
     },
     {
-      "id": "tex.gui.hotbar_slot",
-      "filename": "hotbar_slot.png"
+      "id": "tex.gui.inventory_slot",
+      "filename": "inventory_slot.png"
     },
     {
       "id": "tex.gui.crafting_arrow",
       "filename": "crafting_arrow.png"
     },
     {
-      "id": "tex.gui.hotbar_slot_selected",
-      "filename": "hotbar_slot_selected.png"
+      "id": "tex.gui.inventory_slot_consume",
+      "filename": "inventory_slot_consume.png"
     },
     {
       "id": "tex.gui.quest_icon_incomplete",
@@ -96,7 +104,15 @@
     },
     {
       "id": "tex.gui.health_icon",
-      "filename": "heart_icon.png"
+      "filename": "health_icon.png"
+    },
+    {
+      "id": "tex.gui.hunger_icon",
+      "filename": "hunger_icon.png"
+    },
+    {
+      "id": "tex.gui.water_icon",
+      "filename": "water_icon.png"
     },
     {
       "id": "tex.gui.death",
@@ -125,6 +141,126 @@
     {
       "id": "tex.entities.green_bullet",
       "filename": "green_bullet.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/0",
+      "filename": "left_cactusman_0.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/1",
+      "filename": "left_cactusman_1.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/2",
+      "filename": "left_cactusman_2.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/3",
+      "filename": "left_cactusman_3.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/4",
+      "filename": "left_cactusman_throw.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/0",
+      "filename": "front_cactusman_0.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/1",
+      "filename": "front_cactusman_1.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/2",
+      "filename": "front_cactusman_2.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/3",
+      "filename": "front_cactusman_3.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/4",
+      "filename": "front_cactusman_throw.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/0",
+      "filename": "right_cactusman_0.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/1",
+      "filename": "right_cactusman_1.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/2",
+      "filename": "right_cactusman_2.png"
+    },
+    {
+      "id": "cursor.error",
+      "filename": "error_cursor.png"
+    },
+    {
+      "id": "cursor.pickaxe",
+      "filename": "pickaxe_cursor.png"
+    },
+    {
+      "id": "cursor.shovel",
+      "filename": "shovel_cursor.png"
+    },
+    {
+      "id": "cursor.axe",
+      "filename": "axe_cursor.png"
+    },
+    {
+      "id": "cursor.melee",
+      "filename": "melee_cursor.png"
+    },
+    {
+      "id": "cursor.ranged",
+      "filename": "ranged_cursor.png"
+    },
+    {
+      "id": "cursor.wrench",
+      "filename": "wrench_cursor.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/3",
+      "filename": "right_cactusman_3.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/4",
+      "filename": "right_cactusman_throw.png"
+    },
+    {
+      "id": "tex.entities.rattle/0",
+      "filename": "rattle_0.png"
+    },
+    {
+      "id": "tex.entities.rattle/1",
+      "filename": "rattle_1.png"
+    },
+    {
+      "id": "tex.entities.rattle/2",
+      "filename": "rattle_2.png"
+    },
+    {
+      "id": "tex.entities.rattle/3",
+      "filename": "rattle_3.png"
+    },
+    {
+      "id": "tex.entities.rattle/4",
+      "filename": "rattle_4.png"
+    },
+    {
+      "id": "tex.entities.rattle/5",
+      "filename": "rattle_5.png"
+    },
+    {
+      "id": "tex.entities.rattle/6",
+      "filename": "rattle_6.png"
+    },
+    {
+      "id": "tex.entities.rattle/7",
+      "filename": "rattle_7.png"
     },
     {
       "id": "tex.tiles.tree/0",
@@ -161,12 +297,63 @@
     {
       "id": "tex.items.stick",
       "filename": "stick.png"
+    },
+    {
+      "id": "tex.items.berry",
+      "filename": "berry_item.png"
+    },
+    {
+      "id": "tex.tiles.berry_bush/0",
+      "filename": "berry_bush_0.png"
+    },
+    {
+      "id": "tex.tiles.berry_bush/1",
+      "filename": "berry_bush_1.png"
     }
   ],
   "entities": [
     {
       "id": "entities.zombie",
       "max_health": 100
+    },
+    {
+      "id": "entities.cactus_boss",
+      "max_health": 300,
+      "textures_left": [
+        "tex.entities.cactus_boss.left/0",
+        "tex.entities.cactus_boss.left/1",
+        "tex.entities.cactus_boss.left/2",
+        "tex.entities.cactus_boss.left/3",
+        "tex.entities.cactus_boss.left/4"
+      ],
+      "textures_right": [
+        "tex.entities.cactus_boss.right/0",
+        "tex.entities.cactus_boss.right/1",
+        "tex.entities.cactus_boss.right/2",
+        "tex.entities.cactus_boss.right/3",
+        "tex.entities.cactus_boss.right/4"
+      ],
+      "textures_front": [
+        "tex.entities.cactus_boss.front/0",
+        "tex.entities.cactus_boss.front/1",
+        "tex.entities.cactus_boss.front/2",
+        "tex.entities.cactus_boss.front/3",
+        "tex.entities.cactus_boss.front/4"
+      ],
+      "rattle_launcher": {
+        "damage": 10.0,
+        "fire_speed": 0.1,
+        "textures": [
+          "tex.entities.rattle/0",
+          "tex.entities.rattle/1",
+          "tex.entities.rattle/2",
+          "tex.entities.rattle/3",
+          "tex.entities.rattle/4",
+          "tex.entities.rattle/5",
+          "tex.entities.rattle/6",
+          "tex.entities.rattle/7"
+        ]
+      }
     }
   ],
   "loot_bundles": [
@@ -218,32 +405,62 @@
           "amount": 7
         }
       ]
+    },
+    {
+      "id": "tiles.berry_bush.mine.any",
+      "items": [
+        {
+          "id": "items.stick",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "tiles.berry_bush.collect.any",
+      "items": [
+        {
+          "id": "items.berry",
+          "amount": 1
+        }
+      ]
     }
   ],
   "cursors": [
     {
-      "id": 3,
-      "texture_id": 8,
-      "hotx": 7,
-      "hoty": 4
+      "id": "error",
+      "texture": "cursor.error",
+      "hotx": 16,
+      "hoty": 16
     },
     {
-      "id": 4,
-      "texture_id": 9,
-      "hotx": 5,
-      "hoty": 20
+      "id": "pickaxe",
+      "texture": "cursor.pickaxe",
+      "hotx": 16,
+      "hoty": 16
     },
     {
-      "id": 5,
-      "texture_id": 10,
-      "hotx": 9,
-      "hoty": 5
+      "id": "shovel",
+      "texture": "cursor.shovel",
+      "hotx": 16,
+      "hoty": 16
     },
     {
-      "id": 6,
-      "texture_id": 11,
-      "hotx": 9,
-      "hoty": 5
+      "id": "axe",
+      "texture": "cursor.axe",
+      "hotx": 16,
+      "hoty": 16
+    },
+    {
+      "id": "melee",
+      "texture": "cursor.melee",
+      "hotx": 16,
+      "hoty": 16
+    },
+    {
+      "id": "ranged",
+      "texture": "cursor.ranged",
+      "hotx": 16,
+      "hoty": 16
     }
   ],
   "tiles": [
@@ -254,7 +471,7 @@
     {
       "id": "tiles.tree",
       "name": "Tree",
-      "tool": "pickaxe",
+      "tool": "axe",
       "textures": [
         "tex.tiles.tree/0",
         "tex.tiles.tree/1",
@@ -263,6 +480,18 @@
       ],
       "drops": "tiles.tree.mine.any",
       "mining_resistance": 5
+    },
+    {
+      "id": "tiles.berry_bush",
+      "name": "Berry Bush",
+      "tool": "axe",
+      "textures": [
+        "tex.tiles.berry_bush/0",
+        "tex.tiles.berry_bush/1"
+      ],
+      "drops": "tiles.berry_bush.mine.any",
+      "collection_drops": "tiles.berry_bush.collect.any",
+      "mining_resistance": 3
     }
   ],
   "ground_tiles": [
@@ -272,7 +501,13 @@
       "tool": "shovel",
       "mining_resistance": 3,
       "drops": "gtiles.grass.mine.any",
-      "texture": "tex.gtiles.grass"
+      "texture": "tex.gtiles.grass",
+      "audio": [
+        {
+          "type": "walk",
+          "id": "gtiles.dirt.walk"
+        }
+      ]
     },
     {
       "id": "gtiles.dirt",
@@ -280,7 +515,13 @@
       "tool": "shovel",
       "mining_resistance": 2,
       "drops": "gtiles.dirt.mine.any",
-      "texture": "tex.gtiles.dirt"
+      "texture": "tex.gtiles.dirt",
+      "audio": [
+        {
+          "type": "walk",
+          "id": "gtiles.dirt.walk"
+        }
+      ]
     },
     {
       "id": "gtiles.stone",
@@ -355,6 +596,7 @@
       "id": "items.sword",
       "name": "Sword",
       "texture": "tex.items.sword",
+      "rangesq": 4,
       "damage": 10
     },
     {
@@ -363,7 +605,15 @@
       "texture": "tex.items.stone",
       "texture0": "tex.entities.red_bullet",
       "damage": 2.5,
-      "fire_speed": 0.01
+      "fire_speed": 0.1
+    },
+    {
+      "id": "items.berry",
+      "name": "Berry",
+      "texture": "tex.items.berry",
+      "health": 5.0,
+      "hunger": 20.0,
+      "water": 10.0
     }
   ],
   "fonts": [

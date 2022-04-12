@@ -6,8 +6,10 @@
 #include <fstream>
 #include "Tool.h"
 #include "Item.h"
+#include "SoundType.h"
 
 class World;
+class PlayerEntity;
 
 class GroundTile
 {
@@ -21,7 +23,7 @@ protected:
 
 	ToolType requiredTool;
 
-	GroundTile(World* w, int x, int y, std::string n);
+	GroundTile(World* w, int x, int y, std::string n, ToolType t);
 
 public:
 	virtual std::string GetID() const = 0;
@@ -41,6 +43,7 @@ public:
 	virtual ToolType GetRequiredToolType() const;
 
 	virtual int GetDamageDealtByTool(Tool* tool) const;
+	virtual void Use(PlayerEntity* p);
 
 	virtual const ItemBundle* GetMiningResult(Tool* tool) const;
 
@@ -48,6 +51,8 @@ public:
 	int GetYpos() const;
 
     virtual float GetFrictionModifier() const;
+
+	virtual void PlaySound(SoundType t) const;
 
 	virtual ~GroundTile() = default;
 };

@@ -43,6 +43,7 @@ private:
 	float GenerateGetLevelHeight(int x, int y);
 	float GenerateGetLevelTemperature(int x, int y);
 	float GenerateGetLevelHumidity(int x, int y);
+	float GenerateGetLevelTileRandomness(int x, int y);
 
 	World(bool w, const uint64_t s, std::string name, std::string n, int min, int maj);
 
@@ -71,6 +72,9 @@ public:
 
 	Entity* GetEntityAtPos(float x, float y) const;
 	Entity* GetEntityAtPos(float x, float y, Entity* ignore) const;
+
+	std::vector<Entity*> GetEntitiesAtPos(float x, float y) const;
+	std::vector<Entity*> GetEntitiesNearPos(float x, float y, float dist) const;
 
 	void Draw();
 

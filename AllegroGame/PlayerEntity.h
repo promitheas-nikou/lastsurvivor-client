@@ -8,7 +8,10 @@
 #include "DeathGUI.h"
 #include <list>
 #include <deque>
+#include "Consumable.h"
+#include "ConsumableItem.h"
 #include "ToolItem.h"
+#include "ItemBundle.h"
 //#include "WeaponItem.h"
 class MeleeWeaponItem;
 class RangedWeaponItem;
@@ -16,6 +19,8 @@ class RangedWeaponItem;
 #include "LuaInterface.h"
 
 enum class PLAYER_GUI_STATE {WORLD, INVENTORY, DEATH, QUEST};
+
+class WaterGroundTile;
 
 class PlayerNotification
 {
@@ -36,8 +41,15 @@ class PlayerEntity :
 	public GUI,
 	public GroundTileMiner
 {
+public:
+	enum PlayerActionMode {
+		MELEE = 0x00,
+		RANGED = 0x01,
+		MINING = 0x02,
+		CONFIGURATION = 0x03
+	};
 private:
-	static const float REACH;
+	static const float REACHSQ;
 	std::string buf;
 	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
 	static ALLEGRO_BITMAP* TEXTURE;
@@ -56,8 +68,19 @@ private:
 	ToolItem* pumpTool;
 	MeleeWeaponItem* meleeWeapon;
 	RangedWeaponItem* rangedWeapon;
+	ConsumableItem* consumableItem;
 
-	bool useRangedWeapon = false;
+	float hunger;
+	const float MAX_HUNGER = 100.f;
+	const float HUNGER_LOSS_PER_TICK = .01f;
+	const float HEALTH_LOSS_FROM_HUNGER_PER_TICK = .05f;
+	float water;
+	const float MAX_WATER = 100.f;
+	const float WATER_LOSS_PER_TICK = .025f;
+	const float HEALTH_LOSS_FROM_WATER_PER_TICK = .05f;
+
+
+	char mode;
 
 	std::list<PlayerNotification*> notifications;
 
@@ -66,6 +89,7 @@ private:
 	const static std::string ID;
 
 public:
+	static PlayerEntity* current_player;
 
 	virtual bool Mine();
 
@@ -73,8 +97,12 @@ public:
 
 	void LogToConsole(std::string txt) const;
 
+	static bool ConsumeItemCallback(Item* i);
+
 	void DrawThisGUI() final;
 	void Draw() final;
+
+	void Consume(Consumable* c);
 
 	void KeyDown(ALLEGRO_KEYBOARD_EVENT &event) final;
 	void KeyUp(ALLEGRO_KEYBOARD_EVENT &event) final;
@@ -85,10 +113,11 @@ public:
 
 	void CharTyped(ALLEGRO_KEYBOARD_EVENT& event) override;
 
-	void PlaceTile(int x, int y);
+	void UseTile(int x, int y);
 	void MineTile(int x, int y);
 
 	void GiveConstItem(const Item* item);
+	void GiveConstItemBundle(const ItemBundle* bundle);
 
 	void Tick() final;
 
@@ -104,5 +133,6 @@ public:
 	friend World;
 	friend int main();
 	friend void deathguicallback();
+	friend WaterGroundTile;
 };
 

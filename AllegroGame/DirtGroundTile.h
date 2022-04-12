@@ -1,6 +1,7 @@
 #pragma once
 #include "GroundTile.h"
 #include "ItemBundle.h"
+#include "AudioMultiTrackCollection.h"
 
 class DirtGroundTile :
     public GroundTile
@@ -11,6 +12,7 @@ private:
 	static const ItemBundle* DROP;
 	static int MINING_RESISTANCE;
 	static ToolType TOOL_TYPE;
+	static AudioMultiTrackCollection AUDIO_TRACKS;
 public:
 	static const std::string ID;
 
@@ -22,6 +24,8 @@ public:
 	void Draw() const final;
 
 	const ItemBundle* GetMiningResult(Tool* tool) const final;
+
+	virtual void PlaySound(SoundType t) const override;
 
 	int GetMiningResistance() const final;
 

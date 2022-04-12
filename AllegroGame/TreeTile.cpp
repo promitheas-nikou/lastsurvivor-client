@@ -18,7 +18,7 @@ bool TreeTile::IsTransparent() const
     return false;
 }
 
-bool TreeTile::canWalkThrough() const
+bool TreeTile::CanWalkThrough() const
 {
     return false;
 }

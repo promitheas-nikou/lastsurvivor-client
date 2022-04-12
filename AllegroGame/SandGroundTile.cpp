@@ -14,7 +14,7 @@ std::string SandGroundTile::GetID() const
 	return ID;
 }
 
-SandGroundTile::SandGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME)
+SandGroundTile::SandGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME, TOOL_TYPE)
 {}
 
 void SandGroundTile::Init(nlohmann::json data)

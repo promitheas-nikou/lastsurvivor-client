@@ -1,5 +1,6 @@
 #include "ResourceLoader.h"
 #include <allegro5/error.h>
+#include <allegro5/allegro_acodec.h>
 #include <fstream>
 #include <iostream>
 #include <Windows.h>
@@ -10,13 +11,16 @@
 #include "SandGroundTile.h"
 #include "WaterGroundTile.h"
 #include "TreeTile.h"
+#include "BerryBushTile.h"
 #include "StoneItem.h"
 #include "DirtItem.h"
 #include "StickItem.h"
 #include "SandItem.h"
 #include "SimpleSword.h"
 #include "GunItem.h"
+#include "BerryItem.h"
 #include "SimpleItemBundle.h"
+#include "CactusBossEntity.h"
 
 #include "Recipe.h"
 
@@ -35,16 +39,24 @@ const std::string DATA_JSON_TOOL_TYPE_KEY = "tool";
 const std::string DATA_JSON_NAME_KEY = "name";
 const std::string DATA_JSON_DESCRIPTION_KEY = "description";
 const std::string DATA_JSON_DROP_KEY = "drops";
-const std::string DATA_JSON_ID_KEY = "id";
+const std::string DATA_JSON_COLLECT_KEY = "collection_drops";
+const std::string DATA_JSON_ID_KEY = "id"; 
 const std::string DATA_JSON_DAMAGE_KEY = "damage";
+const std::string DATA_JSON_SOUND_TYPE_KEY = "type";
+const std::string DATA_JSON_AUDIO_COLLECTION_KEY = "audio";
+const std::string DATA_JSON_RANGESQ_KEY = "rangesq";
 const std::string DATA_JSON_FIRE_SPEED_KEY = "fire_speed";
+const std::string DATA_JSON_HEALTH_KEY = "health";
+const std::string DATA_JSON_HUNGER_KEY = "hunger";
+const std::string DATA_JSON_WATER_KEY = "water";
 
 nlohmann::json json_data;
 
 std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
-std::unordered_map<std::string, ALLEGRO_SAMPLE*> loaded_audio_samples;
-std::unordered_map<std::string, ALLEGRO_SAMPLE_INSTANCE*> loaded_audio_sample_instances;
+std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_samples;
+std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;
+std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
 std::unordered_map<std::string, Shader*> loaded_shaders;
 std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
 std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
@@ -56,6 +68,7 @@ using json = nlohmann::json;
 std::unordered_map<std::string, json> ground_tile_data;
 std::unordered_map<std::string, json> tile_data;
 std::unordered_map<std::string, json> item_data;
+std::unordered_map<std::string, json> entity_data;
 
 std::map<uint32_t, std::string> tile_ids_to_keys;
 std::map<uint32_t, std::string> gtile_ids_to_keys;
@@ -103,14 +116,22 @@ void load_resources()
 		for (nlohmann::json audio : audios_data)
 		{
 			std::string id = audio["id"];
-			std::string fn = audio["filename"];
-			if((loaded_audio_samples[id] = al_load_sample(fn.c_str()))==NULL)
-				printf("\tFAILED TO LOAD AUDIO SAMPLE #s(\"%s\")...\n", id.c_str(), fn.c_str());
-			else
+			nlohmann::json files = audio["filenames"];
+			for (std::string fn : files)
 			{
-				printf("\tSUCCESSFULLY LOADED AUDIO SAMPLE #%s(\"%s\")...\n", id.c_str(), fn.c_str());
-				loaded_audio_sample_instances[id] = al_create_sample_instance(loaded_audio_samples[id]);
+				ALLEGRO_SAMPLE* s;
+				//fn = "audio/" + fn;
+				if ((s = al_load_sample("C:/Users/promitheas/source/repos/AllegroGame/AllegroGame/dirt_walk.wav")) == NULL)
+					printf("\tFAILED TO LOAD AUDIO SAMPLE #%s(\"%s\")...\n", id.c_str(), fn.c_str());
+				else
+				{
+					printf("\tSUCCESSFULLY LOADED AUDIO SAMPLE #%s(\"%s\")...\n", id.c_str(), fn.c_str());
+					ALLEGRO_SAMPLE_INSTANCE* i = al_create_sample_instance(s);
+					loaded_audio_samples[id].push_back(s);
+					loaded_audio_sample_instances[id].push_back(i);
+				}
 			}
+			loaded_audio_multi_tracks[id] = new AudioMultiTrack(loaded_audio_sample_instances[id]);
 		}
 
 		nlohmann::json fonts_data = json_data["fonts"];
@@ -123,6 +144,17 @@ void load_resources()
 			for (int i = 10; i <= 80; i++)
 				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
 			printf("SUCCESSFULLY LOADED FONT #%d(%s)...\n", id, fn.c_str());
+		}
+
+		nlohmann::json cursor_data = json_data["cursors"];
+		for (nlohmann::json cd : cursor_data)
+		{
+			std::string id = cd["id"];
+			std::string t = cd["texture"];
+			ALLEGRO_BITMAP* b = loaded_bitmaps[t];
+			int hotx = cd["hotx"];
+			int hoty = cd["hoty"];
+			loaded_cursors[id] = al_create_mouse_cursor(b, hotx, hoty);
 		}
 	}
 	catch (const nlohmann::detail::parse_error& err)
@@ -182,6 +214,7 @@ void init_tiles()
 		WaterGroundTile::Init(ground_tile_data[WaterGroundTile::ID]);
 
 		TreeTile::Init(tile_data[TreeTile::ID]);
+		BerryBushTile::Init(tile_data[BerryBushTile::ID]);
 	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -217,6 +250,7 @@ void init_items()
 		SandItem::Init(item_data[SandItem::ID]);
 		SimpleSword::Init(item_data[SimpleSword::ID]);
 		GunItem::Init(item_data[GunItem::ID]);
+		BerryItem::Init(item_data[BerryItem::ID]);
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
@@ -240,6 +274,14 @@ void init_items()
 void init_quests()
 {
 	quest_collection = QuestCollection::MakeFromJSON(json_data["quests"]);
+}
+
+void init_entities()
+{
+	for (nlohmann::json j : json_data["entities"])
+		entity_data[j["id"]] = j;
+	CactusBossEntity::Init(entity_data[CactusBossEntity::ID]);
+	printf("SUCCESSFULLY INITIALIZED ENTITIES!\n");
 }
 
 void free_resources()
