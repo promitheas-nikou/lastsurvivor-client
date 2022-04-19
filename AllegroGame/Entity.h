@@ -46,6 +46,8 @@ protected:
 
 public:
 
+	static const float MAXIMUM_IGNORABLE_SPEED;
+
 	float GetXpos() const;
 	float GetYpos() const;
 	float getXvel() const;

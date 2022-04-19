@@ -45,7 +45,7 @@ const std::string DATA_JSON_DAMAGE_KEY = "damage";
 const std::string DATA_JSON_SOUND_TYPE_KEY = "type";
 const std::string DATA_JSON_AUDIO_COLLECTION_KEY = "audio";
 const std::string DATA_JSON_RANGESQ_KEY = "rangesq";
-const std::string DATA_JSON_FIRE_SPEED_KEY = "fire_speed";
+const std::string DATA_JSON_FIRE_SPEED_KEY = "projectile_speed";
 const std::string DATA_JSON_HEALTH_KEY = "health";
 const std::string DATA_JSON_HUNGER_KEY = "hunger";
 const std::string DATA_JSON_WATER_KEY = "water";
@@ -104,9 +104,9 @@ void load_resources()
 			std::string id = texture_data["id"];
 			std::string filename = texture_data["filename"];
 			if ((loaded_bitmaps[id] = al_load_bitmap(("textures/"+filename).c_str())) == NULL)
-				printf("\tFAILED TO LOAD TEXTURE #s(\"%s\")...\n", id.c_str(), filename.c_str());
+				printf("\tFAILED TO LOAD TEXTURE 's'(\"%s\")...\n", id.c_str(), filename.c_str());
 			else
-				printf("\tSUCCESSFULLY LOADED TEXTURE #%s(\"%s\")...\n", id.c_str(), filename.c_str());
+				printf("\tSUCCESSFULLY LOADED TEXTURE '%s'(\"%s\")...\n", id.c_str(), filename.c_str());
 		}
 		window_icon = loaded_bitmaps[(std::string)json_data["WINDOW_ICON"]];
 		printf("WINDOW ICON IS TEXTURE #%s\n", ((std::string)json_data["WINDOW_ICON"]).c_str());
@@ -117,16 +117,20 @@ void load_resources()
 		{
 			std::string id = audio["id"];
 			nlohmann::json files = audio["filenames"];
+			printf("\tLOADING AUDIO MULTITRACK '%s':\n", id.c_str());
 			for (std::string fn : files)
 			{
 				ALLEGRO_SAMPLE* s;
 				//fn = "audio/" + fn;
-				if ((s = al_load_sample("C:/Users/promitheas/source/repos/AllegroGame/AllegroGame/dirt_walk.wav")) == NULL)
-					printf("\tFAILED TO LOAD AUDIO SAMPLE #%s(\"%s\")...\n", id.c_str(), fn.c_str());
+				if ((s = al_load_sample(("audio/"+fn).c_str())) == NULL)
+					printf("\t\tFAILED TO LOAD AUDIO SAMPLE \"%s\"...\n", fn.c_str());
 				else
 				{
-					printf("\tSUCCESSFULLY LOADED AUDIO SAMPLE #%s(\"%s\")...\n", id.c_str(), fn.c_str());
+					printf("\t\tSUCCESSFULLY LOADED AUDIO SAMPLE \"%s\"...\n", fn.c_str());
 					ALLEGRO_SAMPLE_INSTANCE* i = al_create_sample_instance(s);
+					al_set_sample_instance_playmode(i, ALLEGRO_PLAYMODE_ONCE);
+					al_set_sample_instance_speed(i, 1.0f);
+					al_attach_sample_instance_to_mixer(i, al_get_default_mixer());
 					loaded_audio_samples[id].push_back(s);
 					loaded_audio_sample_instances[id].push_back(i);
 				}
@@ -143,7 +147,7 @@ void load_resources()
 			std::string fn = font["font"];
 			for (int i = 10; i <= 80; i++)
 				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
-			printf("SUCCESSFULLY LOADED FONT #%d(%s)...\n", id, fn.c_str());
+			printf("SUCCESSFULLY LOADED FONT '%s'(\"%s\")...\n", id.c_str(), fn.c_str());
 		}
 
 		nlohmann::json cursor_data = json_data["cursors"];

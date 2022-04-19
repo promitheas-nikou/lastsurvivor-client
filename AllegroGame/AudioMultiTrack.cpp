@@ -6,5 +6,10 @@ AudioMultiTrack::AudioMultiTrack(std::vector<ALLEGRO_SAMPLE_INSTANCE*>& si) : sa
 
 void AudioMultiTrack::Play() const
 {
-	//al_play_sample_instance((*sampleInstances)[rand() % sampleInstances->size()]);
+	if (lastPlaying != nullptr)
+		if (al_get_sample_instance_playing(lastPlaying))
+			return;
+	ALLEGRO_SAMPLE_INSTANCE* s = (*sampleInstances)[rand() % sampleInstances->size()];
+	lastPlaying = s;
+	al_play_sample_instance(s);	
 }

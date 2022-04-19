@@ -609,7 +609,6 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	SetName("Player");
 	luaInterface = new LuaInterface(world,true);
 	inventory = new SimpleItemInventory(36);
-	inventory->AddConstItem(new SimpleSword());
 	meleeWeapon = new SimpleSword();
 	inventory->AddConstItem(new GunItem());
 	inventory->AddConstItem(new BerryItem());
@@ -626,9 +625,9 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 18, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
 		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 27, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
 	}
-	inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(ConsumeItemCallback, SCREEN_HEIGHT-200, SCREEN_WIDTH/2));
+	inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(ConsumeItemCallback, SCREEN_WIDTH / 2 - 63, SCREEN_HEIGHT - 140));
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
-	recipeGUI->SetRecipeList(loaded_crafting_recipes);
+	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];
 	HEALTH_ICON = loaded_bitmaps["tex.gui.health_icon"];
 	HUNGER_ICON = loaded_bitmaps["tex.gui.hunger_icon"];

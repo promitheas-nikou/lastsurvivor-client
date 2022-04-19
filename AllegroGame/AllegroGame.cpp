@@ -55,6 +55,10 @@ void EXIT_GAME()
 	exit(EXIT_SUCCESS);
 }
 
+#include <allegro5/allegro.h>
+#include <allegro5/allegro5.h>
+#include <allegro5/alcompat.h>
+
 #include <iostream>
 
 int main()
@@ -88,6 +92,10 @@ int main()
 	init_quests();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
+
+	//ALLEGRO_SAMPLE* s = al_load_sample("sample1.wav");
+	//al_play_sample(s, 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
+	//printf("SAMPLE: %p\nERROR: %d\n", s, al_get_errno());
 
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 

@@ -5,6 +5,8 @@
 #include <math.h>
 #include "ResourceLoader.h"
 
+const float Entity::MAXIMUM_IGNORABLE_SPEED = 0.001f;
+
 void Entity::SetRotation(float rot)
 {
     rotation = rot;
@@ -164,6 +166,10 @@ void Entity::Tick()
     }
     if (health <= 0)
         dead = true;
+    if (abs(xvel) <= MAXIMUM_IGNORABLE_SPEED)
+        xvel = 0;
+    if (abs(yvel) <= MAXIMUM_IGNORABLE_SPEED)
+        yvel = 0;
     if (!IsDead())
         if (xvel || yvel)
         {

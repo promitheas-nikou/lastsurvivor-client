@@ -6,6 +6,7 @@
 class AudioMultiTrack
 {
 private:
+	mutable ALLEGRO_SAMPLE_INSTANCE* lastPlaying;
 	std::vector<ALLEGRO_SAMPLE_INSTANCE*> *sampleInstances;
 public:
 

@@ -1,6 +1,6 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.0",
+  "VERSION": "ALPHA 1.1",
   "VER_MINOR": 0,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
@@ -21,7 +21,21 @@
     {
       "id": "gtiles.dirt.walk",
       "filenames": [
-        "dirt_walk.wav"
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
+      "id": "gtiles.grass.walk",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
       ]
     }
   ],
@@ -342,7 +356,7 @@
       ],
       "rattle_launcher": {
         "damage": 10.0,
-        "fire_speed": 0.1,
+        "projectile_speed": 0.1,
         "textures": [
           "tex.entities.rattle/0",
           "tex.entities.rattle/1",
@@ -605,7 +619,7 @@
       "texture": "tex.items.stone",
       "texture0": "tex.entities.red_bullet",
       "damage": 2.5,
-      "fire_speed": 0.1
+      "projectile_speed": 0.1
     },
     {
       "id": "items.berry",

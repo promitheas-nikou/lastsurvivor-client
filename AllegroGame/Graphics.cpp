@@ -26,10 +26,10 @@ void init_graphics()
 void init_sound()
 {
 	if (!al_install_audio())
-		printf("FAILED TO INSTALL AUDIO!!!\nWILL PROCEED INITIALIZATION WITH NO AUDIO\n");
-	al_reserve_samples(4);
+		printf("FAILED TO INSTALL AUDIO!!!\nPROCEEDING INITIALIZATION WITH NO AUDIO\n");
 	if(!al_init_acodec_addon())
-		printf("FAILED TO INSTALL AUDIO!!!\nWILL PROCEED INITIALIZATION WITH NO AUDIO\n");
+		printf("FAILED TO INSTALL AUDIO!!!\nPROCEEDING INITIALIZATION WITH NO AUDIO\n");
+	al_reserve_samples(40);
 	printf("AUDIO SUCCESSFULLY INITIALIZED!\n");
 }
 
