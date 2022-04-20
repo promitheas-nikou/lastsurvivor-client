@@ -1,22 +1,22 @@
 #include "AudioMultiTrackCollection.h"
 #include "ResourceLoader.h"
 
-void AudioMultiTrackCollection::Link(SoundType t, AudioMultiTrack* a)
+void AudioMultiTrackCollection::Play(SoundType t) const
 {
-	audioTracks[t] = a;
+	AudioMultiTrack* m = multiTracks[t];
+	if (m != nullptr)
+		m->Play();
 }
 
-void AudioMultiTrackCollection::Play(SoundType t)
+void AudioMultiTrackCollection::Link(SoundType t, AudioMultiTrack* m)
 {
-	AudioMultiTrack* a = audioTracks[t];
-	if(a!=nullptr)
-		a->Play();
+	multiTracks[t] = m;
 }
 
 void AudioMultiTrackCollection::LoadFromJSON(nlohmann::json data)
 {
-	for (nlohmann::json l : data)
+	for (nlohmann::json audio : data)
 	{
-		Link(GetSoundTypeFromString(l[DATA_JSON_SOUND_TYPE_KEY]), loaded_audio_multi_tracks[l[DATA_JSON_ID_KEY]]);
+		Link(GetSoundTypeFromString(audio[DATA_JSON_SOUND_TYPE_KEY]), loaded_audio_multi_tracks[audio[DATA_JSON_ID_KEY]]);
 	}
 }

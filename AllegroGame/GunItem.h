@@ -1,5 +1,6 @@
 #pragma once
 #include "RangedWeaponItem.h"
+#include "AudioMultiTrackCollection.h"
 
 class GunItem :
     public RangedWeaponItem
@@ -10,7 +11,7 @@ private:
     static ALLEGRO_BITMAP* BULLET_TEXTURE;
     static float DAMAGE;
     static float FIRE_SPEED;
-
+    static AudioMultiTrackCollection AUDIO_TRACKS;
 public:
 
     static const std::string ID;

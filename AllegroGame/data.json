@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.1",
-  "VER_MINOR": 0,
+  "VERSION": "ALPHA 1.2",
+  "VER_MINOR": 2,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -14,12 +14,14 @@
   "audio": [
     {
       "id": "main_music",
+      "wait": true,
       "filenames": [
         "main_music.ogg"
       ]
     },
     {
       "id": "gtiles.dirt.walk",
+      "wait": true,
       "filenames": [
         "dirt_walk_0.wav",
         "dirt_walk_1.wav",
@@ -30,12 +32,36 @@
     },
     {
       "id": "gtiles.grass.walk",
+      "wait": true,
       "filenames": [
         "dirt_walk_0.wav",
         "dirt_walk_1.wav",
         "dirt_walk_2.wav",
         "dirt_walk_3.wav",
         "dirt_walk_4.wav"
+      ]
+    },
+    {
+      "id": "entities.rattle_bullet.hit",
+      "wait": false,
+      "filenames": [
+        "arrow_hit_0.wav"
+      ]
+    },
+    {
+      "id": "entities.generic_bullet.hit",
+      "wait": false,
+      "filenames": [
+        "arrow_hit_0.wav"
+      ]
+    },
+    {
+      "id": "entities.player.hurt",
+      "wait": false,
+      "filenames": [
+        "player_hurt_0.wav",
+        "player_hurt_1.wav",
+        "player_hurt_2.wav"
       ]
     }
   ],
@@ -327,8 +353,31 @@
   ],
   "entities": [
     {
+      "id": "entities.player",
+      "name": "Player",
+      "max_health": 100,
+      "max_water": 100,
+      "max_hunger": 100,
+      "water_loss_per_tick": 0.025,
+      "hunger_loss_per_tick": 0.01,
+      "health_loss_from_water_per_tick": 0.05,
+      "health_loss_from_hunger_per_tick": 0.05,
+      "rangesq": 9,
+      "audio": [
+        {
+          "type": "entity_hurt",
+          "id": "entities.player.hurt"
+        }
+      ]
+    },
+    {
       "id": "entities.zombie",
-      "max_health": 100
+      "max_health": 100,
+      "damage": 3,
+      "rangesq": 0.4,
+      "speed": 0.005,
+      "name": "Zombie",
+      "texture": "tex.entities.zombie"
     },
     {
       "id": "entities.cactus_boss",
@@ -366,6 +415,12 @@
           "tex.entities.rattle/5",
           "tex.entities.rattle/6",
           "tex.entities.rattle/7"
+        ],
+        "audio": [
+          {
+            "type": "projectile_hit",
+            "id": "entities.rattle_bullet.hit"
+          }
         ]
       }
     }
@@ -518,7 +573,7 @@
       "texture": "tex.gtiles.grass",
       "audio": [
         {
-          "type": "walk",
+          "type": "tile_walk",
           "id": "gtiles.dirt.walk"
         }
       ]
@@ -532,7 +587,7 @@
       "texture": "tex.gtiles.dirt",
       "audio": [
         {
-          "type": "walk",
+          "type": "tile_walk",
           "id": "gtiles.dirt.walk"
         }
       ]
@@ -619,7 +674,13 @@
       "texture": "tex.items.stone",
       "texture0": "tex.entities.red_bullet",
       "damage": 2.5,
-      "projectile_speed": 0.1
+      "projectile_speed": 0.1,
+      "audio": [
+        {
+          "type": "projectile_hit",
+          "id": "entities.generic_bullet.hit"
+        }
+      ]
     },
     {
       "id": "items.berry",

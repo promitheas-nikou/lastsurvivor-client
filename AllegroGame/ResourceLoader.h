@@ -24,6 +24,7 @@ const extern std::string DATA_JSON_DESCRIPTION_KEY;
 const extern std::string DATA_JSON_DROP_KEY;
 const extern std::string DATA_JSON_COLLECT_KEY;
 const extern std::string DATA_JSON_ID_KEY;
+const extern std::string DATA_JSON_SPEED_KEY;
 const extern std::string DATA_JSON_AUDIO_COLLECTION_KEY;
 const extern std::string DATA_JSON_SOUND_TYPE_KEY;
 const extern std::string DATA_JSON_RANGESQ_KEY;

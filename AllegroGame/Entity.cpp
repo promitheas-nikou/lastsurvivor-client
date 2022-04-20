@@ -68,12 +68,12 @@ float Entity::getYvel() const
     return yvel;
 }
 
-float Entity::getXsize() const
+float Entity::GetXsize() const
 {
     return xsize;
 }
 
-float Entity::getYsize() const
+float Entity::GetYsize() const
 {
     return ysize;
 }
@@ -96,6 +96,21 @@ bool Entity::DoesBounce() const
 bool Entity::ContainsPos(float x, float y)
 {
     return (xpos - xsize / 2 <= x) && (x <= xpos + xsize / 2) && (ypos - ysize / 2 <= y) && (y <= ypos + ysize / 2);
+}
+
+bool Entity::CollidesWith(Entity* e)
+{
+    float e1sx = GetXpos() - GetXsize() / 2;
+    float e1sy = GetYpos() - GetYsize() / 2;
+    float e1ex = GetXpos() + GetXsize() / 2;
+    float e1ey = GetYpos() + GetYsize() / 2;
+    float e2sx = e->GetXpos() - e->GetXsize() / 2;
+    float e2sy = e->GetYpos() - e->GetYsize() / 2;
+    float e2ex = e->GetXpos() + e->GetXsize() / 2;
+    float e2ey = e->GetYpos() + e->GetYsize() / 2;
+    bool cx = (e1sx <= e2sx) ? (e1ex >= e2sx) : (e1sx <= e2ex);
+    bool cy = (e1sy <= e2sy) ? (e1ey >= e2sy) : (e1sy <= e2ey);
+    return cx && cy;
 }
 
 bool Entity::IsHostile() const
@@ -173,7 +188,7 @@ void Entity::Tick()
     if (!IsDead())
         if (xvel || yvel)
         {
-            containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->PlaySound(SoundType::WALK);
+            containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->PlaySound(SoundType::TILE_WALK);
         }
 }
 
@@ -194,6 +209,7 @@ void Entity::DoDamage(MeleeWeapon* w) const
 
 void Entity::DoDamage(float dmg) const
 {
+    this->PlaySound(SoundType::ENTITY_HURT);
     health -= dmg;
 }
 
@@ -206,6 +222,9 @@ float Entity::getFriction() const
 {
     return .8f;
 }
+
+void Entity::PlaySound(SoundType st) const
+{}
 
 Entity::Entity(World* w, float x, float y, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys) : containingWorld{ w }, xpos{ x }, ypos{ y }, mass{ mass }, xvel{ initialVelocityX }, yvel{ initialVelocityY }, health{ maxHealth }, maxHealth{ maxHealth }, xsize{ xs }, ysize{ ys }
 {}

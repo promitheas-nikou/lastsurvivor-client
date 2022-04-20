@@ -227,16 +227,6 @@ bool World::IsChunkGenerated(int x, int y)
     return chunks[y].find(x) != chunks[y].end();
 }
 
-Entity* World::GetEntityAtPos(float x, float y) const
-{
-    for(Entity* e: entities)
-        if (e->ContainsPos(x, y))
-                return e;
-    if (player->ContainsPos(x, y))
-        return player;
-    return nullptr;
-}
-
 Entity* World::GetEntityAtPos(float x, float y, Entity* ignore) const
 {
     for (Entity* e : entities)
@@ -249,6 +239,18 @@ Entity* World::GetEntityAtPos(float x, float y, Entity* ignore) const
     return nullptr;
 }
 
+Entity* World::GetEntityColliding(Entity* entity, Entity* ignore) const
+{
+    for (Entity* e : entities)
+        if (e != ignore)
+            if (e->CollidesWith(entity))
+                return e;
+    if (player != ignore)
+        if (player->CollidesWith(entity))
+            return player;
+    return nullptr;
+}
+
 std::vector<Entity*> World::GetEntitiesAtPos(float x, float y) const
 {
     std::vector<Entity*> t;
@@ -258,15 +260,12 @@ std::vector<Entity*> World::GetEntitiesAtPos(float x, float y) const
     return t;
 }
 
-std::vector<Entity*> World::GetEntitiesNearPos(float x, float y, float dist) const
+std::vector<Entity*> World::GetEntitiesColliding(Entity* n) const
 {
     std::vector<Entity*> t;
-    dist *= dist;
     for (Entity* e : entities)
     {
-        float a = x - e->GetXpos();
-        float b = y - e->GetYpos();
-        if (a * a + b * b < dist)
+        if(n->CollidesWith(e))
             t.push_back(e);
     }
     return t;

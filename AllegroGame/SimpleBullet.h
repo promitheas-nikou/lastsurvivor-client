@@ -1,6 +1,7 @@
 #pragma once
 #include "Bullet.h"
 #include <allegro5/allegro5.h>
+#include "AudioMultiTrackCollection.h"
 
 class SimpleBullet :
     public Bullet
@@ -10,6 +11,7 @@ private:
     size_t len;
     size_t counter;
     float damage;
+    AudioMultiTrackCollection* AUDIO_TRACKS;
 public:
     static const std::string ID;
 
@@ -17,9 +19,11 @@ public:
 
     virtual void Tick() override;
 
-    SimpleBullet(World* w, float dmg, float x, float y, float velx, float vely, ALLEGRO_BITMAP** tex, size_t len);
+    SimpleBullet(World* w, float dmg, float x, float y, float velx, float vely, ALLEGRO_BITMAP** tex, size_t len, AudioMultiTrackCollection* col);
 
     virtual float GetDamage() const override;
+
+    virtual void PlaySound(SoundType t) const final;
 
     void Draw() override;
 

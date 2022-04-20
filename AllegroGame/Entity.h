@@ -3,6 +3,7 @@
 #include <string>
 #include <allegro5/allegro5.h>
 #include "MeleeWeapon.h"
+#include "SoundType.h"
 
 class World;
 class WorldChunk;
@@ -52,8 +53,8 @@ public:
 	float GetYpos() const;
 	float getXvel() const;
 	float getYvel() const;
-	float getXsize() const;
-	float getYsize() const;
+	float GetXsize() const;
+	float GetYsize() const;
 	float getRotation() const;
 	float getMass() const;
 
@@ -63,6 +64,8 @@ public:
 
 	virtual bool ContainsPos(float x, float y);
 	
+	virtual bool CollidesWith(Entity* e);
+
 	virtual bool IsHostile() const;
 	virtual bool IsPassive() const;
 
@@ -90,6 +93,8 @@ public:
 	virtual void Heal(float hl) const;
 
 	virtual float getFriction() const;
+
+	virtual void PlaySound(SoundType st) const;
 
 	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys);
 	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY);

@@ -11,18 +11,20 @@ void Bullet::Tick()
         return;
     warpRelative(getXvel(), getYvel());
     if (!(
-        containingWorld->GetTile(util_floor(GetXpos() - getXsize() / 2), util_floor(GetYpos() - getYsize() / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(GetXpos() + getXsize() / 2), util_floor(GetYpos() - getYsize() / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(GetXpos() - getXsize() / 2), util_floor(GetYpos() + getYsize() / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(GetXpos() + getXsize() / 2), util_floor(GetYpos() + getYsize() / 2))->CanWalkThrough()))
+        containingWorld->GetTile(util_floor(GetXpos() - GetXsize() / 2), util_floor(GetYpos() - GetYsize() / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(GetXpos() + GetXsize() / 2), util_floor(GetYpos() - GetYsize() / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(GetXpos() - GetXsize() / 2), util_floor(GetYpos() + GetYsize() / 2))->CanWalkThrough() &&
+        containingWorld->GetTile(util_floor(GetXpos() + GetXsize() / 2), util_floor(GetYpos() + GetYsize() / 2))->CanWalkThrough()))
     {
+        this->PlaySound(SoundType::PROJECTILE_HIT);
         Kill();
     }
-	Entity* e = containingWorld->GetEntityAtPos(GetXpos(), GetYpos(), this);
+	Entity* e = containingWorld->GetEntityColliding(this, this);
     if ((e != nullptr) && (e != owner))
     {
         e->DoDamage(GetDamage());
         e->applyForce(getMass() * getXvel(), getMass() * getYvel());
+        this->PlaySound(SoundType::PROJECTILE_HIT);
         Kill();
     }
 }

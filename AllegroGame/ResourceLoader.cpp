@@ -21,6 +21,11 @@
 #include "BerryItem.h"
 #include "SimpleItemBundle.h"
 #include "CactusBossEntity.h"
+#include "ZombieEntity.h"
+#include "PlayerEntity.h"
+#include "AudioMultiTrackCollection.h"
+#include "AudioSampleInstanceMultiTrack.h"
+#include "AudioSampleMultiTrack.h"
 
 #include "Recipe.h"
 
@@ -43,6 +48,7 @@ const std::string DATA_JSON_COLLECT_KEY = "collection_drops";
 const std::string DATA_JSON_ID_KEY = "id"; 
 const std::string DATA_JSON_DAMAGE_KEY = "damage";
 const std::string DATA_JSON_SOUND_TYPE_KEY = "type";
+const std::string DATA_JSON_SPEED_KEY = "speed";
 const std::string DATA_JSON_AUDIO_COLLECTION_KEY = "audio";
 const std::string DATA_JSON_RANGESQ_KEY = "rangesq";
 const std::string DATA_JSON_FIRE_SPEED_KEY = "projectile_speed";
@@ -53,7 +59,7 @@ const std::string DATA_JSON_WATER_KEY = "water";
 nlohmann::json json_data;
 
 std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
-std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
+std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;	
 std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_samples;
 std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;
 std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
@@ -135,11 +141,14 @@ void load_resources()
 					loaded_audio_sample_instances[id].push_back(i);
 				}
 			}
-			loaded_audio_multi_tracks[id] = new AudioMultiTrack(loaded_audio_sample_instances[id]);
+			bool wait = audio["wait"];
+			AudioMultiTrack *a = wait?((AudioMultiTrack*)new AudioSampleInstanceMultiTrack(loaded_audio_sample_instances[id])) : ((AudioMultiTrack*)new AudioSampleMultiTrack(loaded_audio_samples[id]));
+			loaded_audio_multi_tracks[id] = a;
 		}
 
 		nlohmann::json fonts_data = json_data["fonts"];
 		printf("\nLOADING %d FONT(S)...\n", fonts_data.size());
+		
 
 		for (nlohmann::json font : fonts_data)
 		{
@@ -285,6 +294,8 @@ void init_entities()
 	for (nlohmann::json j : json_data["entities"])
 		entity_data[j["id"]] = j;
 	CactusBossEntity::Init(entity_data[CactusBossEntity::ID]);
+	ZombieEntity::Init(entity_data[ZombieEntity::ID]);
+	PlayerEntity::Init(entity_data[PlayerEntity::ID]);
 	printf("SUCCESSFULLY INITIALIZED ENTITIES!\n");
 }
 

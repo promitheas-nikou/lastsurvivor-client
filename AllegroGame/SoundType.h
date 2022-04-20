@@ -2,10 +2,14 @@
 #include <string>
 
 enum class SoundType {
-	WALK,
-	RUN,
-	BREAK,
-	PLACE,
+	TILE_WALK,
+	TILE_BREAK,
+	TILE_PLACE,
+	ENTITY_IDLE,
+	ENTITY_WALK,
+	ENTITY_HURT,
+	PROJECTILE_LAUNCH,
+	PROJECTILE_HIT,
 	NONE
 };
 

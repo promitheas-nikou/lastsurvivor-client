@@ -37,21 +37,21 @@ void CactusBossEntity::Tick()
 
 void CactusBossEntity::Draw()
 {
-	int x = floor((GetXpos() - getXsize() / 2) * 128);
-	int y = floor((GetYpos() - getYsize() / 2) * 128);
+	int x = floor(GetXpos() * 128);
+	int y = floor(GetYpos() * 128);
 	int ind;
 	if (graphicsCounter < 0)
 		ind = 4;
 	else
 		ind = graphicsCounter/10;
 	if (getRotation() < M_PI_4)
-		al_draw_bitmap(RIGHT_TEXTURES[ind], x, y, 0);
+		al_draw_rotated_bitmap(LEFT_TEXTURES[ind], al_get_bitmap_width(LEFT_TEXTURES[ind]) / 2, al_get_bitmap_height(LEFT_TEXTURES[ind]) / 2, x, y, 0, 0);
 	else if (getRotation() < 3 * M_PI_4)
-		al_draw_bitmap(FRONT_TEXTURES[ind], x, y, 0);
+		al_draw_rotated_bitmap(FRONT_TEXTURES[ind], al_get_bitmap_width(LEFT_TEXTURES[ind]) / 2, al_get_bitmap_height(LEFT_TEXTURES[ind]) / 2, x, y, 0, 0);
 	else if (getRotation() < 3 * M_PI_2)
-		al_draw_bitmap(LEFT_TEXTURES[ind], x, y, 0);
+		al_draw_rotated_bitmap(RIGHT_TEXTURES[ind], al_get_bitmap_width(LEFT_TEXTURES[ind])/2, al_get_bitmap_height(LEFT_TEXTURES[ind])/2, x, y, 0, 0);
 	else
-		al_draw_bitmap(RIGHT_TEXTURES[ind], x, y, 0);
+		al_draw_rotated_bitmap(LEFT_TEXTURES[ind], al_get_bitmap_width(LEFT_TEXTURES[ind]) / 2, al_get_bitmap_height(LEFT_TEXTURES[ind]) / 2, x, y, 0, 0);
 }
 
 std::string CactusBossEntity::GetID() const

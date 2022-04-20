@@ -70,11 +70,11 @@ public:
 
 	bool IsChunkGenerated(int x, int y);
 
-	Entity* GetEntityAtPos(float x, float y) const;
-	Entity* GetEntityAtPos(float x, float y, Entity* ignore) const;
+	Entity* GetEntityAtPos(float x, float y, Entity* ignore = nullptr) const;
+	Entity* GetEntityColliding(Entity* entity, Entity* ignore = nullptr) const;
 
 	std::vector<Entity*> GetEntitiesAtPos(float x, float y) const;
-	std::vector<Entity*> GetEntitiesNearPos(float x, float y, float dist) const;
+	std::vector<Entity*> GetEntitiesColliding(Entity* e) const;
 
 	void Draw();
 

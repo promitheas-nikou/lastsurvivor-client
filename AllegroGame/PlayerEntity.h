@@ -17,6 +17,7 @@ class MeleeWeaponItem;
 class RangedWeaponItem;
 #include "GUI.h"
 #include "LuaInterface.h"
+#include "AudioMultiTrackCollection.h"
 
 enum class PLAYER_GUI_STATE {WORLD, INVENTORY, DEATH, QUEST};
 
@@ -49,7 +50,6 @@ public:
 		CONFIGURATION = 0x03
 	};
 private:
-	static const float REACHSQ;
 	std::string buf;
 	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
 	static ALLEGRO_BITMAP* TEXTURE;
@@ -70,14 +70,17 @@ private:
 	RangedWeaponItem* rangedWeapon;
 	ConsumableItem* consumableItem;
 
+	static std::string NAME;
+	static float RANGESQ;
 	float hunger;
-	const float MAX_HUNGER = 100.f;
-	const float HUNGER_LOSS_PER_TICK = .01f;
-	const float HEALTH_LOSS_FROM_HUNGER_PER_TICK = .05f;
+	static float MAX_HUNGER;
+	static float HUNGER_LOSS_PER_TICK;
+	static float HEALTH_LOSS_FROM_HUNGER_PER_TICK;
 	float water;
-	const float MAX_WATER = 100.f;
-	const float WATER_LOSS_PER_TICK = .025f;
-	const float HEALTH_LOSS_FROM_WATER_PER_TICK = .05f;
+	static float MAX_WATER;
+	static float WATER_LOSS_PER_TICK;
+	static float HEALTH_LOSS_FROM_WATER_PER_TICK;
+	static AudioMultiTrackCollection AUDIO_TRACKS;
 
 
 	char mode;
@@ -86,9 +89,10 @@ private:
 
 	virtual void AddResult(const ItemBundle* b) override;
 
+public:
+
 	const static std::string ID;
 
-public:
 	static PlayerEntity* current_player;
 
 	virtual bool Mine();
@@ -121,7 +125,11 @@ public:
 
 	void Tick() final;
 
+	static void Init(nlohmann::json data);
+
 	void ResetAfterDeath();
+
+	virtual void PlaySound(SoundType t) const final;
 
 	void PushNotification(std::string txt, int fontsize = 30);
 

@@ -1,16 +1,17 @@
 #pragma once
-#include "AudioMultiTrack.h"
 #include "SoundType.h"
+#include "AudioMultiTrack.h"
 #include <map>
 #include "json.h"
 
 class AudioMultiTrackCollection
 {
 private:
-	std::map<SoundType, AudioMultiTrack*> audioTracks;
+	mutable std::map<SoundType, AudioMultiTrack*> multiTracks;
 public:
-	void Link(SoundType t, AudioMultiTrack* a);
-	void Play(SoundType t);
+	AudioMultiTrackCollection() = default;
+	void Play(SoundType t) const;
+	void Link(SoundType t, AudioMultiTrack* m);
 	void LoadFromJSON(nlohmann::json data);
 };
 

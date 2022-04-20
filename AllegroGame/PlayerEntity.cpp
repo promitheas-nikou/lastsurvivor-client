@@ -19,6 +19,16 @@
 #include <math.h>
 
 ALLEGRO_BITMAP* PlayerEntity::TEXTURE;
+
+std::string PlayerEntity::NAME;
+float PlayerEntity::RANGESQ;
+float PlayerEntity::MAX_HUNGER;
+float PlayerEntity::HUNGER_LOSS_PER_TICK;
+float PlayerEntity::HEALTH_LOSS_FROM_HUNGER_PER_TICK;
+float PlayerEntity::MAX_WATER;
+float PlayerEntity::WATER_LOSS_PER_TICK;
+float PlayerEntity::HEALTH_LOSS_FROM_WATER_PER_TICK;
+AudioMultiTrackCollection PlayerEntity::AUDIO_TRACKS;
 ALLEGRO_BITMAP* HEALTH_ICON;
 ALLEGRO_BITMAP* HUNGER_ICON;
 ALLEGRO_BITMAP* WATER_ICON;
@@ -157,7 +167,7 @@ void PlayerEntity::DrawThisGUI()
 		{
 			float a = x - GetXpos();
 			float b = y - GetYpos();
-			if (a * a + b * b > REACHSQ)
+			if (a * a + b * b > RANGESQ)
 			{
 				al_set_mouse_cursor(main_display, loaded_cursors["error"]);
 				break;
@@ -364,7 +374,7 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 					{
 						float a = x - GetXpos();
 						float b = y - GetYpos();
-						if(a*a+b*b<=REACHSQ)
+						if(a*a+b*b<=RANGESQ)
 							MineTile(floor(x), floor(y));
 						break;
 					}
@@ -450,13 +460,11 @@ void PlayerEntity::AddConstItem(Item* item)
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
 static const float PLAYER_SPEED = 0.01f;
 
-const float PlayerEntity::REACHSQ = 9.f;
-
 void PlayerEntity::UseTile(int x, int y)
 {
 	float a = GetXpos() - x;
 	float b = GetYpos() - y;
-	if (a * a + b * b > REACHSQ)
+	if (a * a + b * b > RANGESQ)
 		return;
 	Tile* tile = containingWorld->GetTile(x, y);
 	if (tile->IsEmpty())
@@ -574,6 +582,19 @@ void PlayerEntity::Tick()
 	}
 }
 
+void PlayerEntity::Init(nlohmann::json data)
+{
+	NAME = data[DATA_JSON_NAME_KEY];
+	MAX_WATER = data["max_water"];
+	WATER_LOSS_PER_TICK = data["water_loss_per_tick"];
+	HEALTH_LOSS_FROM_WATER_PER_TICK = data["health_loss_from_water_per_tick"];
+	MAX_HUNGER = data["max_hunger"];
+	HUNGER_LOSS_PER_TICK = data["hunger_loss_per_tick"];
+	HEALTH_LOSS_FROM_HUNGER_PER_TICK = data["health_loss_from_hunger_per_tick"];
+	RANGESQ = data[DATA_JSON_RANGESQ_KEY];
+	AUDIO_TRACKS.LoadFromJSON(data[DATA_JSON_AUDIO_COLLECTION_KEY]);
+}
+
 void PlayerEntity::ResetAfterDeath()
 {
 	this->guistate = PLAYER_GUI_STATE::WORLD;
@@ -582,6 +603,11 @@ void PlayerEntity::ResetAfterDeath()
 	hunger = MAX_HUNGER;
 	water = MAX_WATER;
 	Revive();
+}
+
+void PlayerEntity::PlaySound(SoundType t) const
+{
+	AUDIO_TRACKS.Play(t);
 }
 
 void PlayerEntity::PushNotification(std::string txt, int fontsize)

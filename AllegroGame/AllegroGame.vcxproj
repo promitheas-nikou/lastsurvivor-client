@@ -196,6 +196,8 @@
     <ClCompile Include="AllegroGame.cpp" />
     <ClCompile Include="AudioMultiTrack.cpp" />
     <ClCompile Include="AudioMultiTrackCollection.cpp" />
+    <ClCompile Include="AudioSampleInstanceMultiTrack.cpp" />
+    <ClCompile Include="AudioSampleMultiTrack.cpp" />
     <ClCompile Include="BerryBushTile.cpp" />
     <ClCompile Include="BerryItem.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -283,6 +285,8 @@
     <ClInclude Include="AirTile.h" />
     <ClInclude Include="AudioMultiTrack.h" />
     <ClInclude Include="AudioMultiTrackCollection.h" />
+    <ClInclude Include="AudioSampleInstanceMultiTrack.h" />
+    <ClInclude Include="AudioSampleMultiTrack.h" />
     <ClInclude Include="BerryBushTile.h" />
     <ClInclude Include="BerryItem.h" />
     <ClInclude Include="Bullet.h" />

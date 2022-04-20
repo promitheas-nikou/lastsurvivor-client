@@ -172,6 +172,9 @@
     <Filter Include="Header Files\Game\Audio">
       <UniqueIdentifier>{2e57a837-2047-4c7a-8708-8cbaff4a19b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Audio">
+      <UniqueIdentifier>{4eb12b8c-d116-40d5-a38e-d54a9e5c1316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -390,20 +393,26 @@
     <ClCompile Include="BerryBushTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
-    <ClCompile Include="SoundType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioMultiTrack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioMultiTrackCollection.cpp">
+    <ClCompile Include="RattleLauncher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CactusBossEntity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="RattleLauncher.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AudioSampleInstanceMultiTrack.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundType.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioMultiTrackCollection.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSampleMultiTrack.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioMultiTrack.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -646,20 +655,26 @@
     <ClInclude Include="BerryBushTile.h">
       <Filter>Header Files\Game\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="SoundType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioMultiTrack.h">
+    <ClInclude Include="AudioSampleInstanceMultiTrack.h">
       <Filter>Header Files\Game\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioMultiTrackCollection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CactusBossEntity.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RattleLauncher.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CactusBossEntity.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundType.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioMultiTrackCollection.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSampleMultiTrack.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioMultiTrack.h">
+      <Filter>Header Files\Game\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
