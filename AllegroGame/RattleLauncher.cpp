@@ -2,6 +2,7 @@
 #include "SimpleBullet.h"
 #include "World.h"
 #include "ResourceLoader.h"
+#include <functional>
 
 
 ALLEGRO_BITMAP* RattleLauncher::BULLET_TEXTURES[8];
@@ -11,7 +12,8 @@ AudioMultiTrackCollection RattleLauncher::AUDIO_TRACKS;
 
 void RattleLauncher::Fire(World* world, float xpos, float ypos, float rot, Entity* owner)
 {
-	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), BULLET_TEXTURES, 8, &AUDIO_TRACKS);
+	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), BULLET_TEXTURES, 8, 5, &AUDIO_TRACKS);
+	b->SetCollisionCallback([](Entity*){});
 	b->SetOwnerEntity(owner);
 	world->AddEntity(b);
 }

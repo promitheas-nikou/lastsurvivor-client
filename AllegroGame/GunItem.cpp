@@ -19,17 +19,18 @@ std::string GunItem::GetID() const
 
 void GunItem::Fire(World* world, float xpos, float ypos, float rot, Entity* owner)
 {
-	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), &BULLET_TEXTURE, 1, &AUDIO_TRACKS);
+	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), &BULLET_TEXTURE, 1, 1, &AUDIO_TRACKS);
 	b->SetOwnerEntity(owner);
+	b->SetCollisionCallback(callback);
 	world->AddEntity(b);
 }
 
 GunItem::GunItem() : RangedWeaponItem(NAME)
 {}
 
-Item* GunItem::Clone()const
+Item* GunItem::Clone() const
 {
-	return nullptr;//new GunItem(*this);
+	return new GunItem(*this);
 }
 
 void GunItem::Draw(int x, int y, int width, int height) const

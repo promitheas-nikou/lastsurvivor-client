@@ -7,6 +7,7 @@ protected:
     Item** items;
     int size;
 public:
+    Item** GetItemPtr(int itemID) override;
     Item* GetItem(int itemID) const override;
     void SetItem(int itemID, Item* item) override;
 

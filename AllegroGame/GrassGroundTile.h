@@ -2,6 +2,7 @@
 #include "GroundTile.h"
 #include "json.h"
 #include "AudioMultiTrackCollection.h"
+#undef PlaySound
 
 class GrassGroundTile:
 	public GroundTile
@@ -21,7 +22,10 @@ public:
 	GrassGroundTile(World* w, int x, int y);
 
 	static void Init(nlohmann::json data);
+
 	void Draw() const final;
+
+	virtual GroundTile* Clone(World* w, int x, int y) const final;
 
 	const ItemBundle* GetMiningResult(Tool* tool) const final;
 

@@ -15,8 +15,14 @@ public:
     static const std::string ID;
     std::string GetID() const final;
 
-    bool IsTransparent() const final;
-    bool CanWalkThrough() const final;
+    virtual bool IsTransparent() const final;
+    virtual bool CanWalkThrough() const final;
+
+    virtual ToolType GetOptimalToolType() const final;
+    virtual int GetMiningResistance() const final;
+    virtual std::string GetName() const final;
+
+    virtual Tile* Clone(World* w, int x, int y) const final;
 
     void Draw() const final;
 
@@ -27,6 +33,8 @@ public:
     const ItemBundle* GetMiningResult(Tool* tool) const override;
 
     static void Init(nlohmann::json data);
+
+    virtual ~BerryBushTile() = default;
 
     BerryBushTile(World* w, int x, int y);
 };

@@ -10,7 +10,9 @@
 #include "StoneGroundTile.h"
 #include "SandGroundTile.h"
 #include "WaterGroundTile.h"
+#include "AirTile.h"
 #include "TreeTile.h"
+#include "FenceTile.h"
 #include "BerryBushTile.h"
 #include "StoneItem.h"
 #include "DirtItem.h"
@@ -53,6 +55,7 @@ const std::string DATA_JSON_AUDIO_COLLECTION_KEY = "audio";
 const std::string DATA_JSON_RANGESQ_KEY = "rangesq";
 const std::string DATA_JSON_FIRE_SPEED_KEY = "projectile_speed";
 const std::string DATA_JSON_HEALTH_KEY = "health";
+const std::string DATA_JSON_MAX_HEALTH_KEY = "max_health";
 const std::string DATA_JSON_HUNGER_KEY = "hunger";
 const std::string DATA_JSON_WATER_KEY = "water";
 
@@ -147,14 +150,14 @@ void load_resources()
 		}
 
 		nlohmann::json fonts_data = json_data["fonts"];
-		printf("\nLOADING %d FONT(S)...\n", fonts_data.size());
+		printf("\nLOADING %d FONT(S)...\n", fonts_data.size());	
 		
 
 		for (nlohmann::json font : fonts_data)
 		{
 			std::string id = font["id"];
 			std::string fn = font["font"];
-			for (int i = 10; i <= 80; i++)
+			for (int i = 1; i <= 80; i++)
 				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
 			printf("SUCCESSFULLY LOADED FONT '%s'(\"%s\")...\n", id.c_str(), fn.c_str());
 		}
@@ -169,6 +172,7 @@ void load_resources()
 			int hoty = cd["hoty"];
 			loaded_cursors[id] = al_create_mouse_cursor(b, hotx, hoty);
 		}
+		InventoryGUI::Init();
 	}
 	catch (const nlohmann::detail::parse_error& err)
 	{
@@ -225,9 +229,19 @@ void init_tiles()
 		StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
 		SandGroundTile::Init(ground_tile_data[SandGroundTile::ID]);
 		WaterGroundTile::Init(ground_tile_data[WaterGroundTile::ID]);
+		prototype_gtiles[GrassGroundTile::ID] = new GrassGroundTile(nullptr, 0, 0);
+		prototype_gtiles[DirtGroundTile::ID] = new DirtGroundTile(nullptr, 0, 0);
+		prototype_gtiles[StoneGroundTile::ID] = new StoneGroundTile(nullptr, 0, 0);
+		prototype_gtiles[SandGroundTile::ID] = new SandGroundTile(nullptr, 0, 0);
+		prototype_gtiles[WaterGroundTile::ID] = new WaterGroundTile(nullptr, 0, 0);
 
 		TreeTile::Init(tile_data[TreeTile::ID]);
 		BerryBushTile::Init(tile_data[BerryBushTile::ID]);
+		FenceTile::Init(tile_data[FenceTile::ID]);
+		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
+		prototype_tiles[TreeTile::ID] = new TreeTile(nullptr, 0, 0);
+		prototype_tiles[BerryBushTile::ID] = new BerryBushTile(nullptr, 0, 0);
+		prototype_tiles[FenceTile::ID] = new FenceTile(nullptr, 0, 0);
 	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -264,6 +278,13 @@ void init_items()
 		SimpleSword::Init(item_data[SimpleSword::ID]);
 		GunItem::Init(item_data[GunItem::ID]);
 		BerryItem::Init(item_data[BerryItem::ID]);
+		prototype_items[StoneItem::ID] = new StoneItem();
+		prototype_items[DirtItem::ID] = new DirtItem();
+		prototype_items[StickItem::ID] = new StickItem();
+		prototype_items[SandItem::ID] = new SandItem();
+		prototype_items[SimpleSword::ID] = new SimpleSword();
+		prototype_items[GunItem::ID] = new GunItem();
+		prototype_items[BerryItem::ID] = new BerryItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
@@ -287,6 +308,8 @@ void init_items()
 void init_quests()
 {
 	quest_collection = QuestCollection::MakeFromJSON(json_data["quests"]);
+	for (const std::pair<std::string, Quest*>& p : quest_collection->quests)
+		p.second->Resolve();
 }
 
 void init_entities()
@@ -296,6 +319,9 @@ void init_entities()
 	CactusBossEntity::Init(entity_data[CactusBossEntity::ID]);
 	ZombieEntity::Init(entity_data[ZombieEntity::ID]);
 	PlayerEntity::Init(entity_data[PlayerEntity::ID]);
+	prototype_entities[CactusBossEntity::ID] = new CactusBossEntity(nullptr, 0.f, 0.f);
+	prototype_entities[ZombieEntity::ID] = new ZombieEntity(nullptr, 0.f, 0.f);
+	prototype_entities[PlayerEntity::ID] = new PlayerEntity(nullptr, 0.f, 0.f);
 	printf("SUCCESSFULLY INITIALIZED ENTITIES!\n");
 }
 

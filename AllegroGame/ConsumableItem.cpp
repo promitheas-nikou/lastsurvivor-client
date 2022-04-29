@@ -1,4 +1,4 @@
 #include "ConsumableItem.h"
 
-ConsumableItem::ConsumableItem(std::string name): Item(name)
+ConsumableItem::ConsumableItem(std::string name): Consumable(), UsableItem(name)
 {}

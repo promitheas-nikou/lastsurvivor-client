@@ -1,5 +1,6 @@
 #pragma once
 #include "Item.h"
+#include <functional>
 #include "RangedWeapon.h"
 
 class RangedWeaponItem:

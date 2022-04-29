@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "json.h"
+#include <allegro5/allegro5.h>
 
 class QuestCollection;
 class Tile;
@@ -14,15 +15,20 @@ class Quest
 private:
 	std::string name;
 	std::string id;
+	ALLEGRO_BITMAP* icon;
 	bool completed;
 	bool unlocked;
+	int x;
+	int y;
 	QuestCollection* collection;
 
 	class QuestCompletionRequirement {
 	public:
+		std::string id;
 		Quest* targetquest;
-		QuestCompletionRequirement(Quest* quest);
+		QuestCompletionRequirement(std::string id);
 		bool Check() const;
+		void Resolve(QuestCollection* col);
 	};
 
 	class TileMineRequirement {
@@ -63,20 +69,29 @@ private:
 	std::vector<GroundTileMineRequirement> gtile_requirements;
 	std::vector<EntityKillRequirement> kill_requirements;
 
-	Quest(std::string id, std::string n, bool c, bool u);
+	Quest(std::string id, std::string n, ALLEGRO_BITMAP* b, bool c, bool u);
 public:
 	bool IsCompleted() const;
 	bool IsUnlocked() const;
 	
 	void Unlock();
 
+	std::string GetName() const;
+
+	void Update();
+
 	void TileMined(Tile* tile, Tool* tool);
 	void GroundTileMined(GroundTile* gtile, Tool* tool);
 	void EntityKilled(Entity* entity);
+
+	ALLEGRO_BITMAP* GetIcon() const;
+
+	void Resolve();
 
 	std::string GetID() const;
 
 	static Quest *MakeFromJSON(nlohmann::json data, QuestCollection* col);
 	friend QuestCollection;
+	friend class QuestGUI;
 };
 

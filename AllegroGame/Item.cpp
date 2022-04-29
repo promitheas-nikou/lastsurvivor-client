@@ -74,6 +74,8 @@ void Item::UseOnTile(World* world, int x, int y)
     return;
 }
 
+std::unordered_map<std::string, Item*> prototype_items;
+
 Item* MakeItemFromID(std::string id)
 {
     if (id == DirtItem::ID)

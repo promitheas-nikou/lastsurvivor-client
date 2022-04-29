@@ -1,5 +1,10 @@
 #include "SimpleItemInventory.h"
 
+Item** SimpleItemInventory::GetItemPtr(int itemID)
+{
+    return &items[itemID];
+}
+
 Item* SimpleItemInventory::GetItem(int itemID) const
 {
     return items[itemID];

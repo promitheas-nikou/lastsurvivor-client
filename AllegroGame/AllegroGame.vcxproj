@@ -203,12 +203,14 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="CactusBossEntity.cpp" />
+    <ClCompile Include="ConnectingTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="DirtItem.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FenceTile.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GroundTileMiner.cpp" />
@@ -228,6 +230,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Quest.cpp" />
     <ClCompile Include="QuestCollection.cpp" />
+    <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="RangedWeaponItem.cpp" />
     <ClCompile Include="RattleLauncher.cpp" />
@@ -249,6 +252,8 @@
     <ClCompile Include="SimpleSword.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SoundType.cpp" />
+    <ClCompile Include="Usable.cpp" />
+    <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
@@ -292,6 +297,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="CactusBossEntity.h" />
+    <ClInclude Include="ConnectingTile.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="DeathGUI.h" />
@@ -299,6 +305,7 @@
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="DirtItem.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FenceTile.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GroundTileMiner.h" />
@@ -320,6 +327,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Quest.h" />
     <ClInclude Include="QuestCollection.h" />
+    <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="RangedWeaponItem.h" />
     <ClInclude Include="RattleLauncher.h" />
@@ -341,6 +349,8 @@
     <ClInclude Include="SimpleSword.h" />
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SoundType.h" />
+    <ClInclude Include="Usable.h" />
+    <ClInclude Include="UsableItem.h" />
     <ClInclude Include="ZombieEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />

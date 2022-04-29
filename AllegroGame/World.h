@@ -70,6 +70,8 @@ public:
 
 	bool IsChunkGenerated(int x, int y);
 
+	void TileUpdateAround(int x, int y);
+
 	Entity* GetEntityAtPos(float x, float y, Entity* ignore = nullptr) const;
 	Entity* GetEntityColliding(Entity* entity, Entity* ignore = nullptr) const;
 

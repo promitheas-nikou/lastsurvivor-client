@@ -72,9 +72,10 @@ void CactusBossEntity::Init(nlohmann::json data)
 	for (std::string id : data["textures_right"])
 		RIGHT_TEXTURES[i++] = loaded_bitmaps[id];
 	RattleLauncher::Init(data["rattle_launcher"]);
+	MAX_HEALTH = data[DATA_JSON_MAX_HEALTH_KEY];
 }
 
-CactusBossEntity::CactusBossEntity(World* world, float xpos, float ypos) : HostileEntity(world, xpos, ypos, 300.f, 10.f, 0.f, 0.f, 3.0f, 3.0f), graphicsCounter{ 0 }
+CactusBossEntity::CactusBossEntity(World* world, float xpos, float ypos) : HostileEntity(world, xpos, ypos, MAX_HEALTH, 10.f, 0.f, 0.f, 3.0f, 3.0f), graphicsCounter{ 0 }
 {
 	rl = new RattleLauncher();
 	SetName("Cactus Boss");

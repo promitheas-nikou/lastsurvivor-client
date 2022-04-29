@@ -24,6 +24,26 @@ bool BerryBushTile::CanWalkThrough() const
     return false;
 }
 
+ToolType BerryBushTile::GetOptimalToolType() const
+{
+    return TOOL_TYPE;
+}
+
+int BerryBushTile::GetMiningResistance() const
+{
+    return MINING_RESISTANCE;
+}
+
+std::string BerryBushTile::GetName() const
+{
+    return NAME;
+}
+
+Tile* BerryBushTile::Clone(World* w, int x, int y) const
+{
+    return new BerryBushTile(w, x, y);
+}
+
 void BerryBushTile::RandomTickUpdate()
 {
     growthTimer = std::min(600, growthTimer+100);
@@ -61,7 +81,7 @@ void BerryBushTile::Init(nlohmann::json data)
     COLLECT = loaded_loot_bundles[data[DATA_JSON_COLLECT_KEY]];
 }
 
-BerryBushTile::BerryBushTile(World* w, int x, int y): Tile(w, x, y, TOOL_TYPE, MINING_RESISTANCE, NAME), growthTimer{0}
+BerryBushTile::BerryBushTile(World* w, int x, int y): Tile(w, x, y), growthTimer{0}
 {
 
 }

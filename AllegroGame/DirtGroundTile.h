@@ -2,6 +2,7 @@
 #include "GroundTile.h"
 #include "ItemBundle.h"
 #include "AudioMultiTrackCollection.h"
+#undef PlaySound
 
 class DirtGroundTile :
     public GroundTile
@@ -17,6 +18,8 @@ public:
 	static const std::string ID;
 
 	std::string GetID() const final;
+
+	virtual GroundTile* Clone(World* w, int x, int y) const final;
 
 	DirtGroundTile(World* w, int x, int y);
 

@@ -23,6 +23,26 @@ bool TreeTile::CanWalkThrough() const
     return false;
 }
 
+ToolType TreeTile::GetOptimalToolType() const
+{
+    return TOOL_TYPE;
+}
+
+int TreeTile::GetMiningResistance() const
+{
+    return MINING_RESISTANCE;
+}
+
+std::string TreeTile::GetName() const
+{
+    return NAME;
+}
+
+Tile* TreeTile::Clone(World* w, int x, int y) const
+{
+    return new TreeTile(w, x, y);
+}
+
 void TreeTile::RandomTickUpdate()
 {
     growthTimer = std::min(600, growthTimer+20);
@@ -48,7 +68,7 @@ void TreeTile::Init(nlohmann::json data)
     DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 }
 
-TreeTile::TreeTile(World* w, int x, int y): Tile(w, x, y, TOOL_TYPE, MINING_RESISTANCE, NAME), growthTimer{600}
+TreeTile::TreeTile(World* w, int x, int y): Tile(w, x, y), growthTimer{600}
 {
 
 }

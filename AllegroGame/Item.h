@@ -41,6 +41,8 @@ public:
 	virtual ~Item() = default;
 };
 
+extern std::unordered_map<std::string, Item*> prototype_items;
+
 Item* MakeItemFromID(std::string id);
 
 Item* MakeItemFromJSON(nlohmann::json data);

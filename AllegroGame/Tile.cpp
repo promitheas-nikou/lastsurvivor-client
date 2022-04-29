@@ -2,9 +2,7 @@
 #include "AirTile.h"
 #include "TreeTile.h"
 #include "BerryBushTile.h"
-
-Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w), xpos(x), ypos(y), optimalToolType(t), miningResistance(m), name(n)
-{}
+#include "FenceTile.h"
 
 Tile::Tile(World* w, int x, int y): world(w), xpos(x), ypos(y)
 {}
@@ -17,11 +15,6 @@ void Tile::LoadAdditionalDataFromFile(std::ifstream &file)
 void Tile::WriteAdditionalDataToFile(std::ofstream& file)
 {
 	return;
-}
-
-std::string Tile::GetName() const
-{
-	return name;
 }
 
 void Tile::TickUpdate()
@@ -69,11 +62,11 @@ void Tile::Use(PlayerEntity* user)
 
 bool Tile::MineWithTool(Tool* tool)
 {
-	if ((tool!=nullptr)&&(static_cast<char>(tool->GetMiningType()) & static_cast<char>(optimalToolType)))
+	if ((tool!=nullptr)&&(static_cast<char>(tool->GetMiningType()) & static_cast<char>(this->GetOptimalToolType())))
 		miningDamageDone += tool->GetMiningDamage();
 	else
 		miningDamageDone++;
-	return miningDamageDone >= miningResistance;
+	return miningDamageDone >= this->GetMiningResistance();
 }
 
 const ItemBundle* Tile::GetMiningResult(Tool* tool) const
@@ -81,19 +74,9 @@ const ItemBundle* Tile::GetMiningResult(Tool* tool) const
 	return nullptr;
 }
 
-int Tile::GetMiningResistance() const
-{
-	return miningResistance;
-}
-
 int Tile::GetMiningDamageDone() const
 {
 	return miningDamageDone;
-}
-
-ToolType Tile::GetOptimalToolType() const
-{
-	return optimalToolType;
 }
 
 int Tile::GetXpos() const
@@ -106,13 +89,12 @@ int Tile::GetYpos() const
 	return ypos;
 }
 
+std::unordered_map<std::string, const Tile*> prototype_tiles;
+
 Tile* MakeTile(World* world, std::string id, int x, int y)
 {
-	if (id == AirTile::ID)
-		return new AirTile(world, x, y);
-	if (id == TreeTile::ID)
-		return new TreeTile(world, x, y);
-	if (id == BerryBushTile::ID)
-		return new BerryBushTile(world, x, y);
-	return nullptr;
+	const Tile* t = prototype_tiles[id];
+	if (t == nullptr)
+		return nullptr;
+	return t->Clone(world, x, y);
 }

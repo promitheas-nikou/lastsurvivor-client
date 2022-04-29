@@ -8,6 +8,7 @@ class ItemInventory
 {
 public:
 
+	virtual Item** GetItemPtr(int itemID) = 0;
 	virtual Item* GetItem(int itemID) const = 0;
 	virtual void SetItem(int itemID, Item* item) = 0;
 	virtual int AddItemToSlot(Item* item, int itemID);

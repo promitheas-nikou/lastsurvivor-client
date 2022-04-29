@@ -31,6 +31,11 @@ void WaterGroundTile::Draw() const
 	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
+GroundTile* WaterGroundTile::Clone(World* w, int x, int y) const
+{
+	return new WaterGroundTile(w, x, y);
+}
+
 void WaterGroundTile::Use(PlayerEntity* p)
 {
 	p->water = std::min(p->MAX_WATER, p->water+5);

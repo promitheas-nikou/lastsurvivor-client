@@ -15,6 +15,11 @@ std::string DirtGroundTile::GetID() const
 	return ID;
 }
 
+GroundTile* DirtGroundTile::Clone(World* w, int x, int y) const
+{
+	return new DirtGroundTile(w, x, y);
+}
+
 DirtGroundTile::DirtGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAME, TOOL_TYPE)
 {}
 

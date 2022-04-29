@@ -3,6 +3,7 @@
 #include "json.h"
 #include "Item.h"
 #include "Tool.h"
+#include <unordered_map>
 #include <fstream>
 #include <allegro5/allegro.h>
 
@@ -19,14 +20,7 @@ class Tile
 
 		const int xpos, ypos;
 
-		ToolType optimalToolType = ToolType::AXE;
-
-		int miningResistance;
 		mutable int miningDamageDone;
-
-		std::string name;
-
-		Tile(World* w, int x, int y, ToolType t, int miningResistance, std::string n);
 
 		Tile(World* w, int x, int y);
 
@@ -36,13 +30,15 @@ class Tile
 		virtual void LoadAdditionalDataFromFile(std::ifstream &file);
 		virtual void WriteAdditionalDataToFile(std::ofstream& file);
 
-		virtual std::string GetName() const;
+		virtual std::string GetName() const = 0;
 
 		virtual void TickUpdate();
 		virtual void RandomTickUpdate();
 		virtual void TileUpdate();
 
 		virtual void Draw() const = 0;
+
+		virtual Tile* Clone(World* w, int x, int y) const = 0;
 
 		virtual bool CanWalkThrough() const;
 		virtual bool canSwimThrough() const;
@@ -56,9 +52,9 @@ class Tile
 
 		virtual const ItemBundle* GetMiningResult(Tool* tool) const;
 
-		virtual int GetMiningResistance() const;
+		virtual int GetMiningResistance() const = 0;
+		virtual ToolType GetOptimalToolType() const = 0;
 		virtual int GetMiningDamageDone() const;
-		virtual ToolType GetOptimalToolType() const;
 
 		int GetXpos() const;
 		int GetYpos() const;
@@ -67,3 +63,5 @@ class Tile
 	};
 
 Tile* MakeTile(World* world, std::string id, int x, int y);
+
+extern std::unordered_map<std::string, const Tile*> prototype_tiles;

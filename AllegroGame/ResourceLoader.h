@@ -6,6 +6,10 @@
 #include "QuestCollection.h"
 #include <unordered_map>
 #include "AudioMultiTrack.h"
+#include "Tile.h"
+#include "GroundTile.h"
+#include "Item.h"
+#include "Entity.h"
 #include <string>
 
 #include "json.h"
@@ -31,6 +35,7 @@ const extern std::string DATA_JSON_RANGESQ_KEY;
 const extern std::string DATA_JSON_DAMAGE_KEY;
 const extern std::string DATA_JSON_FIRE_SPEED_KEY;
 const extern std::string DATA_JSON_HEALTH_KEY;
+const extern std::string DATA_JSON_MAX_HEALTH_KEY;
 const extern std::string DATA_JSON_HUNGER_KEY;
 const extern std::string DATA_JSON_WATER_KEY;
 

@@ -5,6 +5,7 @@
 #include <allegro5/allegro.h>
 #include <fstream>
 #include "Tool.h"
+#include <unordered_map>
 #include "Item.h"
 #include "SoundType.h"
 
@@ -38,6 +39,8 @@ public:
 
 	virtual void Draw() const = 0;
 
+	virtual GroundTile* Clone(World* w, int x, int y) const = 0;
+
 	virtual int GetMiningResistance() const;
 
 	virtual ToolType GetRequiredToolType() const;
@@ -58,3 +61,5 @@ public:
 };
 
 GroundTile* MakeGroundTile(World* world, std::string id, int x, int y);
+
+extern std::unordered_map<std::string, const GroundTile*> prototype_gtiles;

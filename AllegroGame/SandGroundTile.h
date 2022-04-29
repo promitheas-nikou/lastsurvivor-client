@@ -19,7 +19,10 @@ public:
 	SandGroundTile(World* w, int x, int y);
 
 	static void Init(nlohmann::json data);
+
 	void Draw() const final;
+
+	virtual GroundTile* Clone(World* w, int x, int y) const final;
 
 	const ItemBundle* GetMiningResult(Tool* tool) const final;
 

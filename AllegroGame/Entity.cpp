@@ -255,3 +255,5 @@ void Entity::warpRelative(float dx, float dy)
     ypos += dy;
 }
 
+std::unordered_map<std::string, const Entity*> prototype_entities;
+

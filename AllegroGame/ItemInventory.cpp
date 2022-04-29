@@ -19,7 +19,9 @@ void ItemInventory::AddConstItem(const Item* item)
 {
     if (item == nullptr)
         return;
-    AddItem(item->Clone());
+    Item* rv = AddItem(item->Clone());
+    if (rv != nullptr)
+        delete rv;
 }
 
 Item* ItemInventory::AddItem(Item* item)

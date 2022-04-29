@@ -6,6 +6,8 @@ class Bullet :
 {
 private:
     Entity* owner;
+protected:
+    virtual void CollisionCallback(Entity* e);
 public:
     Bullet(World* w, float x, float y, float velx, float vely);
     void Tick() override;

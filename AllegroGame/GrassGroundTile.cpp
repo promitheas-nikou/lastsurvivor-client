@@ -33,6 +33,11 @@ void GrassGroundTile::Draw() const
 	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
+GroundTile* GrassGroundTile::Clone(World* w, int x, int y) const
+{
+	return new GrassGroundTile(w, x, y);
+}
+
 const ItemBundle* GrassGroundTile::GetMiningResult(Tool* tool) const
 {
 	return DROP;

@@ -132,7 +132,9 @@ Tile* World::RemoveTile(int x, int y)
     int chunkY = (y - subY) / WorldChunk::CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
         GenerateChunk(chunkX, chunkY);
-    return GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
+    Tile* r = GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
+    TileUpdateAround(x, y);
+    return r;
 }
 
 void World::AddEntity(Entity* e)
@@ -216,7 +218,9 @@ Tile* World::SetTile(Tile* tile, int x, int y)
     int chunkY = (y - subY) / WorldChunk::CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
         GenerateChunk(chunkX, chunkY);
-    return GetChunk(chunkX, chunkY)->SetTile(tile, subX, subY);
+    Tile* r = GetChunk(chunkX, chunkY)->SetTile(tile, subX, subY);
+    TileUpdateAround(x, y);
+    return r;
 }
 
 bool World::IsChunkGenerated(int x, int y)
@@ -225,6 +229,15 @@ bool World::IsChunkGenerated(int x, int y)
     if (row == chunks.end())
         return false;
     return chunks[y].find(x) != chunks[y].end();
+}
+
+void World::TileUpdateAround(int x, int y)
+{
+    GetTile(x, y)->TileUpdate();
+    GetTile(x, y-1)->TileUpdate();
+    GetTile(x+1, y)->TileUpdate();
+    GetTile(x, y+1)->TileUpdate();
+    GetTile(x-1, y)->TileUpdate();
 }
 
 Entity* World::GetEntityAtPos(float x, float y, Entity* ignore) const

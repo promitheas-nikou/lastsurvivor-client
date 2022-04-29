@@ -31,6 +31,11 @@ void StoneGroundTile::Draw() const
 	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
+GroundTile* StoneGroundTile::Clone(World* w, int x, int y) const
+{
+	return new StoneGroundTile(w, x, y);
+}
+
 const ItemBundle* StoneGroundTile::GetMiningResult(Tool* tool) const
 {
 	return DROP;

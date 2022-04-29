@@ -15,6 +15,7 @@
 #include "Consumable.h"
 #include "BerryItem.h"
 #include "Graphics.h"
+#include <functional>
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -32,6 +33,7 @@ AudioMultiTrackCollection PlayerEntity::AUDIO_TRACKS;
 ALLEGRO_BITMAP* HEALTH_ICON;
 ALLEGRO_BITMAP* HUNGER_ICON;
 ALLEGRO_BITMAP* WATER_ICON;
+QuestCollection* quests;
 
 int a, b, c;
 
@@ -44,6 +46,11 @@ void PlayerEntity::AddResult(const ItemBundle* b)
 		return;
 	for (int i = 0; i < b->GetSize(); i++)
 		GiveConstItem(b->GetItem(i));
+}
+
+void PlayerEntity::EntityKilledRemote(Entity* e)
+{
+	quests->EntityKilled(e);
 }
 
 const std::string PlayerEntity::ID = "entities.player";
@@ -144,6 +151,9 @@ void PlayerEntity::DrawThisGUI()
 	case PlayerActionMode::CONFIGURATION:
 		m = "CONFIGURATION";
 		break;
+	case PlayerActionMode::BUILDING:
+		m = "BUILDING";
+		break;
 	}
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s", m);
 	switch(guistate)
@@ -194,6 +204,9 @@ void PlayerEntity::DrawThisGUI()
 		case PlayerActionMode::RANGED:
 			al_set_mouse_cursor(main_display, loaded_cursors["ranged"]);
 			break;
+		case PlayerActionMode::BUILDING:
+
+			break;
 		}
 		hotbarGUI->DrawGUI();
 		break;
@@ -206,8 +219,13 @@ void PlayerEntity::DrawThisGUI()
 		break;
 	case PLAYER_GUI_STATE::DEATH:
 		break;
+	case PLAYER_GUI_STATE::QUEST:
+		al_set_system_mouse_cursor(main_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+		al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
+		questGUI->DrawGUI();
+		break;
 	}
-	if (guistate != PLAYER_GUI_STATE::DEATH)
+	if (guistate == PLAYER_GUI_STATE::WORLD)
 	{
 		if (IsTyping())
 		{
@@ -268,14 +286,26 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 	case ALLEGRO_KEY_D:
 		keys_pressed |= 0b00000001;
 		break;
+	case ALLEGRO_KEY_Z:
+		if (guistate == PLAYER_GUI_STATE::QUEST)
+			guistate = PLAYER_GUI_STATE::WORLD;
+		else if (guistate == PLAYER_GUI_STATE::WORLD)
+			guistate = PLAYER_GUI_STATE::QUEST;
+		break;
 	case ALLEGRO_KEY_T:
-		typing = !typing;
+		if(guistate==PLAYER_GUI_STATE::WORLD)
+			typing = !typing;
 		break;
 	case ALLEGRO_KEY_R:
 	{
 		char a = al_key_down(&s, ALLEGRO_KEY_LSHIFT);
-		a = a ? 3 : 1;
-		mode = (mode + a) % 4;
+		a = a ? 4 : 1;
+		mode = (mode + a) % 5;
+		if (mode == PlayerActionMode::RANGED)
+			if (rangedWeapon != nullptr)
+				rangedWeapon->SetCollisionCallback([this](Entity* e) {
+					this->EntityKilledRemote(e);
+				});
 		break;
 	}
 	case ALLEGRO_KEY_E:
@@ -288,7 +318,48 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 			guistate = PLAYER_GUI_STATE::WORLD;
 		}
 		break;
+	case ALLEGRO_KEY_ESCAPE:
+		switch (guistate)
+		{
+		case PLAYER_GUI_STATE::INVENTORY:
+			guistate = PLAYER_GUI_STATE::WORLD;
+			break;
+		case PLAYER_GUI_STATE::QUEST:
+			if(questGUI->curQuest==nullptr)
+				guistate = PLAYER_GUI_STATE::WORLD;
+			break;
+		}
+		break;
+	case ALLEGRO_KEY_1:
+		
+		break;
+	case ALLEGRO_KEY_2:
+
+		break;
+	case ALLEGRO_KEY_3:
+
+		break;
+	case ALLEGRO_KEY_4:
+
+		break;
+	case ALLEGRO_KEY_5:
+
+		break;
+	case ALLEGRO_KEY_6:
+
+		break;
+	case ALLEGRO_KEY_7:
+
+		break;
+	case ALLEGRO_KEY_8:
+
+		break;
+	case ALLEGRO_KEY_9:
+
+		break;
 	}
+	if (guistate == PLAYER_GUI_STATE::QUEST)
+		questGUI->KeyDown(event);
 }
 
 void PlayerEntity::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
@@ -335,6 +406,8 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 								float b = e->GetYpos() - GetYpos();
 								if (a * a + b * b <= meleeWeapon->GetRangeSQ())
 									e->DoDamage(meleeWeapon);
+								if (e->GetHealth() <= 0.f)
+									quests->EntityKilled(e);
 							}
 						}
 					}
@@ -354,7 +427,7 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 					case 1:
 					{
 						if (rangedWeapon != nullptr)
-							rangedWeapon->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI / 2, this);
+							rangedWeapon->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI_2, this);
 					}
 					break;
 					case 2:
@@ -380,7 +453,7 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 					}
 					case 2:
 					{
-						UseTile(floor(x), floor(y));
+
 						break;
 					}
 				}
@@ -408,6 +481,8 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 	}
 	else if (guistate == PLAYER_GUI_STATE::INVENTORY)
 		inventoryGUI->MouseButtonDown(event);
+	else if (guistate == PLAYER_GUI_STATE::QUEST)
+		questGUI->MouseButtonDown(event);
 }
 
 void PlayerEntity::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
@@ -417,7 +492,10 @@ void PlayerEntity::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
 
 void PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
-	rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)) , ((float)event.x - (SCREEN_WIDTH / 2)))+M_PI/2);
+	if (guistate == PLAYER_GUI_STATE::WORLD)
+		rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)), ((float)event.x - (SCREEN_WIDTH / 2))) + M_PI / 2);
+	else if (guistate == PLAYER_GUI_STATE::QUEST)
+		questGUI->MouseButtonMove(event);
 }
 
 
@@ -490,19 +568,24 @@ void PlayerEntity::MineTile(int x, int y)
 	}
 	GroundTileMiner::ResetProgress();
 	bool success = false;
+	Tool* t = nullptr;
 	switch (tile->GetOptimalToolType())
 	{
 	case ToolType::PICKAXE:
 		success = tile->MineWithTool(pickaxeTool);
+		t = pickaxeTool;
 		break;
 	case ToolType::AXE:
 		success = tile->MineWithTool(axeTool);
+		t = axeTool;
 		break;
 	case ToolType::SHOVEL:
 		success = tile->MineWithTool(shovelTool);
+		t = shovelTool;
 		break;
 	case ToolType::PUMP:
 		success = tile->MineWithTool(pumpTool);
+		t = pumpTool;
 		break;
 	case ToolType::NONE:
 		success = tile->MineWithTool(nullptr);
@@ -510,7 +593,9 @@ void PlayerEntity::MineTile(int x, int y)
 	}
 	if (success)
 	{
+		quests->TileMined(tile, t);
 		const ItemBundle* b = tile->GetMiningResult(nullptr);
+		if(b!=nullptr)
 		for (int i = 0; i < b->GetSize(); i++)
 			GiveConstItem(b->GetItem(i));
 		containingWorld->RemoveTile(x, y);
@@ -580,6 +665,7 @@ void PlayerEntity::Tick()
 		}
 		Entity::Tick();
 	}
+	quests->Update();
 }
 
 void PlayerEntity::Init(nlohmann::json data)
@@ -615,43 +701,43 @@ void PlayerEntity::PushNotification(std::string txt, int fontsize)
 	notifications.push_back(PlayerNotification::MakeTextNotification(txt, 200, 70, GUItimer + 500, fontsize));
 }
 
-PlayerEntity* PlayerEntity::current_player;
-
-bool PlayerEntity::ConsumeItemCallback(Item* i)
-{
-	Consumable* c = dynamic_cast<Consumable*>(i);
-	if (c == nullptr)
-		return false;
-	PlayerEntity::current_player->Consume(c);
-	i->RemoveAmount(1);
-	return i->GetAmount() <= 0;
-}
-
 PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr), mode{ PlayerActionMode::MINING }
 {
-	current_player = this;
+	quests = quest_collection;
 	hunger = MAX_HUNGER;
 	water = MAX_WATER;
 	SetName("Player");
-	luaInterface = new LuaInterface(world,true);
+	luaInterface = new LuaInterface(world, true);
 	inventory = new SimpleItemInventory(36);
 	meleeWeapon = new SimpleSword();
-	inventory->AddConstItem(new GunItem());
 	inventory->AddConstItem(new BerryItem());
 	rangedWeapon = new GunItem();
 	GroundTileMiner::SetTargetItemInventory(inventory);
-	inventoryGUI = new SimpleInventoryGUI(inventory);
-	hotbarGUI = new SimpleInventoryGUI(inventory);
+	inventoryGUI = new InventoryGUI();
+	hotbarGUI = new InventoryGUI();
 	deathgui = new DeathGUI(this);
+	questGUI = new QuestGUI(quests);
 	for (int i = 0; i < 9; i++)
 	{
-		hotbarGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 9, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 18, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(i + 27, SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
+		hotbarGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128));
+		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128));
+		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i + 9), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128));
+		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i + 18), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
+		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i + 27), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
 	}
-	inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(ConsumeItemCallback, SCREEN_WIDTH / 2 - 63, SCREEN_HEIGHT - 140));
+	inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration([this](Item* item) {
+		Consumable* c = dynamic_cast<Consumable*>(item);
+		if (c == nullptr)
+			return item;
+		this->Consume(c);
+		item->RemoveAmount(1);
+		if (item->GetAmount() <= 0)
+		{
+			delete item;
+			return (Item*)nullptr;
+		}
+		return item;
+	}, SCREEN_WIDTH / 2 - 63, SCREEN_HEIGHT - 140));
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];

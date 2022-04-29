@@ -31,6 +31,11 @@ void SandGroundTile::Draw() const
 	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
+GroundTile* SandGroundTile::Clone(World* w, int x, int y) const
+{
+	return new SandGroundTile(w, x, y);
+}
+
 const ItemBundle* SandGroundTile::GetMiningResult(Tool* tool) const
 {
 	return DROP;

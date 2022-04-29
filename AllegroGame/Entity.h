@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <allegro5/allegro5.h>
 #include "MeleeWeapon.h"
 #include "SoundType.h"
@@ -106,5 +107,9 @@ public:
 	friend WorldChunk;
 	friend World;
 	friend PlayerEntity;
+	friend class Consumable;
 };
+
+
+extern std::unordered_map<std::string, const Entity*> prototype_entities;
 

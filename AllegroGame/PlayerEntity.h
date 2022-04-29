@@ -12,6 +12,7 @@
 #include "ConsumableItem.h"
 #include "ToolItem.h"
 #include "ItemBundle.h"
+#include "QuestGUI.h"
 //#include "WeaponItem.h"
 class MeleeWeaponItem;
 class RangedWeaponItem;
@@ -19,7 +20,7 @@ class RangedWeaponItem;
 #include "LuaInterface.h"
 #include "AudioMultiTrackCollection.h"
 
-enum class PLAYER_GUI_STATE {WORLD, INVENTORY, DEATH, QUEST};
+enum class PLAYER_GUI_STATE { WORLD, INVENTORY, DEATH, QUEST };
 
 class WaterGroundTile;
 
@@ -47,7 +48,8 @@ public:
 		MELEE = 0x00,
 		RANGED = 0x01,
 		MINING = 0x02,
-		CONFIGURATION = 0x03
+		CONFIGURATION = 0x03,
+		BUILDING = 0x04
 	};
 private:
 	std::string buf;
@@ -55,11 +57,14 @@ private:
 	static ALLEGRO_BITMAP* TEXTURE;
 	LuaInterface* luaInterface;
 	enum class PLAYER_GUI_STATE guistate;
+	int historyViewIndex;
 	int GUItimer;
 	char keys_pressed;
+	int selectedHotbarSlot;
 	InventoryGUI* inventoryGUI;
 	RecipeListGUI* recipeGUI;
 	InventoryGUI* hotbarGUI;
+	QuestGUI* questGUI;
 	ItemInventory* inventory;
 	DeathGUI* deathgui;
 	ToolItem* pickaxeTool;
@@ -68,7 +73,6 @@ private:
 	ToolItem* pumpTool;
 	MeleeWeaponItem* meleeWeapon;
 	RangedWeaponItem* rangedWeapon;
-	ConsumableItem* consumableItem;
 
 	static std::string NAME;
 	static float RANGESQ;
@@ -91,17 +95,15 @@ private:
 
 public:
 
-	const static std::string ID;
+	void EntityKilledRemote(Entity* e);
 
-	static PlayerEntity* current_player;
+	const static std::string ID;
 
 	virtual bool Mine();
 
 	virtual std::string GetID() const final;
 
 	void LogToConsole(std::string txt) const;
-
-	static bool ConsumeItemCallback(Item* i);
 
 	void DrawThisGUI() final;
 	void Draw() final;
@@ -140,7 +142,7 @@ public:
 	friend WorldChunk;
 	friend World;
 	friend int main();
-	friend void deathguicallback();
 	friend WaterGroundTile;
+	friend class Consumable;
 };
 

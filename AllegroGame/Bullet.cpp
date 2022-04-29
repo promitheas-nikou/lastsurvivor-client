@@ -2,6 +2,9 @@
 #include "World.h"
 #include "MathUtils.h"
 
+void Bullet::CollisionCallback(Entity* e)
+{}
+
 Bullet::Bullet(World* w, float x, float y, float velx, float vely): Projectile(w, x, y, velx, vely)
 {}
 
@@ -24,6 +27,7 @@ void Bullet::Tick()
     {
         e->DoDamage(GetDamage());
         e->applyForce(getMass() * getXvel(), getMass() * getYvel());
+        CollisionCallback(e);
         this->PlaySound(SoundType::PROJECTILE_HIT);
         Kill();
     }

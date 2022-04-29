@@ -18,6 +18,17 @@ void QuestCollection::EntityKilled(Entity* entity)
         p.second->EntityKilled(entity);
 }
 
+void QuestCollection::Update()
+{
+    for (const std::pair<std::string, Quest*>& p : quests)
+        p.second->Update();
+}
+
+Quest* QuestCollection::GetQuest(std::string id)
+{
+    return quests[id];
+}
+
 QuestCollection* QuestCollection::MakeFromJSON(nlohmann::json data)
 {
     QuestCollection* qc = new QuestCollection();

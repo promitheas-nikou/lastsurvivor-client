@@ -86,10 +86,10 @@ int main()
 	init_items();
 	printf("\n======= INITIALIZING TILES =======\n\n");
 	init_tiles();
-	printf("\n======= INITIALIZING ENTITIES =======\n\n");
-	init_entities();
 	printf("\n======= INITIALIZING QUESTS =======\n\n");
 	init_quests();
+	printf("\n======= INITIALIZING ENTITIES =======\n\n");
+	init_entities();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 

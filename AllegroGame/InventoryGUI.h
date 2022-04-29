@@ -1,34 +1,35 @@
 #pragma once
 #include "GUI.h"
 #include "Item.h"
+#include <functional>
 
 class InventoryGUI;
 
-enum SLOT_DISPLAY_CONFIGURATION_TYPE { STORAGE, FUNCTION };
+enum SLOT_DISPLAY_CONFIGURATION_TYPE { STORAGE, SHOVEL, PICKAXE, AXE, MELEE, RANGED, CONSUMABLE, PLACEABLE, FUNCTION };
 
 class SlotDisplayConfiguration
 {
 private:
-    int itemID;
+    Item** item_slot;
     int xpos;
     int ypos;
     int width;
     int height;
-    bool (*callback)(Item*);
+    std::function<Item* (Item*)> callback;
     SLOT_DISPLAY_CONFIGURATION_TYPE type;
 public:
 
-    SlotDisplayConfiguration(int s, int x, int y);
-    SlotDisplayConfiguration(int s, int x, int y, int w, int h);
+    SlotDisplayConfiguration(Item** s, int x, int y, SLOT_DISPLAY_CONFIGURATION_TYPE type = STORAGE);
+    SlotDisplayConfiguration(Item** s, int x, int y, int w, int h, SLOT_DISPLAY_CONFIGURATION_TYPE type = STORAGE);
 
-    SlotDisplayConfiguration(bool (*c)(Item*), int x, int y);
-    SlotDisplayConfiguration(bool (*c)(Item*), int x, int y, int w, int h);
+    SlotDisplayConfiguration(std::function<Item* (Item*)> callback, int x, int y);
+    SlotDisplayConfiguration(std::function<Item* (Item*)> callback, int x, int y, int w, int h);
 
     bool contains(int x, int y) const;
 
     SLOT_DISPLAY_CONFIGURATION_TYPE getType() const;
 
-    bool execute(Item* item) const;
+    Item* execute(Item* item) const;
 
     friend InventoryGUI;
 };
@@ -37,25 +38,34 @@ class InventoryGUI :
     public GUI
 {
 protected:
+    static ALLEGRO_BITMAP* INVENTORY_SLOT;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_CALLBACK;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_SHOVEL;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_PICKAXE;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AXE;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_MELEE;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_RANGED;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_CONSUMABLE;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_PLACEABLE;
+
     std::vector<SlotDisplayConfiguration> slots;
     Item* swapTemp;
 
-    virtual Item* GetItem(int itemID) = 0;
-    virtual void SetItem(int itemID, Item* temp) = 0;
-
-    virtual void SwapItem(int slotID);
+    virtual void SwapItem(Item** slot);
 
     virtual void ClickLeftDown(int x, int y) override;
 
-    virtual void DrawSlot(const SlotDisplayConfiguration& data);
-
-    InventoryGUI();
+    virtual void DrawSlot(const SlotDisplayConfiguration& data, bool selected = false);
     
 public:
+
+    InventoryGUI();
 
     virtual void DrawThisGUI() override;
 
     void AddSlotDisplayConfiguration(SlotDisplayConfiguration slot);
+
+    static void Init();
 
     virtual ~InventoryGUI() = default;
 };

@@ -79,17 +79,12 @@ float GroundTile::GetFrictionModifier() const
 void GroundTile::PlaySound(SoundType t) const
 {}
 
+std::unordered_map<std::string, const GroundTile*> prototype_gtiles;
+
 GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
 {
-    if (id == GrassGroundTile::ID)
-        return new GrassGroundTile(world, x, y);
-    else if (id == DirtGroundTile::ID)
-        return new DirtGroundTile(world, x, y);
-    else if (id == StoneGroundTile::ID)
-        return new StoneGroundTile(world, x, y);
-    else if (id == SandGroundTile::ID)
-        return new SandGroundTile(world, x, y);
-    else if (id == WaterGroundTile::ID)
-        return new WaterGroundTile(world, x, y);
-    return nullptr;
+    const GroundTile* gt = prototype_gtiles[id];
+    if (gt == nullptr)
+        return nullptr;
+    return gt->Clone(world, x, y);
 }

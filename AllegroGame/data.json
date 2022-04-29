@@ -57,7 +57,7 @@
     },
     {
       "id": "entities.player.hurt",
-      "wait": false,
+      "wait": true,
       "filenames": [
         "player_hurt_0.wav",
         "player_hurt_1.wav",
@@ -123,12 +123,36 @@
       "filename": "inventory_slot.png"
     },
     {
-      "id": "tex.gui.crafting_arrow",
-      "filename": "crafting_arrow.png"
+      "id": "tex.gui.inventory_slot_pickaxe",
+      "filename": "inventory_slot.png"
     },
     {
-      "id": "tex.gui.inventory_slot_consume",
+      "id": "tex.gui.inventory_slot_axe",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_shovel",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_melee",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_ranged",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_function",
       "filename": "inventory_slot_consume.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_consumable",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.crafting_arrow",
+      "filename": "crafting_arrow.png"
     },
     {
       "id": "tex.gui.quest_icon_incomplete",
@@ -349,6 +373,70 @@
     {
       "id": "tex.tiles.berry_bush/1",
       "filename": "berry_bush_1.png"
+    },
+    {
+      "id": "tex.tiles.fence/0",
+      "filename": "fence0000.png"
+    },
+    {
+      "id": "tex.tiles.fence/1",
+      "filename": "fence0001.png"
+    },
+    {
+      "id": "tex.tiles.fence/2",
+      "filename": "fence0010.png"
+    },
+    {
+      "id": "tex.tiles.fence/3",
+      "filename": "fence0011.png"
+    },
+    {
+      "id": "tex.tiles.fence/4",
+      "filename": "fence0100.png"
+    },
+    {
+      "id": "tex.tiles.fence/5",
+      "filename": "fence0101.png"
+    },
+    {
+      "id": "tex.tiles.fence/6",
+      "filename": "fence0110.png"
+    },
+    {
+      "id": "tex.tiles.fence/7",
+      "filename": "fence0111.png"
+    },
+    {
+      "id": "tex.tiles.fence/8",
+      "filename": "fence1000.png"
+    },
+    {
+      "id": "tex.tiles.fence/9",
+      "filename": "fence1001.png"
+    },
+    {
+      "id": "tex.tiles.fence/10",
+      "filename": "fence1010.png"
+    },
+    {
+      "id": "tex.tiles.fence/11",
+      "filename": "fence1011.png"
+    },
+    {
+      "id": "tex.tiles.fence/12",
+      "filename": "fence1100.png"
+    },
+    {
+      "id": "tex.tiles.fence/13",
+      "filename": "fence1101.png"
+    },
+    {
+      "id": "tex.tiles.fence/14",
+      "filename": "fence1110.png"
+    },
+    {
+      "id": "tex.tiles.fence/15",
+      "filename": "fence1111.png"
     }
   ],
   "entities": [
@@ -381,7 +469,7 @@
     },
     {
       "id": "entities.cactus_boss",
-      "max_health": 300,
+      "max_health": 10,
       "textures_left": [
         "tex.entities.cactus_boss.left/0",
         "tex.entities.cactus_boss.left/1",
@@ -561,6 +649,31 @@
       "drops": "tiles.berry_bush.mine.any",
       "collection_drops": "tiles.berry_bush.collect.any",
       "mining_resistance": 3
+    },
+    {
+      "id": "tiles.fence",
+      "name": "fence",
+      "tool": "axe",
+      "mining_resistance": 10,
+      "textures": [
+        "tex.tiles.fence/0",
+        "tex.tiles.fence/1",
+        "tex.tiles.fence/2",
+        "tex.tiles.fence/3",
+        "tex.tiles.fence/4",
+        "tex.tiles.fence/5",
+        "tex.tiles.fence/6",
+        "tex.tiles.fence/7",
+        "tex.tiles.fence/8",
+        "tex.tiles.fence/9",
+        "tex.tiles.fence/10",
+        "tex.tiles.fence/11",
+        "tex.tiles.fence/12",
+        "tex.tiles.fence/13",
+        "tex.tiles.fence/14",
+        "tex.tiles.fence/15",
+        "tex.tiles.fence/16"
+      ]
     }
   ],
   "ground_tiles": [
@@ -726,50 +839,33 @@
   },
   "quests": [
     {
-      "id": "quests.whatever",
-      "name": "A RANDOM QUEST",
+      "id": "quests.break_trees",
+      "name": "Break 10 trees",
+      "icon": "tex.tiles.tree/3",
       "unlocked": true,
       "completed": false,
+      "xpos": 320,
+      "ypos": 320,
       "requirements": [
         {
           "type": "tile_mine",
           "tile": "tiles.tree",
           "count": 10
-        },
-        {
-          "type": "gtile_mine",
-          "gtile": "gtiles.dirt",
-          "count": 10
-        },
-        {
-          "type": "kill_entity",
-          "entity": "entities.zombie",
-          "count": 3
         },
         {
           "type": "complete_quest",
-          "quest": "quests.whatever"
+          "quest": "quests.break_sand"
         }
       ]
     },
     {
-      "id": "quests.break10trees",
-      "name": "Break 10 trees",
-      "unlocked": true,
-      "completed": false,
-      "requirements": [
-        {
-          "type": "tile_mine",
-          "tile": "tiles.tree",
-          "count": 10
-        }
-      ]
-    },
-    {
-      "id": "quests.Break20sand",
+      "id": "quests.break_sand",
       "name": "Break 20 sand",
-      "unlocked": true,
+      "icon": "tex.gtiles.sand",
+      "unlocked": false,
       "completed": false,
+      "xpos": 640,
+      "ypos": 960,
       "requirements": [
         {
           "type": "gtile_mine",
@@ -779,14 +875,17 @@
       ]
     },
     {
-      "id": "quests.Eliminate1zombie",
-      "name": "Eliminate 1 zombie",
+      "id": "quests.kill_zombie",
+      "name": "Eliminate the Cactus Bosss",
+      "icon": "tex.entities.cactus_boss.front/0",
       "unlocked": true,
       "completed": false,
+      "xpos": 1024,
+      "ypos": 1024,
       "requirements": [
         {
           "type": "kill_entity",
-          "entity": "entities.zombie",
+          "entity": "entities.cactus_boss",
           "count": 1
         }
       ]

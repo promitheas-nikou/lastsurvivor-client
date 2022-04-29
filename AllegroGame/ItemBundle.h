@@ -12,6 +12,9 @@ public:
 	virtual void AddItem(Item* item) = 0;
 	virtual int GetSize() const = 0;
 	virtual const Item* GetItem(int n) const = 0;
+
+	virtual ~ItemBundle() = default;
+
 	friend ItemInventory;
 };
 
