@@ -11,7 +11,8 @@ protected:
 	bool typing = false;
 	std::vector<UIComponent*> UIcomponents;
 public:
-	virtual void DrawThisGUI() = 0;
+	virtual void PreDrawThisGUI() = 0;
+	virtual void PostDrawThisGUI() = 0;
 
 	bool IsTyping() const;
 	void ToggleTyping();

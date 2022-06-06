@@ -78,21 +78,8 @@ std::unordered_map<std::string, Item*> prototype_items;
 
 Item* MakeItemFromID(std::string id)
 {
-    if (id == DirtItem::ID)
-        return new DirtItem();
-    if (id == StoneItem::ID)
-        return new StoneItem();
-    if (id == StickItem::ID)
-        return new StickItem();
-    if (id == SandItem::ID)
-        return new SandItem();
-    if (id == SimpleSword::ID)
-        return new SimpleSword();
-    if (id == GunItem::ID)
-        return new GunItem();
-    if (id == BerryItem::ID)
-        return new BerryItem();
-    return nullptr;
+    Item* p = prototype_items[id];
+    return (p == nullptr) ? nullptr : p->Clone();
 }
 
 Item* MakeItemFromJSON(nlohmann::json data)

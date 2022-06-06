@@ -105,7 +105,8 @@ public:
 
 	void LogToConsole(std::string txt) const;
 
-	void DrawThisGUI() final;
+	void PreDrawThisGUI() final;
+	void PostDrawThisGUI() final;
 	void Draw() final;
 
 	void Consume(Consumable* c);

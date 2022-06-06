@@ -144,7 +144,7 @@ void GUI::ToggleTyping()
 
 void GUI::DrawGUI()
 {
-	DrawThisGUI();
+	this->PreDrawThisGUI();
 	ALLEGRO_TRANSFORM temp_gui_transform = *al_get_current_transform();
 	for (int i = 0; i < UIcomponents.size(); i++)
 	{
@@ -157,4 +157,5 @@ void GUI::DrawGUI()
 	al_use_transform(&temp_gui_transform);
 	if (activeSubGUI != nullptr)
 		activeSubGUI->DrawGUI();
+	this->PostDrawThisGUI();
 }

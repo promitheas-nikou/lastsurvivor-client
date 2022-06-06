@@ -7,6 +7,7 @@ const ItemBundle* SandGroundTile::DROP;
 int SandGroundTile::MINING_RESISTANCE;
 ToolType SandGroundTile::TOOL_TYPE;
 const std::string SandGroundTile::ID = "gtiles.sand";
+AudioMultiTrackCollection SandGroundTile::AUDIO_TRACKS;
 
 
 std::string SandGroundTile::GetID() const
@@ -24,6 +25,7 @@ void SandGroundTile::Init(nlohmann::json data)
 	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
+	AUDIO_TRACKS.LoadFromJSON(data[DATA_JSON_AUDIO_COLLECTION_KEY]);
 }
 
 void SandGroundTile::Draw() const
@@ -44,4 +46,9 @@ const ItemBundle* SandGroundTile::GetMiningResult(Tool* tool) const
 int SandGroundTile::GetMiningResistance() const
 {
 	return MINING_RESISTANCE;
+}
+
+void SandGroundTile::PlaySound(SoundType t) const
+{
+	AUDIO_TRACKS.Play(t);
 }

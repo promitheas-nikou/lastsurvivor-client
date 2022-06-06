@@ -1,18 +1,18 @@
 #pragma once
 
 #include "ButtonUIComponent.h"
-#include "SimpleUIComponent.h"
+#include "BitmapUIComponent.h"
 
 #pragma warning(disable : 4250)
 
 class SimpleButtonUIComponent:
 	public virtual ButtonUIComponent,
-	public virtual SimpleUIComponent
+	public virtual BitmapUIComponent
 {
 public:
 	SimpleButtonUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* tex, void (*func)(void));
 
-	using SimpleUIComponent::Draw;
+	using BitmapUIComponent::Draw;
 
 	virtual void ClickRightDown(int xRel, int yRel) final;
 	virtual void ClickLeftUp(int xRel, int yRel) final;

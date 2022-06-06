@@ -14,7 +14,7 @@ void QuestGUI::AddQuestDisplayConfiguration(QuestDisplayConfiguration* config)
 	questLink[config->quest] = config;
 }
 
-void QuestGUI::DrawThisGUI()
+void QuestGUI::PreDrawThisGUI()
 {
 	__qg = this;
 	if (curQuest == nullptr)
@@ -32,6 +32,11 @@ void QuestGUI::DrawThisGUI()
 	{
 		curQuest->DrawFull();
 	}
+}
+
+void QuestGUI::PostDrawThisGUI()
+{
+
 }
 
 void QuestGUI::ClickRightDown(int xRel, int yRel)

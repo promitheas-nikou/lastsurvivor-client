@@ -35,8 +35,8 @@ private:
     void AddQuestDisplayConfiguration(QuestDisplayConfiguration* config);
 public:
 
-    virtual void DrawThisGUI() override;
-
+    virtual void PreDrawThisGUI() override;
+    virtual void PostDrawThisGUI() final;
 
     virtual void ClickRightDown(int xRel, int yRel) override;
     virtual void ClickLeftDown(int xRel, int yRel) override;

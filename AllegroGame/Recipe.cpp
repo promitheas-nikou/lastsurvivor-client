@@ -36,16 +36,28 @@ bool Recipe::PerformOnInventory(ItemInventory* inventory) const
 
 void Recipe::LoadRecipes(nlohmann::json data)
 {
+    printf("Loading recipes:");
     for (nlohmann::json rec : data)
     {
         loaded_crafting_recipes[rec["id"]] = new Recipe(rec);
+        printf("\tSuccessfully loaded recipe #%s!\n", ((std::string)rec["id"]).c_str());
     }
+
 }
 
 void Recipe::UnloadRecipes()
 {
     for (const std::pair<std::string, const Recipe*>& p : loaded_hand_crafting_recipes)
         delete p.second;
+    loaded_hand_crafting_recipes.clear();
+    for (const std::pair<std::string, const Recipe*>& p : loaded_crafting_recipes)
+        delete p.second;
+    loaded_hand_crafting_recipes.clear();
+    for (const std::pair<std::string, const Recipe*>& p : loaded_smelting_recipes)
+        delete p.second;
+    loaded_hand_crafting_recipes.clear();
+    loaded_crafting_recipes.clear();
+    loaded_smelting_recipes.clear();
 }
 
 Recipe::~Recipe()

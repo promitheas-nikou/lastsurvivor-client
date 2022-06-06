@@ -15,7 +15,8 @@ public:
 
     virtual void SetRecipeList(std::unordered_map<std::string, const Recipe*>& r) override;
 
-    virtual void DrawThisGUI() override;
+    virtual void PreDrawThisGUI() override;
+    virtual void PostDrawThisGUI() final;
 
     virtual void MouseButtonMove(ALLEGRO_MOUSE_EVENT& event) override;
 

@@ -21,6 +21,7 @@
 #include "SimpleSword.h"
 #include "GunItem.h"
 #include "BerryItem.h"
+#include "CoalItem.h"
 #include "SimpleItemBundle.h"
 #include "CactusBossEntity.h"
 #include "ZombieEntity.h"
@@ -58,6 +59,7 @@ const std::string DATA_JSON_HEALTH_KEY = "health";
 const std::string DATA_JSON_MAX_HEALTH_KEY = "max_health";
 const std::string DATA_JSON_HUNGER_KEY = "hunger";
 const std::string DATA_JSON_WATER_KEY = "water";
+const std::string DATA_JSON_BURN_TIME_KEY = "burn_time";
 
 nlohmann::json json_data;
 
@@ -260,7 +262,6 @@ void init_items()
 		printf("PARSING ITEM DATA...\n");
 		json __items = json_data["items"];
 		json __loot_bundles = json_data["loot_bundles"];
-		json __crafting_recipes = json_data["recipes"]["crafting"];
 		int counter = 0;
 		for (json i : __items)
 			item_data[i["id"]] = i;
@@ -278,6 +279,7 @@ void init_items()
 		SimpleSword::Init(item_data[SimpleSword::ID]);
 		GunItem::Init(item_data[GunItem::ID]);
 		BerryItem::Init(item_data[BerryItem::ID]);
+		CoalItem::Init(item_data[CoalItem::ID]);
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
 		prototype_items[StickItem::ID] = new StickItem();
@@ -285,14 +287,13 @@ void init_items()
 		prototype_items[SimpleSword::ID] = new SimpleSword();
 		prototype_items[GunItem::ID] = new GunItem();
 		prototype_items[BerryItem::ID] = new BerryItem();
+		prototype_items[CoalItem::ID] = new CoalItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
 			loaded_loot_bundles[data["id"]] = SimpleItemBundle::CreateFromJSON(data);
 			printf("FOUND DATA FOR LOOT BUNDLE \"%s\"\n", ((std::string)data["id"]).c_str());
 		}
-
-		Recipe::LoadRecipes(__crafting_recipes);
 #ifndef DEBUG
 	}
 	catch (const nlohmann::json::type_error& err)
@@ -323,6 +324,11 @@ void init_entities()
 	prototype_entities[ZombieEntity::ID] = new ZombieEntity(nullptr, 0.f, 0.f);
 	prototype_entities[PlayerEntity::ID] = new PlayerEntity(nullptr, 0.f, 0.f);
 	printf("SUCCESSFULLY INITIALIZED ENTITIES!\n");
+}
+
+void init_recipes()
+{
+	Recipe::LoadRecipes(json_data["recipes"]["crafting"]);
 }
 
 void free_resources()

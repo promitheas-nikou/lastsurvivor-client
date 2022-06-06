@@ -5,40 +5,12 @@
 
 class InventoryGUI;
 
-enum SLOT_DISPLAY_CONFIGURATION_TYPE { STORAGE, SHOVEL, PICKAXE, AXE, MELEE, RANGED, CONSUMABLE, PLACEABLE, FUNCTION };
-
-class SlotDisplayConfiguration
-{
-private:
-    Item** item_slot;
-    int xpos;
-    int ypos;
-    int width;
-    int height;
-    std::function<Item* (Item*)> callback;
-    SLOT_DISPLAY_CONFIGURATION_TYPE type;
-public:
-
-    SlotDisplayConfiguration(Item** s, int x, int y, SLOT_DISPLAY_CONFIGURATION_TYPE type = STORAGE);
-    SlotDisplayConfiguration(Item** s, int x, int y, int w, int h, SLOT_DISPLAY_CONFIGURATION_TYPE type = STORAGE);
-
-    SlotDisplayConfiguration(std::function<Item* (Item*)> callback, int x, int y);
-    SlotDisplayConfiguration(std::function<Item* (Item*)> callback, int x, int y, int w, int h);
-
-    bool contains(int x, int y) const;
-
-    SLOT_DISPLAY_CONFIGURATION_TYPE getType() const;
-
-    Item* execute(Item* item) const;
-
-    friend InventoryGUI;
-};
 
 class InventoryGUI :
     public GUI
 {
 protected:
-    static ALLEGRO_BITMAP* INVENTORY_SLOT;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_GENERIC;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_CALLBACK;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_SHOVEL;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_PICKAXE;
@@ -48,22 +20,22 @@ protected:
     static ALLEGRO_BITMAP* INVENTORY_SLOT_CONSUMABLE;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_PLACEABLE;
 
-    std::vector<SlotDisplayConfiguration> slots;
     Item* swapTemp;
 
     virtual void SwapItem(Item** slot);
-
-    virtual void ClickLeftDown(int x, int y) override;
-
-    virtual void DrawSlot(const SlotDisplayConfiguration& data, bool selected = false);
     
 public:
 
+    enum StorageSlotType { GENERIC, SHOVEL, PICKAXE, AXE, MELEE, RANGED, CONSUMABLE, PLACEABLE };
+
     InventoryGUI();
 
-    virtual void DrawThisGUI() override;
+    virtual void PreDrawThisGUI() override;
+    virtual void PostDrawThisGUI() override;
 
-    void AddSlotDisplayConfiguration(SlotDisplayConfiguration slot);
+    void AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageSlotType t);
+
+    void AddCallbackSlot(int x, int y, int w, int h, std::function<Item*(Item*)> c);
 
     static void Init();
 

@@ -75,7 +75,7 @@ void PlayerEntity::LogToConsole(std::string txt) const
 	history.push_front(std::make_pair(al_map_rgba(110, 110, 110, 255), txt));
 }
 
-void PlayerEntity::DrawThisGUI()
+void PlayerEntity::PreDrawThisGUI()
 {
 	static ALLEGRO_MOUSE_STATE mouseState;
 	al_get_mouse_state(&mouseState);
@@ -208,7 +208,6 @@ void PlayerEntity::DrawThisGUI()
 
 			break;
 		}
-		hotbarGUI->DrawGUI();
 		break;
 	}
 	case PLAYER_GUI_STATE::INVENTORY:
@@ -246,6 +245,11 @@ void PlayerEntity::DrawThisGUI()
 		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 + 300 - (water / MAX_WATER) * 600.f, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 192, 200));
 	}
 	GUItimer++;
+
+}
+
+void PlayerEntity::PostDrawThisGUI()
+{
 
 }
 
@@ -312,10 +316,12 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
 			guistate = PLAYER_GUI_STATE::INVENTORY;
+			activeSubGUI = inventoryGUI;
 		}
 		else if (guistate == PLAYER_GUI_STATE::INVENTORY)
 		{
 			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
 		}
 		break;
 	case ALLEGRO_KEY_ESCAPE:
@@ -715,17 +721,18 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
+	activeSubGUI = hotbarGUI;
 	deathgui = new DeathGUI(this);
 	questGUI = new QuestGUI(quests);
 	for (int i = 0; i < 9; i++)
 	{
-		hotbarGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i + 9), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i + 18), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128));
-		inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration(inventory->GetItemPtr(i + 27), SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128));
+		hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128, *inventory->GetItemPtr(i+9), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128, *inventory->GetItemPtr(i+18), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128, *inventory->GetItemPtr(i+27), InventoryGUI::StorageSlotType::GENERIC);
 	}
-	inventoryGUI->AddSlotDisplayConfiguration(SlotDisplayConfiguration([this](Item* item) {
+	inventoryGUI->AddCallbackSlot(SCREEN_WIDTH / 2 - 63, SCREEN_HEIGHT - 140, 128, 128, [this](Item* item) {
 		Consumable* c = dynamic_cast<Consumable*>(item);
 		if (c == nullptr)
 			return item;
@@ -737,7 +744,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 			return (Item*)nullptr;
 		}
 		return item;
-	}, SCREEN_WIDTH / 2 - 63, SCREEN_HEIGHT - 140));
+	});
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];

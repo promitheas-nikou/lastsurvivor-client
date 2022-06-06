@@ -86,6 +86,8 @@ int main()
 	init_items();
 	printf("\n======= INITIALIZING TILES =======\n\n");
 	init_tiles();
+	printf("\n======= LOADING RECIPES =======\n\n");
+	init_recipes();
 	printf("\n======= INITIALIZING QUESTS =======\n\n");
 	init_quests();
 	printf("\n======= INITIALIZING ENTITIES =======\n\n");

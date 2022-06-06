@@ -2,12 +2,38 @@
 #include <allegro5/allegro_primitives.h>
 #include <cstdio>
 
-SimpleUIComponent::SimpleUIComponent(ALLEGRO_BITMAP* t) : texture{ t }
+SimpleUIComponent::SimpleUIComponent()
 {}
 
 void SimpleUIComponent::Draw()
 {
-    al_draw_scaled_bitmap(texture, 0, 0, al_get_bitmap_width(texture), al_get_bitmap_height(texture), 0, 0, width, height, 0);
 }
 
+void SimpleUIComponent::ClickRightDown(int xRel, int yRel)
+{
+}
+
+void SimpleUIComponent::ClickLeftDown(int xRel, int yRel)
+{
+}
+
+void SimpleUIComponent::ClickRightUp(int xRel, int yRel)
+{
+}
+
+void SimpleUIComponent::ClickLeftUp(int xRel, int yRel)
+{
+}
+
+void SimpleUIComponent::Hover(int xRel, int yRel)
+{
+}
+
+void SimpleUIComponent::KeyDown(int key)
+{
+}
+
+void SimpleUIComponent::KeyUp(int key)
+{
+}
 

@@ -190,11 +190,11 @@
     <Filter Include="Header Files\Game\Usables">
       <UniqueIdentifier>{7cbf6497-4d4e-4b13-8049-154c9dfa35fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Items\NewFilter1">
-      <UniqueIdentifier>{62c87fb9-5288-4b03-8caf-6e61248d2691}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Items\UsableItems\ConsumableItems">
       <UniqueIdentifier>{c6e67361-db15-4d69-aa72-14efb2deeea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\FuelItems">
+      <UniqueIdentifier>{9bbdba08-f15f-4e9e-a11a-e30e999309c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +450,33 @@
     <ClCompile Include="ConsumableItem.cpp">
       <Filter>Source Files\Game\Items\UsableItems\ConsumableItems</Filter>
     </ClCompile>
+    <ClCompile Include="PhantomUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTextDrawUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventorySlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CoalItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="FuelItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -542,9 +569,6 @@
       <Filter>Header Files\Game\GUI\UIComponents</Filter>
     </ClInclude>
     <ClInclude Include="UIComponent.h">
-      <Filter>Header Files\Game\GUI\UIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents</Filter>
     </ClInclude>
     <ClInclude Include="SimpleButtonUIComponent.h">
@@ -726,6 +750,36 @@
     </ClInclude>
     <ClInclude Include="UsableItem.h">
       <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="PhantomUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTextDrawUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleCallbackTextDrawUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventorySlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FuelItem.h">
+      <Filter>Header Files\Game\Items\FuelItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CoalItem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

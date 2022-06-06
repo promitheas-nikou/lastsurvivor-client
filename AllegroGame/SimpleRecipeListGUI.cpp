@@ -8,7 +8,7 @@ void SimpleRecipeListGUI::SetRecipeList(std::unordered_map<std::string, const Re
 		recipes.push_back(p.second);
 }
 
-void SimpleRecipeListGUI::DrawThisGUI()
+void SimpleRecipeListGUI::PreDrawThisGUI()
 {
 	int y = Y;
 	for (int i=scroll;i<std::min((int)recipes.size(),scroll+pageHeight);i++)
@@ -16,6 +16,11 @@ void SimpleRecipeListGUI::DrawThisGUI()
 		DrawRecipe(recipes[i], X, y, W, H);
 		y += H + 16;
 	}
+}
+
+void SimpleRecipeListGUI::PostDrawThisGUI()
+{
+
 }
 
 void SimpleRecipeListGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)

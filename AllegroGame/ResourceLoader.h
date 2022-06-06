@@ -38,6 +38,7 @@ const extern std::string DATA_JSON_HEALTH_KEY;
 const extern std::string DATA_JSON_MAX_HEALTH_KEY;
 const extern std::string DATA_JSON_HUNGER_KEY;
 const extern std::string DATA_JSON_WATER_KEY;
+const extern std::string DATA_JSON_BURN_TIME_KEY;
 
 extern nlohmann::json json_data;
 
@@ -72,6 +73,7 @@ void init_tiles();
 void init_items();
 void init_quests();
 void init_entities();
+void init_recipes();
 
 void load_shaders();
 

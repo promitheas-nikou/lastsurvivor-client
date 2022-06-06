@@ -42,6 +42,19 @@
       ]
     },
     {
+      "id": "gtiles.sand.walk",
+      "wait": true,
+      "filenames": [
+        "sand_walk_0.wav",
+        "sand_walk_1.wav",
+        "sand_walk_2.wav",
+        "sand_walk_3.wav",
+        "sand_walk_4.wav",
+        "sand_walk_5.wav",
+        "sand_walk_6.wav"
+      ]
+    },
+    {
       "id": "entities.rattle_bullet.hit",
       "wait": false,
       "filenames": [
@@ -719,7 +732,13 @@
       "tool": "shovel",
       "mining_resistance": 4,
       "drops": "gtiles.sand.mine.any",
-      "texture": "tex.gtiles.sand"
+      "texture": "tex.gtiles.sand",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.sand.walk"
+        }
+      ]
     },
     {
       "id": "gtiles.water",
@@ -802,6 +821,12 @@
       "health": 5.0,
       "hunger": 20.0,
       "water": 10.0
+    },
+    {
+      "id": "items.coal",
+      "name": "Coal",
+      "texture": "tex.items.stone",
+      "burn_time": 1000
     }
   ],
   "fonts": [
