@@ -4,18 +4,22 @@ SimpleItemInventoryCallbackSlotUIComponent::SimpleItemInventoryCallbackSlotUICom
 {
 }
 
-void SimpleItemInventoryCallbackSlotUIComponent::ClickRightDown(int xRel, int yRel)
+bool SimpleItemInventoryCallbackSlotUIComponent::ClickRightDown(int xRel, int yRel)
 {
 	itemptr = rClickCallback(itemptr);
+	return true;
 }
 
-void SimpleItemInventoryCallbackSlotUIComponent::ClickLeftDown(int xRel, int yRel)
+bool SimpleItemInventoryCallbackSlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
 	itemptr = lClickCallback(itemptr);
+	return true;
 }
 
-void SimpleItemInventoryCallbackSlotUIComponent::Hover(int xRel, int yRel)
-{}
+bool SimpleItemInventoryCallbackSlotUIComponent::Hover(int xRel, int yRel)
+{
+	return true;
+}
 
 void SimpleItemInventoryCallbackSlotUIComponent::Draw()
 {

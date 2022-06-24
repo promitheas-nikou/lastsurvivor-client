@@ -17,9 +17,9 @@ protected:
 	virtual bool CheckCanSwap() const = 0;
 public:
 
-    virtual void ClickRightDown(int xRel, int yRel) final;
-    virtual void ClickLeftDown(int xRel, int yRel) final;
-    virtual void Hover(int xRel, int yRel) final;
+    virtual bool ClickRightDown(int xRel, int yRel) final;
+    virtual bool ClickLeftDown(int xRel, int yRel) final;
+    virtual bool Hover(int xRel, int yRel) final;
 	
     ItemInventorySlotUIComponent(ALLEGRO_BITMAP* b, Item*& i, Item*& s);
 

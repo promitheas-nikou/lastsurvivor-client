@@ -18,7 +18,7 @@ public:
     virtual void PreDrawThisGUI() override;
     virtual void PostDrawThisGUI() final;
 
-    virtual void MouseButtonMove(ALLEGRO_MOUSE_EVENT& event) override;
+    virtual bool MouseButtonMove(ALLEGRO_MOUSE_EVENT& event) override;
 
     SimpleRecipeListGUI(int x, int y, int w, int h);
 

@@ -17,6 +17,8 @@ public:
 	virtual void AddConstItemBundle(const ItemBundle* bundle);
 	virtual bool ContainsItem(const Item* item) const;
 	virtual bool ContainsItemBundleItems(const ItemBundle* bundle) const;
+	virtual int CountTimesContainsItem(const Item* item) const;
+	virtual int CountTimesContainsItemBundleItems(const ItemBundle* bundle) const;
 	virtual void RemoveConstItem(const Item* item);
 	virtual void RemoveConstItemBundle(const ItemBundle* bundle);
 	virtual ItemBundle* AddItemBundle(ItemBundle* bundle);

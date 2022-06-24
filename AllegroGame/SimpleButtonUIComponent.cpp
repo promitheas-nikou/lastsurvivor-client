@@ -1,26 +1,34 @@
 #include "SimpleButtonUIComponent.h"
 
-SimpleButtonUIComponent::SimpleButtonUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* tex, void(*func)(void)) : UIComponent(x, y, w, h), ButtonUIComponent(func), BitmapUIComponent(tex)
+SimpleButtonUIComponent::SimpleButtonUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* tex, std::function<void(void)> func) : UIComponent(x, y, w, h), ButtonUIComponent(func), BitmapUIComponent(tex)
 {}
 
-void SimpleButtonUIComponent::ClickRightDown(int xRel, int yRel)
+bool SimpleButtonUIComponent::ClickRightDown(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleButtonUIComponent::ClickLeftUp(int xRel, int yRel)
-{}
-
-void SimpleButtonUIComponent::ClickRightUp(int xRel, int yRel)
-{}
-
-void SimpleButtonUIComponent::Hover(int xRel, int yRel)
+bool SimpleButtonUIComponent::ClickLeftUp(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleButtonUIComponent::KeyDown(int key)
+bool SimpleButtonUIComponent::ClickRightUp(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleButtonUIComponent::KeyUp(int key)
+bool SimpleButtonUIComponent::Hover(int xRel, int yRel)
 {
+	return false;
+}
+
+bool SimpleButtonUIComponent::KeyDown(int key)
+{
+	return false;
+}
+
+bool SimpleButtonUIComponent::KeyUp(int key)
+{
+	return false;
 }

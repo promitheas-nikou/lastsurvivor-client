@@ -1,6 +1,7 @@
 #include "ItemInventory.h"
 #include "ItemBundle.h"
 #include "ItemIndex.h"
+#include "SimpleItemBundle.h"
 
 int ItemInventory::AddItemToSlot(Item* item, int itemID)
 {
@@ -82,6 +83,20 @@ bool ItemInventory::ContainsItemBundleItems(const ItemBundle* bundle) const
     delete a;
     delete b;
     return val;
+}
+
+int ItemInventory::CountTimesContainsItem(const Item* item) const
+{
+    SimpleItemBundle b;
+    b.AddItem(const_cast<Item*>(item));
+    return CountTimesContainsItemBundleItems(&b);
+}
+
+int ItemInventory::CountTimesContainsItemBundleItems(const ItemBundle* bundle) const
+{
+    ItemIndex i1(bundle);
+    ItemIndex i2(this);
+    return i2.GetMaxFactor(&i1);
 }
 
 void ItemInventory::RemoveConstItem(const Item* item)

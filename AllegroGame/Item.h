@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
 #include "json.h"
 
 class World;
@@ -37,6 +38,8 @@ public:
 	virtual void UseOnTile(World* world, int x, int y);
 
 	virtual void Draw(int x, int y, int width, int height) const = 0;
+	virtual void DrawText(int x, int y, ALLEGRO_FONT* font, ALLEGRO_COLOR color, int align) const;
+	virtual void DrawWithText(int x, int y, int width, int height) const;
 
 	virtual ~Item() = default;
 };

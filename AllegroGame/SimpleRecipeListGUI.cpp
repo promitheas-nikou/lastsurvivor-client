@@ -23,11 +23,11 @@ void SimpleRecipeListGUI::PostDrawThisGUI()
 
 }
 
-void SimpleRecipeListGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
+bool SimpleRecipeListGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
-	printf("SCROLLED!!!");
 	if(event.dz)
 		scroll += std::max(0,std::min((event.dz > 0) ? pageHeight : -pageHeight,(int)recipes.size()-pageHeight));
+	return true;
 }
 
 SimpleRecipeListGUI::SimpleRecipeListGUI(int x, int y, int w, int h) : X{ x }, Y{ y }, W{ w }, H{ h }, pageHeight{ 10 }, scroll{0}

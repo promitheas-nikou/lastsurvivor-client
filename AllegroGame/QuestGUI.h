@@ -38,12 +38,12 @@ public:
     virtual void PreDrawThisGUI() override;
     virtual void PostDrawThisGUI() final;
 
-    virtual void ClickRightDown(int xRel, int yRel) override;
-    virtual void ClickLeftDown(int xRel, int yRel) override;
+    virtual bool ClickRightDown(int xRel, int yRel) override;
+    virtual bool ClickLeftDown(int xRel, int yRel) override;
 
-    virtual void KeyDown(ALLEGRO_KEYBOARD_EVENT& event) override;
+    virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& event) override;
 
-    virtual void MouseButtonMove(ALLEGRO_MOUSE_EVENT& event);
+    virtual bool MouseButtonMove(ALLEGRO_MOUSE_EVENT& event);
 
     QuestGUI(QuestCollection* collection);
 

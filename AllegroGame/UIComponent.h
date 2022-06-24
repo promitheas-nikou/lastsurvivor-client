@@ -23,13 +23,13 @@ public:
 
 	virtual void Draw() = 0;
 
-	virtual void ClickRightDown(int xRel, int yRel) = 0;
-	virtual void ClickLeftDown(int xRel, int yRel) = 0;
-	virtual void ClickRightUp(int xRel, int yRel) = 0;
-	virtual void ClickLeftUp(int xRel, int yRel) = 0;
-	virtual void Hover(int xRel, int yRel) = 0;
-	virtual void KeyDown(int key) = 0;
-	virtual void KeyUp(int key) = 0;
+	virtual bool ClickRightDown(int xRel, int yRel) = 0;
+	virtual bool ClickLeftDown(int xRel, int yRel) = 0;
+	virtual bool ClickRightUp(int xRel, int yRel) = 0;
+	virtual bool ClickLeftUp(int xRel, int yRel) = 0;
+	virtual bool Hover(int xRel, int yRel) = 0;
+	virtual bool KeyDown(int key) = 0;
+	virtual bool KeyUp(int key) = 0;
 
 	virtual ~UIComponent() = default;
 };

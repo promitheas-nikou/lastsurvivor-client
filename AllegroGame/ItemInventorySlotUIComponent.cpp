@@ -1,18 +1,20 @@
 #include "ItemInventorySlotUIComponent.h"
 
-void ItemInventorySlotUIComponent::ClickRightDown(int xRel, int yRel)
+bool ItemInventorySlotUIComponent::ClickRightDown(int xRel, int yRel)
 {
-    ItemInventorySlotUIComponent::ClickLeftDown(xRel, yRel);
+    return ItemInventorySlotUIComponent::ClickLeftDown(xRel, yRel);
 }
 
-void ItemInventorySlotUIComponent::ClickLeftDown(int xRel, int yRel)
+bool ItemInventorySlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
     if (CheckCanSwap())
         std::swap(swapptr, itemptr);
+    return true;
 }
 
-void ItemInventorySlotUIComponent::Hover(int xRel, int yRel)
+bool ItemInventorySlotUIComponent::Hover(int xRel, int yRel)
 {
+    return true;
 }
 
 ItemInventorySlotUIComponent::ItemInventorySlotUIComponent(ALLEGRO_BITMAP* b, Item*& i, Item*& s) : BitmapUIComponent(b), itemptr{ i }, swapptr{ s }

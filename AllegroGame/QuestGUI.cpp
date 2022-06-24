@@ -16,6 +16,8 @@ void QuestGUI::AddQuestDisplayConfiguration(QuestDisplayConfiguration* config)
 
 void QuestGUI::PreDrawThisGUI()
 {
+	al_set_system_mouse_cursor(main_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+	al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
 	__qg = this;
 	if (curQuest == nullptr)
 	{
@@ -39,38 +41,46 @@ void QuestGUI::PostDrawThisGUI()
 
 }
 
-void QuestGUI::ClickRightDown(int xRel, int yRel)
-{}
+bool QuestGUI::ClickRightDown(int xRel, int yRel)
+{
+	return true;
+}
 
-void QuestGUI::ClickLeftDown(int xRel, int yRel)
+bool QuestGUI::ClickLeftDown(int xRel, int yRel)
 {
 	for (QuestDisplayConfiguration* conf : displayConfig)
 	{
 		if (conf->Contains(xRel + curx, yRel + cury))
 		{
 			curQuest = conf;
-			return;
+			return true;
 		}
 	}
+	return true;
 }
 
-void QuestGUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
+bool QuestGUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 {
-	if (event.keycode == ALLEGRO_KEY_ESCAPE)
+	if ((curQuest!=nullptr)&&(event.keycode == ALLEGRO_KEY_ESCAPE))
+	{
 		curQuest = nullptr;
+		return true;
+	}
+	return false;
 }
 
-void QuestGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
+bool QuestGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
 	for (QuestDisplayConfiguration* conf : displayConfig)
 	{
 		if (conf->Contains(event.x + curx, event.y + cury))
 		{
 			curQuestHover = conf;
-			return;
+			return true;
 		}
 	}
 	curQuestHover = nullptr;
+	return true;
 }
 
 QuestGUI::QuestGUI(QuestCollection* col) : curx{ 0 }, cury{ 0 }, curQuest{ nullptr }, questCollection{ col }, curQuestHover{ nullptr }

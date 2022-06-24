@@ -121,14 +121,11 @@ void PlayerEntity::PreDrawThisGUI()
 	else
 		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 150, 150, 150));
 	int yn = SCREEN_HEIGHT - 20;
-	for (std::list<PlayerNotification*>::iterator it = notifications.begin(); it!=notifications.end();)
+	for (std::list<PlayerNotification*>::reverse_iterator it = notifications.rbegin(); it!=notifications.rend();)
 	{
 		if ((*it)->ShouldBeRemoved(GUItimer))
 		{
-			std::list<PlayerNotification*>::iterator tmp = it;
-			tmp++;
-			notifications.erase(it);
-			it = tmp;
+			notifications.erase(--(it.base()));
 		}
 		else
 		{
@@ -213,15 +210,25 @@ void PlayerEntity::PreDrawThisGUI()
 	case PLAYER_GUI_STATE::INVENTORY:
 		al_set_system_mouse_cursor(main_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
 		al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
-		inventoryGUI->DrawGUI();
+		al_draw_scaled_bitmap(HEALTH_ICON, 0, 0, al_get_bitmap_width(HEALTH_ICON), al_get_bitmap_height(HEALTH_ICON), 0, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 - 300, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(64, 0, 0, 200));
+		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 + 300 - (GetHealth() / 100.f) * 600.f, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(192, 0, 0, 200));
+		al_draw_scaled_bitmap(HUNGER_ICON, 0, 0, al_get_bitmap_width(HUNGER_ICON), al_get_bitmap_height(HUNGER_ICON), 64, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(64, SCREEN_HEIGHT / 2 - 300, 128, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 64, 0, 200));
+		al_draw_filled_rectangle(64, SCREEN_HEIGHT / 2 + 300 - (hunger / MAX_HUNGER) * 600.f, 128, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 192, 0, 200));
+		al_draw_scaled_bitmap(WATER_ICON, 0, 0, al_get_bitmap_width(WATER_ICON), al_get_bitmap_height(WATER_ICON), 128, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 - 300, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 64, 200));
+		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 + 300 - (water / MAX_WATER) * 600.f, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 192, 200));
+
+		//inventoryGUI->DrawGUI();
 		recipeGUI->DrawGUI();
 		break;
 	case PLAYER_GUI_STATE::DEATH:
 		break;
 	case PLAYER_GUI_STATE::QUEST:
-		al_set_system_mouse_cursor(main_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
-		al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
-		questGUI->DrawGUI();
+		break;
+	case PLAYER_GUI_STATE::CRAFTING:
+		//craftingGUI->DrawGUI();
 		break;
 	}
 	if (guistate == PLAYER_GUI_STATE::WORLD)
@@ -244,8 +251,8 @@ void PlayerEntity::PreDrawThisGUI()
 		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 - 300, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 64, 200));
 		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 + 300 - (water / MAX_WATER) * 600.f, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 192, 200));
 	}
-	GUItimer++;
-
+	if(guistate==PLAYER_GUI_STATE::WORLD || guistate==PLAYER_GUI_STATE::INVENTORY)
+		GUItimer++;
 }
 
 void PlayerEntity::PostDrawThisGUI()
@@ -267,7 +274,7 @@ void PlayerEntity::Consume(Consumable* c)
 	water = std::max(0.f, std::min(MAX_WATER, water + c->GetWaterBoost()));
 }
 
-void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
+bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	ALLEGRO_KEYBOARD_STATE s;
 	al_get_keyboard_state(&s);
@@ -292,9 +299,27 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		break;
 	case ALLEGRO_KEY_Z:
 		if (guistate == PLAYER_GUI_STATE::QUEST)
+		{
 			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
+		}
 		else if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
 			guistate = PLAYER_GUI_STATE::QUEST;
+			activeSubGUI = questGUI;
+		}
+		break;
+	case ALLEGRO_KEY_C:
+		if (guistate == PLAYER_GUI_STATE::CRAFTING)
+		{
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
+		}
+		else if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			activeSubGUI = craftingGUI;
+			guistate = PLAYER_GUI_STATE::CRAFTING;
+		}
 		break;
 	case ALLEGRO_KEY_T:
 		if(guistate==PLAYER_GUI_STATE::WORLD)
@@ -329,10 +354,16 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		{
 		case PLAYER_GUI_STATE::INVENTORY:
 			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
 			break;
 		case PLAYER_GUI_STATE::QUEST:
 			if(questGUI->curQuest==nullptr)
 				guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
+			break;
+		case PLAYER_GUI_STATE::CRAFTING:
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
 			break;
 		}
 		break;
@@ -364,11 +395,10 @@ void PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 
 		break;
 	}
-	if (guistate == PLAYER_GUI_STATE::QUEST)
-		questGUI->KeyDown(event);
+	return true;
 }
 
-void PlayerEntity::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
+bool PlayerEntity::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	switch (event.keycode)
 	{
@@ -385,11 +415,12 @@ void PlayerEntity::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
 		keys_pressed &= 0b11111110;
 		break;
 	}
+	return true;
 }
 
 
 
-void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
+bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 {
 	if (guistate == PLAYER_GUI_STATE::WORLD)
 	{
@@ -485,38 +516,50 @@ void PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 			}
 		}
 	}
+	return true;
+}
+
+bool PlayerEntity::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
+{
+	return true;
+}
+
+bool PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
+{
+	if (guistate == PLAYER_GUI_STATE::WORLD)
+		rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)), ((float)event.x - (SCREEN_WIDTH / 2))) + M_PI / 2);
+	return true;
+}
+/*
+
 	else if (guistate == PLAYER_GUI_STATE::INVENTORY)
 		inventoryGUI->MouseButtonDown(event);
 	else if (guistate == PLAYER_GUI_STATE::QUEST)
 		questGUI->MouseButtonDown(event);
-}
-
-void PlayerEntity::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
-{
-
-}
-
-void PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
-{
-	if (guistate == PLAYER_GUI_STATE::WORLD)
-		rotateTo(atan2((event.y - (SCREEN_HEIGHT / 2)), ((float)event.x - (SCREEN_WIDTH / 2))) + M_PI / 2);
+	else if (guistate == PLAYER_GUI_STATE::CRAFTING)
+		craftingGUI->MouseButtonDown(event);
+		
+		
 	else if (guistate == PLAYER_GUI_STATE::QUEST)
 		questGUI->MouseButtonMove(event);
-}
+		
+		
+		
+*/
 
 
-void PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
+bool PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	if (event.keycode == ALLEGRO_KEY_ESCAPE)
 	{
 		ToggleTyping();
-		return;
+		return true;
 	}
 	if (event.keycode == ALLEGRO_KEY_BACKSPACE)
 	{
 		if (buf.size())
 			buf.pop_back();
-		return;
+		return true;
 	}
 	if (event.keycode == ALLEGRO_KEY_ENTER)
 	{
@@ -525,9 +568,10 @@ void PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
 		while (history.size() > 15)
 			history.pop_back();
 		buf.clear();
-		return;
+		return true;
 	}
 	buf.push_back(event.unichar);
+	return true;
 }
 
 /*
@@ -704,7 +748,7 @@ void PlayerEntity::PlaySound(SoundType t) const
 
 void PlayerEntity::PushNotification(std::string txt, int fontsize)
 {
-	notifications.push_back(PlayerNotification::MakeTextNotification(txt, 200, 70, GUItimer + 500, fontsize));
+	notifications.push_back(PlayerNotification::MakeTextNotification(txt, 200, 70, GUItimer + 2000, fontsize));
 }
 
 PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr), mode{ PlayerActionMode::MINING }
@@ -721,6 +765,17 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
+	craftingGUI = new SimpleCraftingGUI();
+	craftingGUI->SetRecipeList(loaded_crafting_recipes);
+	craftingGUI->SetInventory(inventory);
+	craftingGUI->SetRecipeCallbackFunction([&](const Recipe* recipe, int times) {
+		if (times == 0)
+			return;
+		for (int i = 0; i < recipe->GetInputItems()->GetSize(); i++)
+			PushNotification(std::format("- {} x {}", recipe->GetInputItems()->GetItem(i)->GetAmount()*times, recipe->GetInputItems()->GetItem(i)->GetName()));
+		for (int i = 0; i < recipe->GetOutputItems()->GetSize(); i++)
+			PushNotification(std::format("+ {} x {}", recipe->GetOutputItems()->GetItem(i)->GetAmount()*times, recipe->GetOutputItems()->GetItem(i)->GetName()));
+	});
 	activeSubGUI = hotbarGUI;
 	deathgui = new DeathGUI(this);
 	questGUI = new QuestGUI(quests);

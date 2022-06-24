@@ -842,15 +842,176 @@
   "recipes": {
     "crafting": [
       {
-        "id": "dirt_to_stone",
+        "id": "sand_from_dirt",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 2
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 1
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt2",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 2
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt3",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 3
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt4",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 4
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt5",
         "input": [
           {
             "id": "items.dirt",
             "amount": 5
-          },
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt6",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 6
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "sand_from_dirt7",
+        "input": [
+          {
+            "id": "items.dirt",
+            "amount": 7
+          }
+        ],
+        "output": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "stone_from_sand",
+        "input": [
+          {
+            "id": "items.sand",
+            "amount": 1
+          }
+        ],
+        "output": [
           {
             "id": "items.stone",
-            "amount": 41
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "stone_from_sand2",
+        "input": [
+          {
+            "id": "items.sand",
+            "amount": 2
+          }
+        ],
+        "output": [
+          {
+            "id": "items.stone",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "stone_from_sand3",
+        "input": [
+          {
+            "id": "items.sand",
+            "amount": 3
+          }
+        ],
+        "output": [
+          {
+            "id": "items.stone",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "stone_from_sand4",
+        "input": [
+          {
+            "id": "items.sand",
+            "amount": 4
           }
         ],
         "output": [
@@ -916,4 +1077,4 @@
       ]
     }
   ]
-} 
+}

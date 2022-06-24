@@ -9,31 +9,38 @@ void SimpleUIComponent::Draw()
 {
 }
 
-void SimpleUIComponent::ClickRightDown(int xRel, int yRel)
+bool SimpleUIComponent::ClickRightDown(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleUIComponent::ClickLeftDown(int xRel, int yRel)
+bool SimpleUIComponent::ClickLeftDown(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleUIComponent::ClickRightUp(int xRel, int yRel)
+bool SimpleUIComponent::ClickRightUp(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleUIComponent::ClickLeftUp(int xRel, int yRel)
+bool SimpleUIComponent::ClickLeftUp(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleUIComponent::Hover(int xRel, int yRel)
+bool SimpleUIComponent::Hover(int xRel, int yRel)
 {
+	return false;
 }
 
-void SimpleUIComponent::KeyDown(int key)
+bool SimpleUIComponent::KeyDown(int key)
 {
+	return false;
 }
 
-void SimpleUIComponent::KeyUp(int key)
+bool SimpleUIComponent::KeyUp(int key)
 {
+	return false;
 }
 

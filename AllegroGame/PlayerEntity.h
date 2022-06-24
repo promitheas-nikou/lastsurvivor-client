@@ -13,6 +13,7 @@
 #include "ToolItem.h"
 #include "ItemBundle.h"
 #include "QuestGUI.h"
+#include "SimpleCraftingGUI.h"
 //#include "WeaponItem.h"
 class MeleeWeaponItem;
 class RangedWeaponItem;
@@ -20,7 +21,7 @@ class RangedWeaponItem;
 #include "LuaInterface.h"
 #include "AudioMultiTrackCollection.h"
 
-enum class PLAYER_GUI_STATE { WORLD, INVENTORY, DEATH, QUEST };
+enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST };
 
 class WaterGroundTile;
 
@@ -63,6 +64,7 @@ private:
 	int selectedHotbarSlot;
 	InventoryGUI* inventoryGUI;
 	RecipeListGUI* recipeGUI;
+	SimpleCraftingGUI* craftingGUI;
 	InventoryGUI* hotbarGUI;
 	QuestGUI* questGUI;
 	ItemInventory* inventory;
@@ -111,14 +113,14 @@ public:
 
 	void Consume(Consumable* c);
 
-	void KeyDown(ALLEGRO_KEYBOARD_EVENT &event) final;
-	void KeyUp(ALLEGRO_KEYBOARD_EVENT &event) final;
+	bool KeyDown(ALLEGRO_KEYBOARD_EVENT &event) final;
+	bool KeyUp(ALLEGRO_KEYBOARD_EVENT &event) final;
 
-	void MouseButtonDown(ALLEGRO_MOUSE_EVENT &event) final;
-	void MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
-	void MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
+	bool MouseButtonDown(ALLEGRO_MOUSE_EVENT &event) final;
+	bool MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
+	bool MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
 
-	void CharTyped(ALLEGRO_KEYBOARD_EVENT& event) override;
+	bool CharTyped(ALLEGRO_KEYBOARD_EVENT& event) override;
 
 	void UseTile(int x, int y);
 	void MineTile(int x, int y);

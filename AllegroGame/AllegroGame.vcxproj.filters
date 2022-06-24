@@ -477,6 +477,15 @@
     <ClCompile Include="FuelItem.cpp">
       <Filter>Source Files\Game\Items</Filter>
     </ClCompile>
+    <ClCompile Include="TextUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleCraftingGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -778,8 +787,17 @@
     <ClInclude Include="FuelItem.h">
       <Filter>Header Files\Game\Items\FuelItems</Filter>
     </ClInclude>
-    <ClInclude Include="CoalItem.h">
+    <ClInclude Include="SimpleCraftingGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoalItem.h">
+      <Filter>Header Files\Game\Items\FuelItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

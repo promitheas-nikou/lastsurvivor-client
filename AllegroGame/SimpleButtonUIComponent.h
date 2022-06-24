@@ -2,6 +2,7 @@
 
 #include "ButtonUIComponent.h"
 #include "BitmapUIComponent.h"
+#include <functional>
 
 #pragma warning(disable : 4250)
 
@@ -10,16 +11,16 @@ class SimpleButtonUIComponent:
 	public virtual BitmapUIComponent
 {
 public:
-	SimpleButtonUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* tex, void (*func)(void));
+	SimpleButtonUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* tex, std::function<void(void)> func);
 
 	using BitmapUIComponent::Draw;
 
-	virtual void ClickRightDown(int xRel, int yRel) final;
-	virtual void ClickLeftUp(int xRel, int yRel) final;
-	virtual void ClickRightUp(int xRel, int yRel) final;
-	virtual void Hover(int xRel, int yRel) final;
-	virtual void KeyDown(int key) final;
-	virtual void KeyUp(int key) final;
+	virtual bool ClickRightDown(int xRel, int yRel) final;
+	virtual bool ClickLeftUp(int xRel, int yRel) final;
+	virtual bool ClickRightUp(int xRel, int yRel) final;
+	virtual bool Hover(int xRel, int yRel) final;
+	virtual bool KeyDown(int key) final;
+	virtual bool KeyUp(int key) final;
 
 	virtual ~SimpleButtonUIComponent() = default;
 

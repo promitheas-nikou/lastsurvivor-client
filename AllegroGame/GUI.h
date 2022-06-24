@@ -20,20 +20,20 @@ public:
 	virtual void DrawGUI();
 
 
-	virtual void ClickRightDown(int xRel, int yRel);
-	virtual void ClickLeftDown(int xRel, int yRel);
-	virtual void ClickRightUp(int xRel, int yRel);
-	virtual void ClickLeftUp(int xRel, int yRel);
+	virtual bool ClickRightDown(int xRel, int yRel);
+	virtual bool ClickLeftDown(int xRel, int yRel);
+	virtual bool ClickRightUp(int xRel, int yRel);
+	virtual bool ClickLeftUp(int xRel, int yRel);
 	
-	virtual void KeyDown(ALLEGRO_KEYBOARD_EVENT& event);
-	virtual void KeyUp(ALLEGRO_KEYBOARD_EVENT& event);
+	virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& event);
+	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& event);
 
-	virtual void CharTyped(ALLEGRO_KEYBOARD_EVENT& event);
+	virtual bool CharTyped(ALLEGRO_KEYBOARD_EVENT& event);
 
-	virtual void MouseButtonDown(ALLEGRO_MOUSE_EVENT& event);
-	virtual void MouseButtonUp(ALLEGRO_MOUSE_EVENT& event);
-	virtual void MouseButtonMove(ALLEGRO_MOUSE_EVENT& event);
+	virtual bool MouseButtonDown(ALLEGRO_MOUSE_EVENT& event);
+	virtual bool MouseButtonUp(ALLEGRO_MOUSE_EVENT& event);
+	virtual bool MouseButtonMove(ALLEGRO_MOUSE_EVENT& event);
 
-	virtual void HandleEvent(ALLEGRO_EVENT& event);
+	virtual bool HandleEvent(ALLEGRO_EVENT& event);
 };
 

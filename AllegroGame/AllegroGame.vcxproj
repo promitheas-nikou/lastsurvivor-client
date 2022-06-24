@@ -205,6 +205,7 @@
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="CactusBossEntity.cpp" />
     <ClCompile Include="CoalItem.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="ConnectingTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="ItemIndex.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="ItemInventorySlotUIComponent.cpp" />
+    <ClCompile Include="SimpleCraftingGUI.cpp" />
     <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp" />
     <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="MathUtils.cpp" />
@@ -261,6 +263,7 @@
     <ClCompile Include="SimpleTextDrawUIComponent.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SoundType.cpp" />
+    <ClCompile Include="TextUtils.cpp" />
     <ClCompile Include="Usable.cpp" />
     <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
@@ -308,6 +311,7 @@
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="CactusBossEntity.h" />
     <ClInclude Include="CoalItem.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="ConnectingTile.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
@@ -330,6 +334,7 @@
     <ClInclude Include="ItemIndex.h" />
     <ClInclude Include="ItemInventory.h" />
     <ClInclude Include="ItemInventorySlotUIComponent.h" />
+    <ClInclude Include="SimpleCraftingGUI.h" />
     <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="LuaInterface.h" />
@@ -367,6 +372,7 @@
     <ClInclude Include="SimpleTextDrawUIComponent.h" />
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SoundType.h" />
+    <ClInclude Include="TextUtils.h" />
     <ClInclude Include="Usable.h" />
     <ClInclude Include="UsableItem.h" />
     <ClInclude Include="ZombieEntity.h" />
@@ -416,7 +422,7 @@
   </Target>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties data_1json__JsonSchema="https://appsemble.app/api.json" />
+      <UserProperties data_1json__JsonSchema="https://beaujs.com/schema.json" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

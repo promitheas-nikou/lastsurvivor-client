@@ -26,6 +26,8 @@ public:
 
 	bool PerformOnInventory(ItemInventory* inventory) const;
 
+	int CheckTimesPerformOnInventory(ItemInventory* inventory) const;
+
 	static void LoadRecipes(nlohmann::json data);
 	static void UnloadRecipes();
 

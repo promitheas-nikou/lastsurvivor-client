@@ -1,5 +1,6 @@
 #include "Recipe.h"
 #include "SimpleItemBundle.h"
+#include "ItemIndex.h"
 
 std::unordered_map<std::string, const Recipe*> loaded_hand_crafting_recipes;
 std::unordered_map<std::string, const Recipe*> loaded_smelting_recipes;
@@ -32,6 +33,11 @@ bool Recipe::PerformOnInventory(ItemInventory* inventory) const
     inventory->RemoveConstItemBundle(input);
     inventory->AddConstItemBundle(output);
     return true;
+}
+
+int Recipe::CheckTimesPerformOnInventory(ItemInventory* inventory) const
+{
+    return inventory->CountTimesContainsItemBundleItems(input);
 }
 
 void Recipe::LoadRecipes(nlohmann::json data)

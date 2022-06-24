@@ -9,6 +9,7 @@
 #include "ResourceLoader.h"
 #include "World.h"
 #include <allegro5/allegro_font.h>
+#include "Config.h"
 
 Item::Item(std::string n) : name{ n }, amount{ 1 }
 {}
@@ -72,6 +73,17 @@ int Item::AddAmount(int a)
 void Item::UseOnTile(World* world, int x, int y)
 {
     return;
+}
+
+void Item::DrawText(int x, int y, ALLEGRO_FONT* font, ALLEGRO_COLOR color, int align) const
+{
+    al_draw_textf(font, color, x, y, align, "%d x %s", GetAmount(), GetName().c_str());
+}
+
+void Item::DrawWithText(int x, int y, int width, int height) const
+{
+    Draw(x, y, width, height);
+    DrawText(x + width, y + width / 2 - 20, loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, 0);
 }
 
 std::unordered_map<std::string, Item*> prototype_items;

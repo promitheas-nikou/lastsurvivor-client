@@ -1,63 +1,75 @@
 #include "GUI.h"
 
-void GUI::ClickRightDown(int xRel, int yRel)
+bool GUI::ClickRightDown(int xRel, int yRel)
 {
+	return false;
 }
 
-void GUI::ClickLeftDown(int xRel, int yRel)
+bool GUI::ClickLeftDown(int xRel, int yRel)
 {
+	return false;
 }
 
-void GUI::ClickRightUp(int xRel, int yRel)
+bool GUI::ClickRightUp(int xRel, int yRel)
 {
+	return false;
 }
 
-void GUI::ClickLeftUp(int xRel, int yRel)
+bool GUI::ClickLeftUp(int xRel, int yRel)
 {
+	return false;
 }
 
-void GUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
+bool GUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 {
+	return false;
 }
 
-void GUI::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
+bool GUI::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
 {
+	return false;
 }
 
-void GUI::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
+bool GUI::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
 {
+	return false;
 }
 
-void GUI::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
+bool GUI::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 {
 	switch (event.button)
 	{
 	case 1:
-		ClickLeftDown(event.x, event.y);
+		return ClickLeftDown(event.x, event.y);
 		break;
 	case 2:
-		ClickRightDown(event.x, event.y);
+		return ClickRightDown(event.x, event.y);
 		break;
 	}
 }
-void GUI::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
+bool GUI::MouseButtonUp(ALLEGRO_MOUSE_EVENT& event)
 {
 	switch (event.button)
 	{
 	case 1:
-		ClickLeftUp(event.x, event.y);
+		return ClickLeftUp(event.x, event.y);
 		break;
 	case 2:
-		ClickRightUp(event.x, event.y);
+		return ClickRightUp(event.x, event.y);
 		break;
 	}
 }
 
-void GUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
-{}
-
-void GUI::HandleEvent(ALLEGRO_EVENT& event)
+bool GUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
+	return false;
+}
+
+bool GUI::HandleEvent(ALLEGRO_EVENT& event)
+{
+	if (activeSubGUI != nullptr)
+		if(activeSubGUI->HandleEvent(event))
+			return true;
 	for (int i = 0; i < UIcomponents.size(); i++)
 	{
 		UIComponent* tmp = UIcomponents[i];
@@ -71,10 +83,12 @@ void GUI::HandleEvent(ALLEGRO_EVENT& event)
 				switch (event.mouse.button)
 				{
 				case 1:
-					tmp->ClickLeftDown(event.mouse.x, event.mouse.y);
+					if (tmp->ClickLeftDown(event.mouse.x, event.mouse.y))
+						return true;
 					break;
 				case 2:
-					tmp->ClickRightDown(event.mouse.x, event.mouse.y);
+					if (tmp->ClickRightDown(event.mouse.x, event.mouse.y))
+						return true;
 					break;
 				}
 				break;
@@ -82,23 +96,28 @@ void GUI::HandleEvent(ALLEGRO_EVENT& event)
 				switch (event.mouse.button)
 				{
 				case 1:
-					tmp->ClickLeftUp(event.mouse.x, event.mouse.y);
+					if (tmp->ClickLeftUp(event.mouse.x, event.mouse.y))
+						return true;
 					break;
 				case 2:
-					tmp->ClickRightUp(event.mouse.x, event.mouse.y);
+					if (tmp->ClickRightUp(event.mouse.x, event.mouse.y))
+						return true;
 					break;
 				}
 				break;
 			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-				tmp->Hover(state.x, state.y);
+				if (tmp->Hover(state.x, state.y))
+					return true;
 				break;
 				//		case ALLEGRO_EVENT_KEY_CHAR:
 				//			break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				tmp->KeyDown(event.keyboard.keycode);
+				if(tmp->KeyDown(event.keyboard.keycode))
+					return true;
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
-				tmp->KeyUp(event.keyboard.keycode);
+				if(tmp->KeyUp(event.keyboard.keycode))
+					return true;
 				break;
 			}
 		}
@@ -106,29 +125,31 @@ void GUI::HandleEvent(ALLEGRO_EVENT& event)
 	switch (event.type)
 	{
 	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-		this->MouseButtonDown(event.mouse);
+		if(this->MouseButtonDown(event.mouse))
+			return true;
 		break;
 	case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-		this->MouseButtonUp(event.mouse);
+		if(this->MouseButtonUp(event.mouse))
+			return true;
 		break;
 	case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-		this->MouseButtonMove(event.mouse);
+		if(this->MouseButtonMove(event.mouse))
+			return true;
 		break;
 	case ALLEGRO_EVENT_KEY_CHAR:
-		if(IsTyping())
-			this->CharTyped(event.keyboard);
+		if(IsTyping()&& this->CharTyped(event.keyboard))
+			return true;
 		break;
 	case ALLEGRO_EVENT_KEY_DOWN:
-		if (!IsTyping())
-			this->KeyDown(event.keyboard);
+		if (!IsTyping() && this->KeyDown(event.keyboard))
+			return true;
 		break;
 	case ALLEGRO_EVENT_KEY_UP:
-		if (!IsTyping())
-			this->KeyUp(event.keyboard);
+		if (!IsTyping() && this->KeyUp(event.keyboard))
+			return true;
 		break;
 	}
-	if(activeSubGUI!=nullptr)
-		activeSubGUI->HandleEvent(event);
+	return false;
 }
 
 

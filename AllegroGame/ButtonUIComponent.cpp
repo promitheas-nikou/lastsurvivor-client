@@ -1,9 +1,10 @@
 #include "ButtonUIComponent.h"
 
-ButtonUIComponent::ButtonUIComponent(void(*func)(void)) : onPress{ func }
+ButtonUIComponent::ButtonUIComponent(std::function<void(void)> func) : onPress{ func }
 {}
 
-void ButtonUIComponent::ClickLeftDown(int xRel, int yRel)
+bool ButtonUIComponent::ClickLeftDown(int xRel, int yRel)
 {
 	onPress();
+	return true;
 }

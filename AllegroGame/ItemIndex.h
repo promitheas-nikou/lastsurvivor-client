@@ -14,8 +14,10 @@ public:
 	const std::unordered_map<std::string, int>& GetIndexTable() const;
 
 	bool CheckGreaterThan(const ItemIndex* ind) const;
+	int GetMaxFactor(const ItemIndex* ind) const;
 
 	ItemIndex(const ItemInventory* inventory);
 	ItemIndex(const ItemBundle* bundle);
+	ItemIndex();
 };
 
