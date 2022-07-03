@@ -465,9 +465,6 @@
     <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
-    <ClCompile Include="ItemInventorySlotUIComponent.cpp">
-      <Filter>Source Files\Game\GUI\UIComponents</Filter>
-    </ClCompile>
     <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
@@ -485,6 +482,15 @@
     </ClCompile>
     <ClCompile Include="Config.cpp">
       <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstItemBundle.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleConstItemBundle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -778,9 +784,6 @@
     <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
-    <ClInclude Include="ItemInventorySlotUIComponent.h">
-      <Filter>Header Files\Game\GUI\UIComponents</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
@@ -798,6 +801,15 @@
     </ClInclude>
     <ClInclude Include="CoalItem.h">
       <Filter>Header Files\Game\Items\FuelItems</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstItemBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleConstItemBundle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

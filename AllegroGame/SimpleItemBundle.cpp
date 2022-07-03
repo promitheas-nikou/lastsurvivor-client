@@ -31,7 +31,7 @@ void SimpleItemBundle::AddConstToInventory(ItemInventory* inv) const
     }
 }
 
-const Item* SimpleItemBundle::GetItem(int i) const
+Item* SimpleItemBundle::GetItem(int i) const
 {
     return items[i];
 }

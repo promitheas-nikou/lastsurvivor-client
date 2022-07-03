@@ -26,7 +26,7 @@ protected:
     
 public:
 
-    enum StorageSlotType { GENERIC, SHOVEL, PICKAXE, AXE, MELEE, RANGED, CONSUMABLE, PLACEABLE };
+    enum StorageSlotType { GENERIC, VIEW, SHOVEL, PICKAXE, AXE, MELEE, RANGED, CONSUMABLE, PLACEABLE };
 
     InventoryGUI();
 

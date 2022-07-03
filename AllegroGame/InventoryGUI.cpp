@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 #include "SimpleItemInventoryCallbackSlotUIComponent.h"
 #include "SimpleItemInventoryGenericStorageSlotUIComponent.h"
+#include "SimpleItemInventoryViewStorageSlotUIComponent.h"
 
 
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_GENERIC;
@@ -33,7 +34,14 @@ void InventoryGUI::SwapItem(Item** slot)
 
 void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageSlotType t)
 {
-	GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
+	switch (t)
+	{
+	case StorageSlotType::VIEW:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryViewStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot));
+		break;
+	default:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
+	}
 }
 
 void InventoryGUI::AddCallbackSlot(int x, int y, int w, int h, std::function<Item*(Item*)> c)

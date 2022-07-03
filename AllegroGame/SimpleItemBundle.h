@@ -13,7 +13,7 @@ public:
 	virtual ItemBundle* AddToInventory(ItemInventory* inv) override;
 	virtual void AddConstToInventory(ItemInventory* inv) const override;
 	virtual void AddItem(Item* item) override;
-	virtual const Item* GetItem(int i) const override;
+	virtual Item* GetItem(int i) const override;
 	virtual int GetSize() const override;
 	SimpleItemBundle() = default;
 	SimpleItemBundle(const SimpleItemBundle&) = default;
