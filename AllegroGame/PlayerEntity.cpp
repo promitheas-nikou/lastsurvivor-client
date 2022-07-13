@@ -784,10 +784,23 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::VIEW);
 		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
 		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128, *inventory->GetItemPtr(i+9), InventoryGUI::StorageSlotType::GENERIC);
-		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128, *inventory->GetItemPtr(i+18), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128, *inventory->GetItemPtr(i+18), InventoryGUI	::StorageSlotType::GENERIC);
 		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128, *inventory->GetItemPtr(i+27), InventoryGUI::StorageSlotType::GENERIC);
 	}
-	inventoryGUI->AddCallbackSlot(SCREEN_WIDTH / 2 - 63, SCREEN_HEIGHT - 140, 128, 128, [this](Item* item) {
+	inventoryGUI->AddCallbackSlot(SCREEN_WIDTH / 2 - 191, SCREEN_HEIGHT - 140, 128, 128, [this](Item* item) {
+		Consumable* c = dynamic_cast<Consumable*>(item);
+		if (c == nullptr)
+			return item;
+		this->Consume(c);
+		item->RemoveAmount(1);
+		if (item->GetAmount() <= 0)
+		{
+			delete item;
+			return (Item*)nullptr;
+		}
+		return item;
+		},
+		[this](Item* item) {
 		Consumable* c = dynamic_cast<Consumable*>(item);
 		if (c == nullptr)
 			return item;
@@ -800,6 +813,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		}
 		return item;
 	});
+	inventoryGUI->AddTrashSlot(SCREEN_WIDTH / 2 + 64, SCREEN_HEIGHT - 140, 128, 128);
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];

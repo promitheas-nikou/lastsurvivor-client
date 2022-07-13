@@ -11,6 +11,7 @@
 #include "Item.h"
 #include "Entity.h"
 #include <string>
+#include "LootBundle.h"
 
 #include "json.h"
 #include "Shader.h"
@@ -51,7 +52,7 @@ extern ALLEGRO_BITMAP* window_icon;
 
 extern std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 extern std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
-extern std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
+extern std::unordered_map<std::string, LootBundle*> loaded_loot_bundles;
 extern std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
 extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_samples;
 extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;

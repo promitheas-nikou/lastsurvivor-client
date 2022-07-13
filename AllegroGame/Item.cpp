@@ -10,6 +10,7 @@
 #include "World.h"
 #include <allegro5/allegro_font.h>
 #include "Config.h"
+#include "SimpleItemBundle.h"
 
 Item::Item(std::string n) : name{ n }, amount{ 1 }
 {}
@@ -41,9 +42,10 @@ int Item::RemoveAmount(int targetAmount)
     return removeAmount;
 }
 
-void Item::SetAmount(int a)
+Item* Item::SetAmount(int a)
 {
     amount = a;
+    return this;
 }
 
 bool Item::Equals(const Item& item) const
@@ -56,6 +58,18 @@ bool Item::Equals(const Item* item) const
     if (item == nullptr)
         return false;
     return item->GetID()==GetID();
+}
+
+ItemBundle* Item::ConstCollapseToItemBundle() const
+{
+    SimpleItemBundle* b = new SimpleItemBundle();
+    b->AddItem(this->Clone());
+    return b;
+}
+
+void Item::AddConstToInventory(ItemInventory* inv) const
+{
+    inv->AddConstItem(this);
 }
 
 int Item::AddAmount(int a)

@@ -7,6 +7,7 @@
 
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_GENERIC;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_CALLBACK;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_TRASH;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_SHOVEL;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_PICKAXE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AXE;
@@ -44,9 +45,30 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 	}
 }
 
-void InventoryGUI::AddCallbackSlot(int x, int y, int w, int h, std::function<Item*(Item*)> c)
+void InventoryGUI::AddCallbackSlot(int x, int y, int w, int h, std::function<Item* (Item*)> cl, std::function<Item* (Item*)> cr)
 {
-	GUI::UIcomponents.push_back(new SimpleItemInventoryCallbackSlotUIComponent(x, y, w, h, INVENTORY_SLOT_CALLBACK, c, c, swapTemp));
+	GUI::UIcomponents.push_back(new SimpleItemInventoryCallbackSlotUIComponent(x, y, w, h, INVENTORY_SLOT_CALLBACK, cl, cr, swapTemp));
+}
+
+void InventoryGUI::AddTrashSlot(int x, int y, int w, int h)
+{
+	static std::function<Item* (Item*)> callbackleft = [](Item* item) {
+		if (item == nullptr)
+			return (Item*)nullptr;
+		item->RemoveAmount(1);
+		if (item->GetAmount() <= 0)
+		{
+			delete item;
+			return (Item*)nullptr;
+		}
+		return item;
+	};
+	static std::function<Item* (Item*)> callbackright = [](Item* item) {
+		if (item != nullptr)
+			delete item;
+		return nullptr;
+	};
+	GUI::UIcomponents.push_back(new SimpleItemInventoryCallbackSlotUIComponent(x, y, w, h, INVENTORY_SLOT_TRASH, callbackleft, callbackright, swapTemp));
 }
 
 InventoryGUI::InventoryGUI() : swapTemp{ nullptr }
@@ -57,6 +79,7 @@ void InventoryGUI::Init()
 {
 	INVENTORY_SLOT_GENERIC = loaded_bitmaps["tex.gui.inventory_slot"];
 	INVENTORY_SLOT_CALLBACK = loaded_bitmaps["tex.gui.inventory_slot_function"];
+	INVENTORY_SLOT_TRASH = loaded_bitmaps["tex.gui.inventory_slot_trash"];
 	INVENTORY_SLOT_SHOVEL = loaded_bitmaps["tex.gui.inventory_slot_shovel"];
 	INVENTORY_SLOT_PICKAXE = loaded_bitmaps["tex.gui.inventory_slot_pickaxe"];
 	INVENTORY_SLOT_AXE = loaded_bitmaps["tex.gui.inventory_slot_axe"];

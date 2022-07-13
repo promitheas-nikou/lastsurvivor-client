@@ -4,7 +4,7 @@
 
 std::string GrassGroundTile::NAME;
 ALLEGRO_BITMAP* GrassGroundTile::TEXTURE;
-const ItemBundle* GrassGroundTile::DROP;
+const LootBundle* GrassGroundTile::DROP;
 int GrassGroundTile::MINING_RESISTANCE;
 ToolType GrassGroundTile::TOOL_TYPE;
 const std::string GrassGroundTile::ID = "gtiles.grass";
@@ -40,7 +40,7 @@ GroundTile* GrassGroundTile::Clone(World* w, int x, int y) const
 
 const ItemBundle* GrassGroundTile::GetMiningResult(Tool* tool) const
 {
-	return DROP;
+	return DROP->ConstCollapseToItemBundle();
 }
 
 int GrassGroundTile::GetMiningResistance() const

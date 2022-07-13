@@ -2,6 +2,7 @@
 #include "GroundTile.h"
 #include "ItemBundle.h"
 #include "AudioMultiTrackCollection.h"
+#include "LootBundle.h"
 #undef PlaySound
 
 class DirtGroundTile :
@@ -10,7 +11,7 @@ class DirtGroundTile :
 private:
 	static std::string NAME;
 	static ALLEGRO_BITMAP* TEXTURE;
-	static const ItemBundle* DROP;
+	static const LootBundle* DROP;
 	static int MINING_RESISTANCE;
 	static ToolType TOOL_TYPE;
 	static AudioMultiTrackCollection AUDIO_TRACKS;

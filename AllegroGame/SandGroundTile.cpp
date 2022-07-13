@@ -3,7 +3,7 @@
 
 std::string SandGroundTile::NAME;
 ALLEGRO_BITMAP* SandGroundTile::TEXTURE;
-const ItemBundle* SandGroundTile::DROP;
+const LootBundle* SandGroundTile::DROP;
 int SandGroundTile::MINING_RESISTANCE;
 ToolType SandGroundTile::TOOL_TYPE;
 const std::string SandGroundTile::ID = "gtiles.sand";
@@ -40,7 +40,7 @@ GroundTile* SandGroundTile::Clone(World* w, int x, int y) const
 
 const ItemBundle* SandGroundTile::GetMiningResult(Tool* tool) const
 {
-	return DROP;
+	return DROP->ConstCollapseToItemBundle();
 }
 
 int SandGroundTile::GetMiningResistance() const

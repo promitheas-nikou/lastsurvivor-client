@@ -1,6 +1,7 @@
 #pragma once
 #include "GroundTile.h"
 #include "ItemBundle.h"
+#include "LootBundle.h"
 
 class WaterGroundTile :
 	public GroundTile
@@ -8,7 +9,7 @@ class WaterGroundTile :
 private:
 	static std::string NAME;
 	static ALLEGRO_BITMAP* TEXTURE;
-	static const ItemBundle* DROP;
+	static const LootBundle* DROP;
 	static int MINING_RESISTANCE;
 	static ToolType TOOL_TYPE;
 public:

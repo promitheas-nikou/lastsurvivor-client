@@ -2,6 +2,7 @@
 #include "GroundTile.h"
 #include "ItemBundle.h"
 #include "AudioMultiTrackCollection.h"
+#include "LootBundle.h"
 
 class SandGroundTile :
 	public GroundTile
@@ -9,7 +10,7 @@ class SandGroundTile :
 private:
 	static std::string NAME;
 	static ALLEGRO_BITMAP* TEXTURE;
-	static const ItemBundle* DROP;
+	static const LootBundle* DROP;
 	static int MINING_RESISTANCE;
 	static ToolType TOOL_TYPE;
 	static AudioMultiTrackCollection AUDIO_TRACKS;

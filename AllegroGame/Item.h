@@ -3,10 +3,13 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include "json.h"
+#include "LootObject.h"
+
 
 class World;
 
-class Item
+class Item:
+	public LootObject
 {
 protected:
 	int amount;
@@ -26,10 +29,14 @@ public:
 
 	virtual int GetAmount() const;
 	virtual int RemoveAmount(int targetAmount);
-	virtual void SetAmount(int a);
+	virtual Item* SetAmount(int a);
 
 	virtual bool Equals(const Item& item) const;
 	virtual bool Equals(const Item* item) const;
+
+	virtual ItemBundle* ConstCollapseToItemBundle() const final;
+
+	virtual void AddConstToInventory(ItemInventory* inv) const override;
 
 	virtual Item* Clone() const = 0;
 

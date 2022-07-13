@@ -483,14 +483,26 @@
     <ClCompile Include="Config.cpp">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
-    <ClCompile Include="ConstItemBundle.cpp">
-      <Filter>Source Files\Game\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleConstItemBundle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleLootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="ChancedLootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="WeightedLootBundle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LootObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableAmountItem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -793,23 +805,35 @@
     <ClInclude Include="SimpleCraftingGUI.h">
       <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
     </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TextUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CoalItem.h">
       <Filter>Header Files\Game\Items\FuelItems</Filter>
     </ClInclude>
-    <ClInclude Include="ConstItemBundle.h">
-      <Filter>Header Files\Game\Items\ItemBundles</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleConstItemBundle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="LootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="ChancedLootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleLootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="LootObject.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="WeightedLootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableAmountItem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 std::string StoneGroundTile::NAME;
 ALLEGRO_BITMAP* StoneGroundTile::TEXTURE;
 int StoneGroundTile::MINING_RESISTANCE;
-const ItemBundle* StoneGroundTile::DROP;
+const LootBundle* StoneGroundTile::DROP;
 ToolType StoneGroundTile::TOOL_TYPE;
 
 const std::string StoneGroundTile::ID = "gtiles.stone";
@@ -38,7 +38,7 @@ GroundTile* StoneGroundTile::Clone(World* w, int x, int y) const
 
 const ItemBundle* StoneGroundTile::GetMiningResult(Tool* tool) const
 {
-	return DROP;
+	return DROP->ConstCollapseToItemBundle();
 }
 
 int StoneGroundTile::GetMiningResistance() const

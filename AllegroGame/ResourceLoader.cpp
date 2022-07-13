@@ -29,6 +29,7 @@
 #include "AudioMultiTrackCollection.h"
 #include "AudioSampleInstanceMultiTrack.h"
 #include "AudioSampleMultiTrack.h"
+#include "LootBundle.h"
 
 #include "Recipe.h"
 
@@ -69,7 +70,7 @@ std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_sampl
 std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;
 std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
 std::unordered_map<std::string, Shader*> loaded_shaders;
-std::unordered_map<std::string, ItemBundle*> loaded_loot_bundles;
+std::unordered_map<std::string, LootBundle*> loaded_loot_bundles;
 std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 
 QuestCollection* quest_collection;
@@ -291,7 +292,7 @@ void init_items()
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
-			loaded_loot_bundles[data["id"]] = SimpleItemBundle::CreateFromJSON(data);
+			loaded_loot_bundles[data["id"]] = LootBundle::CreateFromJSON(data);
 			printf("FOUND DATA FOR LOOT BUNDLE \"%s\"\n", ((std::string)data["id"]).c_str());
 		}
 #ifndef DEBUG

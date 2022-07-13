@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -204,10 +204,10 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="CactusBossEntity.cpp" />
+    <ClCompile Include="ChancedLootBundle.cpp" />
     <ClCompile Include="CoalItem.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="ConnectingTile.cpp" />
-    <ClCompile Include="ConstItemBundle.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
@@ -227,7 +227,8 @@
     <ClCompile Include="ItemBundle.cpp" />
     <ClCompile Include="ItemIndex.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
-    <ClCompile Include="SimpleConstItemBundle.cpp" />
+    <ClCompile Include="LootBundle.cpp" />
+    <ClCompile Include="LootObject.cpp" />
     <ClCompile Include="SimpleCraftingGUI.cpp" />
     <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp" />
     <ClCompile Include="LuaInterface.cpp" />
@@ -258,6 +259,7 @@
     <ClCompile Include="SimpleConsumableItem.cpp" />
     <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleLootBundle.cpp" />
     <ClCompile Include="SimpleMeleeWeapon.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="SimpleMeleeWeaponItem.cpp" />
@@ -268,6 +270,8 @@
     <ClCompile Include="TextUtils.cpp" />
     <ClCompile Include="Usable.cpp" />
     <ClCompile Include="UsableItem.cpp" />
+    <ClCompile Include="VariableAmountItem.cpp" />
+    <ClCompile Include="WeightedLootBundle.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
@@ -312,10 +316,10 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="CactusBossEntity.h" />
+    <ClInclude Include="ChancedLootBundle.h" />
     <ClInclude Include="CoalItem.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConnectingTile.h" />
-    <ClInclude Include="ConstItemBundle.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="DeathGUI.h" />
@@ -336,7 +340,8 @@
     <ClInclude Include="ItemBundle.h" />
     <ClInclude Include="ItemIndex.h" />
     <ClInclude Include="ItemInventory.h" />
-    <ClInclude Include="SimpleConstItemBundle.h" />
+    <ClInclude Include="LootBundle.h" />
+    <ClInclude Include="LootObject.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />
     <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h" />
     <ClInclude Include="json.h" />
@@ -369,6 +374,7 @@
     <ClInclude Include="SimpleConsumableItem.h" />
     <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleLootBundle.h" />
     <ClInclude Include="SimpleMeleeWeapon.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="SimpleMeleeWeaponItem.h" />
@@ -379,6 +385,8 @@
     <ClInclude Include="TextUtils.h" />
     <ClInclude Include="Usable.h" />
     <ClInclude Include="UsableItem.h" />
+    <ClInclude Include="VariableAmountItem.h" />
+    <ClInclude Include="WeightedLootBundle.h" />
     <ClInclude Include="ZombieEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />

@@ -17,7 +17,5 @@ public:
 	virtual int GetSize() const override;
 	SimpleItemBundle() = default;
 	SimpleItemBundle(const SimpleItemBundle&) = default;
-
-	static SimpleItemBundle* CreateFromJSON(nlohmann::json data);
 };
 

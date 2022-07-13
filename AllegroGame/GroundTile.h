@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "Item.h"
 #include "SoundType.h"
+#include "LootBundle.h"
 
 class World;
 class PlayerEntity;

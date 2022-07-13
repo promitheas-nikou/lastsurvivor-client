@@ -12,6 +12,7 @@ class InventoryGUI :
 protected:
     static ALLEGRO_BITMAP* INVENTORY_SLOT_GENERIC;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_CALLBACK;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_TRASH;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_SHOVEL;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_PICKAXE;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_AXE;
@@ -35,7 +36,8 @@ public:
 
     void AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageSlotType t);
 
-    void AddCallbackSlot(int x, int y, int w, int h, std::function<Item*(Item*)> c);
+    void AddCallbackSlot(int x, int y, int w, int h, std::function<Item* (Item*)> cl, std::function<Item* (Item*)> cr);
+    void AddTrashSlot(int x, int y, int w, int h);
 
     static void Init();
 

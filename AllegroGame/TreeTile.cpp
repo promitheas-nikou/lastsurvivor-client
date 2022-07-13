@@ -6,7 +6,7 @@ ToolType TreeTile::TOOL_TYPE;
 std::string TreeTile::NAME;
 ALLEGRO_BITMAP* TreeTile::TEXTURES[4];
 const std::string TreeTile::ID = "tiles.tree";
-const ItemBundle* TreeTile::DROP;
+const LootBundle* TreeTile::DROP;
 
 std::string TreeTile::GetID() const
 {
@@ -50,7 +50,7 @@ void TreeTile::RandomTickUpdate()
 
 const ItemBundle* TreeTile::GetMiningResult(Tool* tool) const
 {
-    return TreeTile::DROP;
+    return TreeTile::DROP->ConstCollapseToItemBundle();
 }
 
 void TreeTile::Draw() const

@@ -4,7 +4,7 @@
 
 std::string WaterGroundTile::NAME;
 ALLEGRO_BITMAP* WaterGroundTile::TEXTURE;
-const ItemBundle* WaterGroundTile::DROP;
+const LootBundle* WaterGroundTile::DROP;
 int WaterGroundTile::MINING_RESISTANCE;
 ToolType WaterGroundTile::TOOL_TYPE;
 const std::string WaterGroundTile::ID = "gtiles.water";
@@ -43,7 +43,7 @@ void WaterGroundTile::Use(PlayerEntity* p)
 
 const ItemBundle* WaterGroundTile::GetMiningResult(Tool* tool) const
 {
-	return DROP;
+	return DROP->ConstCollapseToItemBundle();
 }
 
 int WaterGroundTile::GetMiningResistance() const

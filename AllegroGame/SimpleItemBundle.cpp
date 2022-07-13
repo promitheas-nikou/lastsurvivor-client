@@ -40,11 +40,3 @@ int SimpleItemBundle::GetSize() const
 {
     return items.size();
 }
-
-SimpleItemBundle* SimpleItemBundle::CreateFromJSON(nlohmann::json data)
-{
-    SimpleItemBundle* b = new SimpleItemBundle();
-    for (nlohmann::json item : data["items"])
-        b->AddItem(MakeItemFromJSON(item));
-    return b;
-}

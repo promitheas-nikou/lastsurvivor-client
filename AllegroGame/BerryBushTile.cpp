@@ -7,7 +7,7 @@ ToolType BerryBushTile::TOOL_TYPE;
 std::string BerryBushTile::NAME;
 ALLEGRO_BITMAP* BerryBushTile::TEXTURES[2];
 const std::string BerryBushTile::ID = "tiles.berry_bush";
-const ItemBundle* BerryBushTile::DROP;
+const LootBundle* BerryBushTile::DROP;
 
 std::string BerryBushTile::GetID() const
 {
@@ -51,7 +51,7 @@ void BerryBushTile::RandomTickUpdate()
 
 const ItemBundle* BerryBushTile::GetMiningResult(Tool* tool) const
 {
-    return BerryBushTile::DROP;
+    return BerryBushTile::DROP->ConstCollapseToItemBundle();
 }
 
 void BerryBushTile::Draw() const
@@ -59,14 +59,14 @@ void BerryBushTile::Draw() const
     al_draw_bitmap(TEXTURES[BerryBushTile::growthTimer/600], xpos * 128, ypos * 128, 0);
 }
 
-const ItemBundle* COLLECT;
+const LootBundle* COLLECT;
 
 void BerryBushTile::Use(PlayerEntity* p)
 {
     if (growthTimer == 600)
     {
         growthTimer = 0;
-        p->GiveConstItemBundle(COLLECT);
+        p->GiveConstItemBundle(COLLECT->ConstCollapseToItemBundle());
     }
 }
 

@@ -3,7 +3,7 @@
 
 std::string DirtGroundTile::NAME;
 ALLEGRO_BITMAP* DirtGroundTile::TEXTURE;
-const ItemBundle* DirtGroundTile::DROP;
+const LootBundle* DirtGroundTile::DROP;
 int DirtGroundTile::MINING_RESISTANCE;
 ToolType DirtGroundTile::TOOL_TYPE;
 const std::string DirtGroundTile::ID = "gtiles.dirt";
@@ -40,7 +40,7 @@ void DirtGroundTile::Draw() const
 
 const ItemBundle* DirtGroundTile::GetMiningResult(Tool* tool) const
 {
-	return DROP;
+	return DROP->ConstCollapseToItemBundle();
 }
 
 void DirtGroundTile::PlaySound(SoundType t) const

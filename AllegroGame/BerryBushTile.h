@@ -1,5 +1,6 @@
 #pragma once
 #include "Tile.h"
+#include "LootBundle.h"
 class BerryBushTile :
     public Tile
 {
@@ -8,7 +9,7 @@ private:
     static ToolType TOOL_TYPE;
     static std::string NAME;
     static ALLEGRO_BITMAP* TEXTURES[2];
-    static const ItemBundle* DROP;
+    static const LootBundle* DROP;
 
     int growthTimer;
 public:

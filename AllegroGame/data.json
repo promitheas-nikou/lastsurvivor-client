@@ -1,6 +1,6 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.2",
+  "VERSION": "ALPHA 1.6",
   "VER_MINOR": 2,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
@@ -162,6 +162,10 @@
     {
       "id": "tex.gui.inventory_slot_consumable",
       "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_trash",
+      "filename": "trash_slot.png"
     },
     {
       "id": "tex.gui.crafting_arrow",
@@ -529,12 +533,14 @@
   "loot_bundles": [
     {
       "id": "none",
-      "items": []
+      "type": "null"
     },
     {
       "id": "gtiles.grass.mine.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "item",
           "id": "items.dirt",
           "amount": 1
         }
@@ -542,8 +548,10 @@
     },
     {
       "id": "gtiles.dirt.mine.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "item",
           "id": "items.dirt",
           "amount": 1
         }
@@ -551,8 +559,10 @@
     },
     {
       "id": "gtiles.stone.mine.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "item",
           "id": "items.stone",
           "amount": 1
         }
@@ -560,8 +570,10 @@
     },
     {
       "id": "gtiles.sand.mine.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "item",
           "id": "items.sand",
           "amount": 1
         }
@@ -569,28 +581,37 @@
     },
     {
       "id": "tiles.tree.mine.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "varamount_item",
           "id": "items.stick",
-          "amount": 7
+          "minamount": 4,
+          "maxamount": 8
         }
       ]
     },
     {
       "id": "tiles.berry_bush.mine.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "varamount_item",
           "id": "items.stick",
-          "amount": 1
+          "minamount": 0,
+          "maxamount": 3
         }
       ]
     },
     {
       "id": "tiles.berry_bush.collect.any",
-      "items": [
+      "type": "simple",
+      "objects": [
         {
+          "type": "varamount_item",
           "id": "items.berry",
-          "amount": 1
+          "minamount": 0,
+          "maxamount": 2
         }
       ]
     }
