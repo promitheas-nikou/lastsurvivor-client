@@ -40,7 +40,7 @@ void World::UpdateEntityVector()
 
 GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    if (GenerateGetLevelHeight(x, y) < .7)
+    if (GenerateGetLevelHeight(x, y) < .5)
     {
         if (GenerateGetLevelHeight(x, y) < -.4)
         {
@@ -60,6 +60,26 @@ GroundTile* World::GenerateGroundTile(int x, int y)
         else
             return MakeGroundTile(this, "gtiles.dirt", x, y);
     }
+    else if(GenerateGetLevelOreDensityFactor(x,y)>=.85f)
+    {
+        float o = GenerateGetLevelOreQualityFactor(x, y);
+        if (o >= .8f)
+            return MakeGroundTile(this, "gtiles.malachite_ore", x, y);
+        else if (o <= .8f && o>= .6f)
+            return MakeGroundTile(this, "gtiles.azurite_ore", x, y);
+        else if (o <= .6f && o>= .3f)
+            return MakeGroundTile(this, "gtiles.hematite_ore", x, y);
+        else if (o <= .3f && o>= .1f)
+            return MakeGroundTile(this, "gtiles.azurite_ore", x, y);
+        else if (o <= .1f && o>= -.3f)
+            return MakeGroundTile(this, "gtiles.stone", x, y);
+        else if (o <= -.3f && o >= -.5f)
+            return MakeGroundTile(this, "gtiles.magnetite_ore", x, y);
+        else if (o <= -.5f && o >= -.8f)
+            return MakeGroundTile(this, "gtiles.malachite_ore", x, y);
+        else  if (o <= -.8f)
+            return MakeGroundTile(this, "gtiles.stone", x, y);
+    }
     else
         return MakeGroundTile(this, "gtiles.stone", x, y);
 }
@@ -76,17 +96,27 @@ float World::GenerateGetLevelTemperature(int x, int y)
 
 float World::GenerateGetLevelHumidity(int x, int y)
 {
-    return randgen.fractal(3,x/40.f+925,y/40.f-461);
+    return randgen.fractal(3, x / 40.f + 925, y / 40.f - 461);
+}
+
+float World::GenerateGetLevelOreQualityFactor(int x, int y)
+{
+    return randgen.fractal(2, x / 50.f - 5125, y / 50.f - 742);
+}
+
+float World::GenerateGetLevelOreDensityFactor(int x, int y)
+{
+    return randgen.fractal(1, x / 20.f + 5125, y / 20.f - 7342);
 }
 
 float World::GenerateGetLevelTileRandomness(int x, int y)
 {
-    return randgen.fractal(3, x * 46.77335f + 925, y *843.91275f - 461);
+    return randgen.fractal(5, x * 46.77335f + 925, y *843.91275f - 461);
 }
 
 Tile* World::GenerateTile(int x, int y)
 {
-    if (GenerateGetLevelHeight(x, y) < .7)
+    if (GenerateGetLevelHeight(x, y) < .5)
     {
         if (GenerateGetLevelHeight(x, y) < -.4)
         {

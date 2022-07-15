@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.6",
-  "VER_MINOR": 2,
+  "VERSION": "ALPHA 1.7",
+  "VER_MINOR": 7,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -84,6 +84,26 @@
       "filename": "icon.png"
     },
     {
+      "id": "tex.items.azurite_chunk",
+      "filename": "azurite_chunk.png"
+    },
+    {
+      "id": "tex.items.malachite_chunk",
+      "filename": "malachite_chunk.png"
+    },
+    {
+      "id": "tex.items.hematite_chunk",
+      "filename": "hematite_chunk.png"
+    },
+    {
+      "id": "tex.items.magnetite_chunk",
+      "filename": "magnetite_chunk.png"
+    },
+    {
+      "id": "tex.items.lodestone",
+      "filename": "lodestone.png"
+    },
+    {
       "id": "tex.gtiles.grass",
       "filename": "grass.png"
     },
@@ -110,6 +130,22 @@
     {
       "id": "tex.gtiles.iron_ore",
       "filename": "iron_ore.png"
+    },
+    {
+      "id": "tex.gtiles.malachite_ore",
+      "filename": "malachite_ore.png"
+    },
+    {
+      "id": "tex.gtiles.azurite_ore",
+      "filename": "azurite_ore.png"
+    },
+    {
+      "id": "tex.gtiles.hematite_ore",
+      "filename": "hematite_ore.png"
+    },
+    {
+      "id": "tex.gtiles.magnetite_ore",
+      "filename": "magnetite_ore.png"
     },
     {
       "id": "tex.tiles.table",
@@ -580,6 +616,72 @@
       ]
     },
     {
+      "id": "gtiles.malachite_ore.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.malachite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "gtiles.azurite_ore.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.azurite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "gtiles.hematite_ore.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.hematite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "gtiles.magnetite_ore.mine.any",
+      "type": "weighted",
+      "objects": [
+        {
+          "type": "loot_bundle",
+          "weight": 1,
+          "loot_bundle": {
+            "type": "chanced",
+            "objects": [
+              {
+                "type": "item",
+                "chance": 0.5,
+                "id": "items.magnetite_chunk",
+                "amount": 1
+              },
+              {
+                "type": "item",
+                "chance": 1,
+                "id": "items.lodestone",
+                "amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "type": "item",
+          "weight": 14,
+          "id": "items.magnetite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
       "id": "tiles.tree.mine.any",
       "type": "simple",
       "objects": [
@@ -768,6 +870,38 @@
       "mining_resistance": 4,
       "drops": "none",
       "texture": "tex.gtiles.water"
+    },
+    {
+      "id": "gtiles.malachite_ore",
+      "name": "Malachite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 10,
+      "drops": "gtiles.malachite_ore.mine.any",
+      "texture": "tex.gtiles.malachite_ore"
+    },
+    {
+      "id": "gtiles.azurite_ore",
+      "name": "Azurite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 10,
+      "drops": "gtiles.azurite_ore.mine.any",
+      "texture": "tex.gtiles.azurite_ore"
+    },
+    {
+      "id": "gtiles.hematite_ore",
+      "name": "Hematite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 15,
+      "drops": "gtiles.hematite_ore.mine.any",
+      "texture": "tex.gtiles.hematite_ore"
+    },
+    {
+      "id": "gtiles.magnetite_ore",
+      "name": "Magnetite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 15,
+      "drops": "gtiles.magnetite_ore.mine.any",
+      "texture": "tex.gtiles.magnetite_ore"
     }
   ],
   "items": [
@@ -848,6 +982,31 @@
       "name": "Coal",
       "texture": "tex.items.stone",
       "burn_time": 1000
+    },
+    {
+      "id": "items.malachite_chunk",
+      "name": "Malachite Ore Chunk",
+      "texture": "tex.items.malachite_chunk"
+    },
+    {
+      "id": "items.azurite_chunk",
+      "name": "Azurite Ore Chunk",
+      "texture": "tex.items.azurite_chunk"
+    },
+    {
+      "id": "items.hematite_chunk",
+      "name": "Hematite Ore Chunk",
+      "texture": "tex.items.hematite_chunk"
+    },
+    {
+      "id": "items.magnetite_chunk",
+      "name": "Magnetite Ore Chunk",
+      "texture": "tex.items.magnetite_chunk"
+    },
+    {
+      "id": "items.lodestone",
+      "name": "Lodestone",
+      "texture": "tex.items.lodestone"
     }
   ],
   "fonts": [

@@ -196,6 +196,12 @@
     <Filter Include="Header Files\Game\Items\FuelItems">
       <UniqueIdentifier>{9bbdba08-f15f-4e9e-a11a-e30e999309c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\GroundTiles\OreGroundTiles">
+      <UniqueIdentifier>{1d2c79d8-f356-4e37-8d47-f22dd06de74b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GroundTiles\OreGroundTiles">
+      <UniqueIdentifier>{7e54bfd1-2067-49a9-b601-0fd032d916a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -503,6 +509,33 @@
     </ClCompile>
     <ClCompile Include="VariableAmountItem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HematiteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MalachiteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="AzuriteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MagnetiteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MalachiteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="AzuriteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="HematiteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="LodestoneItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="MagnetiteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -834,6 +867,33 @@
     </ClInclude>
     <ClInclude Include="VariableAmountItem.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HematiteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AzuriteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MagnetiteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MalachiteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="LodestoneItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="MagnetiteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="MalachiteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="AzuriteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="HematiteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

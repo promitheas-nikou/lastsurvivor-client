@@ -30,6 +30,15 @@
 #include "AudioSampleInstanceMultiTrack.h"
 #include "AudioSampleMultiTrack.h"
 #include "LootBundle.h"
+#include "MalachiteOreGroundTile.h"
+#include "AzuriteOreGroundTile.h"
+#include "HematiteOreGroundTile.h"
+#include "MagnetiteOreGroundTile.h"
+#include "HematiteChunkItem.h"
+#include "MagnetiteChunkItem.h"
+#include "MalachiteChunkItem.h"
+#include "AzuriteChunkItem.h"
+#include "LodestoneItem.h"
 
 #include "Recipe.h"
 
@@ -232,11 +241,19 @@ void init_tiles()
 		StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
 		SandGroundTile::Init(ground_tile_data[SandGroundTile::ID]);
 		WaterGroundTile::Init(ground_tile_data[WaterGroundTile::ID]);
+		MalachiteOreGroundTile::Init(ground_tile_data[MalachiteOreGroundTile::ID]);
+		AzuriteOreGroundTile::Init(ground_tile_data[AzuriteOreGroundTile::ID]);
+		HematiteOreGroundTile::Init(ground_tile_data[HematiteOreGroundTile::ID]);
+		MagnetiteOreGroundTile::Init(ground_tile_data[MagnetiteOreGroundTile::ID]);
 		prototype_gtiles[GrassGroundTile::ID] = new GrassGroundTile(nullptr, 0, 0);
 		prototype_gtiles[DirtGroundTile::ID] = new DirtGroundTile(nullptr, 0, 0);
 		prototype_gtiles[StoneGroundTile::ID] = new StoneGroundTile(nullptr, 0, 0);
 		prototype_gtiles[SandGroundTile::ID] = new SandGroundTile(nullptr, 0, 0);
 		prototype_gtiles[WaterGroundTile::ID] = new WaterGroundTile(nullptr, 0, 0);
+		prototype_gtiles[MalachiteOreGroundTile::ID] = new MalachiteOreGroundTile(nullptr, 0, 0);
+		prototype_gtiles[AzuriteOreGroundTile::ID] = new AzuriteOreGroundTile(nullptr, 0, 0);
+		prototype_gtiles[HematiteOreGroundTile::ID] = new HematiteOreGroundTile(nullptr, 0, 0);
+		prototype_gtiles[MagnetiteOreGroundTile::ID] = new MagnetiteOreGroundTile(nullptr, 0, 0);
 
 		TreeTile::Init(tile_data[TreeTile::ID]);
 		BerryBushTile::Init(tile_data[BerryBushTile::ID]);
@@ -281,6 +298,12 @@ void init_items()
 		GunItem::Init(item_data[GunItem::ID]);
 		BerryItem::Init(item_data[BerryItem::ID]);
 		CoalItem::Init(item_data[CoalItem::ID]);
+		MalachiteChunkItem::Init(item_data[MalachiteChunkItem::ID]);
+		MagnetiteChunkItem::Init(item_data[MagnetiteChunkItem::ID]);
+		HematiteChunkItem::Init(item_data[HematiteChunkItem::ID]);
+		AzuriteChunkItem::Init(item_data[AzuriteChunkItem::ID]);
+		LodestoneItem::Init(item_data[LodestoneItem::ID]);
+
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
 		prototype_items[StickItem::ID] = new StickItem();
@@ -289,6 +312,11 @@ void init_items()
 		prototype_items[GunItem::ID] = new GunItem();
 		prototype_items[BerryItem::ID] = new BerryItem();
 		prototype_items[CoalItem::ID] = new CoalItem();
+		prototype_items[MalachiteChunkItem::ID] = new MalachiteChunkItem();
+		prototype_items[MagnetiteChunkItem::ID] = new MagnetiteChunkItem();
+		prototype_items[HematiteChunkItem::ID] = new HematiteChunkItem();
+		prototype_items[AzuriteChunkItem::ID] = new AzuriteChunkItem();
+		prototype_items[LodestoneItem::ID] = new LodestoneItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

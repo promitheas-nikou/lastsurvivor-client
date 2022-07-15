@@ -50,10 +50,10 @@ LootBundle* LootBundle::CreateFromJSON(nlohmann::json data)
 	}
 	else if (type == "weighted")
 	{
-		ChancedLootBundle* bundle = new ChancedLootBundle();
+		WeightedLootBundle* bundle = new WeightedLootBundle();
 		for (nlohmann::json object : objects)
 		{
-			bundle->AddChancedLootObject(CreateLootObjectFromJSON(object), object["weight"]);
+			bundle->AddWeightedLootObject(CreateLootObjectFromJSON(object), object["weight"]);
 		}
 		return bundle;
 	}

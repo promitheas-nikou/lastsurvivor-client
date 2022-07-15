@@ -586,7 +586,7 @@ void PlayerEntity::AddConstItem(Item* item)
 */
 
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
-static const float PLAYER_SPEED = 0.01f;
+static const float PLAYER_SPEED = 0.09f;
 
 void PlayerEntity::UseTile(int x, int y)
 {

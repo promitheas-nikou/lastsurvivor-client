@@ -19,9 +19,9 @@ LootObject* WeightedLootBundle::WeightedLootObject::GetLootObject() const
 WeightedLootBundle::WeightedLootObject::WeightedLootObject(LootObject* o, int w) : object{ o }, weight{ w }
 {}
 
-void WeightedLootBundle::AddWeightedItem(Item* item, int weight)
+void WeightedLootBundle::AddWeightedLootObject(LootObject* loot, int weight)
 {
-	objects.push_back(WeightedLootObject(item, weight));
+	objects.push_back(WeightedLootObject(loot, weight));
 	totalWeight += weight;
 }
 
@@ -32,7 +32,7 @@ LootBundle* WeightedLootBundle::Clone() const
 
 void WeightedLootBundle::AddConstToInventory(ItemInventory* inv) const
 {
-	int sel = rand() % totalWeight;
+	int sel = rand() % (totalWeight+1);
 	for (const WeightedLootObject& i : objects)
 	{
 		sel -= i.GetWeight();
@@ -47,7 +47,7 @@ void WeightedLootBundle::AddConstToInventory(ItemInventory* inv) const
 
 ItemBundle* WeightedLootBundle::ConstCollapseToItemBundle() const
 {
-	int sel = rand() % totalWeight;
+	int sel = rand() % (totalWeight+1);
 	for (const WeightedLootObject& i : objects)
 	{
 		sel -= i.GetWeight();

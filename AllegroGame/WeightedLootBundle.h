@@ -17,13 +17,13 @@ private:
         int GetWeight() const;
         LootObject* GetLootObject() const;
 
-        WeightedLootObject(LootObject* o, int w);
+        WeightedLootObject(LootObject* loot, int w);
     };
 
     std::vector<WeightedLootObject> objects;
     int totalWeight;
 
-    void AddWeightedItem(Item* item, int weight);
+    void AddWeightedLootObject(LootObject* item, int weight);
 public:
 
     virtual LootBundle* Clone() const final;
@@ -34,5 +34,7 @@ public:
     WeightedLootBundle(const WeightedLootBundle&) = default;
 
     virtual ~WeightedLootBundle() = default;
+
+    friend LootBundle;
 };
 

@@ -7,13 +7,13 @@ ChancedLootBundle::ChancedLootObject::ChancedLootObject(LootObject* o, float c) 
 
 void ChancedLootBundle::ChancedLootObject::AddConstToInventory(ItemInventory* inv) const
 {
-	if ((rand() % 100000) / 100000.f > chance)
+	if ((rand() % 100000) / 100000.f <= chance)
 		object->AddConstToInventory(inv);
 }
 
 ItemBundle* ChancedLootBundle::ChancedLootObject::CollapseToItemBundle() const
 {
-	if ((rand() % 100000) / 100000.f <= chance)
+	if ((rand() % 100000) / 100000.f > chance)
 		return nullptr;
 	return object->ConstCollapseToItemBundle();
 }

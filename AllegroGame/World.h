@@ -43,6 +43,8 @@ private:
 	float GenerateGetLevelHeight(int x, int y);
 	float GenerateGetLevelTemperature(int x, int y);
 	float GenerateGetLevelHumidity(int x, int y);
+	float GenerateGetLevelOreQualityFactor(int x, int y);
+	float GenerateGetLevelOreDensityFactor(int x, int y);
 	float GenerateGetLevelTileRandomness(int x, int y);
 
 	World(bool w, const uint64_t s, std::string name, std::string n, int min, int maj);
