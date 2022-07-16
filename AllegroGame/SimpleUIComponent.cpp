@@ -5,7 +5,7 @@
 SimpleUIComponent::SimpleUIComponent()
 {}
 
-void SimpleUIComponent::Draw()
+void SimpleUIComponent::Draw(int plane)
 {
 }
 

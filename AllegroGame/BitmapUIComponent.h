@@ -10,7 +10,7 @@ private:
 public:
 	BitmapUIComponent(ALLEGRO_BITMAP* b);
 
-	void Draw() override;
+	void Draw(int plane) override;
 
 	virtual ~BitmapUIComponent() = default;
 };

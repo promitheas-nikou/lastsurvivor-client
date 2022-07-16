@@ -21,7 +21,8 @@ bool SimpleItemInventoryCallbackSlotUIComponent::Hover(int xRel, int yRel)
 	return true;
 }
 
-void SimpleItemInventoryCallbackSlotUIComponent::Draw()
+void SimpleItemInventoryCallbackSlotUIComponent::Draw(int plane)
 {
-	BitmapUIComponent::Draw();
+	if(plane==1)
+		BitmapUIComponent::Draw(plane);
 }

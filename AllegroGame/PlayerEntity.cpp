@@ -93,6 +93,16 @@ void PlayerEntity::PreDrawThisGUI()
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s",targetedTile->GetName().c_str());
 	GroundTile* targetedGroundTile = nullptr;
+
+	al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 270, 50, SCREEN_WIDTH / 2 + 600, 250, al_map_rgba(0, 200, 130, 150));
+	al_draw_text(loaded_fonts["default"][25], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
+	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
+	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
+	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
+	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
+	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
+	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
+
 	if (targetedTile->IsEmpty())
 	{
 		targetedGroundTile = containingWorld->GetGroundTile(floor(x), floor(y));

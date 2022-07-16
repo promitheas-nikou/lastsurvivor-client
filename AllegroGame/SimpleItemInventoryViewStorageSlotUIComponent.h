@@ -17,7 +17,9 @@ protected:
 
 public:
 
-    virtual void Draw() final;
+    virtual void Draw(int plane) final;
+
+    virtual bool Hover(int x, int y) final;
 
     SimpleItemInventoryViewStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i);
 

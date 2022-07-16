@@ -61,11 +61,27 @@ bool SimpleItemInventoryGenericStorageSlotUIComponent::Hover(int xRel, int yRel)
     return true;
 }
 
-void SimpleItemInventoryGenericStorageSlotUIComponent::Draw()
+void SimpleItemInventoryGenericStorageSlotUIComponent::Draw(int plane)
 {
-    BitmapUIComponent::Draw();
-    if (itemptr != nullptr)
-        itemptr->Draw(0, 0, GetWidth(), GetHeight());
+    switch (plane)
+    {
+    case 1:
+        BitmapUIComponent::Draw(1);
+        if (itemptr != nullptr)
+        {
+            itemptr->Draw(0, 0, GetWidth(), GetHeight());
+        }
+        break;
+    case 2:
+        if (itemptr != nullptr)
+        {
+            int x, y;
+            al_get_mouse_cursor_position(&x, &y);
+            if (0 <= x - GetXpos() && x - GetXpos() < GetWidth() && 0 <= y - GetYpos() && y - GetYpos() < GetHeight())
+                itemptr->DrawItemDetailsPane(x - GetXpos(), y - GetYpos());
+        }
+        break;
+    }
 }
 
 SimpleItemInventoryGenericStorageSlotUIComponent::SimpleItemInventoryGenericStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptr{ i }, swapptr{ s }

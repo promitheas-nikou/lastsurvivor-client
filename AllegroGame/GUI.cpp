@@ -167,14 +167,15 @@ void GUI::DrawGUI()
 {
 	this->PreDrawThisGUI();
 	ALLEGRO_TRANSFORM temp_gui_transform = *al_get_current_transform();
-	for (int i = 0; i < UIcomponents.size(); i++)
-	{
-		UIComponent* tmp = UIcomponents[i];
-		al_translate_transform(&temp_gui_transform, tmp->GetXpos(), tmp->GetYpos());
-		al_use_transform(&temp_gui_transform);
-		UIcomponents[i]->Draw();
-		al_translate_transform(&temp_gui_transform, -tmp->GetXpos(), -tmp->GetYpos());
-	}
+	for(int p=1;p<=3;p++)
+		for (int i = 0; i < UIcomponents.size(); i++)
+		{
+			UIComponent* tmp = UIcomponents[i];
+			al_translate_transform(&temp_gui_transform, tmp->GetXpos(), tmp->GetYpos());
+			al_use_transform(&temp_gui_transform);
+			UIcomponents[i]->Draw(p);
+			al_translate_transform(&temp_gui_transform, -tmp->GetXpos(), -tmp->GetYpos());
+		}
 	al_use_transform(&temp_gui_transform);
 	if (activeSubGUI != nullptr)
 		activeSubGUI->DrawGUI();

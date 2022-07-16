@@ -22,7 +22,7 @@ public:
     virtual bool ClickLeftDown(int xRel, int yRel) final;
     virtual bool Hover(int xRel, int yRel) final;
 
-    virtual void Draw() final;
+    virtual void Draw(int plane) final;
 
     virtual ~SimpleItemInventoryCallbackSlotUIComponent() = default;
 };

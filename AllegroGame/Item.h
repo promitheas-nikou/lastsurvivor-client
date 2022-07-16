@@ -34,6 +34,8 @@ public:
 	virtual bool Equals(const Item& item) const;
 	virtual bool Equals(const Item* item) const;
 
+	virtual void DrawItemDetailsPane(int x, int y);
+
 	virtual ItemBundle* ConstCollapseToItemBundle() const final;
 
 	virtual void AddConstToInventory(ItemInventory* inv) const override;

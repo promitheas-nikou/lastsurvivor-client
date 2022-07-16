@@ -15,6 +15,7 @@ protected:
 
     Item*& swapptr;
     Item*& itemptr;
+    int mouseXpos, mouseYpos;
 
 public:
 
@@ -22,7 +23,7 @@ public:
     virtual bool ClickLeftDown(int xRel, int yRel) final;
     virtual bool Hover(int xRel, int yRel) final;
 
-    virtual void Draw() final;
+    virtual void Draw(int plane) final;
 
     SimpleItemInventoryGenericStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i, Item*& s);
 

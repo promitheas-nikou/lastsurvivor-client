@@ -7,7 +7,7 @@ public:
 
 	SimpleUIComponent();
 
-    void Draw() override;
+    void Draw(int plane) override;
 
 	virtual bool ClickRightDown(int xRel, int yRel) override;
 	virtual bool ClickLeftDown(int xRel, int yRel) override;

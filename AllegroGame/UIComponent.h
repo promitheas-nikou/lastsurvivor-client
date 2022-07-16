@@ -21,7 +21,7 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 
-	virtual void Draw() = 0;
+	virtual void Draw(int plane) = 0;
 
 	virtual bool ClickRightDown(int xRel, int yRel) = 0;
 	virtual bool ClickLeftDown(int xRel, int yRel) = 0;

@@ -90,6 +90,7 @@ public:
 
 	friend WorldChunk;
 	friend LuaInterface;
+	friend PlayerEntity;
 	friend int main();
 };
 
