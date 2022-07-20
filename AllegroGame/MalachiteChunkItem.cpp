@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string MalachiteChunkItem::NAME;
+std::string MalachiteChunkItem::DESCRIPTION;
 ALLEGRO_BITMAP* MalachiteChunkItem::TEXTURE;
 const std::string MalachiteChunkItem::ID = "items.malachite_chunk";
 
@@ -10,7 +11,7 @@ std::string MalachiteChunkItem::GetID() const
     return ID;
 }
 
-MalachiteChunkItem::MalachiteChunkItem(): Item(NAME)
+MalachiteChunkItem::MalachiteChunkItem(): Item(NAME, DESCRIPTION)
 {}
 
 Item* MalachiteChunkItem::Clone() const
@@ -27,5 +28,6 @@ void MalachiteChunkItem::Draw(int x, int y, int width, int height) const
 void MalachiteChunkItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

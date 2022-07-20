@@ -8,7 +8,7 @@ class UsableItem:
 {
 public:
 
-	UsableItem(std::string n);
+	UsableItem(std::string n, std::string d);
 
 	virtual ~UsableItem() = default;
 };

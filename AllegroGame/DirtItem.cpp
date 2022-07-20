@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string DirtItem::NAME;
+std::string DirtItem::DESCRIPTION;
 ALLEGRO_BITMAP* DirtItem::TEXTURE;
 const std::string DirtItem::ID = "items.dirt";
 
@@ -15,7 +16,7 @@ Item* DirtItem::Clone() const
 	return new DirtItem(*this);
 }
 
-DirtItem::DirtItem() : Item(NAME)
+DirtItem::DirtItem() : Item(NAME, DESCRIPTION)
 {}
 
 void DirtItem::Draw(int x, int y, int width, int height) const
@@ -27,5 +28,6 @@ void DirtItem::Draw(int x, int y, int width, int height) const
 void DirtItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

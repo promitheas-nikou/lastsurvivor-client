@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string HematiteChunkItem::NAME;
+std::string HematiteChunkItem::DESCRIPTION;
 ALLEGRO_BITMAP* HematiteChunkItem::TEXTURE;
 const std::string HematiteChunkItem::ID = "items.hematite_chunk";
 
@@ -10,7 +11,7 @@ std::string HematiteChunkItem::GetID() const
     return ID;
 }
 
-HematiteChunkItem::HematiteChunkItem(): Item(NAME)
+HematiteChunkItem::HematiteChunkItem(): Item(NAME, DESCRIPTION)
 {}
 
 Item* HematiteChunkItem::Clone() const
@@ -27,5 +28,6 @@ void HematiteChunkItem::Draw(int x, int y, int width, int height) const
 void HematiteChunkItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

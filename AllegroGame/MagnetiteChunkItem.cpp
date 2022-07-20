@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string MagnetiteChunkItem::NAME;
+std::string MagnetiteChunkItem::DESCRIPTION;
 ALLEGRO_BITMAP* MagnetiteChunkItem::TEXTURE;
 const std::string MagnetiteChunkItem::ID = "items.magnetite_chunk";
 
@@ -10,7 +11,7 @@ std::string MagnetiteChunkItem::GetID() const
     return ID;
 }
 
-MagnetiteChunkItem::MagnetiteChunkItem(): Item(NAME)
+MagnetiteChunkItem::MagnetiteChunkItem(): Item(NAME, DESCRIPTION)
 {}
 
 Item* MagnetiteChunkItem::Clone() const
@@ -27,5 +28,6 @@ void MagnetiteChunkItem::Draw(int x, int y, int width, int height) const
 void MagnetiteChunkItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

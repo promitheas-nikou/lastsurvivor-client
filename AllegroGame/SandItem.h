@@ -7,6 +7,7 @@ class SandItem :
 {
 private:
     static std::string NAME;
+    static std::string DESCRIPTION;
     static ALLEGRO_BITMAP* TEXTURE;
 
 public:

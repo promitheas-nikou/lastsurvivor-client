@@ -7,8 +7,8 @@
 #pragma warning(disable : 4250)
 
 class SimpleButtonUIComponent:
-	public virtual ButtonUIComponent,
-	public virtual BitmapUIComponent
+	public ButtonUIComponent,
+	public BitmapUIComponent
 {
 public:
 	SimpleButtonUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* tex, std::function<void(void)> func);

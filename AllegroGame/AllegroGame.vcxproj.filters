@@ -202,6 +202,9 @@
     <Filter Include="Header Files\Game\GroundTiles\OreGroundTiles">
       <UniqueIdentifier>{7e54bfd1-2067-49a9-b601-0fd032d916a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\VDD-Docs">
+      <UniqueIdentifier>{eeb81b88-d722-4504-b0fe-44188bd9c897}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -537,6 +540,24 @@
     <ClCompile Include="MagnetiteChunkItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
+    <ClCompile Include="InfoGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityInfoGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundTileInfoGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="TileInfoGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInfoGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualDataDisplayObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -548,6 +569,9 @@
     </None>
     <None Include="LuaDefault.lua">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="vdd-docs\items.dirt.json">
+      <Filter>Resource Files\VDD-Docs</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -894,6 +918,24 @@
     </ClInclude>
     <ClInclude Include="HematiteChunkItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="TileInfoGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityInfoGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundTileInfoGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInfoGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualDataDisplayObject.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

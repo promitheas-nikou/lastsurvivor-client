@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string StoneItem::NAME;
+std::string StoneItem::DESCRIPTION;
 ALLEGRO_BITMAP* StoneItem::TEXTURE;
 const std::string StoneItem::ID = "items.stone";
 
@@ -10,7 +11,7 @@ std::string StoneItem::GetID() const
     return ID;
 }
 
-StoneItem::StoneItem(): Item(NAME)
+StoneItem::StoneItem(): Item(NAME, DESCRIPTION)
 {}
 
 Item* StoneItem::Clone()const
@@ -27,5 +28,6 @@ void StoneItem::Draw(int x, int y, int width, int height) const
 void StoneItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

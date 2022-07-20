@@ -11,10 +11,15 @@ class World;
 class Item:
 	public LootObject
 {
+private:
 protected:
+	static int MLBUF;
+	static bool DrawItemDetailsPaneMultilineCB(int line_num, const char* line, int size, void* extra);
+
 	int amount;
 	std::string name;
-	Item(std::string n);
+	std::string description;
+	Item(std::string n, std::string d = "");
 
 public:
 
@@ -26,6 +31,7 @@ public:
 	virtual std::string GetID() const = 0;
 
 	virtual std::string GetName() const;
+	virtual std::string GetDescription() const;
 
 	virtual int GetAmount() const;
 	virtual int RemoveAmount(int targetAmount);

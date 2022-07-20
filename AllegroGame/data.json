@@ -490,6 +490,22 @@
     {
       "id": "tex.tiles.fence/15",
       "filename": "fence1111.png"
+    },
+    {
+      "id": "tex.gui.itemicon",
+      "filename": "itemicon.png"
+    },
+    {
+      "id": "tex.gui.tilesicon",
+      "filename": "tilesicon.png"
+    },
+    {
+      "id": "tex.gui.gtilesicon",
+      "filename": "gtilesicon.png"
+    },
+    {
+      "id": "tex.gui.entitiesicon",
+      "filename": "entitiesicon.png"
     }
   ],
   "entities": [
@@ -908,26 +924,31 @@
     {
       "id": "items.grass",
       "name": "Grass",
+      "description": "",
       "texture": "tex.gtiles.dirt"
     },
     {
       "id": "items.dirt",
       "name": "Dirt",
+      "description": "A common resource. Can be used in agriculture or be further processed to be used as construction meterial.",
       "texture": "tex.items.dirt"
     },
     {
       "id": "items.stone",
       "name": "Stone",
+      "description": "JuSt A nOrMa1 r0cK",
       "texture": "tex.items.stone"
     },
     {
       "id": "items.stick",
       "name": "Stick",
+      "description": "Can be found in trees or produced from Logs. Has many uses.",
       "texture": "tex.items.stick"
     },
     {
       "id": "items.sand",
       "name": "Sand",
+      "description": "Can be gathered from beaches, near lakes. Can be molten to produce glass.",
       "texture": "tex.items.sand"
     },
     {
@@ -973,6 +994,7 @@
       "id": "items.berry",
       "name": "Berry",
       "texture": "tex.items.berry",
+      "description": "A fruit commonly found in forests. Mmm, very tasty...",
       "health": 5.0,
       "hunger": 20.0,
       "water": 10.0
@@ -986,26 +1008,31 @@
     {
       "id": "items.malachite_chunk",
       "name": "Malachite Ore Chunk",
+      "description": "A piece of copper rich ore. Can be mined from Malachite Ore. Can be molten to produce copper metal.",
       "texture": "tex.items.malachite_chunk"
     },
     {
       "id": "items.azurite_chunk",
       "name": "Azurite Ore Chunk",
+      "description": "A piece of copper rich ore. Can be mined from Azurite Ore. Can be molten to produce copper metal, or cut to form decorative gems.",
       "texture": "tex.items.azurite_chunk"
     },
     {
       "id": "items.hematite_chunk",
       "name": "Hematite Ore Chunk",
+      "description": "A piece of iron rich ore. Can be mined from Hematite Ore. Can be molten to produce iron metal.",
       "texture": "tex.items.hematite_chunk"
     },
     {
       "id": "items.magnetite_chunk",
       "name": "Magnetite Ore Chunk",
+      "description": "A piece of iron rich ore. Can be mined from Magnetite Ore. Can be molten to produce iron metal.",
       "texture": "tex.items.magnetite_chunk"
     },
     {
       "id": "items.lodestone",
       "name": "Lodestone",
+      "description": "A naturally magnetized piece of Magnetite Ore, is rarely obtained by mining Magnetite Ore, alongside Magnetite Ore Chunks. Can be used as a primitive magnet, or molten to produce metal.",
       "texture": "tex.items.lodestone"
     }
   ],

@@ -12,7 +12,15 @@
 #include "Config.h"
 #include "SimpleItemBundle.h"
 
-Item::Item(std::string n) : name{ n }, amount{ 1 }
+int Item::MLBUF = 0;
+
+bool Item::DrawItemDetailsPaneMultilineCB(int line_num, const char* line, int size, void* extra)
+{
+    MLBUF = line_num;
+    return true;
+}
+
+Item::Item(std::string n, std::string d) : name{ n }, description{ d }, amount{ 1 }
 {}
 
 void Item::LoadAdditionalDataFromFile(std::ifstream &file)
@@ -28,6 +36,11 @@ void Item::WriteAdditionalDataToFile(std::ofstream& file)
 std::string Item::GetName() const
 {
     return name;
+}
+
+std::string Item::GetDescription() const
+{
+    return description;
 }
 
 int Item::GetAmount() const
@@ -65,10 +78,16 @@ void Item::DrawItemDetailsPane(int x, int y)
     std::string id = ("#" + GetID());
     int w1 = al_get_text_width(loaded_fonts["default"][30], GetName().c_str());
     int w2 = al_get_text_width(loaded_fonts["default"][20], id.c_str());
-    int w = w1 + w2;
-    al_draw_filled_rectangle(x, y, x + w + 25, y + 50, al_map_rgba(10, 30, 50, 200));
+    int w3 = al_get_text_width(loaded_fonts["default"][20],GetDescription().c_str());
+    int w = std::max(300,std::max(w1+w2,w3/5));
+    
+    MLBUF = 0;
+    al_do_multiline_text(loaded_fonts["default"][20], w, GetDescription().c_str(), &DrawItemDetailsPaneMultilineCB, NULL);
+    int h = (MLBUF + 1) * 23 + 53;
+    al_draw_filled_rectangle(x, y, x + w + 25, y + h, al_map_rgba(10, 30, 50, 200));
     al_draw_text(loaded_fonts["default"][30], al_map_rgba(255, 255, 255, 255), x + 10, y + 10, 0, GetName().c_str());
     al_draw_text(loaded_fonts["default"][20], al_map_rgba(150, 150, 150, 255), x + w1 + 15, y + 20, 0, id.c_str());
+    al_draw_multiline_text(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), x + 10, y + 45, w, 23, 0, GetDescription().c_str());
 }
 
 ItemBundle* Item::ConstCollapseToItemBundle() const

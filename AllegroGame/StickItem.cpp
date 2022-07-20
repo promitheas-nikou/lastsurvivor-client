@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string StickItem::NAME;
+std::string StickItem::DESCRIPTION;
 ALLEGRO_BITMAP* StickItem::TEXTURE;
 const std::string StickItem::ID = "items.stick";
 
@@ -10,7 +11,7 @@ std::string StickItem::GetID() const
     return ID;
 }
 
-StickItem::StickItem(): Item(NAME)
+StickItem::StickItem(): Item(NAME, DESCRIPTION)
 {}
 
 Item* StickItem::Clone()const
@@ -27,5 +28,6 @@ void StickItem::Draw(int x, int y, int width, int height) const
 void StickItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

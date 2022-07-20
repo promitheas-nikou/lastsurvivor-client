@@ -14,6 +14,7 @@
 #include "ItemBundle.h"
 #include "QuestGUI.h"
 #include "SimpleCraftingGUI.h"
+#include "InfoGUI.h"
 //#include "WeaponItem.h"
 class MeleeWeaponItem;
 class RangedWeaponItem;
@@ -21,7 +22,7 @@ class RangedWeaponItem;
 #include "LuaInterface.h"
 #include "AudioMultiTrackCollection.h"
 
-enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST };
+enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST, INFO };
 
 class WaterGroundTile;
 
@@ -67,6 +68,7 @@ private:
 	SimpleCraftingGUI* craftingGUI;
 	InventoryGUI* hotbarGUI;
 	QuestGUI* questGUI;
+	InfoGUI* infoGUI;
 	ItemInventory* inventory;
 	DeathGUI* deathgui;
 	ToolItem* pickaxeTool;

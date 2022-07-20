@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string LodestoneItem::NAME;
+std::string LodestoneItem::DESCRIPTION;
 ALLEGRO_BITMAP* LodestoneItem::TEXTURE;
 const std::string LodestoneItem::ID = "items.lodestone";
 
@@ -10,7 +11,7 @@ std::string LodestoneItem::GetID() const
     return ID;
 }
 
-LodestoneItem::LodestoneItem(): Item(NAME)
+LodestoneItem::LodestoneItem(): Item(NAME, DESCRIPTION)
 {}
 
 Item* LodestoneItem::Clone() const
@@ -27,5 +28,6 @@ void LodestoneItem::Draw(int x, int y, int width, int height) const
 void LodestoneItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

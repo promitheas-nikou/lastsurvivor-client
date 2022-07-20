@@ -8,7 +8,10 @@ class ConsumableItem :
     public UsableItem
 {
 public:
-    ConsumableItem(std::string name);
+    ConsumableItem(std::string name, std::string description);
+
+    virtual void DrawItemDetailsPane(int x, int y) override;
+
     virtual ~ConsumableItem() = default;
 };
 

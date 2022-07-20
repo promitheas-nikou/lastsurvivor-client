@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string BerryItem::NAME;
+std::string BerryItem::DESCRIPTION;
 ALLEGRO_BITMAP* BerryItem::TEXTURE;
 const std::string BerryItem::ID = "items.berry";
 float BerryItem::HEALTH;
@@ -18,7 +19,7 @@ Item* BerryItem::Clone() const
 	return new BerryItem(*this);
 }
 
-BerryItem::BerryItem() : SimpleConsumableItem(NAME, HEALTH, HUNGER, WATER)
+BerryItem::BerryItem() : SimpleConsumableItem(NAME, DESCRIPTION, HEALTH, HUNGER, WATER)
 {}
 
 void BerryItem::Draw(int x, int y, int width, int height) const
@@ -30,6 +31,7 @@ void BerryItem::Draw(int x, int y, int width, int height) const
 void BerryItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 	HEALTH = data[DATA_JSON_HEALTH_KEY];
 	HUNGER = data[DATA_JSON_HUNGER_KEY];

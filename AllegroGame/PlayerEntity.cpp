@@ -375,8 +375,23 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 			guistate = PLAYER_GUI_STATE::WORLD;
 			activeSubGUI = hotbarGUI;
 			break;
+		case PLAYER_GUI_STATE::INFO:
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
+			break;
 		}
 		break;
+	case ALLEGRO_KEY_I:
+		if (guistate == PLAYER_GUI_STATE::INFO)
+		{
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = hotbarGUI;
+		}
+		else if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			guistate = PLAYER_GUI_STATE::INFO;
+			activeSubGUI = infoGUI;
+		}
 	case ALLEGRO_KEY_1:
 		
 		break;
@@ -776,6 +791,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
 	craftingGUI = new SimpleCraftingGUI();
+	infoGUI = new InfoGUI();
 	craftingGUI->SetRecipeList(loaded_crafting_recipes);
 	craftingGUI->SetInventory(inventory);
 	craftingGUI->SetRecipeCallbackFunction([&](const Recipe* recipe, int times) {
