@@ -37,5 +37,6 @@ public:
     virtual ~TreeTile() = default;
 
     TreeTile(World* w, int x, int y);
+    TreeTile(World* w, int x, int y, int g);
 };
 

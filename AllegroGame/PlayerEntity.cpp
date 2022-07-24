@@ -342,7 +342,7 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		mode = (mode + a) % 5;
 		if (mode == PlayerActionMode::RANGED)
 			if (rangedWeapon != nullptr)
-				rangedWeapon->SetCollisionCallback([this](Entity* e) {
+				dynamic_cast<RangedWeapon*>(rangedWeapon)->SetCollisionCallback([this](Entity* e) {
 					this->EntityKilledRemote(e);
 				});
 		break;
@@ -381,17 +381,6 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 			break;
 		}
 		break;
-	case ALLEGRO_KEY_I:
-		if (guistate == PLAYER_GUI_STATE::INFO)
-		{
-			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
-		}
-		else if (guistate == PLAYER_GUI_STATE::WORLD)
-		{
-			guistate = PLAYER_GUI_STATE::INFO;
-			activeSubGUI = infoGUI;
-		}
 	case ALLEGRO_KEY_1:
 		
 		break;
@@ -462,12 +451,13 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 						Entity* e = containingWorld->GetEntityAtPos(x, y, this);
 						if (e != nullptr)
 						{
-							if (meleeWeapon != nullptr)
+							MeleeWeapon* mw = dynamic_cast<MeleeWeapon*>(meleeWeapon);
+							if (mw != nullptr)
 							{
 								float a = e->GetXpos() - GetXpos();
 								float b = e->GetYpos() - GetYpos();
-								if (a * a + b * b <= meleeWeapon->GetRangeSQ())
-									e->DoDamage(meleeWeapon);
+								if (a * a + b * b <= mw->GetRangeSQ())
+									e->DoDamage(mw);
 								if (e->GetHealth() <= 0.f)
 									quests->EntityKilled(e);
 							}
@@ -489,7 +479,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 					case 1:
 					{
 						if (rangedWeapon != nullptr)
-							rangedWeapon->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI_2, this);
+							dynamic_cast<RangedWeapon*>(rangedWeapon)->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI_2, this);
 					}
 					break;
 					case 2:
@@ -536,6 +526,21 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 					UseTile(floor(x), floor(y));
 					break;
 				}
+				}
+				break;
+			}
+			case PlayerActionMode::BUILDING:
+			{
+				if (dynamic_cast<PlaceableItem*>(placeableItem) == nullptr)
+					break;
+				if (dynamic_cast<PlaceableItem*>(placeableItem)->Use(x, y, this))
+				{
+					placeableItem->RemoveAmount(1);
+					if (placeableItem->GetAmount() == 0)
+					{
+						delete placeableItem;
+						placeableItem = nullptr;
+					}
 				}
 				break;
 			}
@@ -647,25 +652,21 @@ void PlayerEntity::MineTile(int x, int y)
 	switch (tile->GetOptimalToolType())
 	{
 	case ToolType::PICKAXE:
-		success = tile->MineWithTool(pickaxeTool);
-		t = pickaxeTool;
+		t = dynamic_cast<Tool*>(pickaxeTool);
 		break;
 	case ToolType::AXE:
-		success = tile->MineWithTool(axeTool);
-		t = axeTool;
+		t = dynamic_cast<Tool*>(axeTool);
 		break;
 	case ToolType::SHOVEL:
-		success = tile->MineWithTool(shovelTool);
-		t = shovelTool;
+		t = dynamic_cast<Tool*>(shovelTool);
 		break;
 	case ToolType::PUMP:
-		success = tile->MineWithTool(pumpTool);
-		t = pumpTool;
+		t = dynamic_cast<Tool*>(pumpTool);
 		break;
 	case ToolType::NONE:
-		success = tile->MineWithTool(nullptr);
 		break;
 	}
+	success = tile->MineWithTool(nullptr);
 	if (success)
 	{
 		quests->TileMined(tile, t);
@@ -791,16 +792,15 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
 	craftingGUI = new SimpleCraftingGUI();
-	infoGUI = new InfoGUI();
 	craftingGUI->SetRecipeList(loaded_crafting_recipes);
 	craftingGUI->SetInventory(inventory);
 	craftingGUI->SetRecipeCallbackFunction([&](const Recipe* recipe, int times) {
 		if (times == 0)
 			return;
 		for (int i = 0; i < recipe->GetInputItems()->GetSize(); i++)
-			PushNotification(std::format("- {} x {}", recipe->GetInputItems()->GetItem(i)->GetAmount()*times, recipe->GetInputItems()->GetItem(i)->GetName()));
+			PushNotification(std::format("-{} x {}", recipe->GetInputItems()->GetItem(i)->GetAmount()*times, recipe->GetInputItems()->GetItem(i)->GetName()));
 		for (int i = 0; i < recipe->GetOutputItems()->GetSize(); i++)
-			PushNotification(std::format("+ {} x {}", recipe->GetOutputItems()->GetItem(i)->GetAmount()*times, recipe->GetOutputItems()->GetItem(i)->GetName()));
+			PushNotification(std::format("+{} x {}", recipe->GetOutputItems()->GetItem(i)->GetAmount()*times, recipe->GetOutputItems()->GetItem(i)->GetName()));
 	});
 	activeSubGUI = hotbarGUI;
 	deathgui = new DeathGUI(this);
@@ -840,6 +840,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		return item;
 	});
 	inventoryGUI->AddTrashSlot(SCREEN_WIDTH / 2 + 64, SCREEN_HEIGHT - 140, 128, 128);
+	inventoryGUI->AddSlot(100, SCREEN_HEIGHT - 150, 128, 128, placeableItem, InventoryGUI::StorageSlotType::PLACEABLE);
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];

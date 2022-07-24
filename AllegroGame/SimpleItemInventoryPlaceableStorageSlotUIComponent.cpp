@@ -1,12 +1,15 @@
-#include "SimpleItemInventoryGenericStorageSlotUIComponent.h"
+#include "SimpleItemInventoryPlaceableStorageSlotUIComponent.h"
+#include "PlaceableItem.h"
 
-bool SimpleItemInventoryGenericStorageSlotUIComponent::ClickRightDown(int xRel, int yRel)
+bool SimpleItemInventoryPlaceableStorageSlotUIComponent::ClickRightDown(int xRel, int yRel)
 {
     if (swapptr != nullptr)
     {
+        if (dynamic_cast<PlaceableItem*>(swapptr) == nullptr)
+            return true;
         if (swapptr->Equals(itemptr))
         {
-            if (itemptr->AddAmount(1))
+            if(itemptr->AddAmount(1))
                 return true;
             swapptr->RemoveAmount(1);
             if (swapptr->GetAmount() == 0)
@@ -44,25 +47,42 @@ bool SimpleItemInventoryGenericStorageSlotUIComponent::ClickRightDown(int xRel, 
     return true;
 }
 
-bool SimpleItemInventoryGenericStorageSlotUIComponent::ClickLeftDown(int xRel, int yRel)
+bool SimpleItemInventoryPlaceableStorageSlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
-    if (swapptr != nullptr && swapptr->Equals(itemptr))
+    if (swapptr == nullptr)
     {
-        itemptr->AddAmount(swapptr->GetAmount());
-        delete swapptr;
-        swapptr = nullptr;
+        std::swap(itemptr, swapptr);
+        return true;
+    }
+    if (dynamic_cast<PlaceableItem*>(swapptr) == nullptr)
+        return true;
+    if (itemptr == nullptr) {
+        std::swap(itemptr, swapptr);
+        return true;
+    }
+    if (swapptr->Equals(itemptr))
+    {
+        int a = swapptr->GetAmount();
+        swapptr->RemoveAmount(a-itemptr->AddAmount(a));
+        if (swapptr->GetAmount() == 0)
+        {
+            delete swapptr;
+            swapptr = nullptr;
+        }
     }
     else
-        std::swap(swapptr, itemptr);
+    {
+        std::swap(itemptr, swapptr);
+    }
     return true;
 }
 
-bool SimpleItemInventoryGenericStorageSlotUIComponent::Hover(int xRel, int yRel)
+bool SimpleItemInventoryPlaceableStorageSlotUIComponent::Hover(int xRel, int yRel)
 {
     return true;
 }
 
-void SimpleItemInventoryGenericStorageSlotUIComponent::Draw(int plane)
+void SimpleItemInventoryPlaceableStorageSlotUIComponent::Draw(int plane)
 {
     switch (plane)
     {
@@ -85,5 +105,5 @@ void SimpleItemInventoryGenericStorageSlotUIComponent::Draw(int plane)
     }
 }
 
-SimpleItemInventoryGenericStorageSlotUIComponent::SimpleItemInventoryGenericStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptr{ i }, swapptr{ s }
+SimpleItemInventoryPlaceableStorageSlotUIComponent::SimpleItemInventoryPlaceableStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptr{ i }, swapptr{ s }
 {}

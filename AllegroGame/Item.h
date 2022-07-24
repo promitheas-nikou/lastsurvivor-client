@@ -50,8 +50,6 @@ public:
 
 	virtual int AddAmount(int a);
 
-	virtual void UseOnTile(World* world, int x, int y);
-
 	virtual void Draw(int x, int y, int width, int height) const = 0;
 	virtual void DrawText(int x, int y, ALLEGRO_FONT* font, ALLEGRO_COLOR color, int align) const;
 	virtual void DrawWithText(int x, int y, int width, int height) const;

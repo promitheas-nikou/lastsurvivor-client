@@ -88,6 +88,11 @@ float Entity::getMass() const
     return mass;
 }
 
+World* Entity::GetContainingWorld() const
+{
+    return containingWorld;
+}
+
 bool Entity::DoesBounce() const
 {
     return bounce;

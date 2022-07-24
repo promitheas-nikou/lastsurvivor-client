@@ -5,7 +5,7 @@
 
 class ConsumableItem :
     public virtual Consumable,
-    public UsableItem
+    public Item
 {
 public:
     ConsumableItem(std::string name, std::string description);

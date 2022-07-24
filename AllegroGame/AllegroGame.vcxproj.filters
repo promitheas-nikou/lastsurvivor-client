@@ -88,9 +88,6 @@
     <Filter Include="Header Files\Game\Items\ResourceItems">
       <UniqueIdentifier>{ba4ee3d3-ebba-4796-a2ce-02be695d38c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Items\ResourceItems">
-      <UniqueIdentifier>{0c64ce5c-6d51-4913-b768-5157f4a4d61c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\GUI\UIComponents">
       <UniqueIdentifier>{24ae7c38-7a0d-42ab-907a-4a792e7b244f}</UniqueIdentifier>
     </Filter>
@@ -204,6 +201,12 @@
     </Filter>
     <Filter Include="Resource Files\VDD-Docs">
       <UniqueIdentifier>{eeb81b88-d722-4504-b0fe-44188bd9c897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\PlaceableItems">
+      <UniqueIdentifier>{daf75c74-4a97-410a-ad93-1f384bb3927e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ResourceItems">
+      <UniqueIdentifier>{0c64ce5c-6d51-4913-b768-5157f4a4d61c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -347,9 +350,6 @@
     </ClCompile>
     <ClCompile Include="RecipeListGUI.cpp">
       <Filter>Source Files\Game\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleRecipeListGUI.cpp">
-      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
     </ClCompile>
     <ClCompile Include="WaterGroundTile.cpp">
       <Filter>Source Files\Game\GroundTiles</Filter>
@@ -504,15 +504,6 @@
     <ClCompile Include="ChancedLootBundle.cpp">
       <Filter>Source Files\Game\Items\ItemBundles</Filter>
     </ClCompile>
-    <ClCompile Include="WeightedLootBundle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LootObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VariableAmountItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HematiteOreGroundTile.cpp">
       <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
     </ClCompile>
@@ -540,23 +531,29 @@
     <ClCompile Include="MagnetiteChunkItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
-    <ClCompile Include="InfoGUI.cpp">
+    <ClCompile Include="SimpleRecipeListGUI.cpp">
       <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
     </ClCompile>
-    <ClCompile Include="EntityInfoGUI.cpp">
-      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
-    <ClCompile Include="GroundTileInfoGUI.cpp">
-      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    <ClCompile Include="VariableAmountItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
     </ClCompile>
-    <ClCompile Include="TileInfoGUI.cpp">
-      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    <ClCompile Include="WeightedLootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
     </ClCompile>
-    <ClCompile Include="ItemInfoGUI.cpp">
-      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    <ClCompile Include="LootObject.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
     </ClCompile>
-    <ClCompile Include="VisualDataDisplayObject.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="FenceItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SaplingItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaceableItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -889,9 +886,6 @@
     <ClInclude Include="WeightedLootBundle.h">
       <Filter>Header Files\Game\Items\ItemBundles</Filter>
     </ClInclude>
-    <ClInclude Include="VariableAmountItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HematiteOreGroundTile.h">
       <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
     </ClInclude>
@@ -919,23 +913,20 @@
     <ClInclude Include="HematiteChunkItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
-    <ClInclude Include="InfoGUI.h">
-      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
-    <ClInclude Include="TileInfoGUI.h">
-      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    <ClInclude Include="SaplingItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
-    <ClInclude Include="EntityInfoGUI.h">
-      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    <ClInclude Include="PlaceableItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
-    <ClInclude Include="GroundTileInfoGUI.h">
-      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    <ClInclude Include="VariableAmountItem.h">
+      <Filter>Header Files\Game\Items</Filter>
     </ClInclude>
-    <ClInclude Include="ItemInfoGUI.h">
-      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
-    </ClInclude>
-    <ClInclude Include="VisualDataDisplayObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="FenceItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

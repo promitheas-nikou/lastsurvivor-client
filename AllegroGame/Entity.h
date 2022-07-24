@@ -58,6 +58,7 @@ public:
 	float GetYsize() const;
 	float getRotation() const;
 	float getMass() const;
+	World* GetContainingWorld() const;
 
 	bool DoesBounce() const;
 

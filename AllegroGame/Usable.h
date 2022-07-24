@@ -7,7 +7,7 @@ class Usable
 {
 public:
 
-    virtual void Use(float xpos, float ypos, PlayerEntity* player) = 0;
+    virtual bool Use(float xpos, float ypos, PlayerEntity* player) = 0;
 
     virtual ~Usable() = default;
 };

@@ -39,6 +39,8 @@
 #include "MalachiteChunkItem.h"
 #include "AzuriteChunkItem.h"
 #include "LodestoneItem.h"
+#include "SaplingItem.h"
+#include "FenceItem.h"
 
 #include "Recipe.h"
 
@@ -303,6 +305,8 @@ void init_items()
 		HematiteChunkItem::Init(item_data[HematiteChunkItem::ID]);
 		AzuriteChunkItem::Init(item_data[AzuriteChunkItem::ID]);
 		LodestoneItem::Init(item_data[LodestoneItem::ID]);
+		SaplingItem::Init(item_data[SaplingItem::ID]);
+		FenceItem::Init(item_data[FenceItem::ID]);
 
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
@@ -317,6 +321,8 @@ void init_items()
 		prototype_items[HematiteChunkItem::ID] = new HematiteChunkItem();
 		prototype_items[AzuriteChunkItem::ID] = new AzuriteChunkItem();
 		prototype_items[LodestoneItem::ID] = new LodestoneItem();
+		prototype_items[SaplingItem::ID] = new SaplingItem();
+		prototype_items[FenceItem::ID] = new FenceItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

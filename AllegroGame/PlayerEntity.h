@@ -14,13 +14,14 @@
 #include "ItemBundle.h"
 #include "QuestGUI.h"
 #include "SimpleCraftingGUI.h"
-#include "InfoGUI.h"
 //#include "WeaponItem.h"
 class MeleeWeaponItem;
 class RangedWeaponItem;
 #include "GUI.h"
 #include "LuaInterface.h"
+#include "PlaceableItem.h"
 #include "AudioMultiTrackCollection.h"
+#undef PlaySound
 
 enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST, INFO };
 
@@ -68,15 +69,15 @@ private:
 	SimpleCraftingGUI* craftingGUI;
 	InventoryGUI* hotbarGUI;
 	QuestGUI* questGUI;
-	InfoGUI* infoGUI;
 	ItemInventory* inventory;
 	DeathGUI* deathgui;
-	ToolItem* pickaxeTool;
-	ToolItem* axeTool;
-	ToolItem* shovelTool;
-	ToolItem* pumpTool;
-	MeleeWeaponItem* meleeWeapon;
-	RangedWeaponItem* rangedWeapon;
+	Item* pickaxeTool;
+	Item* axeTool;
+	Item* shovelTool;
+	Item* pumpTool;
+	Item* placeableItem;
+	Item* meleeWeapon;
+	Item* rangedWeapon;
 
 	static std::string NAME;
 	static float RANGESQ;

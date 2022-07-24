@@ -50,7 +50,7 @@ void TreeTile::RandomTickUpdate()
 
 const ItemBundle* TreeTile::GetMiningResult(Tool* tool) const
 {
-    return TreeTile::DROP->ConstCollapseToItemBundle();
+    return (growthTimer>=600)?TreeTile::DROP->ConstCollapseToItemBundle():nullptr;
 }
 
 void TreeTile::Draw() const
@@ -71,4 +71,8 @@ void TreeTile::Init(nlohmann::json data)
 TreeTile::TreeTile(World* w, int x, int y): Tile(w, x, y), growthTimer{600}
 {
 
+}
+
+TreeTile::TreeTile(World* w, int x, int y, int g): Tile(w, x, y), growthTimer{ g }
+{
 }

@@ -2,6 +2,7 @@
 #include "Config.h"
 #include "TextUtils.h"
 #include "SimpleButtonUIComponent.h"
+#include <algorithm>
 
 void SimpleCraftingGUI::DrawRecipe(const Recipe* recipe, int x, int y, int tw, int th, int rw, int rh)
 {
@@ -25,7 +26,7 @@ void SimpleCraftingGUI::PreDrawThisGUI()
 	const char* header = "CRAFTING MENU";
 	al_draw_filled_rectangle(132, 132, SCREEN_WIDTH - 132, 200, gameconfig::SOLID_BACKGROUND_COLOR_0);
 	TextUtils::DrawCenteredText(loaded_fonts["default"][30],SCREEN_WIDTH/2,132,header,gameconfig::SOLID_TEXT_COLOR_NORMAL);
-	for (int i = 0; i < pageHeight; i++)
+	for (int i = 0; i < std::min((unsigned long long) pageHeight,recipes.size()-scroll); i++)
 		DrawRecipe(recipes[i+scroll], 148, 214 + i * 148, SCREEN_WIDTH - 296, 128, 128, 128);
 }
 

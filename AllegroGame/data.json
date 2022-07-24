@@ -100,6 +100,10 @@
       "filename": "magnetite_chunk.png"
     },
     {
+      "id": "tex.items.sapling",
+      "filename": "tree_0.png"
+    },
+    {
       "id": "tex.items.lodestone",
       "filename": "lodestone.png"
     },
@@ -198,6 +202,10 @@
     {
       "id": "tex.gui.inventory_slot_consumable",
       "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_placeable",
+      "filename": "inventory_slot_placeable.png"
     },
     {
       "id": "tex.gui.inventory_slot_trash",
@@ -492,6 +500,10 @@
       "filename": "fence1111.png"
     },
     {
+      "id": "tex.items.fence",
+      "filename": "fence1111.png"
+    },
+    {
       "id": "tex.gui.itemicon",
       "filename": "itemicon.png"
     },
@@ -706,6 +718,12 @@
           "id": "items.stick",
           "minamount": 4,
           "maxamount": 8
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.sapling",
+          "minamount": 0,
+          "maxamount": 3
         }
       ]
     },
@@ -1034,6 +1052,18 @@
       "name": "Lodestone",
       "description": "A naturally magnetized piece of Magnetite Ore, is rarely obtained by mining Magnetite Ore, alongside Magnetite Ore Chunks. Can be used as a primitive magnet, or molten to produce metal.",
       "texture": "tex.items.lodestone"
+    },
+    {
+      "id": "items.sapling",
+      "name": "Sapling",
+      "description": "A sapling that was found near a tree that was cut down. Plant it again, so that it may grow to become a tree. May be occasionally found when cutting trees.",
+      "texture": "tex.items.sapling"
+    },
+    {
+      "id": "items.fence",
+      "name": "Fence",
+      "description": "A fence created from wood. May be placed to block the path of players or other entities.",
+      "texture": "tex.items.fence"
     }
   ],
   "fonts": [
@@ -1049,181 +1079,16 @@
   "recipes": {
     "crafting": [
       {
-        "id": "sand_from_dirt",
+        "id": "recipes.fence_from_sticks",
         "input": [
           {
-            "id": "items.dirt",
-            "amount": 2
+            "id": "items.stick",
+            "amount": 15
           }
         ],
         "output": [
           {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 1
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt2",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 2
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt3",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 3
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt4",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 4
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt5",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 5
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt6",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 6
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "sand_from_dirt7",
-        "input": [
-          {
-            "id": "items.dirt",
-            "amount": 7
-          }
-        ],
-        "output": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "stone_from_sand",
-        "input": [
-          {
-            "id": "items.sand",
-            "amount": 1
-          }
-        ],
-        "output": [
-          {
-            "id": "items.stone",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "stone_from_sand2",
-        "input": [
-          {
-            "id": "items.sand",
-            "amount": 2
-          }
-        ],
-        "output": [
-          {
-            "id": "items.stone",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "stone_from_sand3",
-        "input": [
-          {
-            "id": "items.sand",
-            "amount": 3
-          }
-        ],
-        "output": [
-          {
-            "id": "items.stone",
-            "amount": 1
-          }
-        ]
-      },
-      {
-        "id": "stone_from_sand4",
-        "input": [
-          {
-            "id": "items.sand",
-            "amount": 4
-          }
-        ],
-        "output": [
-          {
-            "id": "items.stone",
+            "id": "items.fence",
             "amount": 1
           }
         ]

@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 #include "SimpleItemInventoryCallbackSlotUIComponent.h"
 #include "SimpleItemInventoryGenericStorageSlotUIComponent.h"
+#include "SimpleItemInventoryPlaceableStorageSlotUIComponent.h"
 #include "SimpleItemInventoryViewStorageSlotUIComponent.h"
 
 
@@ -39,6 +40,9 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 	{
 	case StorageSlotType::VIEW:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryViewStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot));
+		break;
+	case StorageSlotType::PLACEABLE:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryPlaceableStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_PLACEABLE, itemslot, swapTemp));
 		break;
 	default:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));

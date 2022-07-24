@@ -114,11 +114,6 @@ int Item::AddAmount(int a)
     return 0;
 }
 
-void Item::UseOnTile(World* world, int x, int y)
-{
-    return;
-}
-
 void Item::DrawText(int x, int y, ALLEGRO_FONT* font, ALLEGRO_COLOR color, int align) const
 {
     al_draw_textf(font, color, x, y, align, "%d x %s", GetAmount(), GetName().c_str());

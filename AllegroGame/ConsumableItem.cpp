@@ -4,7 +4,7 @@
 #include <allegro5/allegro_primitives.h>
 #include "Config.h"
 
-ConsumableItem::ConsumableItem(std::string name, std::string description): Consumable(), UsableItem(name, description)
+ConsumableItem::ConsumableItem(std::string name, std::string description): Consumable(), Item(name, description)
 {}
 
 void ConsumableItem::DrawItemDetailsPane(int x, int y)
