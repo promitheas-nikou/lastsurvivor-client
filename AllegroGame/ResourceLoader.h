@@ -40,6 +40,8 @@ const extern std::string DATA_JSON_MAX_HEALTH_KEY;
 const extern std::string DATA_JSON_HUNGER_KEY;
 const extern std::string DATA_JSON_WATER_KEY;
 const extern std::string DATA_JSON_BURN_TIME_KEY;
+const extern std::string DATA_JSON_BURN_HEAT_KEY;
+const extern std::string DATA_JSON_BRIGHTNESS_KEY;
 
 extern nlohmann::json json_data;
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "ConnectingTile.h"
+#include "LootBundle.h"
+
 class FenceTile :
 	public ConnectingTile
 {
@@ -7,6 +9,7 @@ private:
 	static ALLEGRO_BITMAP* TEXTURES[16];
 	static ToolType TOOL_TYPE;
 	static int MINING_RESISTANCE;
+	static const LootBundle* DROP;
 	static std::string NAME;
 public:
 	static const std::string ID;
@@ -19,6 +22,8 @@ public:
 	virtual ToolType GetOptimalToolType() const final;
 	virtual int GetMiningResistance() const final;
 	virtual std::string GetName() const final;
+
+	virtual const ItemBundle* GetMiningResult(Tool* tool) const final;
 
 	virtual bool ShouldConnect(Tile* t) const final;
 

@@ -1,12 +1,15 @@
 #pragma once
-#include "FuelItem.h"
-class CoalItem :
-    public FuelItem
+
+#include "PlaceableItem.h"
+#include "json.h"
+
+class TorchItem :
+    public PlaceableItem
 {
 private:
     static std::string NAME;
+    static std::string DESCRIPTION;
     static ALLEGRO_BITMAP* TEXTURE;
-    static float BURN_TIME;
 
 public:
 
@@ -14,17 +17,17 @@ public:
 
     std::string GetID() const final;
 
+    virtual Tile* GetTile(World* w, int x, int y) override;
+
     virtual Item* Clone() const override;
 
-    virtual float GetBurnTime() const final;
-
-    CoalItem();
+    TorchItem();
 
     void Draw(int x, int y, int width, int height) const final;
 
     static void Init(nlohmann::json data);
 
-    virtual ~CoalItem() = default;
+    virtual ~TorchItem() = default;
 
 };
 

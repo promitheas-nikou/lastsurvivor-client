@@ -28,6 +28,37 @@
 #define WORLD_SAVE_CHUNKDATA_FILE_EXTENSION ".chunkdata"
 #define WORLD_SAVE_CHUNKDATA_DIR "chunks"
 
+ALLEGRO_COLOR CombineColors(ALLEGRO_COLOR x, ALLEGRO_COLOR y, float z)
+{
+    y.a *= z;
+    x.a *= (1.f - z);
+    float r = x.a * x.r + y.a * y.r;
+    float b = x.a * x.b + y.a * y.b;
+    float g = x.a * x.g + y.a * y.g;
+    float a = x.a + y.a - x.a * y.a;
+    return al_map_rgba_f(r, b, g, a);
+}
+
+
+ALLEGRO_COLOR World::CalcAmbientColor()
+{
+    constexpr ALLEGRO_COLOR MORNING_COLOR = { .r = .5f, .g = .4f, .b = .2f, .a = 1.f }; //00000 or 0 minutes
+    constexpr ALLEGRO_COLOR NOON_COLOR = { .r = 1.f, .g = 1.f, .b = .8f, .a = 1.f }; //30000 or 10 minutes
+    constexpr ALLEGRO_COLOR AFTERNOON_COLOR = { .r = .9f, .g = .85f, .b = .7f, .a = 1.f}; //48000 or 16 minutes
+    constexpr ALLEGRO_COLOR NIGHT_COLOR = { .r = .2f, .g = .3f, .b = .25f, .a = 1.f }; //60000 or 20 minutes
+    constexpr ALLEGRO_COLOR MIDNIGHT_COLOR = { .r = .075f, .g = .1f, .b = .2f, .a = 1.f }; //75000 or 25 minutes
+    if (daytime < 30000)
+        return CombineColors(MORNING_COLOR, NOON_COLOR, daytime / 30000.f);
+    if (daytime < 48000)
+        return CombineColors(NOON_COLOR, AFTERNOON_COLOR, (daytime - 30000) / 18000.f);
+    if (daytime < 60000)
+        return CombineColors(AFTERNOON_COLOR, NIGHT_COLOR, (daytime - 48000) / 12000.f);
+    if (daytime < 75000)
+        return CombineColors(NIGHT_COLOR, MIDNIGHT_COLOR, (daytime - 60000) / 15000.f);
+    return CombineColors(MIDNIGHT_COLOR, MORNING_COLOR, (daytime - 75000) / 15000.f);
+
+}
+
 void World::UpdateEntityVector()
 {
     std::vector<Entity*> new_entities;
@@ -149,7 +180,12 @@ Tile* World::GenerateTile(int x, int y)
         return MakeTile(this, "tiles.air", x, y);
 }
 
-WorldChunk* World::GetChunk(int x, int y)   
+double World::GetMeasuredTPS()
+{
+    return TPSmeasured;
+}
+
+WorldChunk* World::GetChunk(int x, int y)
 {
     return chunks[y][x];
 }
@@ -175,6 +211,7 @@ void World::AddEntity(Entity* e)
 void World::Tick()
 {
     static int tick_counter=0;
+    static std::deque<double> timestamps;
     loadedChunkCount = 0;
 
     for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
@@ -192,6 +229,11 @@ void World::Tick()
 
     if ((tick_counter++ % ENTITY_UPDATE_RATE)==0)
         UpdateEntityVector();
+    daytime = (daytime + 1) % 90000;
+    timestamps.push_back(al_get_time());
+    if (timestamps.size() > 51)
+        timestamps.pop_front();
+    TPSmeasured = 50 / (timestamps.back() - timestamps.front());
 }
 
 const PlayerEntity* World::GetPlayer() const
@@ -321,8 +363,20 @@ int OPTION_DRAW_TILES_RIGHT = 12;
 int OPTION_DRAW_TILES_UP = 7;
 int OPTION_DRAW_TILES_DOWN = 7;
 
+std::vector<World::Light> LIGHTS;
+
+void World::RegisterLight(Light l)
+{
+    LIGHTS.push_back(l);
+}
+
 void World::Draw()
 {
+    static float playerPos[3] = { 0.f, 0.f, 0.f };
+    static float ambientLightColor[4] = { 1.f, 0.6f, 0.6f, 1.f };
+    static float LIGHTS_POS[100][3];
+    static float LIGHTS_BRIG[100];
+
     //DRAW TILES
     loaded_shaders["world"]->Use();
     int offset_x = floor(player->GetXpos() * 128) - SCREEN_WIDTH / 2;
@@ -331,6 +385,38 @@ void World::Draw()
     int drawEndX = floor(player->GetXpos()) + OPTION_DRAW_TILES_RIGHT;
     int drawBeginY = floor(player->GetYpos()) - OPTION_DRAW_TILES_UP;
     int drawEndY = floor(player->GetYpos()) + OPTION_DRAW_TILES_DOWN;
+
+    LIGHTS.clear();
+
+    for (int x = drawBeginX-6; x < drawEndX+6; x++)
+        for (int y = drawBeginY-6; y < drawEndY+6; y++)
+            GetGroundTile(x, y)->RegisterLights();
+
+    for (int x = drawBeginX-6; x < drawEndX+6; x++)
+        for (int y = drawBeginY-6; y < drawEndY+6; y++)
+            GetTile(x, y)->RegisterLights();
+    for (int i = 0; i < LIGHTS.size(); i++)
+    {
+        LIGHTS_POS[i][0] = LIGHTS[i].GetXpos()*128 - offset_x;
+        LIGHTS_POS[i][1] = -LIGHTS[i].GetYpos() * 128 + offset_y + SCREEN_HEIGHT;
+        LIGHTS_POS[i][2] = 1.f;
+        LIGHTS_BRIG[i] = LIGHTS[i].GetBrightness();
+    }
+    bool r;
+    r = al_set_shader_float_vector("LIGHTS_POS", 3, (float*)LIGHTS_POS, LIGHTS.size());
+    r = al_set_shader_float_vector("LIGHTS_BRIGHT", 1, (float*)LIGHTS_BRIG, LIGHTS.size());
+    r = al_set_shader_int("LIGHTS_NUM", LIGHTS.size());
+
+
+    playerPos[0] = offset_x;
+    playerPos[1] = offset_y;
+    ALLEGRO_COLOR ambientCol = CalcAmbientColor();
+    ambientLightColor[0] = ambientCol.r;
+    ambientLightColor[1] = ambientCol.g;
+    ambientLightColor[2] = ambientCol.b;
+    al_set_shader_float_vector("ambientLightColor", 4, ambientLightColor, 1);
+    al_set_shader_float_vector("ambientLightColor", 4, ambientLightColor, 1);
+
     al_build_transform(&draw_transform, -offset_x, -offset_y, 1, 1, 0);
     al_use_transform(&draw_transform);
     for (int x = drawBeginX; x < drawEndX; x++)
@@ -537,4 +623,22 @@ World::World(bool w, const uint64_t s, std::string name, std::string n, int min,
     player = new PlayerEntity(this, 0, 0);
 }
 
+World::Light::Light(float x, float y, float b) : xpos{ x }, ypos{ y }, brightness{ b }
+{
+}
+
+float World::Light::GetXpos() const
+{
+    return xpos;
+}
+
+float World::Light::GetYpos() const
+{
+    return ypos;
+}
+
+float World::Light::GetBrightness() const
+{
+    return brightness;
+}
 

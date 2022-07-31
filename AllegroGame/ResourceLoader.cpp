@@ -21,7 +21,7 @@
 #include "SimpleSword.h"
 #include "GunItem.h"
 #include "BerryItem.h"
-#include "CoalItem.h"
+#include "AnthraciteCoalChunkItem.h"
 #include "SimpleItemBundle.h"
 #include "CactusBossEntity.h"
 #include "ZombieEntity.h"
@@ -41,6 +41,8 @@
 #include "LodestoneItem.h"
 #include "SaplingItem.h"
 #include "FenceItem.h"
+#include "TorchTile.h"
+#include "TorchItem.h"
 
 #include "Recipe.h"
 
@@ -72,6 +74,8 @@ const std::string DATA_JSON_MAX_HEALTH_KEY = "max_health";
 const std::string DATA_JSON_HUNGER_KEY = "hunger";
 const std::string DATA_JSON_WATER_KEY = "water";
 const std::string DATA_JSON_BURN_TIME_KEY = "burn_time";
+const std::string DATA_JSON_BURN_HEAT_KEY = "burn_heat";
+const std::string DATA_JSON_BRIGHTNESS_KEY = "brightness";
 
 nlohmann::json json_data;
 
@@ -260,10 +264,12 @@ void init_tiles()
 		TreeTile::Init(tile_data[TreeTile::ID]);
 		BerryBushTile::Init(tile_data[BerryBushTile::ID]);
 		FenceTile::Init(tile_data[FenceTile::ID]);
+		TorchTile::Init(tile_data[TorchTile::ID]);
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
 		prototype_tiles[TreeTile::ID] = new TreeTile(nullptr, 0, 0);
 		prototype_tiles[BerryBushTile::ID] = new BerryBushTile(nullptr, 0, 0);
 		prototype_tiles[FenceTile::ID] = new FenceTile(nullptr, 0, 0);
+		prototype_tiles[TorchTile::ID] = new TorchTile(nullptr, 0, 0);
 	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -299,7 +305,7 @@ void init_items()
 		SimpleSword::Init(item_data[SimpleSword::ID]);
 		GunItem::Init(item_data[GunItem::ID]);
 		BerryItem::Init(item_data[BerryItem::ID]);
-		CoalItem::Init(item_data[CoalItem::ID]);
+		AnthraciteCoalChunkItem::Init(item_data[AnthraciteCoalChunkItem::ID]);
 		MalachiteChunkItem::Init(item_data[MalachiteChunkItem::ID]);
 		MagnetiteChunkItem::Init(item_data[MagnetiteChunkItem::ID]);
 		HematiteChunkItem::Init(item_data[HematiteChunkItem::ID]);
@@ -307,6 +313,7 @@ void init_items()
 		LodestoneItem::Init(item_data[LodestoneItem::ID]);
 		SaplingItem::Init(item_data[SaplingItem::ID]);
 		FenceItem::Init(item_data[FenceItem::ID]);
+		TorchItem::Init(item_data[TorchItem::ID]);
 
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
@@ -315,7 +322,7 @@ void init_items()
 		prototype_items[SimpleSword::ID] = new SimpleSword();
 		prototype_items[GunItem::ID] = new GunItem();
 		prototype_items[BerryItem::ID] = new BerryItem();
-		prototype_items[CoalItem::ID] = new CoalItem();
+		prototype_items[AnthraciteCoalChunkItem::ID] = new AnthraciteCoalChunkItem();
 		prototype_items[MalachiteChunkItem::ID] = new MalachiteChunkItem();
 		prototype_items[MagnetiteChunkItem::ID] = new MagnetiteChunkItem();
 		prototype_items[HematiteChunkItem::ID] = new HematiteChunkItem();
@@ -323,6 +330,7 @@ void init_items()
 		prototype_items[LodestoneItem::ID] = new LodestoneItem();
 		prototype_items[SaplingItem::ID] = new SaplingItem();
 		prototype_items[FenceItem::ID] = new FenceItem();
+		prototype_items[TorchItem::ID] = new TorchItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

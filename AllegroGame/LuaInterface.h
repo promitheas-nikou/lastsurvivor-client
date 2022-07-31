@@ -19,6 +19,7 @@ public:
 	static int lua_GetTile(lua_State* state);
 	static int lua_GetGroundTile(lua_State* state);
 	static int lua_Print(lua_State* state);
+	static int lua_SetDaytime(lua_State* state);
 	static int lua_TickTile(lua_State* state);
 	static int lua_RandomTickTile(lua_State* state);
 };

@@ -145,9 +145,6 @@
     <Filter Include="Header Files\Game\Items\WeaponItems">
       <UniqueIdentifier>{b6eef291-5c32-4df4-9d5e-0ae49aa78760}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Items\WeaponItems">
-      <UniqueIdentifier>{ea1c721d-7d5a-4f65-ba85-73e0a50fc232}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game\Entities\Projectiles">
       <UniqueIdentifier>{e5f57002-7e05-42a2-8386-d203535065d2}</UniqueIdentifier>
     </Filter>
@@ -207,6 +204,15 @@
     </Filter>
     <Filter Include="Source Files\Game\Items\ResourceItems">
       <UniqueIdentifier>{0c64ce5c-6d51-4913-b768-5157f4a4d61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\FuelItems">
+      <UniqueIdentifier>{5e85b7fd-a13d-463f-98a1-c6744212e099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\WeaponItems">
+      <UniqueIdentifier>{ea1c721d-7d5a-4f65-ba85-73e0a50fc232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\PlaceableItems">
+      <UniqueIdentifier>{b0bdaac4-6b12-4647-b1db-6045f7a7373f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -477,12 +483,6 @@
     <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
-    <ClCompile Include="CoalItem.cpp">
-      <Filter>Source Files\Game\Items\ResourceItems</Filter>
-    </ClCompile>
-    <ClCompile Include="FuelItem.cpp">
-      <Filter>Source Files\Game\Items</Filter>
-    </ClCompile>
     <ClCompile Include="TextUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -553,6 +553,18 @@
       <Filter>Source Files\Game\Items\PlaceableItems</Filter>
     </ClCompile>
     <ClCompile Include="PlaceableItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="AnthraciteCoalChunkItem.cpp">
+      <Filter>Source Files\Game\Items\FuelItems</Filter>
+    </ClCompile>
+    <ClCompile Include="FuelItem.cpp">
+      <Filter>Source Files\Game\Items\FuelItems</Filter>
+    </ClCompile>
+    <ClCompile Include="TorchTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TorchItem.cpp">
       <Filter>Source Files\Game\Items\PlaceableItems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -862,7 +874,7 @@
     <ClInclude Include="TextUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CoalItem.h">
+    <ClInclude Include="AnthraciteCoalChunkItem.h">
       <Filter>Header Files\Game\Items\FuelItems</Filter>
     </ClInclude>
     <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h">
@@ -916,9 +928,6 @@
     <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
-    <ClInclude Include="SaplingItem.h">
-      <Filter>Header Files\Game\Items\ResourceItems</Filter>
-    </ClInclude>
     <ClInclude Include="PlaceableItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
@@ -927,6 +936,15 @@
     </ClInclude>
     <ClInclude Include="FenceItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="TorchTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TorchItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SaplingItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

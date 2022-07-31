@@ -89,6 +89,9 @@ int Tile::GetYpos() const
 	return ypos;
 }
 
+void Tile::RegisterLights()
+{}
+
 std::unordered_map<std::string, const Tile*> prototype_tiles;
 
 Tile* MakeTile(World* world, std::string id, int x, int y)

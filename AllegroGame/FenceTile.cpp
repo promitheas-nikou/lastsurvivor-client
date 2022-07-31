@@ -4,6 +4,7 @@
 ALLEGRO_BITMAP* FenceTile::TEXTURES[16];
 ToolType FenceTile::TOOL_TYPE;
 int FenceTile::MINING_RESISTANCE;
+const LootBundle* FenceTile::DROP;
 std::string FenceTile::NAME;
 
 const std::string FenceTile::ID = "tiles.fence";
@@ -38,6 +39,11 @@ std::string FenceTile::GetName() const
     return NAME;
 }
 
+const ItemBundle* FenceTile::GetMiningResult(Tool* tool) const
+{
+    return DROP->ConstCollapseToItemBundle();
+}
+
 bool FenceTile::ShouldConnect(Tile* t) const
 {
     return dynamic_cast<FenceTile*>(t)!=nullptr;
@@ -60,6 +66,7 @@ void FenceTile::Init(nlohmann::json data)
     MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
     TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
     NAME = data[DATA_JSON_NAME_KEY];
+    DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 }
 
 FenceTile::FenceTile(World* w, int x, int y, char connections) : ConnectingTile(w, x, y, connections)

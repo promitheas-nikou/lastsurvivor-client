@@ -79,6 +79,11 @@ void PlayerEntity::PreDrawThisGUI()
 {
 	static ALLEGRO_MOUSE_STATE mouseState;
 	al_get_mouse_state(&mouseState);
+	
+	al_draw_filled_rectangle(100, 50, 300, 130, al_map_rgba(0, 150, 255, 150));
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 55, 0, "TIME: %d", GetContainingWorld()->daytime);
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
+	
 	al_draw_filled_rectangle(SCREEN_WIDTH/2-250, 50, SCREEN_WIDTH/2+250, 250, al_map_rgba(0, 150, 255, 150));
 
 	float x = GET_MOUSE_XPOS(mouseState);

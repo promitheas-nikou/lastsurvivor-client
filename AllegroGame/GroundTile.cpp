@@ -79,6 +79,9 @@ float GroundTile::GetFrictionModifier() const
 void GroundTile::PlaySound(SoundType t) const
 {}
 
+void GroundTile::RegisterLights()
+{}
+
 std::unordered_map<std::string, const GroundTile*> prototype_gtiles;
 
 GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)

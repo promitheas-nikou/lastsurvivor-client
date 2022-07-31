@@ -58,6 +58,8 @@ public:
 
 	virtual void PlaySound(SoundType t) const;
 
+	virtual void RegisterLights();
+
 	virtual ~GroundTile() = default;
 };
 

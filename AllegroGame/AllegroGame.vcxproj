@@ -207,7 +207,7 @@
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="CactusBossEntity.cpp" />
     <ClCompile Include="ChancedLootBundle.cpp" />
-    <ClCompile Include="CoalItem.cpp" />
+    <ClCompile Include="AnthraciteCoalChunkItem.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="ConnectingTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
@@ -282,6 +282,8 @@
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SoundType.cpp" />
     <ClCompile Include="TextUtils.cpp" />
+    <ClCompile Include="TorchItem.cpp" />
+    <ClCompile Include="TorchTile.cpp" />
     <ClCompile Include="Usable.cpp" />
     <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="VariableAmountItem.cpp" />
@@ -333,7 +335,7 @@
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="CactusBossEntity.h" />
     <ClInclude Include="ChancedLootBundle.h" />
-    <ClInclude Include="CoalItem.h" />
+    <ClInclude Include="AnthraciteCoalChunkItem.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConnectingTile.h" />
     <ClInclude Include="Consumable.h" />
@@ -410,6 +412,8 @@
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SoundType.h" />
     <ClInclude Include="TextUtils.h" />
+    <ClInclude Include="TorchItem.h" />
+    <ClInclude Include="TorchTile.h" />
     <ClInclude Include="Usable.h" />
     <ClInclude Include="UsableItem.h" />
     <ClInclude Include="VariableAmountItem.h" />

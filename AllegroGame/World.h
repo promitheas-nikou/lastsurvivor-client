@@ -16,9 +16,14 @@ class World
 private:
 	int WorldGameVersionMinor;
 	int WorldGameVersionMajor;
+	double TPSmeasured;
 	std::string WorldGameVersionName;
 
 	SimplexNoise randgen;
+
+	int daytime; //90000 ticks (30 minutes) is 1 day
+
+	ALLEGRO_COLOR CalcAmbientColor();
 
 	std::string worldname;
 
@@ -52,6 +57,9 @@ private:
 	Tile* GenerateTile(int x, int y);
 
 public:
+
+	double GetMeasuredTPS();
+
 	inline WorldChunk* GetChunk(int x, int y);
 
 	Tile* RemoveTile(int x, int y);
@@ -79,6 +87,21 @@ public:
 
 	std::vector<Entity*> GetEntitiesAtPos(float x, float y) const;
 	std::vector<Entity*> GetEntitiesColliding(Entity* e) const;
+
+	class Light {
+	private:
+		float xpos;
+		float ypos;
+		float brightness;
+	public:
+		Light(float x, float y, float b);
+		float GetXpos() const;
+		float GetYpos() const;
+		float GetBrightness() const;
+		~Light() = default;
+	};
+
+	void RegisterLight(Light l);
 
 	void Draw();
 

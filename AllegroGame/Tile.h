@@ -59,6 +59,8 @@ class Tile
 		int GetXpos() const;
 		int GetYpos() const;
 
+		virtual void RegisterLights();
+
 		virtual ~Tile() = default;
 	};
 

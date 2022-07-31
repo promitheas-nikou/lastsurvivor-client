@@ -518,6 +518,18 @@
     {
       "id": "tex.gui.entitiesicon",
       "filename": "entitiesicon.png"
+    },
+    {
+      "id": "tex.items.anthracite_coal_chunk",
+      "filename": "anthracite_coal_chunk.png"
+    },
+    {
+      "id": "tex.tiles.torch",
+      "filename": "torch.png"
+    },
+    {
+      "id": "tex.items.torch",
+      "filename": "torch.png"
     }
   ],
   "entities": [
@@ -750,6 +762,30 @@
           "maxamount": 2
         }
       ]
+    },
+    {
+      "id": "tiles.fence.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 5,
+          "maxamount": 10
+        }
+      ]
+    },
+    {
+      "id": "tiles.torch.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 2,
+          "maxamount": 6
+        }
+      ]
     }
   ],
   "cursors": [
@@ -809,6 +845,15 @@
       "mining_resistance": 5
     },
     {
+      "id": "tiles.torch",
+      "name": "Torch",
+      "tool": "axe",
+      "texture": "tex.tiles.torch",
+      "drops": "tiles.torch.mine.any",
+      "mining_resistance": 3,
+      "brightness": 768.0
+    },
+    {
       "id": "tiles.berry_bush",
       "name": "Berry Bush",
       "tool": "axe",
@@ -822,7 +867,7 @@
     },
     {
       "id": "tiles.fence",
-      "name": "fence",
+      "name": "Fence",
       "tool": "axe",
       "mining_resistance": 10,
       "textures": [
@@ -843,7 +888,8 @@
         "tex.tiles.fence/14",
         "tex.tiles.fence/15",
         "tex.tiles.fence/16"
-      ]
+      ],
+      "drops": "tiles.fence.mine.any"
     }
   ],
   "ground_tiles": [
@@ -1018,10 +1064,19 @@
       "water": 10.0
     },
     {
-      "id": "items.coal",
-      "name": "Coal",
-      "texture": "tex.items.stone",
-      "burn_time": 1000
+      "id": "items.anthracite_coal_chunk",
+      "name": "Anthracite Coal Chunk",
+      "texture": "tex.items.anthracite_coal_chunk",
+      "description": "A chunk of high-grade (85-95%) coal ore. Is the hardest coal ore, and the one with the greatest heat content.",
+      "burn_time": 1000,
+      "burn_heat": 900
+    },
+    {
+      "id": "items.lignite_coal_chunk",
+      "name": "Lignite Coal Chunk",
+      "texture": "tex.items.lignite_coal_chunk",
+      "burn_time": 700,
+      "burn_heat": 550
     },
     {
       "id": "items.malachite_chunk",
@@ -1064,6 +1119,12 @@
       "name": "Fence",
       "description": "A fence created from wood. May be placed to block the path of players or other entities.",
       "texture": "tex.items.fence"
+    },
+    {
+      "id": "items.torch",
+      "name": "Torch",
+      "description": "A torch created from wood. Can be used to provide light at nighttime.",
+      "texture": "tex.items.torch"
     }
   ],
   "fonts": [
@@ -1089,6 +1150,21 @@
         "output": [
           {
             "id": "items.fence",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "recipes.torch_from_sticks",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 8
+          }
+        ],
+        "output": [
+          {
+            "id": "items.torch",
             "amount": 1
           }
         ]

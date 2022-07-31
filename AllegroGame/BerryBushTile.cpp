@@ -1,6 +1,7 @@
 #include "BerryBushTile.h"
 #include "ResourceLoader.h"
 #include "PlayerEntity.h"
+#include "World.h"
 
 int BerryBushTile::MINING_RESISTANCE;
 ToolType BerryBushTile::TOOL_TYPE;
@@ -80,6 +81,7 @@ void BerryBushTile::Init(nlohmann::json data)
     DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
     COLLECT = loaded_loot_bundles[data[DATA_JSON_COLLECT_KEY]];
 }
+
 
 BerryBushTile::BerryBushTile(World* w, int x, int y): Tile(w, x, y), growthTimer{0}
 {
