@@ -28,6 +28,8 @@ public:
 	virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& event);
 	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& event);
 
+	void SetActiveSubGUI(GUI* gui);
+
 	virtual bool CharTyped(ALLEGRO_KEYBOARD_EVENT& event);
 
 	virtual bool MouseButtonDown(ALLEGRO_MOUSE_EVENT& event);

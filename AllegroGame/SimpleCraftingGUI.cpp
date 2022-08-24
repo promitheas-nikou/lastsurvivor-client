@@ -4,7 +4,7 @@
 #include "SimpleButtonUIComponent.h"
 #include <algorithm>
 
-void SimpleCraftingGUI::DrawRecipe(const Recipe* recipe, int x, int y, int tw, int th, int rw, int rh)
+void SimpleCraftingGUI::DrawRecipe(const CraftingRecipe* recipe, int x, int y, int tw, int th, int rw, int rh)
 {
 	al_draw_filled_rectangle(x, y, x + tw, y + th, gameconfig::SOLID_BACKGROUND_COLOR_0);
 	const ItemBundle* in = recipe->GetInputItems();
@@ -77,14 +77,14 @@ ItemInventory* SimpleCraftingGUI::GetInventory() const
 	return recipeGUI->GetInventory();
 }
 
-void SimpleCraftingGUI::SetRecipeList(std::unordered_map<std::string, const Recipe*>& r)
+void SimpleCraftingGUI::SetRecipeList(std::unordered_map<std::string, const CraftingRecipe*>& r)
 {
 	recipes.clear();
-	for (const std::pair<std::string, const Recipe*>& p: r)
+	for (const std::pair<std::string, const CraftingRecipe*>& p: r)
 		recipes.push_back(p.second);
 }
 
-void SimpleCraftingGUI::SetRecipeCallbackFunction(std::function<void(const Recipe*, int)> callback)
+void SimpleCraftingGUI::SetRecipeCallbackFunction(std::function<void(const CraftingRecipe*, int)> callback)
 {
 	recipeCraftedCallback = callback;
 }
@@ -94,14 +94,14 @@ SimpleCraftingGUI::SimpleCraftingGUI() : GUI(), scroll{ 0 }, pageHeight{ (SCREEN
 	recipeGUI = new SingleRecipeExecutionGUI(this);
 }
 
-void SimpleCraftingGUI::SingleRecipeExecutionGUI::SetRecipe(const Recipe* r)
+void SimpleCraftingGUI::SingleRecipeExecutionGUI::SetRecipe(const CraftingRecipe* r)
 {
 	recipe = r;
 	if(inventory!=nullptr)
 		index = ItemIndex(inventory);
 }
 
-const Recipe* SimpleCraftingGUI::SingleRecipeExecutionGUI::GetRecipe() const
+const CraftingRecipe* SimpleCraftingGUI::SingleRecipeExecutionGUI::GetRecipe() const
 {
 	return recipe;
 }

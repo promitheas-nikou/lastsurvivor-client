@@ -1,6 +1,7 @@
 #include "ItemInventory.h"
 #include "ItemBundle.h"
 #include "ItemIndex.h"
+#include "SimpleItemInventory.h"
 #include "SimpleItemBundle.h"
 
 int ItemInventory::AddItemToSlot(Item* item, int itemID)
@@ -128,5 +129,34 @@ ItemBundle* ItemInventory::AddItemBundle(ItemBundle* bundle)
     if (bundle == nullptr)
         return nullptr;
     return bundle->AddToInventory(this);
+}
+
+void ItemInventory::SaveToFile(std::ofstream& file)
+{
+    uint32_t v;
+    constexpr uint32_t nullitemid = 0xFFFFFFFF;
+    v = GetSize();
+    file.write(reinterpret_cast<char*>(&v), sizeof(uint32_t));
+    for (int i = 0; i < v; i++)
+    {
+        Item* t = GetItem(i);
+        if (t == nullptr)
+            file.write(reinterpret_cast<const char*>(&nullitemid), sizeof(uint32_t));
+        else
+            t->SaveToFile(file);
+        file.flush();
+    }
+}
+
+ItemInventory* ItemInventory::LoadFromFile(std::ifstream& file)
+{
+    uint32_t v;
+    file.read(reinterpret_cast<char*>(&v), sizeof(uint32_t));
+    SimpleItemInventory* inv = new SimpleItemInventory(v);
+    for (int i = 0; i < v; i++)
+    {
+        inv->SetItem(i, Item::LoadFromFile(file));
+    }
+    return inv;
 }
 

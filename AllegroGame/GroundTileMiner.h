@@ -2,13 +2,16 @@
 
 #include "GroundTile.h"
 #include "ItemInventory.h"
+class World;
 
 class GroundTileMiner
 {
 private:
+	World* world;
 	int miningDamageDone;
 	ItemInventory* inventory;
-	GroundTile* target;
+	int gtileX;
+	int gtileY;
 	Tool* tool;
 public:
 
@@ -20,7 +23,7 @@ public:
 	ItemInventory* GetTargetItemInventory() const;
 	void SetTargetItemInventory(ItemInventory* inv);
 
-	void SetTarget(GroundTile* newTarget);
+	void SetTarget(World* w, int x, int y);
 	GroundTile* GetTarget() const;
 
 	virtual void AddResult(const ItemBundle* b);
@@ -29,7 +32,7 @@ public:
 
 	bool Mine();
 
-	GroundTileMiner(Tool* t, ItemInventory* inv);
+	GroundTileMiner(Tool* t, ItemInventory* inv, World* w, int x, int y);
 
 	virtual ~GroundTileMiner() = default;
 };

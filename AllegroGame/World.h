@@ -21,7 +21,7 @@ private:
 
 	SimplexNoise randgen;
 
-	int daytime; //90000 ticks (30 minutes) is 1 day
+	int gametime; //90000 ticks (30 minutes) is 1 day
 
 	ALLEGRO_COLOR CalcAmbientColor();
 

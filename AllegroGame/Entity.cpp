@@ -27,6 +27,16 @@ void Entity::SetHasFriction(bool b)
     hasFriction = b;
 }
 
+bool Entity::GetKillOnCollision() const
+{
+    return killOnCollision;
+}
+
+void Entity::SetKillOnCollision(bool b)
+{
+    killOnCollision = b;
+}
+
 bool Entity::GetHasFriction() const
 {
     return hasFriction;
@@ -58,12 +68,12 @@ float Entity::GetYpos() const
     return ypos;
 }
 
-float Entity::getXvel() const
+float Entity::GetXvel() const
 {
     return xvel;
 }
 
-float Entity::getYvel() const
+float Entity::GetYvel() const
 {
     return yvel;
 }
@@ -78,12 +88,12 @@ float Entity::GetYsize() const
     return ysize;
 }
 
-float Entity::getRotation() const
+float Entity::GetRotation() const
 {
     return rotation;
 }
 
-float Entity::getMass() const
+float Entity::GetMass() const
 {
     return mass;
 }
@@ -103,7 +113,24 @@ bool Entity::ContainsPos(float x, float y)
     return (xpos - xsize / 2 <= x) && (x <= xpos + xsize / 2) && (ypos - ysize / 2 <= y) && (y <= ypos + ysize / 2);
 }
 
-bool Entity::CollidesWith(Entity* e)
+bool Entity::IntersectRect(float x1, float y1, float x2, float y2)
+{
+    float x3 = GetXpos() - xsize / 2;
+    float x4 = GetXpos() + xsize / 2;
+    float y3 = GetYpos() - ysize / 2;
+    float y4 = GetYpos() + ysize / 2;
+    if (x3 > x2)
+        return false;
+    if (x4 < x1)
+        return false;
+    if (y3 > y2)
+        return false;
+    if (y4 < y1)
+        return false;
+    return true;
+}
+
+bool Entity::CollidesWith(Entity* e) const
 {
     float e1sx = GetXpos() - GetXsize() / 2;
     float e1sy = GetYpos() - GetYsize() / 2;
@@ -116,6 +143,32 @@ bool Entity::CollidesWith(Entity* e)
     bool cx = (e1sx <= e2sx) ? (e1ex >= e2sx) : (e1sx <= e2ex);
     bool cy = (e1sy <= e2sy) ? (e1ey >= e2sy) : (e1sy <= e2ey);
     return cx && cy;
+}
+
+void Entity::LoadAdditionalDataFromFile(std::ifstream& file)
+{
+    file.read(reinterpret_cast<char*>(&xpos), sizeof(float));
+    file.read(reinterpret_cast<char*>(&ypos), sizeof(float));
+    file.read(reinterpret_cast<char*>(&xvel), sizeof(float));
+    file.read(reinterpret_cast<char*>(&yvel), sizeof(float));
+    file.read(reinterpret_cast<char*>(&rotation), sizeof(float));
+    file.read(reinterpret_cast<char*>(&health), sizeof(float));
+    file.read(reinterpret_cast<char*>(&mass), sizeof(float));
+    file.read(reinterpret_cast<char*>(&xsize), sizeof(float));
+    file.read(reinterpret_cast<char*>(&ysize), sizeof(float));
+}
+
+void Entity::WriteAdditionalDataToFile(std::ofstream& file)
+{
+    file.write(reinterpret_cast<char*>(&xpos), sizeof(float));
+    file.write(reinterpret_cast<char*>(&ypos), sizeof(float));
+    file.write(reinterpret_cast<char*>(&xvel), sizeof(float));
+    file.write(reinterpret_cast<char*>(&yvel), sizeof(float));
+    file.write(reinterpret_cast<char*>(&rotation), sizeof(float));
+    file.write(reinterpret_cast<char*>(&health), sizeof(float));
+    file.write(reinterpret_cast<char*>(&mass), sizeof(float));
+    file.write(reinterpret_cast<char*>(&xsize), sizeof(float));
+    file.write(reinterpret_cast<char*>(&ysize), sizeof(float));
 }
 
 bool Entity::IsHostile() const
@@ -138,7 +191,7 @@ float Entity::GetMaxHealth() const
     return maxHealth;
 }
 
-void Entity::applyForce(float dx, float dy)
+void Entity::ApplyForce(float dx, float dy)
 {
     xvel += dx / mass;
     yvel += dy / mass;
@@ -161,6 +214,12 @@ void Entity::Tick()
         containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough() &&
         containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough()))
     {
+        if (killOnCollision)
+        {
+            PlaySound(SoundType::PROJECTILE_HIT);
+            Kill();
+            return;
+        }
         xpos -= xvel;
         xvel = DoesBounce()?-xvel:0;
     }
@@ -176,6 +235,12 @@ void Entity::Tick()
         containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough() &&
         containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough()))
     {
+        if (killOnCollision)
+        {
+            PlaySound(SoundType::PROJECTILE_HIT);
+            Kill();
+            return;
+        }
         ypos -= yvel;
         yvel = DoesBounce() ? -yvel : 0;
     }
@@ -262,3 +327,10 @@ void Entity::warpRelative(float dx, float dy)
 
 std::unordered_map<std::string, const Entity*> prototype_entities;
 
+Entity* MakeEntity(World* world, std::string id, float x, float y)
+{
+    const Entity* e= prototype_entities[id];
+    if (e == nullptr)
+        return nullptr;
+    return e->Clone(world, x, y);
+}

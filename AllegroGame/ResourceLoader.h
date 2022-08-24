@@ -66,9 +66,11 @@ extern QuestCollection* quest_collection;
 extern std::map<uint32_t, std::string> tile_ids_to_keys;
 extern std::map<uint32_t, std::string> gtile_ids_to_keys;
 extern std::map<uint32_t, std::string> item_ids_to_keys;
+extern std::map<uint32_t, std::string> entity_ids_to_keys;
 extern std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
 extern std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
 extern std::unordered_map<std::string, uint32_t> item_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> entity_keys_to_ids;
 
 void load_resources();
 

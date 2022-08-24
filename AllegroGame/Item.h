@@ -3,6 +3,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include "json.h"
+#include <fstream>
 #include "LootObject.h"
 
 
@@ -17,16 +18,18 @@ protected:
 	static bool DrawItemDetailsPaneMultilineCB(int line_num, const char* line, int size, void* extra);
 
 	int amount;
+	bool hasCustomName = false;
 	std::string name;
+	bool hasCustomDescription = false;
 	std::string description;
 	Item(std::string n, std::string d = "");
 
 public:
 
-	static constexpr int MAX_AMOUNT = 128;
+	static std::unordered_map<std::string, uint32_t> str_to_id;
+	static std::map<uint32_t, std::string> id_to_str;
 
-	virtual void LoadAdditionalDataFromFile(std::ifstream &file);
-	virtual void WriteAdditionalDataToFile(std::ofstream& file);
+	static constexpr int MAX_AMOUNT = 128;
 
 	virtual std::string GetID() const = 0;
 
@@ -43,6 +46,11 @@ public:
 	virtual void DrawItemDetailsPane(int x, int y);
 
 	virtual ItemBundle* ConstCollapseToItemBundle() const final;
+
+	virtual void SaveToFile(std::ofstream &file);
+	static void SaveToFile(Item* item, std::ofstream& file);
+	static Item* LoadFromFile(std::ifstream& file);
+	virtual void LoadAdditionalDataFromFile(std::ifstream &file);
 
 	virtual void AddConstToInventory(ItemInventory* inv) const override;
 

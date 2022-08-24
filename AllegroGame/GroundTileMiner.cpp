@@ -1,4 +1,5 @@
 #include "GroundTileMiner.h"
+#include "World.h"
 
 int GroundTileMiner::GetMiningDamageDone() const
 {
@@ -25,18 +26,16 @@ void GroundTileMiner::SetTargetItemInventory(ItemInventory* inv)
     inventory = inv;
 }
 
-void GroundTileMiner::SetTarget(GroundTile* newTarget)
+void GroundTileMiner::SetTarget(World* w, int x, int y)
 {
-    if (target != newTarget)
-    {
-        target = newTarget;
-        ResetProgress();
-    }
+    world = w;
+    gtileX = x;
+    gtileY = y;
 }
 
 GroundTile* GroundTileMiner::GetTarget() const
 {
-    return target;
+    return world->GetGroundTile(gtileX,gtileY);
 }
 
 void GroundTileMiner::AddResult(const ItemBundle* b)
@@ -51,6 +50,7 @@ void GroundTileMiner::ResetProgress()
 
 bool GroundTileMiner::Mine()
 {
+    GroundTile* target = world->GetGroundTile(gtileX, gtileY);
     if (target == nullptr)
         return false;
     miningDamageDone += target->GetDamageDealtByTool(tool);
@@ -67,5 +67,5 @@ bool GroundTileMiner::Mine()
     
 }
 
-GroundTileMiner::GroundTileMiner(Tool* t, ItemInventory* inv) : tool{ t }, inventory{ inv }, miningDamageDone{ 0 }, target{ nullptr }
+GroundTileMiner::GroundTileMiner(Tool* t, ItemInventory* inv, World* w, int x, int y) : tool{ t }, inventory{ inv }, miningDamageDone{ 0 }, world{ w }, gtileX{ x }, gtileY{ y }
 {}

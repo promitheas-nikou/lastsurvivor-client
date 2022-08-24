@@ -23,7 +23,7 @@ class RangedWeaponItem;
 #include "AudioMultiTrackCollection.h"
 #undef PlaySound
 
-enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST, INFO };
+enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE };
 
 class WaterGroundTile;
 
@@ -39,6 +39,7 @@ public:
 	void Draw(int x, int y, int width, int height, int new_timer);
 	bool ShouldBeRemoved(int new_timer);
 	static PlayerNotification* MakeTextNotification(std::string txt, int w, int h, int t, int fontsize = 30);
+	friend class PlayerEntity;
 };
 
 class PlayerEntity :
@@ -56,6 +57,8 @@ public:
 	};
 private:
 	std::string buf;
+	char debug = 0;
+	bool showHitbox = false;
 	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
 	static ALLEGRO_BITMAP* TEXTURE;
 	LuaInterface* luaInterface;
@@ -100,6 +103,12 @@ private:
 
 public:
 
+
+	virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
+	virtual void WriteAdditionalDataToFile(std::ofstream& file) override;
+
+	virtual Entity* Clone(World* world, float x, float y) const override;
+
 	void EntityKilledRemote(Entity* e);
 
 	const static std::string ID;
@@ -140,6 +149,7 @@ public:
 	virtual void PlaySound(SoundType t) const final;
 
 	void PushNotification(std::string txt, int fontsize = 30);
+	void DisplayTileGUI(Tile* t, GUI* g);
 
 	PlayerEntity(World* world, float xpos, float ypos);
 

@@ -31,6 +31,9 @@ public:
 
     virtual bool ShouldConnect(Tile* tile) const;
 
+    virtual void WriteAdditionalDataToFile(std::ofstream& file) override;
+    virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
+
     virtual void TileUpdate() override;
 
     virtual ~ConnectingTile() = default;

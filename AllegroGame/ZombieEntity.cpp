@@ -9,13 +9,18 @@ ALLEGRO_BITMAP* ZombieEntity::TEXTURE;
 std::string ZombieEntity::NAME;
 const std::string ZombieEntity::ID = "entities.zombie";
 
+Entity* ZombieEntity::Clone(World* world, float x, float y) const
+{
+	return new ZombieEntity(world, x, y);
+}
+
 void ZombieEntity::Tick()
 {	
 	float xdif = GetXpos() - containingWorld->GetPlayer()->GetXpos();
 	float ydif = GetYpos() - containingWorld->GetPlayer()->GetYpos();
 	float angle = 3.14159265358979f+atan2f(ydif, xdif);
 	SetRotation(angle);
-	Entity::applyForce(SPEED * cosf(angle), SPEED * sinf(angle));
+	Entity::ApplyForce(SPEED * cosf(angle), SPEED * sinf(angle));
 	HostileEntity::Tick();
 	if(CooldownReady())
 		if (xdif * xdif + ydif * ydif < REACHSQ)
@@ -29,7 +34,7 @@ void ZombieEntity::Draw()
 {
 	int x = floor(GetXpos() * 128);
 	int y = floor(GetYpos() * 128);
-	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, getRotation()+3.14159265358f/2, 0);
+	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, GetRotation()+3.14159265358f/2, 0);
 }
 
 std::string ZombieEntity::GetID() const

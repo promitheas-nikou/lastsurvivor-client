@@ -16,6 +16,8 @@
 #include "BerryItem.h"
 #include "Graphics.h"
 #include <functional>
+#include "DebugInfo.h"
+#include "MathUtils.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -46,6 +48,48 @@ void PlayerEntity::AddResult(const ItemBundle* b)
 		return;
 	for (int i = 0; i < b->GetSize(); i++)
 		GiveConstItem(b->GetItem(i));
+}
+
+void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
+{
+	Entity::LoadAdditionalDataFromFile(file);
+	file.read(reinterpret_cast<char*>(&hunger), sizeof(int));
+	file.read(reinterpret_cast<char*>(&water), sizeof(int));
+
+	pickaxeTool = Item::LoadFromFile(file);
+	axeTool = Item::LoadFromFile(file);
+	shovelTool = Item::LoadFromFile(file);
+	pumpTool = Item::LoadFromFile(file);
+	placeableItem = Item::LoadFromFile(file);
+	meleeWeapon = Item::LoadFromFile(file);
+	rangedWeapon = Item::LoadFromFile(file);
+
+	uint32_t a;
+	file.read(reinterpret_cast<char*>(&a), sizeof(uint32_t));
+	for (int i = 0; i < inventory->GetSize(); i++)
+	{
+		inventory->SetItem(i, Item::LoadFromFile(file));
+	}
+}
+
+void PlayerEntity::WriteAdditionalDataToFile(std::ofstream& file)
+{
+	Entity::WriteAdditionalDataToFile(file);
+	file.write(reinterpret_cast<char*>(&hunger), sizeof(int));
+	file.write(reinterpret_cast<char*>(&water), sizeof(int));
+	Item::SaveToFile(pickaxeTool, file);
+	Item::SaveToFile(axeTool, file);
+	Item::SaveToFile(shovelTool, file);
+	Item::SaveToFile(pumpTool, file);
+	Item::SaveToFile(placeableItem, file);
+	Item::SaveToFile(meleeWeapon, file);
+	Item::SaveToFile(rangedWeapon, file);
+	inventory->SaveToFile(file);
+}
+
+Entity* PlayerEntity::Clone(World* world, float x, float y) const
+{
+	return new PlayerEntity(world, x, y);
 }
 
 void PlayerEntity::EntityKilledRemote(Entity* e)
@@ -79,15 +123,27 @@ void PlayerEntity::PreDrawThisGUI()
 {
 	static ALLEGRO_MOUSE_STATE mouseState;
 	al_get_mouse_state(&mouseState);
-	
-	al_draw_filled_rectangle(100, 50, 300, 130, al_map_rgba(0, 150, 255, 150));
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 55, 0, "TIME: %d", GetContainingWorld()->daytime);
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
-	
-	al_draw_filled_rectangle(SCREEN_WIDTH/2-250, 50, SCREEN_WIDTH/2+250, 250, al_map_rgba(0, 150, 255, 150));
+
+	if (debug >= 1)
+	{
+		al_draw_filled_rectangle(100, 50, 300, 180, al_map_rgba(0, 150, 255, 150));
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 55, 0, "TIME: %d", GetContainingWorld()->gametime);
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 135, 0, "FPS: %.1lf", DebugInfo::framesEnd.empty() ? 0 : DebugInfo::FRAMES_RECORD_NUM / (DebugInfo::framesEnd.back() - DebugInfo::framesEnd.front()));
+	}
 
 	float x = GET_MOUSE_XPOS(mouseState);
 	float y = GET_MOUSE_YPOS(mouseState);
+	if (debug >= 2)
+	{
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 500, 50, SCREEN_WIDTH / 2 - 270, 250, al_map_rgba(150, 255, 0, 150));
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 490), 60, 0, "Chunk X: %d", (int)util_floor(x / WorldChunk::CHUNK_SIZE_X));
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 490), 95, 0, "Chunk Y: %d", (int)util_floor(y / WorldChunk::CHUNK_SIZE_Y));
+	}
+
+
+	al_draw_filled_rectangle(SCREEN_WIDTH/2-250, 50, SCREEN_WIDTH/2+250, 250, al_map_rgba(0, 150, 255, 150));
+
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", GetXpos());
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", GetYpos());
@@ -99,14 +155,17 @@ void PlayerEntity::PreDrawThisGUI()
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s",targetedTile->GetName().c_str());
 	GroundTile* targetedGroundTile = nullptr;
 
-	al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 270, 50, SCREEN_WIDTH / 2 + 600, 250, al_map_rgba(0, 200, 130, 150));
-	al_draw_text(loaded_fonts["default"][25], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
-	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
-	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
-	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
-	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
-	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
-	al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
+	if (debug >= 3)
+	{
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 270, 50, SCREEN_WIDTH / 2 + 600, 250, al_map_rgba(0, 200, 130, 150));
+		al_draw_text(loaded_fonts["default"][25], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
+		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
+		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
+		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
+		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
+		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
+		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
+	}
 
 	if (targetedTile->IsEmpty())
 	{
@@ -279,7 +338,7 @@ void PlayerEntity::Draw()
 {
 	int x = floor((GetXpos()) * 128);
 	int y = floor((GetYpos()) * 128);
-	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, getRotation(), 0);
+	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, GetRotation(), 0);
 }
 
 void PlayerEntity::Consume(Consumable* c)
@@ -365,26 +424,8 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		}
 		break;
 	case ALLEGRO_KEY_ESCAPE:
-		switch (guistate)
-		{
-		case PLAYER_GUI_STATE::INVENTORY:
-			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
-			break;
-		case PLAYER_GUI_STATE::QUEST:
-			if(questGUI->curQuest==nullptr)
-				guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
-			break;
-		case PLAYER_GUI_STATE::CRAFTING:
-			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
-			break;
-		case PLAYER_GUI_STATE::INFO:
-			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
-			break;
-		}
+		guistate = PLAYER_GUI_STATE::WORLD;
+		activeSubGUI = hotbarGUI;
 		break;
 	case ALLEGRO_KEY_1:
 		
@@ -412,6 +453,12 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		break;
 	case ALLEGRO_KEY_9:
 
+		break;
+	case ALLEGRO_KEY_F2:
+		showHitbox = !showHitbox;
+		break;
+	case ALLEGRO_KEY_F3:
+		debug = (debug + (al_key_down(&s,ALLEGRO_KEY_LSHIFT)?-1:1)+4) % 4;
 		break;
 	}
 	return true;
@@ -484,7 +531,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 					case 1:
 					{
 						if (rangedWeapon != nullptr)
-							dynamic_cast<RangedWeapon*>(rangedWeapon)->Fire(containingWorld, GetXpos(), GetYpos(), getRotation() - M_PI_2, this);
+							dynamic_cast<RangedWeapon*>(rangedWeapon)->Fire(containingWorld, GetXpos(), GetYpos(), GetRotation() - M_PI_2, this);
 					}
 					break;
 					case 2:
@@ -621,7 +668,7 @@ void PlayerEntity::AddConstItem(Item* item)
 */
 
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
-static const float PLAYER_SPEED = 0.09f;
+static const float PLAYER_SPEED = 0.01f;
 
 void PlayerEntity::UseTile(int x, int y)
 {
@@ -646,8 +693,7 @@ void PlayerEntity::MineTile(int x, int y)
 	Tile* tile = containingWorld->GetTile(x, y);
 	if (tile->IsEmpty())
 	{
-		GroundTile* gtile = containingWorld->GetGroundTile(x, y);
-		SetTarget(gtile);
+		SetTarget(containingWorld,x,y);
 		this->Mine();
 		return;
 	}
@@ -710,28 +756,28 @@ void PlayerEntity::Tick()
 		switch (keys_pressed & 0b00001111)
 		{
 		case 0b0001:
-			applyForce(PLAYER_SPEED, 0);
+			ApplyForce(PLAYER_SPEED, 0);
 			break;
 		case 0b0010:
-			applyForce(0, PLAYER_SPEED);
+			ApplyForce(0, PLAYER_SPEED);
 			break;
 		case 0b0011:
-			applyForce(PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED * DIAG_MOD);
+			ApplyForce(PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED * DIAG_MOD);
 			break;
 		case 0b0100:
-			applyForce(-PLAYER_SPEED, 0);
+			ApplyForce(-PLAYER_SPEED, 0);
 			break;
 		case 0b0110:
-			applyForce(-PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED * DIAG_MOD);
+			ApplyForce(-PLAYER_SPEED * DIAG_MOD, PLAYER_SPEED * DIAG_MOD);
 			break;
 		case 0b1000:
-			applyForce(0, -PLAYER_SPEED);
+			ApplyForce(0, -PLAYER_SPEED);
 			break;
 		case 0b1001:
-			applyForce(PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
+			ApplyForce(PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
 			break;
 		case 0b1100:
-			applyForce(-PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
+			ApplyForce(-PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
 			break;
 		}
 		hunger = std::max(0.f, hunger - HUNGER_LOSS_PER_TICK);
@@ -782,7 +828,13 @@ void PlayerEntity::PushNotification(std::string txt, int fontsize)
 	notifications.push_back(PlayerNotification::MakeTextNotification(txt, 200, 70, GUItimer + 2000, fontsize));
 }
 
-PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr), mode{ PlayerActionMode::MINING }
+void PlayerEntity::DisplayTileGUI(Tile* t, GUI* g)
+{
+	guistate = PLAYER_GUI_STATE::TILE;
+	activeSubGUI = g;
+}
+
+PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }
 {
 	quests = quest_collection;
 	hunger = MAX_HUNGER;
@@ -791,7 +843,6 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	luaInterface = new LuaInterface(world, true);
 	inventory = new SimpleItemInventory(36);
 	meleeWeapon = new SimpleSword();
-	inventory->AddConstItem(new BerryItem());
 	rangedWeapon = new GunItem();
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
@@ -799,7 +850,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	craftingGUI = new SimpleCraftingGUI();
 	craftingGUI->SetRecipeList(loaded_crafting_recipes);
 	craftingGUI->SetInventory(inventory);
-	craftingGUI->SetRecipeCallbackFunction([&](const Recipe* recipe, int times) {
+	craftingGUI->SetRecipeCallbackFunction([&](const CraftingRecipe* recipe, int times) {
 		if (times == 0)
 			return;
 		for (int i = 0; i < recipe->GetInputItems()->GetSize(); i++)

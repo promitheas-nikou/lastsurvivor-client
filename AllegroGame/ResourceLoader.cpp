@@ -43,6 +43,8 @@
 #include "FenceItem.h"
 #include "TorchTile.h"
 #include "TorchItem.h"
+#include "BurnerFurnaceMk1Tile.h"
+#include "BurnerFurnaceMk1Item.h"
 
 #include "Recipe.h"
 
@@ -100,9 +102,11 @@ std::unordered_map<std::string, json> entity_data;
 std::map<uint32_t, std::string> tile_ids_to_keys;
 std::map<uint32_t, std::string> gtile_ids_to_keys;
 std::map<uint32_t, std::string> item_ids_to_keys;
+std::map<uint32_t, std::string> entity_ids_to_keys;
 std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
 std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
 std::unordered_map<std::string, uint32_t> item_keys_to_ids;
+std::unordered_map<std::string, uint32_t> entity_keys_to_ids;
 
 std::string game_name;
 std::string game_version_name;
@@ -265,11 +269,13 @@ void init_tiles()
 		BerryBushTile::Init(tile_data[BerryBushTile::ID]);
 		FenceTile::Init(tile_data[FenceTile::ID]);
 		TorchTile::Init(tile_data[TorchTile::ID]);
+		BurnerFurnaceMk1Tile::Init(tile_data[BurnerFurnaceMk1Tile::ID]);
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
 		prototype_tiles[TreeTile::ID] = new TreeTile(nullptr, 0, 0);
 		prototype_tiles[BerryBushTile::ID] = new BerryBushTile(nullptr, 0, 0);
 		prototype_tiles[FenceTile::ID] = new FenceTile(nullptr, 0, 0);
 		prototype_tiles[TorchTile::ID] = new TorchTile(nullptr, 0, 0);
+		prototype_tiles[BurnerFurnaceMk1Tile::ID] = new BurnerFurnaceMk1Tile(nullptr, 0, 0);
 	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -314,6 +320,7 @@ void init_items()
 		SaplingItem::Init(item_data[SaplingItem::ID]);
 		FenceItem::Init(item_data[FenceItem::ID]);
 		TorchItem::Init(item_data[TorchItem::ID]);
+		BurnerFurnaceMk1Item::Init(item_data[BurnerFurnaceMk1Item::ID]);
 
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
@@ -322,6 +329,7 @@ void init_items()
 		prototype_items[SimpleSword::ID] = new SimpleSword();
 		prototype_items[GunItem::ID] = new GunItem();
 		prototype_items[BerryItem::ID] = new BerryItem();
+		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
 		prototype_items[AnthraciteCoalChunkItem::ID] = new AnthraciteCoalChunkItem();
 		prototype_items[MalachiteChunkItem::ID] = new MalachiteChunkItem();
 		prototype_items[MagnetiteChunkItem::ID] = new MagnetiteChunkItem();
@@ -331,6 +339,7 @@ void init_items()
 		prototype_items[SaplingItem::ID] = new SaplingItem();
 		prototype_items[FenceItem::ID] = new FenceItem();
 		prototype_items[TorchItem::ID] = new TorchItem();
+		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
@@ -360,10 +369,19 @@ void init_entities()
 {
 	for (nlohmann::json j : json_data["entities"])
 		entity_data[j["id"]] = j;
+	int counter = 0;
+	for (std::pair<std::string, json> pair : entity_data)
+	{
+		printf("FOUND DATA FOR ENTITY \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+		entity_ids_to_keys[counter] = pair.first;
+		entity_keys_to_ids[pair.first] = counter++;
+	}
 	CactusBossEntity::Init(entity_data[CactusBossEntity::ID]);
+	CactusBossEntity::RattleProjectile::Init(entity_data[CactusBossEntity::RattleProjectile::ID]);
 	ZombieEntity::Init(entity_data[ZombieEntity::ID]);
 	PlayerEntity::Init(entity_data[PlayerEntity::ID]);
 	prototype_entities[CactusBossEntity::ID] = new CactusBossEntity(nullptr, 0.f, 0.f);
+	prototype_entities[CactusBossEntity::RattleProjectile::ID] = new CactusBossEntity::RattleProjectile(nullptr, 0.f, 0.f);
 	prototype_entities[ZombieEntity::ID] = new ZombieEntity(nullptr, 0.f, 0.f);
 	prototype_entities[PlayerEntity::ID] = new PlayerEntity(nullptr, 0.f, 0.f);
 	printf("SUCCESSFULLY INITIALIZED ENTITIES!\n");
@@ -371,7 +389,7 @@ void init_entities()
 
 void init_recipes()
 {
-	Recipe::LoadRecipes(json_data["recipes"]["crafting"]);
+	CraftingRecipe::LoadRecipes(json_data["recipes"]["crafting"]);
 }
 
 void free_resources()

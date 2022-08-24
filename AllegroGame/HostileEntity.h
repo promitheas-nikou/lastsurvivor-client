@@ -9,6 +9,9 @@ protected:
     virtual bool IsHostile() const final;
 	virtual void Tick() override;
 
+	virtual void LoadAdditionalDataFromFile(std::ifstream& file);
+	virtual void WriteAdditionalDataToFile(std::ofstream& file);
+
 	bool CooldownReady() const;
 	void ResetCooldown(int val);
 

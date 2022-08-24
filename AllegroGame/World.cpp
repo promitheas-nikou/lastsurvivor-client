@@ -7,26 +7,33 @@
 #include "dirent.h"
 #include "MathUtils.h"
 #include "SimplexNoise.h"
+#include "DebugInfo.h"
+#include <exception>
 
 #define DEBUG
 
 
 #define WORLD_SAVE_MANIFEST_FILENAME "world_manifest.json"
+#define WORLD_SAVE_PLAYER_DATA_FILENAME "player.entitydata"
 #define WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY "DO_DYNAMIC_WORLDGEN"
 #define WORLD_SAVE_MANIFEST_SEED_KEY "SEED"
 #define WORLD_SAVE_MANIFEST_VERSION_KEY "VERSION"
+#define WORLD_SAVE_MANIFEST_GAMETIME_KEY "GAMETIME"
 #define WORLD_SAVE_MANIFEST_VER_MAJOR_KEY "VER_MAJOR"
 #define WORLD_SAVE_MANIFEST_VER_MINOR_KEY "VER_MINOR"
 #define WORLD_SAVE_MANIFEST_NAME_KEY "NAME"
 #define WORLD_SAVE_MANIFEST_CHUNKS_KEY "CHUNKS"
 #define WORLD_SAVE_MANIFEST_TILES_DICT_KEY "TILES"
 #define WORLD_SAVE_MANIFEST_GROUND_TILES_DICT_KEY "GTILES"
+#define WORLD_SAVE_MANIFEST_ENTITIES_DICT_KEY "ENTITIES"
 #define WORLD_SAVE_MANIFEST_ITEMS_DICT_KEY "ITEMS"
 #define WORLD_SAVE_MANIFEST_CHUNK_X_SIZE_KEY "CHUNK_X_SIZE"
 #define WORLD_SAVE_MANIFEST_CHUNK_Y_SIZE_KEY "CHUNK_Y_SIZE"
 #define WORLD_SAVE_COORDINATE_DELIMETER "~"
 #define WORLD_SAVE_CHUNKDATA_FILE_EXTENSION ".chunkdata"
+#define WORLD_SAVE_ENTITYDATA_FILE_EXTENSION ".entitydata"
 #define WORLD_SAVE_CHUNKDATA_DIR "chunks"
+#define WORLD_SAVE_ENTITYDATA_DIR "entities"
 
 ALLEGRO_COLOR CombineColors(ALLEGRO_COLOR x, ALLEGRO_COLOR y, float z)
 {
@@ -47,15 +54,15 @@ ALLEGRO_COLOR World::CalcAmbientColor()
     constexpr ALLEGRO_COLOR AFTERNOON_COLOR = { .r = .9f, .g = .85f, .b = .7f, .a = 1.f}; //48000 or 16 minutes
     constexpr ALLEGRO_COLOR NIGHT_COLOR = { .r = .2f, .g = .3f, .b = .25f, .a = 1.f }; //60000 or 20 minutes
     constexpr ALLEGRO_COLOR MIDNIGHT_COLOR = { .r = .075f, .g = .1f, .b = .2f, .a = 1.f }; //75000 or 25 minutes
-    if (daytime < 30000)
-        return CombineColors(MORNING_COLOR, NOON_COLOR, daytime / 30000.f);
-    if (daytime < 48000)
-        return CombineColors(NOON_COLOR, AFTERNOON_COLOR, (daytime - 30000) / 18000.f);
-    if (daytime < 60000)
-        return CombineColors(AFTERNOON_COLOR, NIGHT_COLOR, (daytime - 48000) / 12000.f);
-    if (daytime < 75000)
-        return CombineColors(NIGHT_COLOR, MIDNIGHT_COLOR, (daytime - 60000) / 15000.f);
-    return CombineColors(MIDNIGHT_COLOR, MORNING_COLOR, (daytime - 75000) / 15000.f);
+    if (gametime < 30000)
+        return CombineColors(MORNING_COLOR, NOON_COLOR, gametime / 30000.f);
+    if (gametime < 48000)
+        return CombineColors(NOON_COLOR, AFTERNOON_COLOR, (gametime - 30000) / 18000.f);
+    if (gametime < 60000)
+        return CombineColors(AFTERNOON_COLOR, NIGHT_COLOR, (gametime - 48000) / 12000.f);
+    if (gametime < 75000)
+        return CombineColors(NIGHT_COLOR, MIDNIGHT_COLOR, (gametime - 60000) / 15000.f);
+    return CombineColors(MIDNIGHT_COLOR, MORNING_COLOR, (gametime - 75000) / 15000.f);
 
 }
 
@@ -211,7 +218,6 @@ void World::AddEntity(Entity* e)
 void World::Tick()
 {
     static int tick_counter=0;
-    static std::deque<double> timestamps;
     loadedChunkCount = 0;
 
     for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
@@ -229,11 +235,12 @@ void World::Tick()
 
     if ((tick_counter++ % ENTITY_UPDATE_RATE)==0)
         UpdateEntityVector();
-    daytime = (daytime + 1) % 90000;
-    timestamps.push_back(al_get_time());
-    if (timestamps.size() > 51)
-        timestamps.pop_front();
-    TPSmeasured = 50 / (timestamps.back() - timestamps.front());
+    gametime = (gametime + 1) % 90000;
+
+    DebugInfo::ticksEnd.push(al_get_time());
+    if (DebugInfo::ticksEnd.size() > DebugInfo::TICKS_RECORD_NUM)
+        DebugInfo::ticksEnd.pop();
+    TPSmeasured = DebugInfo::TICKS_RECORD_NUM / (DebugInfo::ticksEnd.back() - DebugInfo::ticksEnd.front());
 }
 
 const PlayerEntity* World::GetPlayer() const
@@ -342,6 +349,8 @@ std::vector<Entity*> World::GetEntitiesAtPos(float x, float y) const
     for (Entity* e : entities)
         if (e->ContainsPos(x, y))
             t.push_back(e);
+    if(player->ContainsPos(x,y))
+        t.push_back(player);
     return t;
 }
 
@@ -353,6 +362,8 @@ std::vector<Entity*> World::GetEntitiesColliding(Entity* n) const
         if(n->CollidesWith(e))
             t.push_back(e);
     }
+    if(player->CollidesWith(n))
+        t.push_back(player);
     return t;
 }
 
@@ -378,7 +389,6 @@ void World::Draw()
     static float LIGHTS_BRIG[100];
 
     //DRAW TILES
-    loaded_shaders["world"]->Use();
     int offset_x = floor(player->GetXpos() * 128) - SCREEN_WIDTH / 2;
     int offset_y = floor(player->GetYpos() * 128) - SCREEN_HEIGHT / 2;
     int drawBeginX = floor(player->GetXpos()) - OPTION_DRAW_TILES_LEFT;
@@ -431,6 +441,13 @@ void World::Draw()
         if(!e->IsDead())
             e->Draw();
     player->Draw();
+    if (player->showHitbox)
+    {
+        loaded_shaders["default"]->Use();
+        al_draw_rectangle((player->GetXpos() - player->GetXsize() / 2) * 128, (player->GetYpos() - player->GetYsize() / 2) * 128, (player->GetXpos() + player->GetXsize() / 2) * 128, (player->GetYpos() + player->GetYsize() / 2) * 128, al_map_rgba(255, 255, 255, 255), 3.f);
+        for (Entity* e : entities)
+            al_draw_rectangle((e->GetXpos() - e->GetXsize() / 2) * 128, (e->GetYpos() - e->GetYsize() / 2) * 128, (e->GetXpos() + e->GetXsize() / 2) * 128, (e->GetYpos() + e->GetYsize() / 2) * 128, al_map_rgba(255, 255, 255, 255), 3.f);
+    }
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
     al_use_transform(&draw_transform);
 }
@@ -460,12 +477,13 @@ World* World::LoadWorldFromFile(std::string filename)
             manifest[WORLD_SAVE_MANIFEST_VERSION_KEY],
             manifest[WORLD_SAVE_MANIFEST_VER_MAJOR_KEY],
             manifest[WORLD_SAVE_MANIFEST_VER_MINOR_KEY]);
-
+        world->gametime = manifest[WORLD_SAVE_MANIFEST_GAMETIME_KEY];
         if ((manifest[WORLD_SAVE_MANIFEST_CHUNK_X_SIZE_KEY] != WorldChunk::CHUNK_SIZE_X) || (manifest[WORLD_SAVE_MANIFEST_CHUNK_Y_SIZE_KEY] != WorldChunk::CHUNK_SIZE_Y))
             throw std::format_error("WORLD FILE HAS DIFFERENT CHUNK SIZE!!!");
         std::map<uint32_t, std::string> cur_tile_keys;
         std::map<uint32_t, std::string> cur_gtile_keys;
         std::map<uint32_t, std::string> cur_item_ids;
+        std::map<uint32_t, std::string> cur_entities_ids;
 
         for (auto& [key, value] : manifest[WORLD_SAVE_MANIFEST_TILES_DICT_KEY].items())
             cur_tile_keys[std::stoi(key)] = value;
@@ -473,6 +491,12 @@ World* World::LoadWorldFromFile(std::string filename)
             cur_gtile_keys[std::stoi(key)] = value;
         for (auto& [key, value] : manifest[WORLD_SAVE_MANIFEST_ITEMS_DICT_KEY].items())
             cur_item_ids[std::stoi(key)] = value;
+        for (auto& [key, value] : manifest[WORLD_SAVE_MANIFEST_ENTITIES_DICT_KEY].items())
+            cur_entities_ids[std::stoi(key)] = value;
+        Item::id_to_str = cur_item_ids;
+
+        std::filesystem::path chunkdatadir = dir / WORLD_SAVE_CHUNKDATA_DIR;
+        std::filesystem::path entitydatadir = dir / WORLD_SAVE_ENTITYDATA_DIR;
 
         for (auto& [key, value] : manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY].items())
         {
@@ -481,7 +505,7 @@ World* World::LoadWorldFromFile(std::string filename)
             int cy = std::stoi(key.substr(pos+1));
             WorldChunk* chunk = new WorldChunk(world, cx, cy, false);
 
-            std::ifstream chunkdata = std::ifstream(dir / WORLD_SAVE_CHUNKDATA_DIR / (std::string)value);
+            std::ifstream chunkdata = std::ifstream(chunkdatadir / (std::string)value);
 
             for (int y = 0; y < WorldChunk::CHUNK_SIZE_Y; y++)
                 for (int x = 0; x < WorldChunk::CHUNK_SIZE_X; x++)
@@ -491,11 +515,34 @@ World* World::LoadWorldFromFile(std::string filename)
                     chunk->ground_tiles[y][x] = MakeGroundTile(world, cur_gtile_keys[gtileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
                     chunk->ground_tiles[y][x]->LoadAdditionalDataFromFile(chunkdata);
                     chunkdata.read(reinterpret_cast<char*>(&tileid), sizeof(uint32_t));
-                    chunk->tiles[y][x] = MakeTile(world, cur_tile_keys[gtileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
+                    chunk->tiles[y][x] = MakeTile(world, cur_tile_keys[tileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
                     chunk->tiles[y][x]->LoadAdditionalDataFromFile(chunkdata);
                 }
-            world->chunks[cx][cy] = chunk;
+            chunkdata.close();
+            world->chunks[cy][cx] = chunk;
         }
+
+
+
+        std::ifstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION);
+        uint32_t pid;
+        playerdata.read(reinterpret_cast<char*>(&pid), sizeof(uint32_t));
+        world->player = dynamic_cast<PlayerEntity*>(MakeEntity(world, cur_entities_ids[pid], 0, 0));
+        world->player->LoadAdditionalDataFromFile(playerdata);
+        if(std::filesystem::exists(entitydatadir))
+            for (const std::filesystem::directory_entry& entry : std::filesystem::directory_iterator(entitydatadir))
+            {
+                uint32_t eid;
+                std::ifstream entitydata(entry);
+                entitydata.read(reinterpret_cast<char*>(&eid), sizeof(uint32_t));
+                Entity* e = MakeEntity(world, cur_entities_ids[eid], 0, 0);
+                e->LoadAdditionalDataFromFile(entitydata);
+                world->AddEntity(e);
+                entitydata.close();
+            }
+
+        playerdata.close();
+
 #ifndef DEBUG
     }
     catch (std::exception e)
@@ -507,12 +554,8 @@ World* World::LoadWorldFromFile(std::string filename)
         world = nullptr;
     }
 #endif //DEBUG
-    try
-    {
-        //std::filesystem::remove_all(dir);
-    }
-    catch (std::filesystem::filesystem_error e) {}
-    return world; 
+    std::filesystem::remove_all(dir);
+    return world;
 }
 
 int begin_filename_index;
@@ -549,6 +592,7 @@ void zip_walk(struct zip_t* zip, const char* path) {
 void World::SaveToFile(std::string filename)
 {
     std::filesystem::path dir = std::filesystem::temp_directory_path() / "LastSurvivorTemp";
+    std::filesystem::create_directory(dir);
     std::cout << dir;
     std::ofstream manif_file(dir / WORLD_SAVE_MANIFEST_FILENAME);
     nlohmann::json manifest;
@@ -560,22 +604,27 @@ void World::SaveToFile(std::string filename)
     manifest[WORLD_SAVE_MANIFEST_VER_MINOR_KEY] = game_version_minor;
     manifest[WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY] = doDynamicWorldGen;
     manifest[WORLD_SAVE_MANIFEST_SEED_KEY] = SEED;
+    manifest[WORLD_SAVE_MANIFEST_GAMETIME_KEY] = gametime;
+    manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY] = {};
     for (const std::pair<int, std::string>& p : item_ids_to_keys)
         manifest[WORLD_SAVE_MANIFEST_ITEMS_DICT_KEY][p.first] = p.second;
     for (const std::pair<int, std::string>& p : tile_ids_to_keys)
         manifest[WORLD_SAVE_MANIFEST_TILES_DICT_KEY][p.first] = p.second;
     for (const std::pair<int, std::string>& p : gtile_ids_to_keys)
         manifest[WORLD_SAVE_MANIFEST_GROUND_TILES_DICT_KEY][p.first] = p.second;
-    manif_file << manifest;
-    manif_file.close();
-    for(const std::pair<int,std::map<int,WorldChunk*>>& p1: chunks)
+    for (const std::pair<int, std::string>& p : entity_ids_to_keys)
+        manifest[WORLD_SAVE_MANIFEST_ENTITIES_DICT_KEY][p.first] = p.second;
+    Item::str_to_id = item_keys_to_ids;
+    std::filesystem::path chunkdatadir = dir / WORLD_SAVE_CHUNKDATA_DIR;
+    std::filesystem::create_directory(chunkdatadir);
+    std::filesystem::path entitydatadir = dir / WORLD_SAVE_ENTITYDATA_DIR;
+    std::filesystem::create_directory(entitydatadir);
+        for(const std::pair<int,std::map<int,WorldChunk*>>& p1: chunks)
         for (const std::pair<int, WorldChunk*>& p2 : p1.second)
         {
-            std::string key = std::format("{}" WORLD_SAVE_COORDINATE_DELIMETER "{}", p1.first, p2.first);
+            std::string key = std::format("{}" WORLD_SAVE_COORDINATE_DELIMETER "{}", p2.first, p1.first);
             std::string filename = key + WORLD_SAVE_CHUNKDATA_FILE_EXTENSION;
             manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY][key] = filename;
-            std::filesystem::path chunkdatadir = dir / WORLD_SAVE_CHUNKDATA_DIR;
-            std::filesystem::create_directory(chunkdatadir);
             std::ofstream chunkdata(chunkdatadir / filename);
             for (int y = 0; y < WorldChunk::CHUNK_SIZE_Y; y++)
                 for (int x = 0; x < WorldChunk::CHUNK_SIZE_X; x++)
@@ -587,8 +636,30 @@ void World::SaveToFile(std::string filename)
                     chunkdata.write(reinterpret_cast<char*>(&tile_keys_to_ids[t->GetID()]), sizeof(uint32_t));
                     t->WriteAdditionalDataToFile(chunkdata);
                 }
+            chunkdata.flush();
             chunkdata.close();
         }
+    manif_file << manifest;
+    manif_file.flush();
+    manif_file.close();
+
+    std::ofstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION);
+    
+    playerdata.write(reinterpret_cast<char*>(&entity_keys_to_ids[player->GetID()]), sizeof(uint32_t));
+    player->WriteAdditionalDataToFile(playerdata);
+    playerdata.flush();
+    playerdata.close();
+
+    int counter = 0;
+    for (Entity* e : entities)
+    {
+        std::ofstream entitydatafile(entitydatadir / std::format("{}" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, counter++));
+        entitydatafile.write(reinterpret_cast<char*>(&entity_keys_to_ids[e->GetID()]), sizeof(uint32_t));
+        e->WriteAdditionalDataToFile(entitydatafile);
+        entitydatafile.flush();
+        entitydatafile.close();
+    }
+    
     zip_t* z = zip_open(filename.c_str(), ZIP_DEFAULT_COMPRESSION_LEVEL, 'w');
     if (z == NULL)
     {
@@ -599,6 +670,13 @@ void World::SaveToFile(std::string filename)
     begin_filename_index = dir.string().size()+1;
     zip_walk(z, dir.string().c_str());
     zip_close(z);
+    try {
+        std::filesystem::remove_all(dir);
+    }
+    catch (std::exception e)
+    {
+        std::cout << e.what();
+    }
 }
 
 World* World::CreateNewWorld(std::string name)
@@ -606,7 +684,9 @@ World* World::CreateNewWorld(std::string name)
     srand((unsigned int)time(NULL));
     int a = abs(rand()*rand()*rand());
     printf("SEED: %d\n", a);
-    return new World(true, a, name, game_version_name, game_version_minor, game_version_major);
+    World* w = new World(true, a, name, game_version_name, game_version_minor, game_version_major);
+    w->player = new PlayerEntity(w, 0, 0);
+    return w;
 }
 
 
@@ -620,7 +700,6 @@ World::World(bool w, const uint64_t s, std::string name, std::string n, int min,
 
     std::cout << a << '\n' << b << '\n' << c << '\n' << d << '\n';
     randgen = SimplexNoise::SimplexNoise(a, b, c, d);
-    player = new PlayerEntity(this, 0, 0);
 }
 
 World::Light::Light(float x, float y, float b) : xpos{ x }, ypos{ y }, brightness{ b }

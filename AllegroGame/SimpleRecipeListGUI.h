@@ -5,7 +5,7 @@ class SimpleRecipeListGUI :
 {
 private:
 
-    std::vector<const Recipe*> recipes;
+    std::vector<const CraftingRecipe*> recipes;
 
     int X,Y,W,H;
     int scroll;
@@ -13,7 +13,7 @@ private:
 
 public:
 
-    virtual void SetRecipeList(std::unordered_map<std::string, const Recipe*>& r) override;
+    virtual void SetRecipeList(std::unordered_map<std::string, const CraftingRecipe*>& r) override;
 
     virtual void PreDrawThisGUI() override;
     virtual void PostDrawThisGUI() final;

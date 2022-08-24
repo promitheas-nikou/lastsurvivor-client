@@ -11,6 +11,18 @@ void HostileEntity::Tick()
     damageCooldown--;
 }
 
+void HostileEntity::LoadAdditionalDataFromFile(std::ifstream& file)
+{
+    Entity::LoadAdditionalDataFromFile(file);
+    file.read(reinterpret_cast<char*>(&damageCooldown), sizeof(int));
+}
+
+void HostileEntity::WriteAdditionalDataToFile(std::ofstream& file)
+{
+    Entity::WriteAdditionalDataToFile(file);
+    file.write(reinterpret_cast<char*>(&damageCooldown), sizeof(int));
+}
+
 bool HostileEntity::CooldownReady() const
 {
     return damageCooldown<=0;

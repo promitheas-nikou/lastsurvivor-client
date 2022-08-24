@@ -203,7 +203,8 @@
     <ClCompile Include="BerryBushTile.cpp" />
     <ClCompile Include="BerryItem.cpp" />
     <ClCompile Include="BitmapUIComponent.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BurnerFurnaceMk1Item.cpp" />
+    <ClCompile Include="BurnerFurnaceMk1Tile.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="CactusBossEntity.cpp" />
     <ClCompile Include="ChancedLootBundle.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
+    <ClCompile Include="DebugInfo.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="DirtItem.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -255,7 +257,6 @@
     <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="RangedWeaponItem.cpp" />
-    <ClCompile Include="RattleLauncher.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RecipeListGUI.cpp" />
     <ClCompile Include="RectangularUIComponent.cpp" />
@@ -264,7 +265,6 @@
     <ClCompile Include="SandItem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShovelToolItem.cpp" />
-    <ClCompile Include="SimpleBullet.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
     <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp" />
     <ClCompile Include="SimpleConsumable.cpp" />
@@ -322,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
+    <ClInclude Include="AllItems.h" />
     <ClInclude Include="AudioMultiTrack.h" />
     <ClInclude Include="AudioMultiTrackCollection.h" />
     <ClInclude Include="AudioSampleInstanceMultiTrack.h" />
@@ -331,7 +332,8 @@
     <ClInclude Include="BerryBushTile.h" />
     <ClInclude Include="BerryItem.h" />
     <ClInclude Include="BitmapUIComponent.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BurnerFurnaceMk1Item.h" />
+    <ClInclude Include="BurnerFurnaceMk1Tile.h" />
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="CactusBossEntity.h" />
     <ClInclude Include="ChancedLootBundle.h" />
@@ -341,6 +343,7 @@
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="DeathGUI.h" />
+    <ClInclude Include="DebugInfo.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="DirtItem.h" />
@@ -386,7 +389,6 @@
     <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="RangedWeaponItem.h" />
-    <ClInclude Include="RattleLauncher.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeListGUI.h" />
     <ClInclude Include="RectangularUIComponent.h" />
@@ -395,7 +397,6 @@
     <ClInclude Include="SandItem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShovelToolItem.h" />
-    <ClInclude Include="SimpleBullet.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
     <ClInclude Include="SimpleCallbackTextDrawUIComponent.h" />
     <ClInclude Include="SimpleConsumable.h" />

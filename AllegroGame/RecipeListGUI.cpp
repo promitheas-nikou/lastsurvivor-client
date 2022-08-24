@@ -1,7 +1,7 @@
 #include "RecipeListGUI.h"
 #include "ResourceLoader.h"
 
-void RecipeListGUI::DrawRecipe(const Recipe* recipe, int x, int y, int w, int h)
+void RecipeListGUI::DrawRecipe(const CraftingRecipe* recipe, int x, int y, int w, int h)
 {
 	const ItemBundle* in = recipe->GetInputItems();
 	int a = in->GetSize();

@@ -12,6 +12,9 @@
 #include "Config.h"
 #include "SimpleItemBundle.h"
 
+std::unordered_map<std::string, uint32_t> Item::str_to_id;
+std::map<uint32_t, std::string> Item::id_to_str;
+
 int Item::MLBUF = 0;
 
 bool Item::DrawItemDetailsPaneMultilineCB(int line_num, const char* line, int size, void* extra)
@@ -22,16 +25,6 @@ bool Item::DrawItemDetailsPaneMultilineCB(int line_num, const char* line, int si
 
 Item::Item(std::string n, std::string d) : name{ n }, description{ d }, amount{ 1 }
 {}
-
-void Item::LoadAdditionalDataFromFile(std::ifstream &file)
-{
-    return;
-}
-
-void Item::WriteAdditionalDataToFile(std::ofstream& file)
-{
-    return;
-}
 
 std::string Item::GetName() const
 {
@@ -96,6 +89,39 @@ ItemBundle* Item::ConstCollapseToItemBundle() const
     b->AddItem(this->Clone());
     return b;
 }
+
+void Item::SaveToFile(std::ofstream &file)
+{
+    file.write(reinterpret_cast<char*>(&str_to_id[GetID()]), sizeof(uint32_t));
+    uint32_t d = GetAmount();
+    file.write(reinterpret_cast<char*>(&d), sizeof(int));
+}
+
+void Item::SaveToFile(Item* item, std::ofstream& file)
+{
+    constexpr uint32_t nullitemid = 0xFFFFFFFF;
+    if (item == nullptr)
+        file.write(reinterpret_cast<const char*>(&nullitemid), sizeof(uint32_t));
+    else
+        item->SaveToFile(file);
+}
+
+Item* Item::LoadFromFile(std::ifstream &file)
+{
+    uint32_t i;
+    file.read(reinterpret_cast<char*>(&i), sizeof(uint32_t));
+    if (i == 0xFFFFFFFF)
+        return nullptr;
+    int a;
+    Item* item = MakeItemFromID(id_to_str[i]);
+    file.read(reinterpret_cast<char*>(&a), sizeof(int));
+    item->SetAmount(a);
+    item->LoadAdditionalDataFromFile(file);
+    return item;
+}
+
+void Item::LoadAdditionalDataFromFile(std::ifstream& file)
+{}
 
 void Item::AddConstToInventory(ItemInventory* inv) const
 {

@@ -30,6 +30,11 @@ bool GUI::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
 	return false;
 }
 
+void GUI::SetActiveSubGUI(GUI* gui)
+{
+	activeSubGUI = gui;
+}
+
 bool GUI::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	return false;

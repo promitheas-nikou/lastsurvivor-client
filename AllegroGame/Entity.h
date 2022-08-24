@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <iostream>
+#include <fstream>
 #include <unordered_map>
 #include <allegro5/allegro5.h>
 #include "MeleeWeapon.h"
@@ -29,6 +31,7 @@ private:
 	float maxHealth;
 	bool bounce = false;
 	bool hasFriction = true;
+	bool killOnCollision = false;
 
 protected:
 	World* containingWorld;
@@ -41,6 +44,10 @@ protected:
 
 	void SetHasFriction(bool b);
 
+	bool GetKillOnCollision() const;
+
+	void SetKillOnCollision(bool b);
+
 	void Revive();
 	void Kill();
 
@@ -50,14 +57,16 @@ public:
 
 	static const float MAXIMUM_IGNORABLE_SPEED;
 
+	virtual Entity* Clone(World* world, float x, float y) const = 0;
+
 	float GetXpos() const;
 	float GetYpos() const;
-	float getXvel() const;
-	float getYvel() const;
+	float GetXvel() const;
+	float GetYvel() const;
 	float GetXsize() const;
 	float GetYsize() const;
-	float getRotation() const;
-	float getMass() const;
+	float GetRotation() const;
+	float GetMass() const;
 	World* GetContainingWorld() const;
 
 	bool DoesBounce() const;
@@ -65,8 +74,12 @@ public:
 	bool GetHasFriction() const;
 
 	virtual bool ContainsPos(float x, float y);
+	virtual bool IntersectRect(float x1, float y1, float x2, float y2);
 	
-	virtual bool CollidesWith(Entity* e);
+	virtual bool CollidesWith(Entity* e) const;
+
+	virtual void LoadAdditionalDataFromFile(std::ifstream& file);
+	virtual void WriteAdditionalDataToFile(std::ofstream& file);
 
 	virtual bool IsHostile() const;
 	virtual bool IsPassive() const;
@@ -74,7 +87,7 @@ public:
 	float GetHealth() const;
 	float GetMaxHealth() const;
 
-	void applyForce(float dx, float dy);
+	void ApplyForce(float dx, float dy);
 	void setSpeed(float dx, float dy);
 
 	void rotateTo(float targetRotation);
@@ -109,8 +122,11 @@ public:
 	friend World;
 	friend PlayerEntity;
 	friend class Consumable;
+	friend class LuaInterface;
 };
 
 
 extern std::unordered_map<std::string, const Entity*> prototype_entities;
+
+Entity* MakeEntity(World* world, std::string id, float x, float y);
 

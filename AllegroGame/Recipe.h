@@ -4,25 +4,29 @@
 #include "ItemBundle.h"
 #include "ItemInventory.h"
 
-class Recipe;
+class CraftingRecipe;
+class SmeltingRecipe;
 
-extern std::unordered_map<std::string, const Recipe*> loaded_hand_crafting_recipes;
-extern std::unordered_map<std::string, const Recipe*> loaded_smelting_recipes;
-extern std::unordered_map<std::string, const Recipe*> loaded_crafting_recipes;
+extern std::unordered_map<std::string, const SmeltingRecipe*> loaded_smelting_recipes;
+extern std::unordered_map<std::string, const CraftingRecipe*> loaded_crafting_recipes;
 
 
-class Recipe
+class CraftingRecipe
 {
 private:
+	int tier;
 	ItemBundle* input;
 	ItemBundle* output;
 
-	Recipe(nlohmann::json data);
+	CraftingRecipe(nlohmann::json data);
 
 public:
 
 	const ItemBundle* GetInputItems() const;
 	const ItemBundle* GetOutputItems() const;
+
+	int GetTier() const;
+
 
 	bool PerformOnInventory(ItemInventory* inventory) const;
 
@@ -31,6 +35,33 @@ public:
 	static void LoadRecipes(nlohmann::json data);
 	static void UnloadRecipes();
 
-	~Recipe();
+	~CraftingRecipe();
+};
+
+
+class SmeltingRecipe
+{
+private:
+	int tier;
+	float minHeat;
+	float duration;
+	Item* inputItem;
+	Item* outputItem;
+
+	SmeltingRecipe(nlohmann::json data);
+
+public:
+
+	const Item* GetInputItem() const;
+	const Item* GetOutputItem() const;
+
+
+	float GetMinimumHeat() const;
+	int GetTier() const;
+
+	static void LoadRecipes(nlohmann::json data);
+	static void UnloadRecipes();
+
+	~SmeltingRecipe();
 };
 

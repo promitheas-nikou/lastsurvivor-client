@@ -23,6 +23,8 @@ public:
 	virtual void RemoveConstItemBundle(const ItemBundle* bundle);
 	virtual ItemBundle* AddItemBundle(ItemBundle* bundle);
 	virtual int GetSize() const = 0;
+	virtual void SaveToFile(std::ofstream& file);
+	static ItemInventory* LoadFromFile(std::ifstream& file);
 	
 	virtual ~ItemInventory() = default;
 };

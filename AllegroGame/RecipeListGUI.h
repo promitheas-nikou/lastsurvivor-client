@@ -7,10 +7,10 @@ class RecipeListGUI :
 {
 protected:
 
-    void DrawRecipe(const Recipe* recipe, int x, int y, int w, int h);
+    void DrawRecipe(const CraftingRecipe* recipe, int x, int y, int w, int h);
 
 public:
 
-    virtual void SetRecipeList(std::unordered_map<std::string, const Recipe*>& recipes) = 0;
+    virtual void SetRecipeList(std::unordered_map<std::string, const CraftingRecipe*>& recipes) = 0;
 };
 

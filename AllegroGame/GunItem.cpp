@@ -1,7 +1,6 @@
 #include "GunItem.h"
 #include "ResourceLoader.h"
 #include "World.h"
-#include "SimpleBullet.h"
 
 std::string GunItem::NAME;
 ALLEGRO_BITMAP* GunItem::TEXTURE;
@@ -19,10 +18,6 @@ std::string GunItem::GetID() const
 
 void GunItem::Fire(World* world, float xpos, float ypos, float rot, Entity* owner)
 {
-	SimpleBullet* b = new SimpleBullet(world, DAMAGE, xpos, ypos, FIRE_SPEED * cosf(rot), FIRE_SPEED * sinf(rot), &BULLET_TEXTURE, 1, 1, &AUDIO_TRACKS);
-	b->SetOwnerEntity(owner);
-	b->SetCollisionCallback(callback);
-	world->AddEntity(b);
 }
 
 GunItem::GunItem() : RangedWeaponItem(NAME)

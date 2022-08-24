@@ -1,10 +1,10 @@
 #include "SimpleRecipeListGUI.h"
 #include <algorithm>
 
-void SimpleRecipeListGUI::SetRecipeList(std::unordered_map<std::string, const Recipe*>& r)
+void SimpleRecipeListGUI::SetRecipeList(std::unordered_map<std::string, const CraftingRecipe*>& r)
 {
 	recipes.clear();
-	for (const std::pair<std::string, const Recipe*>& p : r)
+	for (const std::pair<std::string, const CraftingRecipe*>& p : r)
 		recipes.push_back(p.second);
 }
 

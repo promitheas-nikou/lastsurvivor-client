@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.7",
-  "VER_MINOR": 7,
+  "VERSION": "ALPHA 1.11",
+  "VER_MINOR": 11,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -16,7 +16,7 @@
       "id": "main_music",
       "wait": true,
       "filenames": [
-        "main_music.ogg"
+        "menu_theme_1.wav"
       ]
     },
     {
@@ -75,6 +75,13 @@
         "player_hurt_0.wav",
         "player_hurt_1.wav",
         "player_hurt_2.wav"
+      ]
+    },
+    {
+      "id": "theme.menu",
+      "wait": true,
+      "filenames": [
+        "menu_theme_1.wav"
       ]
     }
   ],
@@ -530,6 +537,18 @@
     {
       "id": "tex.items.torch",
       "filename": "torch.png"
+    },
+    {
+      "id": "tex.tiles.burner_furnace_mk1/0",
+      "filename": "burner_furnace_mk1_off.png"
+    },
+    {
+      "id": "tex.tiles.burner_furnace_mk1/1",
+      "filename": "burner_furnace_mk1_on.png"
+    },
+    {
+      "id": "tex.items.burner_furnace_mk1",
+      "filename": "burner_furnace_mk1_off.png"
     }
   ],
   "entities": [
@@ -562,7 +581,8 @@
     },
     {
       "id": "entities.cactus_boss",
-      "max_health": 10,
+      "max_health": 100,
+      "name": "Cactus Boss",
       "textures_left": [
         "tex.entities.cactus_boss.left/0",
         "tex.entities.cactus_boss.left/1",
@@ -583,27 +603,29 @@
         "tex.entities.cactus_boss.front/2",
         "tex.entities.cactus_boss.front/3",
         "tex.entities.cactus_boss.front/4"
+      ]
+    },
+    {
+      "id": "entities.projectiles.cactus_boss_rattle",
+      "name": "Rattle",
+      "damage": 10.0,
+      "projectile_speed": 0.5,
+      "textures": [
+        "tex.entities.rattle/0",
+        "tex.entities.rattle/1",
+        "tex.entities.rattle/2",
+        "tex.entities.rattle/3",
+        "tex.entities.rattle/4",
+        "tex.entities.rattle/5",
+        "tex.entities.rattle/6",
+        "tex.entities.rattle/7"
       ],
-      "rattle_launcher": {
-        "damage": 10.0,
-        "projectile_speed": 0.1,
-        "textures": [
-          "tex.entities.rattle/0",
-          "tex.entities.rattle/1",
-          "tex.entities.rattle/2",
-          "tex.entities.rattle/3",
-          "tex.entities.rattle/4",
-          "tex.entities.rattle/5",
-          "tex.entities.rattle/6",
-          "tex.entities.rattle/7"
-        ],
-        "audio": [
-          {
-            "type": "projectile_hit",
-            "id": "entities.rattle_bullet.hit"
-          }
-        ]
-      }
+      "audio": [
+        {
+          "type": "projectile_hit",
+          "id": "entities.rattle_bullet.hit"
+        }
+      ]
     }
   ],
   "loot_bundles": [
@@ -776,6 +798,18 @@
       ]
     },
     {
+      "id": "tiles.burner_furnace_mk1.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.rock",
+          "minamount": 3,
+          "maxamount": 4
+        }
+      ]
+    },
+    {
       "id": "tiles.torch.mine.any",
       "type": "simple",
       "objects": [
@@ -890,6 +924,18 @@
         "tex.tiles.fence/16"
       ],
       "drops": "tiles.fence.mine.any"
+    },
+    {
+      "id": "tiles.burner_furnace_mk1",
+      "name": "Burner Furnace",
+      "tool": "pickaxe",
+      "textures": [
+        "tex.tiles.burner_furnace_mk1/0",
+        "tex.tiles.burner_furnace_mk1/1"
+      ],
+      "drops": "tiles.burner_furnace_mk1.mine.any",
+      "mining_resistance": 8,
+      "brightness": 512.0
     }
   ],
   "ground_tiles": [
@@ -1125,6 +1171,12 @@
       "name": "Torch",
       "description": "A torch created from wood. Can be used to provide light at nighttime.",
       "texture": "tex.items.torch"
+    },
+    {
+      "id": "items.burner_furnace_mk1",
+      "name": "Burner Furnace Mk1",
+      "description": "A furnace that can be used to melt ore.",
+      "texture": "tex.items.burner_furnace_mk1"
     }
   ],
   "fonts": [
@@ -1165,6 +1217,21 @@
         "output": [
           {
             "id": "items.torch",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "recipes.burner_furnace_mk1",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.burner_furnace_mk1",
             "amount": 1
           }
         ]

@@ -214,6 +214,9 @@
     <Filter Include="Header Files\Game\Items\PlaceableItems">
       <UniqueIdentifier>{b0bdaac4-6b12-4647-b1db-6045f7a7373f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Tiles\MachineTiles">
+      <UniqueIdentifier>{347bab62-47ce-4d5e-9ac8-cc76623bd0e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -405,12 +408,6 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\Game\Entities\Projectiles</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\Game\Entities\Projectiles</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleBullet.cpp">
-      <Filter>Source Files\Game\Entities\Projectiles</Filter>
-    </ClCompile>
     <ClCompile Include="Consumable.cpp">
       <Filter>Source Files\Game\Usables\Consumables</Filter>
     </ClCompile>
@@ -446,9 +443,6 @@
     </ClCompile>
     <ClCompile Include="ConnectingTile.cpp">
       <Filter>Source Files\Game\Tiles\ConnectingTile</Filter>
-    </ClCompile>
-    <ClCompile Include="RattleLauncher.cpp">
-      <Filter>Source Files\Game\GUI</Filter>
     </ClCompile>
     <ClCompile Include="QuestGUI.cpp">
       <Filter>Source Files\Game\GUI</Filter>
@@ -566,6 +560,15 @@
     </ClCompile>
     <ClCompile Include="TorchItem.cpp">
       <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerFurnaceMk1Item.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerFurnaceMk1Tile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugInfo.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,12 +784,6 @@
     <ClInclude Include="RangedWeaponItem.h">
       <Filter>Header Files\Game\Items\WeaponItems</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleBullet.h">
-      <Filter>Header Files\Game\Entities\Projectiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files\Game\Entities\Projectiles</Filter>
-    </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\Game\Entities\Projectiles</Filter>
     </ClInclude>
@@ -810,9 +807,6 @@
     </ClInclude>
     <ClInclude Include="AudioSampleInstanceMultiTrack.h">
       <Filter>Header Files\Game\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="RattleLauncher.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CactusBossEntity.h">
       <Filter>Header Files\Game\Entities</Filter>
@@ -945,6 +939,18 @@
     </ClInclude>
     <ClInclude Include="SaplingItem.h">
       <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerFurnaceMk1Item.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerFurnaceMk1Tile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllItems.h">
+      <Filter>Header Files\Game\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

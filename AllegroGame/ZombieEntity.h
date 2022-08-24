@@ -13,6 +13,7 @@ private:
     static std::string NAME;
 public:
     static const std::string ID;
+    virtual Entity* Clone(World* world, float x, float y) const override;
     virtual void Tick() override;
     virtual void Draw() override;
     virtual std::string GetID() const final;

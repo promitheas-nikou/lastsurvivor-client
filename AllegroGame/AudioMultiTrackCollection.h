@@ -9,6 +9,8 @@ class AudioMultiTrackCollection
 private:
 	mutable std::map<SoundType, AudioMultiTrack*> multiTracks;
 public:
+
+
 	AudioMultiTrackCollection() = default;
 	void Play(SoundType t) const;
 	void Link(SoundType t, AudioMultiTrack* m);

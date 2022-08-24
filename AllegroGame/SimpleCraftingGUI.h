@@ -12,22 +12,22 @@ class SimpleCraftingGUI :
     public GUI
 {
 private:
-    std::function<void(const Recipe*, int)> recipeCraftedCallback;
+    std::function<void(const CraftingRecipe*, int)> recipeCraftedCallback;
 
     class SingleRecipeExecutionGUI :
         public GUI
     {   
     private:
         SimpleCraftingGUI* parent;
-        const Recipe* recipe;
+        const CraftingRecipe* recipe;
         ItemInventory* inventory;
         ItemIndex index;
         ALLEGRO_BITMAP* b1;
         ALLEGRO_BITMAP* b2;
         ALLEGRO_BITMAP* b3;
     public:
-        void SetRecipe(const Recipe* r);
-        const Recipe* GetRecipe() const;
+        void SetRecipe(const CraftingRecipe* r);
+        const CraftingRecipe* GetRecipe() const;
         void SetInventory(ItemInventory* i);
         ItemInventory* GetInventory() const;
 
@@ -44,12 +44,12 @@ private:
 
     SingleRecipeExecutionGUI* recipeGUI;
 
-    std::vector<const Recipe*> recipes;
+    std::vector<const CraftingRecipe*> recipes;
 
     int pageHeight;
     int scroll;
 
-    void DrawRecipe(const Recipe* recipe, int x, int y, int tw, int th, int rw, int rh);
+    void DrawRecipe(const CraftingRecipe* recipe, int x, int y, int tw, int th, int rw, int rh);
 
 public:
 
@@ -60,12 +60,12 @@ public:
     virtual bool MouseButtonDown(ALLEGRO_MOUSE_EVENT& event) override;
     virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& event) override;
 
-    void SetRecipeCallbackFunction(std::function<void(const Recipe*, int)> callback);
+    void SetRecipeCallbackFunction(std::function<void(const CraftingRecipe*, int)> callback);
 
     void SetInventory(ItemInventory* inventory);
     ItemInventory* GetInventory() const;
 
-    void SetRecipeList(std::unordered_map<std::string, const Recipe*>& r);
+    void SetRecipeList(std::unordered_map<std::string, const CraftingRecipe*>& r);
 
     SimpleCraftingGUI();
 };
