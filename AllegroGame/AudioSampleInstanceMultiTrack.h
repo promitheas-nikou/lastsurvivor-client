@@ -15,5 +15,6 @@ public:
 	AudioSampleInstanceMultiTrack(std::vector<ALLEGRO_SAMPLE_INSTANCE*>& si);
 
 	virtual void Play() const final;
+	virtual void Stop() const final;
 };
 

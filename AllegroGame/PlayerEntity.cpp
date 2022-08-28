@@ -18,6 +18,10 @@
 #include <functional>
 #include "DebugInfo.h"
 #include "MathUtils.h"
+#include <allegro5/allegro_native_dialog.h>
+#include <algorithm>
+#include "AllegroGame.h"
+#include "SimpleTextButtonUIComponent.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -121,6 +125,9 @@ void PlayerEntity::LogToConsole(std::string txt) const
 
 void PlayerEntity::PreDrawThisGUI()
 {
+	loaded_shaders["world"]->Use();
+	containingWorld->Draw();
+	loaded_shaders["default"]->Use();
 	static ALLEGRO_MOUSE_STATE mouseState;
 	al_get_mouse_state(&mouseState);
 
@@ -231,6 +238,7 @@ void PlayerEntity::PreDrawThisGUI()
 	{
 	case PLAYER_GUI_STATE::WORLD:
 	{
+		hotbarGUI->DrawGUI();
 		switch (mode)
 		{
 		case PlayerActionMode::MELEE:
@@ -302,7 +310,19 @@ void PlayerEntity::PreDrawThisGUI()
 	case PLAYER_GUI_STATE::QUEST:
 		break;
 	case PLAYER_GUI_STATE::CRAFTING:
-		//craftingGUI->DrawGUI();
+		break;
+	case PLAYER_GUI_STATE::PAUSE:
+		al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(100, 100, 100, 150));
+		al_draw_scaled_bitmap(HEALTH_ICON, 0, 0, al_get_bitmap_width(HEALTH_ICON), al_get_bitmap_height(HEALTH_ICON), 0, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 - 300, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(64, 0, 0, 200));
+		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 + 300 - (GetHealth() / 100.f) * 600.f, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(192, 0, 0, 200));
+		al_draw_scaled_bitmap(HUNGER_ICON, 0, 0, al_get_bitmap_width(HUNGER_ICON), al_get_bitmap_height(HUNGER_ICON), 64, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(64, SCREEN_HEIGHT / 2 - 300, 128, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 64, 0, 200));
+		al_draw_filled_rectangle(64, SCREEN_HEIGHT / 2 + 300 - (hunger / MAX_HUNGER) * 600.f, 128, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 192, 0, 200));
+		al_draw_scaled_bitmap(WATER_ICON, 0, 0, al_get_bitmap_width(WATER_ICON), al_get_bitmap_height(WATER_ICON), 128, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
+		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 - 300, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 64, 200));
+		al_draw_filled_rectangle(128, SCREEN_HEIGHT / 2 + 300 - (water / MAX_WATER) * 600.f, 192, SCREEN_HEIGHT / 2 + 300, al_map_rgba(0, 0, 192, 200));
+		hotbarGUI->DrawGUI();
 		break;
 	}
 	if (guistate == PLAYER_GUI_STATE::WORLD)
@@ -361,11 +381,6 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		keys_pressed |= 0b00000100;
 		break;
 	case ALLEGRO_KEY_S:
-		if (al_key_down(&s, ALLEGRO_KEY_LCTRL) || al_key_down(&s, ALLEGRO_KEY_RCTRL))
-		{
-			containingWorld->SaveToFile("./new_world.zip");
-			PushNotification("SAVED WORLD!!!", 24);
-		}
 		keys_pressed |= 0b00000010;
 		break;
 	case ALLEGRO_KEY_D:
@@ -375,7 +390,7 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		if (guistate == PLAYER_GUI_STATE::QUEST)
 		{
 			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
+			activeSubGUI = nullptr;
 		}
 		else if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
@@ -387,7 +402,7 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		if (guistate == PLAYER_GUI_STATE::CRAFTING)
 		{
 			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
+			activeSubGUI = nullptr;
 		}
 		else if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
@@ -420,12 +435,23 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		else if (guistate == PLAYER_GUI_STATE::INVENTORY)
 		{
 			guistate = PLAYER_GUI_STATE::WORLD;
-			activeSubGUI = hotbarGUI;
+			activeSubGUI = nullptr;
 		}
 		break;
 	case ALLEGRO_KEY_ESCAPE:
-		guistate = PLAYER_GUI_STATE::WORLD;
-		activeSubGUI = hotbarGUI;
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			guistate = PLAYER_GUI_STATE::PAUSE;
+			doWorldTick = false;
+			activeSubGUI = pauseGUI;
+		}
+		else
+		{
+			if (guistate == PLAYER_GUI_STATE::PAUSE)
+				doWorldTick = true;
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = nullptr;
+		}
 		break;
 	case ALLEGRO_KEY_1:
 		
@@ -630,7 +656,7 @@ bool PlayerEntity::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 */
 
 
-bool PlayerEntity::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
+bool PlayerEntity::KeyChar(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	if (event.keycode == ALLEGRO_KEY_ESCAPE)
 	{
@@ -847,6 +873,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
+	pauseGUI = new PauseMenuGUI(this);
 	craftingGUI = new SimpleCraftingGUI();
 	craftingGUI->SetRecipeList(loaded_crafting_recipes);
 	craftingGUI->SetInventory(inventory);
@@ -858,7 +885,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		for (int i = 0; i < recipe->GetOutputItems()->GetSize(); i++)
 			PushNotification(std::format("+{} x {}", recipe->GetOutputItems()->GetItem(i)->GetAmount()*times, recipe->GetOutputItems()->GetItem(i)->GetName()));
 	});
-	activeSubGUI = hotbarGUI;
+	activeSubGUI = nullptr;
 	deathgui = new DeathGUI(this);
 	questGUI = new QuestGUI(quests);
 	for (int i = 0; i < 9; i++)
@@ -930,3 +957,51 @@ PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, in
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	return p;
 }
+
+void PlayerEntity::PauseMenuGUI::PreDrawThisGUI()
+{
+	al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(150, 150, 150, 150));
+}
+
+PlayerEntity::PauseMenuGUI::PauseMenuGUI(PlayerEntity* p)
+{
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 300, 300, 100, [p]() {
+		doWorldTick = true;
+		p->guistate = PLAYER_GUI_STATE::WORLD;
+		p->activeSubGUI = nullptr;
+		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "RESUME GAME"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 150, 300, 100, [p]() {
+		ALLEGRO_FILECHOOSER* f = al_create_native_file_dialog("", "SAVE WORLD", "*.zip", ALLEGRO_FILECHOOSER_SAVE);
+		if (al_show_native_file_dialog(main_display, f)) {
+			p->containingWorld->SaveToFile(al_get_native_file_dialog_path(f, 0));
+			p->PushNotification("SUCCESSFULLY SAVED WORLD!!!", 24);
+		}
+		else
+			p->PushNotification("FAILED TO SAVE WORLD!!!", 24);
+		al_destroy_native_file_dialog(f);
+		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "SAVE WORLD"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2, 300, 100, [p]() {
+		ALLEGRO_FILECHOOSER* f = al_create_native_file_dialog("", "SAVE WORLD", "*.zip", ALLEGRO_FILECHOOSER_SAVE);
+		if (al_show_native_file_dialog(main_display, f)) {
+			p->containingWorld->SaveToFile(al_get_native_file_dialog_path(f, 0));
+			p->PushNotification("SUCCESSFULLY SAVED WORLD!!!", 24);
+			al_destroy_native_file_dialog(f);
+			delete p->GetContainingWorld();
+			al_stop_samples();
+			al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
+			currentGUI = mainMenuGUI;
+		}
+		else
+		{
+			p->PushNotification("FAILED TO SAVE WORLD!!!", 24);
+			al_destroy_native_file_dialog(f);
+		}
+		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "SAVE AND EXIT"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 150, 300, 100, [p]() {
+		delete p->GetContainingWorld();
+		al_stop_samples();
+		al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
+		currentGUI = mainMenuGUI;
+		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "EXIT WITHOUT SAVING"));
+}
+

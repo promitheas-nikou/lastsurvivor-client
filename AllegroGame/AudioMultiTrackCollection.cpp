@@ -13,6 +13,11 @@ void AudioMultiTrackCollection::Link(SoundType t, AudioMultiTrack* m)
 	multiTracks[t] = m;
 }
 
+void AudioMultiTrackCollection::Stop(SoundType t)
+{
+	multiTracks[t]->Stop();
+}
+
 void AudioMultiTrackCollection::LoadFromJSON(nlohmann::json data)
 {
 	for (nlohmann::json audio : data)

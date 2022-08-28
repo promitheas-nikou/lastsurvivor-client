@@ -239,6 +239,7 @@
     <ClCompile Include="LootObject.cpp" />
     <ClCompile Include="MagnetiteChunkItem.cpp" />
     <ClCompile Include="MagnetiteOreGroundTile.cpp" />
+    <ClCompile Include="MainGUIs.cpp" />
     <ClCompile Include="MalachiteChunkItem.cpp" />
     <ClCompile Include="MalachiteOreGroundTile.cpp" />
     <ClCompile Include="PlaceableItem.cpp" />
@@ -278,7 +279,9 @@
     <ClCompile Include="SimpleMeleeWeaponItem.cpp" />
     <ClCompile Include="SimpleRecipeListGUI.cpp" />
     <ClCompile Include="SimpleSword.cpp" />
+    <ClCompile Include="SimpleTextButtonUIComponent.cpp" />
     <ClCompile Include="SimpleTextDrawUIComponent.cpp" />
+    <ClCompile Include="SimpleTextInputUIComponent.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SoundType.cpp" />
     <ClCompile Include="TextUtils.cpp" />
@@ -322,6 +325,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
+    <ClInclude Include="AllegroGame.h" />
     <ClInclude Include="AllItems.h" />
     <ClInclude Include="AudioMultiTrack.h" />
     <ClInclude Include="AudioMultiTrackCollection.h" />
@@ -369,6 +373,7 @@
     <ClInclude Include="LootObject.h" />
     <ClInclude Include="MagnetiteChunkItem.h" />
     <ClInclude Include="MagnetiteOreGroundTile.h" />
+    <ClInclude Include="MainGUIs.h" />
     <ClInclude Include="MalachiteChunkItem.h" />
     <ClInclude Include="MalachiteOreGroundTile.h" />
     <ClInclude Include="PlaceableItem.h" />
@@ -409,7 +414,9 @@
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="SimpleMeleeWeaponItem.h" />
     <ClInclude Include="SimpleSword.h" />
+    <ClInclude Include="SimpleTextButtonUIComponent.h" />
     <ClInclude Include="SimpleTextDrawUIComponent.h" />
+    <ClInclude Include="SimpleTextInputUIComponent.h" />
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SoundType.h" />
     <ClInclude Include="TextUtils.h" />

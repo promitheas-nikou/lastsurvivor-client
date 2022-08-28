@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.11",
-  "VER_MINOR": 11,
+  "VERSION": "ALPHA 1.12",
+  "VER_MINOR": 12,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -13,10 +13,17 @@
   ],
   "audio": [
     {
-      "id": "main_music",
+      "id": "themes.credits",
       "wait": true,
       "filenames": [
-        "menu_theme_1.wav"
+        "menu_theme_2.wav"
+      ]
+    },
+    {
+      "id": "themes.ingame",
+      "wait": true,
+      "filenames": [
+        "menu_theme_2.wav"
       ]
     },
     {
@@ -78,7 +85,7 @@
       ]
     },
     {
-      "id": "theme.menu",
+      "id": "themes.menu",
       "wait": true,
       "filenames": [
         "menu_theme_1.wav"

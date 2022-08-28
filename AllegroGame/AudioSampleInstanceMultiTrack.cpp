@@ -13,3 +13,8 @@ void AudioSampleInstanceMultiTrack::Play() const
 	lastPlaying = s;
 	al_play_sample_instance(s);	
 }
+
+void AudioSampleInstanceMultiTrack::Stop() const
+{
+	al_stop_sample_instance(lastPlaying);
+}

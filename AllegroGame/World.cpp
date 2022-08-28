@@ -240,10 +240,11 @@ void World::Tick()
     DebugInfo::ticksEnd.push(al_get_time());
     if (DebugInfo::ticksEnd.size() > DebugInfo::TICKS_RECORD_NUM)
         DebugInfo::ticksEnd.pop();
-    TPSmeasured = DebugInfo::TICKS_RECORD_NUM / (DebugInfo::ticksEnd.back() - DebugInfo::ticksEnd.front());
+    if(DebugInfo::ticksEnd.size()>1)
+        TPSmeasured = (19*TPSmeasured + (DebugInfo::TICKS_RECORD_NUM-1) / (DebugInfo::ticksEnd.back() - DebugInfo::ticksEnd.front()))/20;
 }
 
-const PlayerEntity* World::GetPlayer() const
+PlayerEntity* World::GetPlayer() const
 {
     return player;
 }
@@ -679,6 +680,9 @@ void World::SaveToFile(std::string filename)
     }
 }
 
+#include "CactusBossEntity.h"
+#include "ZombieEntity.h"
+
 World* World::CreateNewWorld(std::string name)
 {
     srand((unsigned int)time(NULL));
@@ -686,6 +690,9 @@ World* World::CreateNewWorld(std::string name)
     printf("SEED: %d\n", a);
     World* w = new World(true, a, name, game_version_name, game_version_minor, game_version_major);
     w->player = new PlayerEntity(w, 0, 0);
+    w->AddEntity(new CactusBossEntity(w, (rand() % 1000) / 50 - 10, (rand() % 1000) / 50 - 10));
+    w->AddEntity(new ZombieEntity(w, (rand() % 1000) / 50 - 10, (rand() % 1000) / 50 - 10));
+    w->AddEntity(new ZombieEntity(w, (rand() % 1000) / 50 - 10, (rand() % 1000) / 50 - 10));
     return w;
 }
 

@@ -19,8 +19,9 @@ public:
 	virtual bool ClickLeftUp(int xRel, int yRel) final;
 	virtual bool ClickRightUp(int xRel, int yRel) final;
 	virtual bool Hover(int xRel, int yRel) final;
-	virtual bool KeyDown(int key) final;
-	virtual bool KeyUp(int key) final;
+	virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& evt) final;
+	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& evt) final;
+	virtual bool KeyChar(ALLEGRO_KEYBOARD_EVENT& evt) final;
 
 	virtual ~SimpleButtonUIComponent() = default;
 

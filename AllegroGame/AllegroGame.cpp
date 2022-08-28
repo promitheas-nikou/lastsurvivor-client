@@ -1,3 +1,4 @@
+#include "AllegroGame.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <allegro5/allegro.h>
@@ -17,15 +18,21 @@
 
 //ALLEGRO_THREAD* 
 
-
 static const float TPS = 50.f;
+
+GUI* currentGUI;
+GUI* mainMenuGUI;
+GUI* playMenuGUI;
+GUI* creditsMenuGUI;
+GUI* worldCreationGUI;
+World* world;
+bool doWorldTick;
 
 static ALLEGRO_MUTEX* worldMutex;
 static ALLEGRO_THREAD* worldTickerThread;
 
-void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
+void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* nothing)
 {
-	World* world = (World*)_world;
 	ALLEGRO_TIMER* timer = al_create_timer(1/TPS);
 	ALLEGRO_EVENT evt;
 	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
@@ -35,6 +42,8 @@ void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* _world)
 	{
 		al_wait_for_event(queue, &evt);
 		if (evt.type != ALLEGRO_EVENT_TIMER)
+			continue;
+		if (!doWorldTick)
 			continue;
 		al_lock_mutex(worldMutex);
 		world->Tick();
@@ -59,6 +68,7 @@ void EXIT_GAME()
 
 int main()
 {
+	doWorldTick = false;
 	if (!al_init())
 	{
 		printf("FATAL ALLEGRO LIB LOADING ERROR!!!\n");
@@ -91,23 +101,19 @@ int main()
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 
-	ALLEGRO_SAMPLE* s = al_load_sample("audio\\menu_theme_2.wav");
-	al_play_sample(s, 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
-	printf("SAMPLE: %p\nERROR: %d\n", s, al_get_errno());
+	al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
 
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
 
-	//World* world = World::CreateNewWorld("New World");
-	World* world = World::LoadWorldFromFile("C:\\Users\\promitheas\\source\\repos\\AllegroGame\\AllegroGame\\new_world.zip");
-	//world->entities.push_back(new CactusBossEntity(world, 10, 10));
-	double tick;
-	double worldDraw;
-	double playerGUIdraw;
-	double drawEnd;
 	printf("\n");
 	worldMutex = al_create_mutex();
 	worldTickerThread = al_create_thread(&WorldTickerFunc, world);
 	al_start_thread(worldTickerThread);
+	mainMenuGUI = new MainMenuGUI();
+	playMenuGUI = new PlayMenuGUI();
+	worldCreationGUI = new WorldCreationMenuGUI();
+	creditsMenuGUI = new CreditsMenuGUI();
+	currentGUI = mainMenuGUI;
 	while (true)
 	{
 		while (GetNextEvent())
@@ -118,19 +124,14 @@ int main()
 				EXIT_GAME();
 				break;
 			default:
-				world->player->HandleEvent(NEXT_EVENT);
+				currentGUI->HandleEvent(NEXT_EVENT);
 			}
 		}
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		
 		al_lock_mutex(worldMutex);
-
-		loaded_shaders["world"]->Use();
-		world->Draw();
-		playerGUIdraw = al_get_time();
-		loaded_shaders["default"]->Use();
-		world->player->DrawGUI();
+		currentGUI->DrawGUI();
 		DebugInfo::framesEnd.push(al_get_time());
 		if (DebugInfo::framesEnd.size() > DebugInfo::FRAMES_RECORD_NUM)
 			DebugInfo::framesEnd.pop();

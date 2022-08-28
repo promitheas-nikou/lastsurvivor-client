@@ -10,9 +10,12 @@ protected:
 	GUI* activeSubGUI = nullptr;
 	bool typing = false;
 	std::vector<UIComponent*> UIcomponents;
+	UIComponent* selectedComponent;
 public:
-	virtual void PreDrawThisGUI() = 0;
-	virtual void PostDrawThisGUI() = 0;
+	virtual void PreDrawThisGUI();
+	virtual void PostDrawThisGUI();
+
+	UIComponent* GetSelectedComponent();
 
 	bool IsTyping() const;
 	void ToggleTyping();
@@ -30,7 +33,7 @@ public:
 
 	void SetActiveSubGUI(GUI* gui);
 
-	virtual bool CharTyped(ALLEGRO_KEYBOARD_EVENT& event);
+	virtual bool KeyChar(ALLEGRO_KEYBOARD_EVENT& event);
 
 	virtual bool MouseButtonDown(ALLEGRO_MOUSE_EVENT& event);
 	virtual bool MouseButtonUp(ALLEGRO_MOUSE_EVENT& event);

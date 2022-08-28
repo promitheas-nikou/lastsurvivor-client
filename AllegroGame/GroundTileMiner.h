@@ -7,7 +7,7 @@ class World;
 class GroundTileMiner
 {
 private:
-	World* world;
+	World *world;
 	int miningDamageDone;
 	ItemInventory* inventory;
 	int gtileX;

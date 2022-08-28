@@ -23,9 +23,12 @@ class RangedWeaponItem;
 #include "AudioMultiTrackCollection.h"
 #undef PlaySound
 
-enum class PLAYER_GUI_STATE { WORLD, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE };
+enum class PLAYER_GUI_STATE { WORLD, PAUSE, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE };
 
 class WaterGroundTile;
+
+class World;
+class WorldChunk;
 
 class PlayerNotification
 {
@@ -56,6 +59,15 @@ public:
 		BUILDING = 0x04
 	};
 private:
+
+	class PauseMenuGUI :
+		public GUI
+	{
+	public:
+		virtual void PreDrawThisGUI() final;
+		PauseMenuGUI(PlayerEntity* p);
+	};
+
 	std::string buf;
 	char debug = 0;
 	bool showHitbox = false;
@@ -71,6 +83,7 @@ private:
 	RecipeListGUI* recipeGUI;
 	SimpleCraftingGUI* craftingGUI;
 	InventoryGUI* hotbarGUI;
+	PauseMenuGUI* pauseGUI;
 	QuestGUI* questGUI;
 	ItemInventory* inventory;
 	DeathGUI* deathgui;
@@ -132,7 +145,7 @@ public:
 	bool MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
 	bool MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
 
-	bool CharTyped(ALLEGRO_KEYBOARD_EVENT& event) override;
+	bool KeyChar(ALLEGRO_KEYBOARD_EVENT& event) override;
 
 	void UseTile(int x, int y);
 	void MineTile(int x, int y);
@@ -157,6 +170,7 @@ public:
 
 	friend WorldChunk;
 	friend World;
+	friend PauseMenuGUI;
 	friend int main();
 	friend WaterGroundTile;
 	friend class Consumable;

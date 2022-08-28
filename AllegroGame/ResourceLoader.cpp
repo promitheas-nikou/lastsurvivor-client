@@ -134,6 +134,7 @@ void load_resources()
 		{
 			std::string id = texture_data["id"];
 			std::string filename = texture_data["filename"];
+			al_set_new_bitmap_flags(ALLEGRO_CONVERT_BITMAP | ALLEGRO_MIPMAP | ALLEGRO_MIN_LINEAR);
 			if ((loaded_bitmaps[id] = al_load_bitmap(("textures/"+filename).c_str())) == NULL)
 				printf("\tFAILED TO LOAD TEXTURE 's'(\"%s\")...\n", id.c_str(), filename.c_str());
 			else
@@ -179,7 +180,9 @@ void load_resources()
 		{
 			std::string id = font["id"];
 			std::string fn = font["font"];
-			for (int i = 1; i <= 80; i++)
+			for (int i = 1; i <= 50; i++)
+				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
+			for(int i=55;i<=200;i+=5)
 				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
 			printf("SUCCESSFULLY LOADED FONT '%s'(\"%s\")...\n", id.c_str(), fn.c_str());
 		}

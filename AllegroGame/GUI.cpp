@@ -35,7 +35,7 @@ void GUI::SetActiveSubGUI(GUI* gui)
 	activeSubGUI = gui;
 }
 
-bool GUI::CharTyped(ALLEGRO_KEYBOARD_EVENT& event)
+bool GUI::KeyChar(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	return false;
 }
@@ -85,6 +85,7 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 			switch (event.type)
 			{
 			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+				selectedComponent = tmp;
 				switch (event.mouse.button)
 				{
 				case 1:
@@ -117,12 +118,22 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 				//		case ALLEGRO_EVENT_KEY_CHAR:
 				//			break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				if(tmp->KeyDown(event.keyboard.keycode))
-					return true;
+				if (selectedComponent != nullptr)
+					return selectedComponent->KeyDown(event.keyboard);
+				else
+					return this->KeyDown(event.keyboard);
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
-				if(tmp->KeyUp(event.keyboard.keycode))
-					return true;
+				if (selectedComponent != nullptr)
+					return selectedComponent->KeyUp(event.keyboard);
+				else
+					return this->KeyUp(event.keyboard);
+				break;
+			case ALLEGRO_EVENT_KEY_CHAR:
+				if (selectedComponent != nullptr)
+					return selectedComponent->KeyChar(event.keyboard);
+				else
+					return this->KeyChar(event.keyboard);
 				break;
 			}
 		}
@@ -142,7 +153,7 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 			return true;
 		break;
 	case ALLEGRO_EVENT_KEY_CHAR:
-		if(IsTyping()&& this->CharTyped(event.keyboard))
+		if(IsTyping()&& this->KeyChar(event.keyboard))
 			return true;
 		break;
 	case ALLEGRO_EVENT_KEY_DOWN:
@@ -157,6 +168,17 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 	return false;
 }
 
+
+void GUI::PreDrawThisGUI()
+{}
+
+void GUI::PostDrawThisGUI()
+{}
+
+UIComponent* GUI::GetSelectedComponent()
+{
+	return selectedComponent;
+}
 
 bool GUI::IsTyping() const
 {

@@ -16,7 +16,7 @@ class World
 private:
 	int WorldGameVersionMinor;
 	int WorldGameVersionMajor;
-	double TPSmeasured;
+	double TPSmeasured = 50;
 	std::string WorldGameVersionName;
 
 	SimplexNoise randgen;
@@ -68,7 +68,7 @@ public:
 
 	void Tick();
 
-	const PlayerEntity* GetPlayer() const;
+	PlayerEntity* GetPlayer() const;
 
 	void GenerateChunk(int x, int y);
 

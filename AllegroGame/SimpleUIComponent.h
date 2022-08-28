@@ -14,8 +14,9 @@ public:
 	virtual bool ClickRightUp(int xRel, int yRel) override;
 	virtual bool ClickLeftUp(int xRel, int yRel) override;
 	virtual bool Hover(int xRel, int yRel) override;
-	virtual bool KeyDown(int key) override;
-	virtual bool KeyUp(int key) override;
+	virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& evt) override;
+	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& evt) override;
+	virtual bool KeyChar(ALLEGRO_KEYBOARD_EVENT& evt) override;
 
     virtual ~SimpleUIComponent() = default;
 };

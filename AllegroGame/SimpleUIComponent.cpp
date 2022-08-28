@@ -34,12 +34,17 @@ bool SimpleUIComponent::Hover(int xRel, int yRel)
 	return false;
 }
 
-bool SimpleUIComponent::KeyDown(int key)
+bool SimpleUIComponent::KeyDown(ALLEGRO_KEYBOARD_EVENT& evt)
 {
 	return false;
 }
 
-bool SimpleUIComponent::KeyUp(int key)
+bool SimpleUIComponent::KeyUp(ALLEGRO_KEYBOARD_EVENT& evt)
+{
+	return false;
+}
+
+bool SimpleUIComponent::KeyChar(ALLEGRO_KEYBOARD_EVENT& evt)
 {
 	return false;
 }

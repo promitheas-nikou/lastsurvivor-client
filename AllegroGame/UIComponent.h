@@ -28,8 +28,9 @@ public:
 	virtual bool ClickRightUp(int xRel, int yRel) = 0;
 	virtual bool ClickLeftUp(int xRel, int yRel) = 0;
 	virtual bool Hover(int xRel, int yRel) = 0;
-	virtual bool KeyDown(int key) = 0;
-	virtual bool KeyUp(int key) = 0;
+	virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& evt) = 0;
+	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& evt) = 0;
+	virtual bool KeyChar(ALLEGRO_KEYBOARD_EVENT& evt) = 0;
 
 	virtual ~UIComponent() = default;
 };

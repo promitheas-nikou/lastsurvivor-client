@@ -14,6 +14,7 @@ public:
 	AudioMultiTrackCollection() = default;
 	void Play(SoundType t) const;
 	void Link(SoundType t, AudioMultiTrack* m);
+	void Stop(SoundType t);
 	void LoadFromJSON(nlohmann::json data);
 };
 
