@@ -28,7 +28,7 @@ LootBundle* LootBundle::CreateFromJSON(nlohmann::json data)
 	nlohmann::json objects = data["objects"];
 	if (type == "null")
 	{
-		return nullptr;
+		return new SimpleLootBundle();
 	}
 	else if (type == "simple")
 	{

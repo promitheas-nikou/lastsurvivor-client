@@ -42,6 +42,7 @@ const extern std::string DATA_JSON_WATER_KEY;
 const extern std::string DATA_JSON_BURN_TIME_KEY;
 const extern std::string DATA_JSON_BURN_HEAT_KEY;
 const extern std::string DATA_JSON_BRIGHTNESS_KEY;
+const extern std::string DATA_JSON_DURABILITY_KEY;
 
 extern nlohmann::json json_data;
 

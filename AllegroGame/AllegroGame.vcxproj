@@ -203,6 +203,7 @@
     <ClCompile Include="BerryBushTile.cpp" />
     <ClCompile Include="BerryItem.cpp" />
     <ClCompile Include="BitmapUIComponent.cpp" />
+    <ClCompile Include="BrickWallTile.cpp" />
     <ClCompile Include="BurnerFurnaceMk1Item.cpp" />
     <ClCompile Include="BurnerFurnaceMk1Tile.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FenceItem.cpp" />
     <ClCompile Include="FenceTile.cpp" />
+    <ClCompile Include="FlaskItem.cpp" />
     <ClCompile Include="FuelItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
@@ -235,6 +237,7 @@
     <ClCompile Include="ItemIndex.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="LodestoneItem.cpp" />
+    <ClCompile Include="LogItem.cpp" />
     <ClCompile Include="LootBundle.cpp" />
     <ClCompile Include="LootObject.cpp" />
     <ClCompile Include="MagnetiteChunkItem.cpp" />
@@ -277,13 +280,16 @@
     <ClCompile Include="SimpleMeleeWeapon.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="SimpleMeleeWeaponItem.cpp" />
+    <ClCompile Include="SimpleNumberInputUIComponent.cpp" />
     <ClCompile Include="SimpleRecipeListGUI.cpp" />
     <ClCompile Include="SimpleSword.cpp" />
     <ClCompile Include="SimpleTextButtonUIComponent.cpp" />
     <ClCompile Include="SimpleTextDrawUIComponent.cpp" />
     <ClCompile Include="SimpleTextInputUIComponent.cpp" />
+    <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SoundType.cpp" />
+    <ClCompile Include="StoneBrickWallTile.cpp" />
     <ClCompile Include="TextUtils.cpp" />
     <ClCompile Include="TorchItem.cpp" />
     <ClCompile Include="TorchTile.cpp" />
@@ -326,7 +332,6 @@
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
     <ClInclude Include="AllegroGame.h" />
-    <ClInclude Include="AllItems.h" />
     <ClInclude Include="AudioMultiTrack.h" />
     <ClInclude Include="AudioMultiTrackCollection.h" />
     <ClInclude Include="AudioSampleInstanceMultiTrack.h" />
@@ -336,6 +341,7 @@
     <ClInclude Include="BerryBushTile.h" />
     <ClInclude Include="BerryItem.h" />
     <ClInclude Include="BitmapUIComponent.h" />
+    <ClInclude Include="BrickWallTile.h" />
     <ClInclude Include="BurnerFurnaceMk1Item.h" />
     <ClInclude Include="BurnerFurnaceMk1Tile.h" />
     <ClInclude Include="ButtonUIComponent.h" />
@@ -354,6 +360,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FenceItem.h" />
     <ClInclude Include="FenceTile.h" />
+    <ClInclude Include="FlaskItem.h" />
     <ClInclude Include="FuelItem.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassGroundTile.h" />
@@ -368,7 +375,10 @@
     <ClInclude Include="ItemBundle.h" />
     <ClInclude Include="ItemIndex.h" />
     <ClInclude Include="ItemInventory.h" />
+    <ClInclude Include="ListAllItems.h" />
+    <ClInclude Include="ListAllTiles.h" />
     <ClInclude Include="LodestoneItem.h" />
+    <ClInclude Include="LogItem.h" />
     <ClInclude Include="LootBundle.h" />
     <ClInclude Include="LootObject.h" />
     <ClInclude Include="MagnetiteChunkItem.h" />
@@ -413,12 +423,15 @@
     <ClInclude Include="SimpleMeleeWeapon.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="SimpleMeleeWeaponItem.h" />
+    <ClInclude Include="SimpleNumberInputUIComponent.h" />
     <ClInclude Include="SimpleSword.h" />
     <ClInclude Include="SimpleTextButtonUIComponent.h" />
     <ClInclude Include="SimpleTextDrawUIComponent.h" />
     <ClInclude Include="SimpleTextInputUIComponent.h" />
+    <ClInclude Include="SimpleToggleTextButtonUIComponent.h" />
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SoundType.h" />
+    <ClInclude Include="StoneBrickWallTile.h" />
     <ClInclude Include="TextUtils.h" />
     <ClInclude Include="TorchItem.h" />
     <ClInclude Include="TorchTile.h" />

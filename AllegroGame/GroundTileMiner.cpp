@@ -28,9 +28,12 @@ void GroundTileMiner::SetTargetItemInventory(ItemInventory* inv)
 
 void GroundTileMiner::SetTarget(World* w, int x, int y)
 {
+    if (gtileX == x && gtileY == y)
+        return;
     world = w;
     gtileX = x;
     gtileY = y;
+    miningDamageDone = 0;
 }
 
 GroundTile* GroundTileMiner::GetTarget() const

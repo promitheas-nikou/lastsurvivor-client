@@ -75,11 +75,21 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 	if (activeSubGUI != nullptr)
 		if(activeSubGUI->HandleEvent(event))
 			return true;
+	ALLEGRO_MOUSE_STATE state;
+	al_get_mouse_state(&state);
+	if(selectedComponent!=nullptr)
+		switch (event.type) {
+		case ALLEGRO_EVENT_KEY_DOWN:
+			return selectedComponent->KeyDown(event.keyboard);
+		case ALLEGRO_EVENT_KEY_UP:
+			return selectedComponent->KeyUp(event.keyboard);
+		case ALLEGRO_EVENT_KEY_CHAR:
+			return selectedComponent->KeyChar(event.keyboard);
+		}
 	for (int i = 0; i < UIcomponents.size(); i++)
 	{
 		UIComponent* tmp = UIcomponents[i];
-		ALLEGRO_MOUSE_STATE state;
-		al_get_mouse_state(&state);
+
 		if(tmp->ContainsPoint(state.x, state.y))
 		{
 			switch (event.type)
@@ -118,21 +128,12 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 				//		case ALLEGRO_EVENT_KEY_CHAR:
 				//			break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				if (selectedComponent != nullptr)
-					return selectedComponent->KeyDown(event.keyboard);
-				else
 					return this->KeyDown(event.keyboard);
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
-				if (selectedComponent != nullptr)
-					return selectedComponent->KeyUp(event.keyboard);
-				else
 					return this->KeyUp(event.keyboard);
 				break;
 			case ALLEGRO_EVENT_KEY_CHAR:
-				if (selectedComponent != nullptr)
-					return selectedComponent->KeyChar(event.keyboard);
-				else
 					return this->KeyChar(event.keyboard);
 				break;
 			}
@@ -193,6 +194,7 @@ void GUI::ToggleTyping()
 void GUI::DrawGUI()
 {
 	this->PreDrawThisGUI();
+
 	ALLEGRO_TRANSFORM temp_gui_transform = *al_get_current_transform();
 	for(int p=1;p<=3;p++)
 		for (int i = 0; i < UIcomponents.size(); i++)

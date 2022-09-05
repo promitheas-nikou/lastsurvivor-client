@@ -3,7 +3,7 @@
 #include "RectangularUIComponent.h"
 #include <string>
 
-class SimpleTextInputUIComponent :
+class SimpleNumberInputUIComponent :
     public SimpleUIComponent,
     public RectangularUIComponent
 {
@@ -22,8 +22,9 @@ public:
     virtual void Draw(int plane) final;
     void SetAlert(std::string temp_string, ALLEGRO_COLOR text_color, ALLEGRO_COLOR back_color);
     void ClearTextBuffer();
+    long long GetInputNumber();
     std::string GetTextBuffer();
 
-    SimpleTextInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edt_txt, std::string pst_txt, int flags);
+    SimpleNumberInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edit_txt, std::string pst_txt, int flags);
 };
 

@@ -1,11 +1,4 @@
 #include "Item.h"
-#include "StoneItem.h"
-#include "DirtItem.h"
-#include "StickItem.h"
-#include "SandItem.h"
-#include "BerryItem.h"
-#include "SimpleSword.h"
-#include "GunItem.h"
 #include "ResourceLoader.h"
 #include "World.h"
 #include <allegro5/allegro_font.h>
@@ -25,6 +18,11 @@ bool Item::DrawItemDetailsPaneMultilineCB(int line_num, const char* line, int si
 
 Item::Item(std::string n, std::string d) : name{ n }, description{ d }, amount{ 1 }
 {}
+
+int Item::GetMaxStackSize() const
+{
+    return 128;
+}
 
 std::string Item::GetName() const
 {
@@ -131,10 +129,10 @@ void Item::AddConstToInventory(ItemInventory* inv) const
 int Item::AddAmount(int a)
 {
     amount += a;
-    if (amount > MAX_AMOUNT)
+    if (amount > GetMaxStackSize())
     {
-        int tmp = amount - MAX_AMOUNT;
-        amount = MAX_AMOUNT;
+        int tmp = amount - GetMaxStackSize();
+        amount = GetMaxStackSize();
         return tmp;
     }
     return 0;

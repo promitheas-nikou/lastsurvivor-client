@@ -125,6 +125,7 @@ void PlayerEntity::LogToConsole(std::string txt) const
 
 void PlayerEntity::PreDrawThisGUI()
 {
+	al_lock_mutex(worldMutex);
 	loaded_shaders["world"]->Use();
 	containingWorld->Draw();
 	loaded_shaders["default"]->Use();
@@ -148,19 +149,22 @@ void PlayerEntity::PreDrawThisGUI()
 		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 490), 95, 0, "Chunk Y: %d", (int)util_floor(y / WorldChunk::CHUNK_SIZE_Y));
 	}
 
-
-	al_draw_filled_rectangle(SCREEN_WIDTH/2-250, 50, SCREEN_WIDTH/2+250, 250, al_map_rgba(0, 150, 255, 150));
-
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", GetXpos());
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", GetYpos());
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
 	Tile* targetedTile = containingWorld->GetTile(floor(x), floor(y));
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s",targetedTile->GetName().c_str());
-	GroundTile* targetedGroundTile = nullptr;
+	GroundTile* targetedGroundTile = containingWorld->GetGroundTile(floor(x), floor(y));
+	Entity* targetedEntity = containingWorld->GetEntityAtPos(x, y);
+	if (infoMenu)
+	{
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 250, 50, SCREEN_WIDTH / 2 + 250, 250, al_map_rgba(0, 150, 255, 150));
+
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", GetXpos());
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", GetYpos());
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s", targetedTile==nullptr?"<NULL>":targetedTile->GetName().c_str());
+	}
 
 	if (debug >= 3)
 	{
@@ -173,34 +177,40 @@ void PlayerEntity::PreDrawThisGUI()
 		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
 		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
 	}
-
-	if (targetedTile->IsEmpty())
-	{
-		targetedGroundTile = containingWorld->GetGroundTile(floor(x), floor(y));
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 150, 150, 150));
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 0, 0, 150));
-		//printf("%p::%p\n", GroundTileMiner::GetTarget(), targetedGroundTile);
-		if (GroundTileMiner::GetTarget() == targetedGroundTile)
-			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 55 + 190 * GroundTileMiner::GetMiningDamageDone() / targetedGroundTile->GetMiningResistance()), 145, al_map_rgba(255, 0, 0, 150));
+	if (infoMenu) {
+		if (targetedTile != nullptr) {
+			if (targetedTile->IsEmpty())
+			{
+				al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 150, 150, 150));
+				al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 0, 0, 150));
+				//printf("%p::%p\n", GroundTileMiner::GetTarget(), targetedGroundTile);
+				if (GroundTileMiner::GetTarget() == targetedGroundTile)
+					al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 55 + 190 * GroundTileMiner::GetMiningDamageDone() / targetedGroundTile->GetMiningResistance()), 145, al_map_rgba(255, 0, 0, 150));
+			}
+			else
+			{
+				al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 150, 150, 150));
+				al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 0, 0, 150));
+				al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedTile->GetMiningDamageDone() / (float)targetedTile->GetMiningResistance())), 175, al_map_rgba(255, 0, 0, 150));
+			}
+		}
+		else
+		{
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 150, 150, 150));
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 150, 150, 150));
+		}
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", targetedGroundTile==nullptr?"<NULL>":targetedGroundTile->GetName().c_str());
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
+		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity != nullptr) ? targetedEntity->GetName().c_str() : "None");
+		if (targetedEntity != nullptr)
+		{
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 0, 0, 150));
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedEntity->GetHealth() / targetedEntity->maxHealth)), 205, al_map_rgba(255, 0, 0, 150));
+		}
+		else
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 150, 150, 150));
 	}
-	else
-	{
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 150, 150, 150));
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 0, 0, 150));
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedTile->GetMiningDamageDone() / (float)targetedTile->GetMiningResistance())), 175, al_map_rgba(255, 0, 0, 150));
-	}
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", containingWorld->GetGroundTile(floor(x),floor(y))->GetName().c_str());
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
-	Entity* targetedEntity = containingWorld->GetEntityAtPos(x, y);
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity!=nullptr)?targetedEntity->GetName().c_str():"None");
-	if (targetedEntity != nullptr)
-	{
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 0, 0, 150));
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedEntity->GetHealth() / targetedEntity->maxHealth)), 205, al_map_rgba(255, 0, 0, 150));
-	}
-	else
-		al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 150, 150, 150));
 	int yn = SCREEN_HEIGHT - 20;
 	for (std::list<PlayerNotification*>::reverse_iterator it = notifications.rbegin(); it!=notifications.rend();)
 	{
@@ -262,10 +272,15 @@ void PlayerEntity::PreDrawThisGUI()
 				break;
 			}
 			ToolType t;
-			if (targetedTile->IsEmpty())
-				t = targetedGroundTile->GetRequiredToolType();
+			if (targetedTile == nullptr)
+				t = ToolType::NONE;
 			else
-				t = targetedTile->GetOptimalToolType();
+			{
+				if (targetedTile->IsEmpty())
+					t = targetedGroundTile->GetRequiredToolType();
+				else
+					t = targetedTile->GetOptimalToolType();
+			}
 			switch (t)
 			{
 			case ToolType::PICKAXE:
@@ -347,6 +362,7 @@ void PlayerEntity::PreDrawThisGUI()
 	}
 	if(guistate==PLAYER_GUI_STATE::WORLD || guistate==PLAYER_GUI_STATE::INVENTORY)
 		GUItimer++;
+	al_unlock_mutex(worldMutex);
 }
 
 void PlayerEntity::PostDrawThisGUI()
@@ -359,13 +375,6 @@ void PlayerEntity::Draw()
 	int x = floor((GetXpos()) * 128);
 	int y = floor((GetYpos()) * 128);
 	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, GetRotation(), 0);
-}
-
-void PlayerEntity::Consume(Consumable* c)
-{
-	Heal(c->GetHealthBoost());
-	hunger = std::max(0.f, std::min(MAX_HUNGER, hunger + c->GetFoodBoost()));
-	water = std::max(0.f, std::min(MAX_WATER, water + c->GetWaterBoost()));
 }
 
 bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
@@ -479,6 +488,9 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		break;
 	case ALLEGRO_KEY_9:
 
+		break;
+	case ALLEGRO_KEY_F1:
+		infoMenu = !infoMenu;
 		break;
 	case ALLEGRO_KEY_F2:
 		showHitbox = !showHitbox;
@@ -717,6 +729,8 @@ void PlayerEntity::MineTile(int x, int y)
 	float a = xpos - x;
 	float b = ypos - y;
 	Tile* tile = containingWorld->GetTile(x, y);
+	if (tile == nullptr)
+		return;
 	if (tile->IsEmpty())
 	{
 		SetTarget(containingWorld,x,y);
@@ -900,12 +914,14 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		Consumable* c = dynamic_cast<Consumable*>(item);
 		if (c == nullptr)
 			return item;
-		this->Consume(c);
-		item->RemoveAmount(1);
-		if (item->GetAmount() <= 0)
+		if (c->Consume(GetXpos(), GetYpos(), this))
 		{
-			delete item;
-			return (Item*)nullptr;
+			item->RemoveAmount(1);
+			if (item->GetAmount() <= 0)
+			{
+				delete item;
+				return (Item*)nullptr;
+			}
 		}
 		return item;
 		},
@@ -913,12 +929,14 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		Consumable* c = dynamic_cast<Consumable*>(item);
 		if (c == nullptr)
 			return item;
-		this->Consume(c);
-		item->RemoveAmount(1);
-		if (item->GetAmount() <= 0)
+		if (c->Consume(GetXpos(), GetYpos(), this))
 		{
-			delete item;
-			return (Item*)nullptr;
+			item->RemoveAmount(1);
+			if (item->GetAmount() <= 0)
+			{
+				delete item;
+				return (Item*)nullptr;
+			}
 		}
 		return item;
 	});

@@ -32,4 +32,3 @@ public:
     virtual void PreDrawThisGUI() final;
     CreditsMenuGUI();
 };
-

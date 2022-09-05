@@ -207,12 +207,26 @@ void Entity::Tick()
 {
     if (this->IsDead())
         return;
+    Tile* a = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2));
+    Tile* b = containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2));
+    Tile* c = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2));
+    Tile* d = containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2));
+    GroundTile* u = containingWorld->GetGroundTile(util_floor(xpos), util_floor(ypos));
+    if (u == nullptr)
+    {
+        Kill();
+        return;
+    }
     xpos += xvel;
+    a = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2));
+    b = containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2));
+    c = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2));
+    d = containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2));
     if (!(
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough()))
+        (a == nullptr || a->CanWalkThrough())&&
+        (b == nullptr || b->CanWalkThrough()) &&
+        (c == nullptr || c->CanWalkThrough()) &&
+        (d == nullptr || d->CanWalkThrough())))
     {
         if (killOnCollision)
         {
@@ -226,14 +240,18 @@ void Entity::Tick()
     else
     {
         if(GetHasFriction())
-            xvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
+            xvel *= getFriction()*u->GetFrictionModifier();
     }
     ypos += yvel;
+    a = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2));
+    b = containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2));
+    c = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2));
+    d = containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2));
     if (!(
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos - ysize / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough() &&
-        containingWorld->GetTile(util_floor(xpos + xsize / 2), util_floor(ypos + ysize / 2))->CanWalkThrough()))
+        (a == nullptr || a->CanWalkThrough()) &&
+        (b == nullptr || b->CanWalkThrough()) &&
+        (c == nullptr || c->CanWalkThrough()) &&
+        (d == nullptr || d->CanWalkThrough())))
     {
         if (killOnCollision)
         {
@@ -247,7 +265,7 @@ void Entity::Tick()
     else
     {
         if (GetHasFriction())
-            yvel *= getFriction()*containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->GetFrictionModifier();
+            yvel *= getFriction() * u->GetFrictionModifier();
     }
     if (health <= 0)
         dead = true;
@@ -258,7 +276,7 @@ void Entity::Tick()
     if (!IsDead())
         if (xvel || yvel)
         {
-            containingWorld->GetGroundTile(util_floor(xpos - xsize / 2), util_floor(ypos + ysize / 2))->PlaySound(SoundType::TILE_WALK);
+            u->PlaySound(SoundType::TILE_WALK);
         }
 }
 

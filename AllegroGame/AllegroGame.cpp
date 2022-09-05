@@ -28,8 +28,8 @@ GUI* worldCreationGUI;
 World* world;
 bool doWorldTick;
 
-static ALLEGRO_MUTEX* worldMutex;
-static ALLEGRO_THREAD* worldTickerThread;
+ALLEGRO_MUTEX* worldMutex;
+ALLEGRO_THREAD* worldTickerThread;
 
 void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* nothing)
 {
@@ -98,6 +98,7 @@ int main()
 	init_quests();
 	printf("\n======= INITIALIZING ENTITIES =======\n\n");
 	init_entities();
+	World::Init();
 	double LOAD_TIME = al_get_time();
 	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
 
@@ -129,14 +130,11 @@ int main()
 		}
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-		
-		al_lock_mutex(worldMutex);
+
 		currentGUI->DrawGUI();
 		DebugInfo::framesEnd.push(al_get_time());
 		if (DebugInfo::framesEnd.size() > DebugInfo::FRAMES_RECORD_NUM)
 			DebugInfo::framesEnd.pop();
-
-		al_unlock_mutex(worldMutex);
 
 		al_flip_display();
 	}

@@ -3,9 +3,12 @@
 #include "Graphics.h"
 #include "SimpleTextButtonUIComponent.h"
 #include "SimpleTextInputUIComponent.h"
+#include "SimpleNumberInputUIComponent.h"
+#include "SimpleToggleTextButtonUIComponent.h"
 #include "AllegroGame.h"
 #include <allegro5/allegro_native_dialog.h>
 #include "World.h"
+#include "Config.h"
 
 void MainMenuGUI::PreDrawThisGUI()
 {
@@ -56,17 +59,90 @@ void WorldCreationMenuGUI::PreDrawThisGUI()
 
 WorldCreationMenuGUI::WorldCreationMenuGUI()
 {
-	SimpleTextInputUIComponent* txtin1 = new SimpleTextInputUIComponent(SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 + 100, 600, 100, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "NEW WORLD NAME: ", "", ALLEGRO_ALIGN_LEFT);
-	UIcomponents.push_back(txtin1);
-	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 250, 300, 100, [txtin1]() {
-		world = World::CreateNewWorld(txtin1->GetTextBuffer());
+	SimpleTextInputUIComponent* namein = new SimpleTextInputUIComponent(SCREEN_WIDTH / 2 - 600, 200, 1200, 100, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "NEW WORLD NAME: \"", "", "\"", ALLEGRO_ALIGN_LEFT);
+	SimpleNumberInputUIComponent* seedin = new SimpleNumberInputUIComponent(SCREEN_WIDTH / 2 - 600, 350, 1200, 100, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "WORLD SEED (DECIMAL NUMBER; LEAVE EMPTY FOR RANDOM): [", "", "]", ALLEGRO_ALIGN_LEFT);
+	SimpleToggleTextButtonUIComponent* isDynamicTB = new SimpleToggleTextButtonUIComponent(SCREEN_WIDTH / 2 - 600, 500, 1200, 100, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "DO DYNAMIC WORLD GENERATION", true);
+
+	SimpleNumberInputUIComponent* mincx = new SimpleNumberInputUIComponent(SCREEN_WIDTH / 2 - 600, 650, 550, 80, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "MIN CHUNK X: [", "", "]", ALLEGRO_ALIGN_LEFT);
+	SimpleNumberInputUIComponent* maxcx = new SimpleNumberInputUIComponent(SCREEN_WIDTH / 2 + 50, 650, 550, 80, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "MAX CHUNK X: [", "", "]", ALLEGRO_ALIGN_LEFT);
+	SimpleNumberInputUIComponent* mincy = new SimpleNumberInputUIComponent(SCREEN_WIDTH / 2 - 600, 750, 550, 80, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "MIN CHUNK Y: [", "", "]", ALLEGRO_ALIGN_LEFT);
+	SimpleNumberInputUIComponent* maxcy = new SimpleNumberInputUIComponent(SCREEN_WIDTH / 2 + 50, 750, 550, 80, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "MAX CHUNK Y: [", "", "]", ALLEGRO_ALIGN_LEFT);
+
+	UIcomponents.push_back(namein);
+	UIcomponents.push_back(seedin);
+	UIcomponents.push_back(isDynamicTB);
+	UIcomponents.push_back(mincx);
+	UIcomponents.push_back(maxcx);
+	UIcomponents.push_back(mincy);
+	UIcomponents.push_back(maxcy);
+
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 400, SCREEN_HEIGHT - 250, 300, 100, [namein,seedin,isDynamicTB,mincx,mincy,maxcx,maxcy]() {
+		if (seedin->GetTextBuffer().empty())
+		{
+			srand((unsigned int)time(NULL));
+		}
+		else
+		{
+			srand(seedin->GetInputNumber());
+		}
+		for (int i = 0; i < 10; i++)
+			rand();
+		uint64_t seed = abs(rand() * rand() * rand() * rand() * rand());
+		if(isDynamicTB->GetIsToggledOn())
+			world = World::CreateNewWorld(namein->GetTextBuffer(), seed, [](int,int,int,int) {});
+		else
+		{
+			bool isError = false;
+			if (mincx->GetTextBuffer().empty())
+			{
+				mincx->SetAlert("YOU MUST ENTER A VALUE", gameconfig::SOLID_BACKGROUND_COLOR_0, gameconfig::SOLID_TEXT_COLOR_ERROR);
+				isError = true;
+			}
+			if (mincy->GetTextBuffer().empty())
+			{
+				mincy->SetAlert("YOU MUST ENTER A VALUE", gameconfig::SOLID_BACKGROUND_COLOR_0, gameconfig::SOLID_TEXT_COLOR_ERROR);
+				isError = true;
+			}
+			if (maxcx->GetTextBuffer().empty())
+			{
+				maxcx->SetAlert("YOU MUST ENTER A VALUE", gameconfig::SOLID_BACKGROUND_COLOR_0, gameconfig::SOLID_TEXT_COLOR_ERROR);
+				isError = true;
+			}
+			if (maxcy->GetTextBuffer().empty())
+			{
+				maxcy->SetAlert("YOU MUST ENTER A VALUE", gameconfig::SOLID_BACKGROUND_COLOR_0, gameconfig::SOLID_TEXT_COLOR_ERROR);
+				isError = true;
+			}
+			if (isError)
+				return;
+
+			al_clear_to_color(al_map_rgba(50, 80, 255, 255));
+			al_draw_filled_rectangle(SCREEN_WIDTH / 4 - 10, SCREEN_HEIGHT / 2 - 110, 3 * SCREEN_WIDTH / 4 + 10, SCREEN_HEIGHT / 2 + 10, al_map_rgba(255, 255, 255, 255));
+			al_flip_display();
+			//TODO: DELETE THIS BODGE
+			al_clear_to_color(al_map_rgba(50, 80, 255, 255));
+			al_draw_filled_rectangle(SCREEN_WIDTH / 4 - 10, SCREEN_HEIGHT / 2 - 110, 3 * SCREEN_WIDTH / 4 + 10, SCREEN_HEIGHT / 2 + 10, al_map_rgba(255, 255, 255, 255));
+			al_flip_display();
+			al_clear_to_color(al_map_rgba(50, 80, 255, 255));
+			al_draw_filled_rectangle(SCREEN_WIDTH / 4 - 10, SCREEN_HEIGHT / 2 - 110, 3 * SCREEN_WIDTH / 4 + 10, SCREEN_HEIGHT / 2 + 10, al_map_rgba(255, 255, 255, 255));
+			al_flip_display();
+			world = World::CreateNewFixedSizeWorld(namein->GetTextBuffer(), seed, mincx->GetInputNumber(), mincy->GetInputNumber(), maxcx->GetInputNumber(), maxcy->GetInputNumber(), [](int cx, int cy, int c, int t) {
+				static double lastDraw = al_get_time();
+				float progress = ((float)c) / t;
+				al_draw_filled_rectangle(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 - 100, SCREEN_WIDTH / 4 + SCREEN_WIDTH * (progress / 2), SCREEN_HEIGHT / 2, al_map_rgba(255, 255, 255, 255));
+				al_draw_filled_rectangle(SCREEN_WIDTH / 4 + SCREEN_WIDTH * (progress / 2), SCREEN_HEIGHT / 2 - 100, 3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, al_map_rgba(50, 80, 255, 255));
+				al_draw_filled_rectangle(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 + 100, 3 * SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2 + 140,al_map_rgba(50,80,255,255));
+				al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 + 100, ALLEGRO_ALIGN_LEFT, "[%d%% DONE] Generating Chunk (%d,%d)...", (int)(progress * 100), cx, cy);
+				al_flip_display();
+			});
+		}
 		currentGUI = world->GetPlayer();
 		al_stop_samples();
 		al_play_sample(loaded_audio_samples["themes.ingame"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
 		doWorldTick = true;
 		
 	}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "CREATE WORLD"));
-	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 400, 300, 100, []() {
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 + 100, SCREEN_HEIGHT - 250, 300, 100, []() {
 		currentGUI = playMenuGUI;
 	}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "CANCEL"));
 }

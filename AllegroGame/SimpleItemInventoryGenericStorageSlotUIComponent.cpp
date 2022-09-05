@@ -46,11 +46,24 @@ bool SimpleItemInventoryGenericStorageSlotUIComponent::ClickRightDown(int xRel, 
 
 bool SimpleItemInventoryGenericStorageSlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
-    if (swapptr != nullptr && swapptr->Equals(itemptr))
+    if (swapptr == nullptr || itemptr == nullptr)
     {
-        itemptr->AddAmount(swapptr->GetAmount());
-        delete swapptr;
-        swapptr = nullptr;
+        std::swap(itemptr, swapptr);
+        return 0;
+    }
+    if(itemptr->GetMaxStackSize() == 1 || itemptr->GetMaxStackSize() == 1)
+    {
+        std::swap(itemptr, swapptr);
+        return 0;
+    }
+    if (swapptr->Equals(itemptr))
+    {
+        swapptr->SetAmount(itemptr->AddAmount(swapptr->GetAmount()));
+        if (swapptr->GetAmount() == 0)
+        {
+            delete swapptr;
+            swapptr = nullptr;
+        }
     }
     else
         std::swap(swapptr, itemptr);

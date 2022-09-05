@@ -10,18 +10,8 @@
 #include "StoneGroundTile.h"
 #include "SandGroundTile.h"
 #include "WaterGroundTile.h"
-#include "AirTile.h"
-#include "TreeTile.h"
-#include "FenceTile.h"
-#include "BerryBushTile.h"
-#include "StoneItem.h"
-#include "DirtItem.h"
-#include "StickItem.h"
-#include "SandItem.h"
-#include "SimpleSword.h"
-#include "GunItem.h"
-#include "BerryItem.h"
-#include "AnthraciteCoalChunkItem.h"
+#include "ListAllTiles.h"
+#include "ListAllItems.h"
 #include "SimpleItemBundle.h"
 #include "CactusBossEntity.h"
 #include "ZombieEntity.h"
@@ -34,17 +24,8 @@
 #include "AzuriteOreGroundTile.h"
 #include "HematiteOreGroundTile.h"
 #include "MagnetiteOreGroundTile.h"
-#include "HematiteChunkItem.h"
-#include "MagnetiteChunkItem.h"
-#include "MalachiteChunkItem.h"
-#include "AzuriteChunkItem.h"
-#include "LodestoneItem.h"
-#include "SaplingItem.h"
-#include "FenceItem.h"
 #include "TorchTile.h"
-#include "TorchItem.h"
 #include "BurnerFurnaceMk1Tile.h"
-#include "BurnerFurnaceMk1Item.h"
 
 #include "Recipe.h"
 
@@ -78,6 +59,7 @@ const std::string DATA_JSON_WATER_KEY = "water";
 const std::string DATA_JSON_BURN_TIME_KEY = "burn_time";
 const std::string DATA_JSON_BURN_HEAT_KEY = "burn_heat";
 const std::string DATA_JSON_BRIGHTNESS_KEY = "brightness";
+const std::string DATA_JSON_DURABILITY_KEY = "durability";
 
 nlohmann::json json_data;
 
@@ -273,12 +255,16 @@ void init_tiles()
 		FenceTile::Init(tile_data[FenceTile::ID]);
 		TorchTile::Init(tile_data[TorchTile::ID]);
 		BurnerFurnaceMk1Tile::Init(tile_data[BurnerFurnaceMk1Tile::ID]);
+		BrickWallTile::Init(tile_data[BrickWallTile::ID]);
+		StoneBrickWallTile::Init(tile_data[StoneBrickWallTile::ID]);
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
 		prototype_tiles[TreeTile::ID] = new TreeTile(nullptr, 0, 0);
 		prototype_tiles[BerryBushTile::ID] = new BerryBushTile(nullptr, 0, 0);
 		prototype_tiles[FenceTile::ID] = new FenceTile(nullptr, 0, 0);
 		prototype_tiles[TorchTile::ID] = new TorchTile(nullptr, 0, 0);
 		prototype_tiles[BurnerFurnaceMk1Tile::ID] = new BurnerFurnaceMk1Tile(nullptr, 0, 0);
+		prototype_tiles[BrickWallTile::ID] = new BrickWallTile(nullptr, 0, 0);
+		prototype_tiles[StoneBrickWallTile::ID] = new StoneBrickWallTile(nullptr, 0, 0);
 	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -323,7 +309,9 @@ void init_items()
 		SaplingItem::Init(item_data[SaplingItem::ID]);
 		FenceItem::Init(item_data[FenceItem::ID]);
 		TorchItem::Init(item_data[TorchItem::ID]);
+		LogItem::Init(item_data[LogItem::ID]);
 		BurnerFurnaceMk1Item::Init(item_data[BurnerFurnaceMk1Item::ID]);
+		FlaskItem::Init(item_data[FlaskItem::ID]);
 
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
@@ -342,7 +330,9 @@ void init_items()
 		prototype_items[SaplingItem::ID] = new SaplingItem();
 		prototype_items[FenceItem::ID] = new FenceItem();
 		prototype_items[TorchItem::ID] = new TorchItem();
+		prototype_items[LogItem::ID] = new LogItem();
 		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
+		prototype_items[FlaskItem::ID] = new FlaskItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

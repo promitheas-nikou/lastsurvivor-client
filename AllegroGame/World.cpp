@@ -35,6 +35,8 @@
 #define WORLD_SAVE_CHUNKDATA_DIR "chunks"
 #define WORLD_SAVE_ENTITYDATA_DIR "entities"
 
+ALLEGRO_BITMAP* World::nullTileBitmap;
+
 ALLEGRO_COLOR CombineColors(ALLEGRO_COLOR x, ALLEGRO_COLOR y, float z)
 {
     y.a *= z;
@@ -262,7 +264,12 @@ GroundTile* World::GetGroundTile(int x, int y)
     int chunkX = (x-subX) / WorldChunk::CHUNK_SIZE_X;
     int chunkY = (y-subY) / WorldChunk::CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
-        GenerateChunk(chunkX, chunkY);
+    {
+        if (doDynamicWorldGen)
+            GenerateChunk(chunkX, chunkY);
+        else
+            return nullptr;
+    }
     auto t = GetChunk(chunkX, chunkY)->GetGroundTile(subX, subY);
     return t;
 }
@@ -274,7 +281,12 @@ GroundTile* World::SetGroundTile(GroundTile* gtile, int x, int y)
     int chunkX = (x - subX) / WorldChunk::CHUNK_SIZE_X;
     int chunkY = (y - subY) / WorldChunk::CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
-        GenerateChunk(chunkX, chunkY);
+    {
+        if (doDynamicWorldGen)
+            GenerateChunk(chunkX, chunkY);
+        else
+            return nullptr;
+    }
     return GetChunk(chunkX, chunkY)->SetGroundTile(gtile,subX, subY);
 }
 
@@ -285,7 +297,12 @@ Tile* World::GetTile(int x, int y)
     int chunkX = (x - subX) / WorldChunk::CHUNK_SIZE_X;
     int chunkY = (y - subY) / WorldChunk::CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
-        GenerateChunk(chunkX, chunkY);
+    {
+        if (doDynamicWorldGen)
+            GenerateChunk(chunkX, chunkY);
+        else
+            return nullptr;
+    }
     auto t = GetChunk(chunkX, chunkY)->GetTile(subX, subY);
     return t;
 }
@@ -297,7 +314,12 @@ Tile* World::SetTile(Tile* tile, int x, int y)
     int chunkX = (x - subX) / WorldChunk::CHUNK_SIZE_X;
     int chunkY = (y - subY) / WorldChunk::CHUNK_SIZE_Y;
     if (!IsChunkGenerated(chunkX, chunkY))
-        GenerateChunk(chunkX, chunkY);
+    {
+        if (doDynamicWorldGen)
+            GenerateChunk(chunkX, chunkY);
+        else
+            return nullptr;
+    }
     Tile* r = GetChunk(chunkX, chunkY)->SetTile(tile, subX, subY);
     TileUpdateAround(x, y);
     return r;
@@ -313,11 +335,17 @@ bool World::IsChunkGenerated(int x, int y)
 
 void World::TileUpdateAround(int x, int y)
 {
-    GetTile(x, y)->TileUpdate();
-    GetTile(x, y-1)->TileUpdate();
-    GetTile(x+1, y)->TileUpdate();
-    GetTile(x, y+1)->TileUpdate();
-    GetTile(x-1, y)->TileUpdate();
+    Tile* a;
+    if ((a = GetTile(x, y)) != nullptr)
+        a->TileUpdate();
+    if ((a = GetTile(x-1, y)) != nullptr)
+        a->TileUpdate();
+    if ((a = GetTile(x, y+1)) != nullptr)
+        a->TileUpdate();
+    if ((a = GetTile(x+1, y)) != nullptr)
+        a->TileUpdate();
+    if ((a = GetTile(x, y-1)) != nullptr)
+        a->TileUpdate();
 }
 
 Entity* World::GetEntityAtPos(float x, float y, Entity* ignore) const
@@ -399,13 +427,17 @@ void World::Draw()
 
     LIGHTS.clear();
 
+    Tile* tmpTile;
+    GroundTile* tmpGTile;
     for (int x = drawBeginX-6; x < drawEndX+6; x++)
         for (int y = drawBeginY-6; y < drawEndY+6; y++)
-            GetGroundTile(x, y)->RegisterLights();
+            if ((tmpGTile = GetGroundTile(x, y)) != nullptr)
+                tmpGTile->RegisterLights();
 
     for (int x = drawBeginX-6; x < drawEndX+6; x++)
         for (int y = drawBeginY-6; y < drawEndY+6; y++)
-            GetTile(x, y)->RegisterLights();
+            if ((tmpTile = GetTile(x, y)) != nullptr)
+                tmpTile->RegisterLights();
     for (int i = 0; i < LIGHTS.size(); i++)
     {
         LIGHTS_POS[i][0] = LIGHTS[i].GetXpos()*128 - offset_x;
@@ -432,10 +464,17 @@ void World::Draw()
     al_use_transform(&draw_transform);
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
-            GetGroundTile(x, y)->Draw();
+            if ((tmpGTile = GetGroundTile(x, y)) != nullptr)
+                tmpGTile->Draw();
+            else
+                al_draw_bitmap(nullTileBitmap, x * 128, y * 128, 0);
+
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
-            GetTile(x, y)->Draw();
+            if((tmpTile = GetTile(x, y)) != nullptr)
+                tmpTile->Draw();
+            //else nothing
+
 
     //DRAW ENTITIES
     for (Entity* e : entities)
@@ -680,19 +719,35 @@ void World::SaveToFile(std::string filename)
     }
 }
 
+void World::Init()
+{
+    nullTileBitmap = loaded_bitmaps["tex.tiles.null"];
+}
+
 #include "CactusBossEntity.h"
 #include "ZombieEntity.h"
 
-World* World::CreateNewWorld(std::string name)
+World* World::CreateNewWorld(std::string name, uint64_t seed, std::function<void(int curx, int cury, int p, int t)> update)
 {
-    srand((unsigned int)time(NULL));
-    int a = abs(rand()*rand()*rand());
-    printf("SEED: %d\n", a);
-    World* w = new World(true, a, name, game_version_name, game_version_minor, game_version_major);
+    World* w = new World(true, seed, name, game_version_name, game_version_minor, game_version_major);
+    w->GenerateChunk(0, 0);
     w->player = new PlayerEntity(w, 0, 0);
-    w->AddEntity(new CactusBossEntity(w, (rand() % 1000) / 50 - 10, (rand() % 1000) / 50 - 10));
-    w->AddEntity(new ZombieEntity(w, (rand() % 1000) / 50 - 10, (rand() % 1000) / 50 - 10));
-    w->AddEntity(new ZombieEntity(w, (rand() % 1000) / 50 - 10, (rand() % 1000) / 50 - 10));
+    return w;
+}
+
+World* World::CreateNewFixedSizeWorld(std::string name, uint64_t seed, int minChunkX, int minChunkY, int maxChunkX, int maxChunkY, std::function<void(int curx, int cury, int p, int t)> update)
+{
+    World* w = new World(false, seed, name, game_version_name, game_version_minor, game_version_major);
+    int c = 0;
+    int t = (maxChunkY - minChunkY + 1) * (maxChunkX - minChunkX + 1);
+    for (int y = minChunkY; y <= maxChunkY; y++)
+        for (int x = minChunkX; x <= maxChunkX; x++)
+        {
+            w->GenerateChunk(x, y);
+            update(x, y, c, t);
+            c++;
+        }
+    w->player = new PlayerEntity(w, 0, 0);
     return w;
 }
 

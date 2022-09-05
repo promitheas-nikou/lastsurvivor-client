@@ -556,6 +556,26 @@
     {
       "id": "tex.items.burner_furnace_mk1",
       "filename": "burner_furnace_mk1_off.png"
+    },
+    {
+      "id": "tex.items.log",
+      "filename": "log_item.png"
+    },
+    {
+      "id": "tex.tiles.brick_wall",
+      "filename": "brick_wall.png"
+    },
+    {
+      "id": "tex.tiles.stone_brick_wall",
+      "filename": "stone_brick_wall.png"
+    },
+    {
+      "id": "tex.tiles.null",
+      "filename": "void_tile.png"
+    },
+    {
+      "id": "tex.items.flask",
+      "filename": "flask_item.png"
     }
   ],
   "entities": [
@@ -757,8 +777,14 @@
         {
           "type": "varamount_item",
           "id": "items.stick",
-          "minamount": 4,
-          "maxamount": 8
+          "minamount": 0,
+          "maxamount": 2
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.log",
+          "minamount": 2,
+          "maxamount": 4
         },
         {
           "type": "varamount_item",
@@ -943,6 +969,22 @@
       "drops": "tiles.burner_furnace_mk1.mine.any",
       "mining_resistance": 8,
       "brightness": 512.0
+    },
+    {
+      "id": "tiles.brick_wall",
+      "mining_resistance": 10,
+      "name": "Brick Wall",
+      "tool": "pickaxe",
+      "texture": "tex.tiles.brick_wall",
+      "drops": "gtiles.stone.mine.any"
+    },
+    {
+      "id": "tiles.stone_brick_wall",
+      "mining_resistance": 10,
+      "name": "Stone Brick Wall",
+      "tool": "pickaxe",
+      "texture": "tex.tiles.stone_brick_wall",
+      "drops": "gtiles.stone.mine.any"
     }
   ],
   "ground_tiles": [
@@ -1184,6 +1226,22 @@
       "name": "Burner Furnace Mk1",
       "description": "A furnace that can be used to melt ore.",
       "texture": "tex.items.burner_furnace_mk1"
+    },
+    {
+      "id": "items.log",
+      "name": "Log",
+      "description": "A wooden log taken from a cut tree. Has many uses.",
+      "texture": "tex.items.log"
+    },
+    {
+      "id": "items.flask",
+      "name": "Flask",
+      "description": "A metal flask that can store water or some other liquid. Very convenient for staying hydrated far from lakes.",
+      "texture": "tex.items.flask",
+      "health": 0.0,
+      "hunger": 0.0,
+      "water": 5.0,
+      "durability": 40
     }
   ],
   "fonts": [
@@ -1225,6 +1283,21 @@
           {
             "id": "items.torch",
             "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "recipes.sticks_from_logs",
+        "input": [
+          {
+            "id": "items.log",
+            "amount": 1
+          }
+        ],
+        "output": [
+          {
+            "id": "items.stick",
+            "amount": 3
           }
         ]
       },

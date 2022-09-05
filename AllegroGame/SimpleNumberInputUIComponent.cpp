@@ -1,9 +1,9 @@
-#include "SimpleTextInputUIComponent.h"
+#include "SimpleNumberInputUIComponent.h"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include "ResourceLoader.h"
 
-bool SimpleTextInputUIComponent::KeyChar(ALLEGRO_KEYBOARD_EVENT& evt)
+bool SimpleNumberInputUIComponent::KeyChar(ALLEGRO_KEYBOARD_EVENT& evt)
 {
     if (alert)
     {
@@ -17,13 +17,15 @@ bool SimpleTextInputUIComponent::KeyChar(ALLEGRO_KEYBOARD_EVENT& evt)
     }
     else
     {
-        if (evt.unichar > 0)
+        if (evt.unichar>='0' && evt.unichar<='9')
             edit_text.push_back(evt.unichar);
+        else if(evt.unichar=='-')
+            edit_text.push_back('-');
     }
     return true;
 }
 
-void SimpleTextInputUIComponent::Draw(int plane)
+void SimpleNumberInputUIComponent::Draw(int plane)
 {
     if (plane != 1)
         return;
@@ -49,7 +51,7 @@ void SimpleTextInputUIComponent::Draw(int plane)
     }
 }
 
-void SimpleTextInputUIComponent::SetAlert(std::string temp_string, ALLEGRO_COLOR text_color, ALLEGRO_COLOR back_color)
+void SimpleNumberInputUIComponent::SetAlert(std::string temp_string, ALLEGRO_COLOR text_color, ALLEGRO_COLOR back_color)
 {
     edit_text = temp_string;
     alert_text_color = text_color;
@@ -57,15 +59,20 @@ void SimpleTextInputUIComponent::SetAlert(std::string temp_string, ALLEGRO_COLOR
     alert = true;
 }
 
-void SimpleTextInputUIComponent::ClearTextBuffer()
+void SimpleNumberInputUIComponent::ClearTextBuffer()
 {
     edit_text.clear();
 }
 
-std::string SimpleTextInputUIComponent::GetTextBuffer()
+long long SimpleNumberInputUIComponent::GetInputNumber()
+{
+    return std::stoi(edit_text);
+}
+
+std::string SimpleNumberInputUIComponent::GetTextBuffer()
 {
     return edit_text;
 }
 
-SimpleTextInputUIComponent::SimpleTextInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edt_txt, std::string pst_txt, int flags) : UIComponent(x, y, w, h), background_color{ bc }, text_color{ tc }, pre_text{ pre_txt }, edit_text{ edt_txt }, post_text{ pst_txt }, flags{ flags }, alert{false}, alert_background_color{al_map_rgba(255,255,255,255)}, alert_text_color{al_map_rgba(0,0,0,255)}
+SimpleNumberInputUIComponent::SimpleNumberInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edit_txt, std::string pst_txt, int flags) : UIComponent(x, y, w, h), background_color{ bc }, text_color{ tc }, pre_text{ pre_txt }, edit_text{ edit_txt }, post_text{ pst_txt }, flags{ flags }, alert{false}, alert_background_color{al_map_rgba(255,255,255,255)}, alert_text_color{al_map_rgba(0,0,0,255)}
 {}

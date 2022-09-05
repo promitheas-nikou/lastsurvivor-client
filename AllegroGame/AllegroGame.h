@@ -9,3 +9,7 @@ extern GUI* creditsMenuGUI;
 extern GUI* worldCreationGUI;
 extern World* world;
 extern bool doWorldTick;
+
+
+extern ALLEGRO_MUTEX* worldMutex;
+extern ALLEGRO_THREAD* worldTickerThread;

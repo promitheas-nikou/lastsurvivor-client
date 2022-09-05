@@ -29,7 +29,7 @@ public:
 	static std::unordered_map<std::string, uint32_t> str_to_id;
 	static std::map<uint32_t, std::string> id_to_str;
 
-	static constexpr int MAX_AMOUNT = 128;
+	virtual int GetMaxStackSize() const;
 
 	virtual std::string GetID() const = 0;
 

@@ -70,6 +70,7 @@ private:
 
 	std::string buf;
 	char debug = 0;
+	bool infoMenu = false;
 	bool showHitbox = false;
 	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
 	static ALLEGRO_BITMAP* TEXTURE;
@@ -135,8 +136,6 @@ public:
 	void PreDrawThisGUI() final;
 	void PostDrawThisGUI() final;
 	void Draw() final;
-
-	void Consume(Consumable* c);
 
 	bool KeyDown(ALLEGRO_KEYBOARD_EVENT &event) final;
 	bool KeyUp(ALLEGRO_KEYBOARD_EVENT &event) final;

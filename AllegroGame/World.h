@@ -16,8 +16,9 @@ class World
 private:
 	int WorldGameVersionMinor;
 	int WorldGameVersionMajor;
-	double TPSmeasured = 50;
+	double TPSmeasured = 50.;
 	std::string WorldGameVersionName;
+	static ALLEGRO_BITMAP* nullTileBitmap;
 
 	SimplexNoise randgen;
 
@@ -43,7 +44,6 @@ private:
 
 	PlayerEntity* player;
 
-	GroundTile* GenerateGroundTile(int x, int y);
 
 	float GenerateGetLevelHeight(int x, int y);
 	float GenerateGetLevelTemperature(int x, int y);
@@ -55,6 +55,7 @@ private:
 	World(bool w, const uint64_t s, std::string name, std::string n, int min, int maj);
 
 	Tile* GenerateTile(int x, int y);
+	GroundTile* GenerateGroundTile(int x, int y);
 
 public:
 
@@ -109,7 +110,10 @@ public:
 
 	void SaveToFile(std::string filename);
 
-	static World* CreateNewWorld(std::string name);
+	static void Init();
+
+	static World* CreateNewWorld(std::string name, uint64_t seed, std::function<void(int curx, int cury, int p, int t)>);
+	static World* CreateNewFixedSizeWorld(std::string name, uint64_t seed, int minChunkX, int minChunkY, int maxChunkX, int maxChunkYvoid, std::function<void(int curx, int cury, int p, int t)>);
 
 	friend WorldChunk;
 	friend LuaInterface;

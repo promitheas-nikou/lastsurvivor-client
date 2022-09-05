@@ -573,10 +573,28 @@
     <ClCompile Include="SimpleTextButtonUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
-    <ClCompile Include="MainGUIs.cpp">
+    <ClCompile Include="SimpleTextInputUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleTextInputUIComponent.cpp">
+    <ClCompile Include="LogItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickWallTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBrickWallTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="FlaskItem.cpp">
+      <Filter>Source Files\Game\Items\UsableItems\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGUIs.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleNumberInputUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
   </ItemGroup>
@@ -958,19 +976,40 @@
     <ClInclude Include="DebugInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AllItems.h">
-      <Filter>Header Files\Game\Items</Filter>
-    </ClInclude>
     <ClInclude Include="AllegroGame.h">
       <Filter>Source Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGUIs.h">
-      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
     <ClInclude Include="SimpleTextInputUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
     <ClInclude Include="SimpleTextButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ListAllItems.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LogItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="ListAllTiles.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickWallTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneBrickWallTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="FlaskItem.h">
+      <Filter>Header Files\Game\Items\UsableItems\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleNumberInputUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGUIs.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleToggleTextButtonUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
   </ItemGroup>
