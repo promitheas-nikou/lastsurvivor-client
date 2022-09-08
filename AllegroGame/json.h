@@ -8014,7 +8014,7 @@ namespace nlohmann
                 if (JSON_HEDLEY_LIKELY(current != std::char_traits<char_type>::eof()))
                 {
                     JSON_ASSERT(!token_string.empty());
-                    token_string.pop_back();
+                        token_string.pop_back();
                 }
             }
 

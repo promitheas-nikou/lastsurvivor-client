@@ -79,7 +79,15 @@ bool QuestGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 			return true;
 		}
 	}
+	ALLEGRO_MOUSE_STATE s;
+	al_get_mouse_state(&s);
 	curQuestHover = nullptr;
+
+	if (al_mouse_button_down(&s, 1))
+	{
+		curx -= event.dx;
+		cury -= event.dy;
+	}
 	return true;
 }
 

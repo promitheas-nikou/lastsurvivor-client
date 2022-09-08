@@ -21,6 +21,9 @@ void Quest::QuestCompletionRequirement::Resolve(QuestCollection* col)
 Quest::TileMineRequirement::TileMineRequirement(std::string tileid, int goal) : tileid{ tileid }, count{ goal }, progress{ 0 }
 {}
 
+Quest::TileMineRequirement::TileMineRequirement(std::string tileid, int progress, int goal) : tileid{ tileid }, count{ goal }, progress{ progress }
+{}
+
 void Quest::TileMineRequirement::Progress(Tile* tile)
 {
     if (tile->GetID() == tileid)
@@ -35,6 +38,10 @@ bool Quest::TileMineRequirement::Check() const
 Quest::GroundTileMineRequirement::GroundTileMineRequirement(std::string gtileid, int goal) : gtileid{ gtileid }, count{ goal }, progress{ 0 }
 {}
 
+Quest::GroundTileMineRequirement::GroundTileMineRequirement(std::string gtileid, int progress, int goal) : gtileid{ gtileid }, count{ goal }, progress{ progress }
+{
+}
+
 void Quest::GroundTileMineRequirement::Progress(GroundTile* gtile)
 {
     if (gtile->GetID() == gtileid)
@@ -47,6 +54,9 @@ bool Quest::GroundTileMineRequirement::Check() const
 }
 
 Quest::EntityKillRequirement::EntityKillRequirement(std::string entityid, int goal) : entityid{ entityid }, count{ goal }, progress{ 0 }
+{}
+
+Quest::EntityKillRequirement::EntityKillRequirement(std::string entityid, int progress, int goal) : entityid{ entityid }, count{ goal }, progress{ progress }
 {}
 
 void Quest::EntityKillRequirement::Progress(Entity* entity)
@@ -151,10 +161,15 @@ std::string Quest::GetID() const
 
 Quest* Quest::MakeFromJSON(nlohmann::json data, QuestCollection* col)
 {
+    std::cout << data << std::endl;
     Quest* q = new Quest(data["id"],data["name"], loaded_bitmaps[data["icon"]],data["completed"], data["unlocked"]);
+    q->iconid = data["icon"];
     q->collection = col;
     q->x = data["xpos"];
     q->y = data["ypos"];
+
+    int i = 0;
+
     for (nlohmann::json req : data["requirements"])
     {
         std::string t = req["type"];
@@ -162,12 +177,59 @@ Quest* Quest::MakeFromJSON(nlohmann::json data, QuestCollection* col)
         if (t == "complete_quest")
             q->quest_requirements.push_back(QuestCompletionRequirement(req["quest"]));
         else if (t == "tile_mine")
-            q->tile_requirements.push_back(TileMineRequirement(req["tile"], req["count"]));
+            q->tile_requirements.push_back(TileMineRequirement(req["tile"], req.value("progress",0), req["count"]));
         else if (t == "gtile_mine")
-            q->gtile_requirements.push_back(GroundTileMineRequirement(req["gtile"], req["count"]));
+            q->gtile_requirements.push_back(GroundTileMineRequirement(req["gtile"], req.value("progress", 0), req["count"]));
         else if (t == "kill_entity")
-            q->kill_requirements.push_back(EntityKillRequirement(req["entity"], req["count"]));
+            q->kill_requirements.push_back(EntityKillRequirement(req["entity"], req.value("progress", 0), req["count"]));
+        i++;
     }
     printf("LOADED QUEST \"%s\"\n", q->GetID().c_str());
     return q;
+}
+
+nlohmann::json Quest::SerializeToJSON()
+{
+    nlohmann::json data;
+    data["id"] = id;
+    data["name"] = name;
+    data["xpos"] = x;
+    data["ypos"] = y;
+    data["icon"] = iconid;
+    data["completed"] = completed;
+    data["unlocked"] = unlocked;
+    nlohmann::json requirements = nlohmann::json::array();
+    nlohmann::json requirement;
+    for (const QuestCompletionRequirement& q : quest_requirements) {
+        requirement = nlohmann::json::object();
+        requirement["type"] = "complete_quest";
+        requirement["quest"] = q.id;
+        requirements.push_back(requirement);
+    }
+    for (const TileMineRequirement& q : tile_requirements) {
+        requirement = nlohmann::json::object();
+        requirement["type"] = "tile_mine";
+        requirement["tile"] = q.tileid;
+        requirement["count"] = q.count;
+        requirement["progress"] = q.progress;
+        requirements.push_back(requirement);
+    }
+    for (const GroundTileMineRequirement& q : gtile_requirements) {
+        requirement = nlohmann::json::object();
+        requirement["type"] = "gtile_mine";
+        requirement["gtile"] = q.gtileid;
+        requirement["count"] = q.count;
+        requirement["progress"] = q.progress;
+        requirements.push_back(requirement);
+    }
+    for (const EntityKillRequirement& q : kill_requirements){
+        requirement = nlohmann::json::object();
+        requirement["type"] = "gtile_mine";
+        requirement["entity"] = q.entityid;
+        requirement["count"] = q.count;
+        requirement["progress"] = q.progress;
+        requirements.push_back(requirement);
+    }
+    data["requirements"] = requirements;
+    return data;
 }

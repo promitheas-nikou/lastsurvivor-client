@@ -9,6 +9,7 @@
 #include "SimplexNoise.h"
 #include "DebugInfo.h"
 #include <exception>
+#include <iostream>
 
 #define DEBUG
 
@@ -29,6 +30,7 @@
 #define WORLD_SAVE_MANIFEST_ITEMS_DICT_KEY "ITEMS"
 #define WORLD_SAVE_MANIFEST_CHUNK_X_SIZE_KEY "CHUNK_X_SIZE"
 #define WORLD_SAVE_MANIFEST_CHUNK_Y_SIZE_KEY "CHUNK_Y_SIZE"
+#define WORLD_SAVE_MANIFEST_HAS_QUESTS_BOOL_KEY "HAS_QUESTS"
 #define WORLD_SAVE_COORDINATE_DELIMETER "~"
 #define WORLD_SAVE_CHUNKDATA_FILE_EXTENSION ".chunkdata"
 #define WORLD_SAVE_ENTITYDATA_FILE_EXTENSION ".entitydata"
@@ -221,18 +223,19 @@ void World::Tick()
 {
     static int tick_counter=0;
     loadedChunkCount = 0;
+    if(doTileTick)
+        for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
+            for (const std::pair<int, WorldChunk*>& wc : m.second)
+            {
+                wc.second->Tick();
+                loadedChunkCount++;
+            }
 
-    for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
-        for (const std::pair<int, WorldChunk*>& wc : m.second)
-        {
-            wc.second->Tick();
-            loadedChunkCount++;
-        }
-
-    for (int i=0;i<entities.size();i++)
-        if(entities[i]!=nullptr)
-            if(!entities[i]->IsDead())
-                entities[i]->Tick();
+    if(doEntityTick)
+        for (int i=0;i<entities.size();i++)
+            if(entities[i]!=nullptr)
+                if(!entities[i]->IsDead())
+                    entities[i]->Tick();
     player->Tick();
 
     if ((tick_counter++ % ENTITY_UPDATE_RATE)==0)
@@ -395,6 +398,11 @@ std::vector<Entity*> World::GetEntitiesColliding(Entity* n) const
         t.push_back(player);
     return t;
 }
+    
+QuestCollection* World::GetQuestCollection() const
+{
+    return questCollection;
+}
 
 ALLEGRO_TRANSFORM draw_transform;
 
@@ -494,8 +502,6 @@ void World::Draw()
 
 //int OnWorldArchiveFileExtract() {}
 
-#include <iostream>
-
 World* World::LoadWorldFromFile(std::string filename)
 {
     std::filesystem::path dir = std::filesystem::temp_directory_path() / "LastSurvivorTemp";
@@ -505,11 +511,10 @@ World* World::LoadWorldFromFile(std::string filename)
     {
 #endif //DEBUG
         zip_extract(filename.c_str(), dir.string().c_str(), NULL, NULL);
-        nlohmann::json manifest = nlohmann::json::parse(std::ifstream(dir / WORLD_SAVE_MANIFEST_FILENAME));
+        std::ifstream manifestfilein(dir / WORLD_SAVE_MANIFEST_FILENAME);
+        nlohmann::json manifest = nlohmann::json::parse(manifestfilein);
+        manifestfilein.close();
 
-        std::cout << manifest;
-
-        std::cout << manifest[WORLD_SAVE_MANIFEST_SEED_KEY];
         world = new World(
             manifest[WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY],
             manifest[WORLD_SAVE_MANIFEST_SEED_KEY],
@@ -517,6 +522,15 @@ World* World::LoadWorldFromFile(std::string filename)
             manifest[WORLD_SAVE_MANIFEST_VERSION_KEY],
             manifest[WORLD_SAVE_MANIFEST_VER_MAJOR_KEY],
             manifest[WORLD_SAVE_MANIFEST_VER_MINOR_KEY]);
+
+
+        if (manifest.value(WORLD_SAVE_MANIFEST_HAS_QUESTS_BOOL_KEY,false))
+        {
+            std::ifstream questsjson(dir / "quests.json");
+            world->questCollection = QuestCollection::LoadFromFile(questsjson);
+            questsjson.close();
+        }
+
         world->gametime = manifest[WORLD_SAVE_MANIFEST_GAMETIME_KEY];
         if ((manifest[WORLD_SAVE_MANIFEST_CHUNK_X_SIZE_KEY] != WorldChunk::CHUNK_SIZE_X) || (manifest[WORLD_SAVE_MANIFEST_CHUNK_Y_SIZE_KEY] != WorldChunk::CHUNK_SIZE_Y))
             throw std::format_error("WORLD FILE HAS DIFFERENT CHUNK SIZE!!!");
@@ -645,7 +659,15 @@ void World::SaveToFile(std::string filename)
     manifest[WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY] = doDynamicWorldGen;
     manifest[WORLD_SAVE_MANIFEST_SEED_KEY] = SEED;
     manifest[WORLD_SAVE_MANIFEST_GAMETIME_KEY] = gametime;
-    manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY] = {};
+    manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY] = nlohmann::json::object();
+    manifest[WORLD_SAVE_MANIFEST_HAS_QUESTS_BOOL_KEY] = GetQuestCollection() != nullptr;
+    if (GetQuestCollection() != nullptr)
+    {
+        std::ofstream questsjson(dir/"quests.json");
+        GetQuestCollection()->SaveToFile(questsjson);
+        questsjson.flush();
+        questsjson.close();
+    }
     for (const std::pair<int, std::string>& p : item_ids_to_keys)
         manifest[WORLD_SAVE_MANIFEST_ITEMS_DICT_KEY][p.first] = p.second;
     for (const std::pair<int, std::string>& p : tile_ids_to_keys)

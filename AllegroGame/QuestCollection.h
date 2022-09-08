@@ -6,6 +6,7 @@
 class QuestCollection
 {
 private:
+	static QuestCollection* NULL_COLLECTION;
 	std::unordered_map<std::string, Quest*> quests;
 	QuestCollection() = default;
 public:
@@ -13,13 +14,15 @@ public:
 	void MinedGroundTile(GroundTile* gtile, Tool* tool);
 	void EntityKilled(Entity* entity);
 
+	static QuestCollection* GetNullCollection();
+
 	void Update();
 
 	Quest* GetQuest(std::string id);
 
-	static QuestCollection* MakeFromJSON(nlohmann::json data);
+	static QuestCollection* LoadFromFile(std::ifstream &file);
+	void SaveToFile(std::ofstream &file);
 	friend Quest;
 	friend class QuestGUI;
-	friend void init_quests();
 };
 

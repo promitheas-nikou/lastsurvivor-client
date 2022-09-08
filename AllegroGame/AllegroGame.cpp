@@ -94,8 +94,6 @@ int main()
 	init_tiles();
 	printf("\n======= LOADING RECIPES =======\n\n");
 	init_recipes();
-	printf("\n======= INITIALIZING QUESTS =======\n\n");
-	init_quests();
 	printf("\n======= INITIALIZING ENTITIES =======\n\n");
 	init_entities();
 	World::Init();

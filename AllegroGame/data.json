@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.12",
-  "VER_MINOR": 12,
+  "VERSION": "ALPHA 1.14",
+  "VER_MINOR": 14,
   "VER_MAJOR": 1,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -1317,59 +1317,5 @@
         ]
       }
     ]
-  },
-  "quests": [
-    {
-      "id": "quests.break_trees",
-      "name": "Break 10 trees",
-      "icon": "tex.tiles.tree/3",
-      "unlocked": true,
-      "completed": false,
-      "xpos": 320,
-      "ypos": 320,
-      "requirements": [
-        {
-          "type": "tile_mine",
-          "tile": "tiles.tree",
-          "count": 10
-        },
-        {
-          "type": "complete_quest",
-          "quest": "quests.break_sand"
-        }
-      ]
-    },
-    {
-      "id": "quests.break_sand",
-      "name": "Break 20 sand",
-      "icon": "tex.gtiles.sand",
-      "unlocked": false,
-      "completed": false,
-      "xpos": 640,
-      "ypos": 960,
-      "requirements": [
-        {
-          "type": "gtile_mine",
-          "gtile": "gtiles.sand",
-          "count": 20
-        }
-      ]
-    },
-    {
-      "id": "quests.kill_zombie",
-      "name": "Eliminate the Cactus Bosss",
-      "icon": "tex.entities.cactus_boss.front/0",
-      "unlocked": true,
-      "completed": false,
-      "xpos": 1024,
-      "ypos": 1024,
-      "requirements": [
-        {
-          "type": "kill_entity",
-          "entity": "entities.cactus_boss",
-          "count": 1
-        }
-      ]
-    }
-  ]
+  }
 }

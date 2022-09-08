@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "json.h"
+#include <fstream>
 #include <allegro5/allegro5.h>
 
 class QuestCollection;
@@ -15,6 +16,7 @@ class Quest
 private:
 	std::string name;
 	std::string id;
+	std::string iconid;
 	ALLEGRO_BITMAP* icon;
 	bool completed;
 	bool unlocked;
@@ -38,6 +40,7 @@ private:
 		int progress;
 		bool completed = false;
 		TileMineRequirement(std::string tileid, int goal);
+		TileMineRequirement(std::string tileid, int progress, int goal);
 		void Progress(Tile* tile);
 		bool Check() const;
 	};
@@ -49,6 +52,7 @@ private:
 		int progress;
 		bool completed = false;
 		GroundTileMineRequirement(std::string gtileid, int goal);
+		GroundTileMineRequirement(std::string gtileid, int progress, int goal);
 		void Progress(GroundTile* gtile);
 		bool Check() const;
 	};
@@ -60,6 +64,7 @@ private:
 		int progress;
 		bool completed = false;
 		EntityKillRequirement(std::string entityid, int goal);
+		EntityKillRequirement(std::string entityid, int progress, int goal);
 		void Progress(Entity* entity);
 		bool Check() const;	
 	};
@@ -91,6 +96,7 @@ public:
 	std::string GetID() const;
 
 	static Quest *MakeFromJSON(nlohmann::json data, QuestCollection* col);
+	nlohmann::json SerializeToJSON();
 	friend QuestCollection;
 	friend class QuestGUI;
 };

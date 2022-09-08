@@ -62,8 +62,6 @@ extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> lo
 extern std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 extern std::unordered_map<std::string, Shader*> loaded_shaders;
 
-extern QuestCollection* quest_collection;
-
 extern std::map<uint32_t, std::string> tile_ids_to_keys;
 extern std::map<uint32_t, std::string> gtile_ids_to_keys;
 extern std::map<uint32_t, std::string> item_ids_to_keys;
@@ -77,7 +75,6 @@ void load_resources();
 
 void init_tiles();
 void init_items();
-void init_quests();
 void init_entities();
 void init_recipes();
 

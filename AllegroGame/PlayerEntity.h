@@ -10,6 +10,7 @@
 #include <deque>
 #include "Consumable.h"
 #include "ConsumableItem.h"
+#include "SimpleToggleTextButtonUIComponent.h"
 #include "ToolItem.h"
 #include "ItemBundle.h"
 #include "QuestGUI.h"
@@ -59,11 +60,14 @@ public:
 		BUILDING = 0x04
 	};
 private:
-
+	bool godMode = false;
 	class PauseMenuGUI :
 		public GUI
 	{
 	public:
+		SimpleToggleTextButtonUIComponent* godmode_tb;
+		SimpleToggleTextButtonUIComponent* tile_tick_tb;
+		SimpleToggleTextButtonUIComponent* entity_tick_tb;
 		virtual void PreDrawThisGUI() final;
 		PauseMenuGUI(PlayerEntity* p);
 	};

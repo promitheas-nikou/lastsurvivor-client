@@ -14,11 +14,14 @@ class LuaInterface;
 class World
 {
 private:
+	bool doTileTick = true;
+	bool doEntityTick = true;
 	int WorldGameVersionMinor;
 	int WorldGameVersionMajor;
 	double TPSmeasured = 50.;
 	std::string WorldGameVersionName;
 	static ALLEGRO_BITMAP* nullTileBitmap;
+	QuestCollection* questCollection;
 
 	SimplexNoise randgen;
 
@@ -88,6 +91,8 @@ public:
 
 	std::vector<Entity*> GetEntitiesAtPos(float x, float y) const;
 	std::vector<Entity*> GetEntitiesColliding(Entity* e) const;
+
+	QuestCollection* GetQuestCollection() const;
 
 	class Light {
 	private:

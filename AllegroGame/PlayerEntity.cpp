@@ -39,7 +39,6 @@ AudioMultiTrackCollection PlayerEntity::AUDIO_TRACKS;
 ALLEGRO_BITMAP* HEALTH_ICON;
 ALLEGRO_BITMAP* HUNGER_ICON;
 ALLEGRO_BITMAP* WATER_ICON;
-QuestCollection* quests;
 
 int a, b, c;
 
@@ -98,7 +97,8 @@ Entity* PlayerEntity::Clone(World* world, float x, float y) const
 
 void PlayerEntity::EntityKilledRemote(Entity* e)
 {
-	quests->EntityKilled(e);
+	if (GetContainingWorld()->GetQuestCollection() != nullptr)
+		GetContainingWorld()->GetQuestCollection()->EntityKilled(e);
 }
 
 const std::string PlayerEntity::ID = "entities.player";
@@ -107,7 +107,8 @@ bool PlayerEntity::Mine()
 {
 	if (GroundTileMiner::Mine())
 	{
-		quest_collection->MinedGroundTile(GroundTileMiner::GetTarget(), GroundTileMiner::GetTool());
+		if(GetContainingWorld()->GetQuestCollection()!=nullptr)
+			GetContainingWorld()->GetQuestCollection()->MinedGroundTile(GroundTileMiner::GetTarget(), GroundTileMiner::GetTool());
 		return true;
 	}
 	return false;
@@ -457,7 +458,12 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		else
 		{
 			if (guistate == PLAYER_GUI_STATE::PAUSE)
+			{
 				doWorldTick = true;
+				godMode = pauseGUI->godmode_tb->GetIsToggledOn();
+				GetContainingWorld()->doTileTick = pauseGUI->tile_tick_tb->GetIsToggledOn();
+				GetContainingWorld()->doEntityTick = pauseGUI->entity_tick_tb->GetIsToggledOn();
+			}
 			guistate = PLAYER_GUI_STATE::WORLD;
 			activeSubGUI = nullptr;
 		}
@@ -549,7 +555,8 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 								if (a * a + b * b <= mw->GetRangeSQ())
 									e->DoDamage(mw);
 								if (e->GetHealth() <= 0.f)
-									quests->EntityKilled(e);
+									if (GetContainingWorld()->GetQuestCollection() != nullptr)
+										GetContainingWorld()->GetQuestCollection()->EntityKilled(e);
 							}
 						}
 					}
@@ -760,7 +767,8 @@ void PlayerEntity::MineTile(int x, int y)
 	success = tile->MineWithTool(nullptr);
 	if (success)
 	{
-		quests->TileMined(tile, t);
+		if (GetContainingWorld()->GetQuestCollection() != nullptr)
+			GetContainingWorld()->GetQuestCollection()->TileMined(tile, t);
 		const ItemBundle* b = tile->GetMiningResult(nullptr);
 		if(b!=nullptr)
 		for (int i = 0; i < b->GetSize(); i++)
@@ -820,19 +828,29 @@ void PlayerEntity::Tick()
 			ApplyForce(-PLAYER_SPEED * DIAG_MOD, -PLAYER_SPEED * DIAG_MOD);
 			break;
 		}
-		hunger = std::max(0.f, hunger - HUNGER_LOSS_PER_TICK);
-		if (hunger == 0.f)
+		if (!godMode)
 		{
-			DoDamage(HEALTH_LOSS_FROM_HUNGER_PER_TICK);
+			hunger = std::max(0.f, hunger - HUNGER_LOSS_PER_TICK);
+			if (hunger == 0.f)
+			{
+				DoDamage(HEALTH_LOSS_FROM_HUNGER_PER_TICK);
+			}
+			water = std::max(0.f, water - WATER_LOSS_PER_TICK);
+			if (water == 0.f)
+			{
+				DoDamage(HEALTH_LOSS_FROM_WATER_PER_TICK);
+			}
 		}
-		water = std::max(0.f, water - WATER_LOSS_PER_TICK);
-		if (water == 0.f)
+		else
 		{
-			DoDamage(HEALTH_LOSS_FROM_WATER_PER_TICK);
+			hunger = MAX_HUNGER;
+			water = MAX_WATER;
+			SetHealth(GetMaxHealth());
 		}
 		Entity::Tick();
 	}
-	quests->Update();
+	if(GetContainingWorld()->GetQuestCollection()!=nullptr)
+		GetContainingWorld()->GetQuestCollection()->Update();
 }
 
 void PlayerEntity::Init(nlohmann::json data)
@@ -876,10 +894,11 @@ void PlayerEntity::DisplayTileGUI(Tile* t, GUI* g)
 
 PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }
 {
-	quests = quest_collection;
 	hunger = MAX_HUNGER;
 	water = MAX_WATER;
 	SetName("Player");
+	if (world == nullptr)
+		return;
 	luaInterface = new LuaInterface(world, true);
 	inventory = new SimpleItemInventory(36);
 	meleeWeapon = new SimpleSword();
@@ -901,7 +920,10 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	});
 	activeSubGUI = nullptr;
 	deathgui = new DeathGUI(this);
-	questGUI = new QuestGUI(quests);
+	if (GetContainingWorld()->GetQuestCollection() != nullptr)
+		questGUI = new QuestGUI(GetContainingWorld()->GetQuestCollection());
+	else
+		questGUI = new QuestGUI(QuestCollection::GetNullCollection());
 	for (int i = 0; i < 9; i++)
 	{
 		hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::VIEW);
@@ -1021,5 +1043,8 @@ PlayerEntity::PauseMenuGUI::PauseMenuGUI(PlayerEntity* p)
 		al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
 		currentGUI = mainMenuGUI;
 		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "EXIT WITHOUT SAVING"));
+	UIcomponents.push_back(godmode_tb = new SimpleToggleTextButtonUIComponent(100, SCREEN_HEIGHT / 2 - 100, 400, 50, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "GOD-MODE", false));
+	UIcomponents.push_back(tile_tick_tb = new SimpleToggleTextButtonUIComponent(100, SCREEN_HEIGHT / 2 - 25, 400, 50, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "DO TILE TICK", true));
+	UIcomponents.push_back(entity_tick_tb = new SimpleToggleTextButtonUIComponent(100, SCREEN_HEIGHT / 2 + 50, 400, 50, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "DO ENTITY TICK", true));
 }
 

@@ -72,8 +72,6 @@ std::unordered_map<std::string, Shader*> loaded_shaders;
 std::unordered_map<std::string, LootBundle*> loaded_loot_bundles;
 std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 
-QuestCollection* quest_collection;
-
 using json = nlohmann::json;
 
 std::unordered_map<std::string, json> ground_tile_data;
@@ -349,13 +347,6 @@ void init_items()
 		exit(EXIT_FAILURE);
 	}
 #endif //DEBUG
-}
-
-void init_quests()
-{
-	quest_collection = QuestCollection::MakeFromJSON(json_data["quests"]);
-	for (const std::pair<std::string, Quest*>& p : quest_collection->quests)
-		p.second->Resolve();
 }
 
 void init_entities()

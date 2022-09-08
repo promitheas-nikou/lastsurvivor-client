@@ -162,6 +162,8 @@ void CreditsMenuGUI::PreDrawThisGUI()
 	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 620, ALLEGRO_ALIGN_CENTER, "THEOFILOS MYSTIDIS");
 	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 760, ALLEGRO_ALIGN_LEFT, "SPECIAL THANKS TO:");
 	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 760, ALLEGRO_ALIGN_CENTER, "APOSTOLOS ADAMOS");
+	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 800, ALLEGRO_ALIGN_CENTER, "MARKELLA SENEKH");
+	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 840, ALLEGRO_ALIGN_CENTER, "LAZAROS TZHMKAS");
 }
 
 CreditsMenuGUI::CreditsMenuGUI()

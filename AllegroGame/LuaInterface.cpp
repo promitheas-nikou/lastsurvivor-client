@@ -37,6 +37,9 @@ LuaInterface::LuaInterface(World* world, bool privileged) : world{ world }
 		lua_pushlightuserdata(state, this);
 		lua_pushcclosure(state, &lua_Teleport, 1);
 		lua_setglobal(state, "teleport");
+		lua_pushlightuserdata(state, this);
+		lua_pushcclosure(state, &lua_SpawnEntity, 1);
+		lua_setglobal(state, "spawn");
 		luaL_dofile(state, "LuaDefault.lua");
 	}
 
@@ -118,5 +121,12 @@ int LuaInterface::lua_Teleport(lua_State* state)
 {
 	LuaInterface* ptr = (LuaInterface*)lua_topointer(state, lua_upvalueindex(1));
 	ptr->world->player->warpAbsolute(lua_tointeger(state, 1), lua_tointeger(state, 2));
+	return 0;
+}
+
+int LuaInterface::lua_SpawnEntity(lua_State* state)
+{
+	LuaInterface* ptr = (LuaInterface*)lua_topointer(state, lua_upvalueindex(1));
+	ptr->world->AddEntity(MakeEntity(ptr->world, lua_tostring(state, 1), lua_tonumber(state, 2), lua_tonumber(state, 3)));
 	return 0;
 }
