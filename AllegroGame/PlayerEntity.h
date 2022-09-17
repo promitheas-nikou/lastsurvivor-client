@@ -46,7 +46,7 @@ public:
 	friend class PlayerEntity;
 };
 
-class PlayerEntity :
+class PlayerEntity:
     public Entity,
 	public GUI,
 	public GroundTileMiner
@@ -121,7 +121,6 @@ private:
 
 public:
 
-
 	virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
 	virtual void WriteAdditionalDataToFile(std::ofstream& file) override;
 
@@ -166,6 +165,8 @@ public:
 
 	void PushNotification(std::string txt, int fontsize = 30);
 	void DisplayTileGUI(Tile* t, GUI* g);
+
+	InventoryGUI* GetMainInventoryGUI(int offsetx, int offsety);
 
 	PlayerEntity(World* world, float xpos, float ypos);
 

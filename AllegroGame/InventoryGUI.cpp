@@ -3,7 +3,11 @@
 #include "SimpleItemInventoryCallbackSlotUIComponent.h"
 #include "SimpleItemInventoryGenericStorageSlotUIComponent.h"
 #include "SimpleItemInventoryPlaceableStorageSlotUIComponent.h"
+#include "SimpleItemInventoryFuelStorageSlotUIComponent.h"
 #include "SimpleItemInventoryViewStorageSlotUIComponent.h"
+#include "SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h"
+#include "SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h"
+#include "SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h"
 
 
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_GENERIC;
@@ -16,6 +20,105 @@ ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_MELEE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_RANGED;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_CONSUMABLE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_PLACEABLE;
+
+bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
+{
+	if (activeSubGUI != nullptr)
+		if (activeSubGUI->HandleEvent(event))
+			return true;
+	ALLEGRO_MOUSE_STATE state;
+	al_get_mouse_state(&state);
+	if (selectedComponent != nullptr)
+		switch (event.type) {
+		case ALLEGRO_EVENT_KEY_DOWN:
+			return selectedComponent->KeyDown(event.keyboard);
+		case ALLEGRO_EVENT_KEY_UP:
+			return selectedComponent->KeyUp(event.keyboard);
+		case ALLEGRO_EVENT_KEY_CHAR:
+			return selectedComponent->KeyChar(event.keyboard);
+		}
+	for (int i = 0; i < UIcomponents.size(); i++)
+	{
+		UIComponent* tmp = UIcomponents[i];
+
+		if (tmp->ContainsPoint(state.x - xoffset, state.y - yoffset))
+		{
+			switch (event.type)
+			{
+			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+				selectedComponent = tmp;
+				switch (event.mouse.button)
+				{
+				case 1:
+					if (tmp->ClickLeftDown(event.mouse.x - xoffset, event.mouse.y - yoffset))
+						return true;
+					break;
+				case 2:
+					if (tmp->ClickRightDown(event.mouse.x - xoffset, event.mouse.y - yoffset))
+						return true;
+					break;
+				}
+				break;
+			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+				switch (event.mouse.button)
+				{
+				case 1:
+					if (tmp->ClickLeftUp(event.mouse.x - xoffset, event.mouse.y - yoffset))
+						return true;
+					break;
+				case 2:
+					if (tmp->ClickRightUp(event.mouse.x - xoffset, event.mouse.y - yoffset))
+						return true;
+					break;
+				}
+				break;
+			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
+				if (tmp->Hover(state.x - xoffset, state.y - xoffset))
+					return true;
+				break;
+				//		case ALLEGRO_EVENT_KEY_CHAR:
+				//			break;
+			case ALLEGRO_EVENT_KEY_DOWN:
+				return this->KeyDown(event.keyboard);
+				break;
+			case ALLEGRO_EVENT_KEY_UP:
+				return this->KeyUp(event.keyboard);
+				break;
+			case ALLEGRO_EVENT_KEY_CHAR:
+				return this->KeyChar(event.keyboard);
+				break;
+			}
+		}
+	}
+	switch (event.type)
+	{
+	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+		if (this->MouseButtonDown(event.mouse))
+			return true;
+		break;
+	case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+		if (this->MouseButtonUp(event.mouse))
+			return true;
+		break;
+	case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
+		if (this->MouseButtonMove(event.mouse))
+			return true;
+		break;
+	case ALLEGRO_EVENT_KEY_CHAR:
+		if (IsTyping() && this->KeyChar(event.keyboard))
+			return true;
+		break;
+	case ALLEGRO_EVENT_KEY_DOWN:
+		if (!IsTyping() && this->KeyDown(event.keyboard))
+			return true;
+		break;
+	case ALLEGRO_EVENT_KEY_UP:
+		if (!IsTyping() && this->KeyUp(event.keyboard))
+			return true;
+		break;
+	}
+	return false;
+}
 
 void InventoryGUI::SwapItem(Item** slot)
 {
@@ -44,8 +147,26 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 	case StorageSlotType::PLACEABLE:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryPlaceableStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_PLACEABLE, itemslot, swapTemp));
 		break;
+	case StorageSlotType::FUEL:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
+		break;
 	default:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
+	}
+}
+
+void InventoryGUI::AddDynamicSlot(int x, int y, int w, int h, std::function<Item**()> itemslotfunc, StorageSlotType t)
+{
+	switch (t)
+	{
+	case StorageSlotType::FUEL:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::OUTPUT:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryOutputStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslotfunc, swapTemp));
+		break;
+	default:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslotfunc, swapTemp));
 	}
 }
 
@@ -75,8 +196,45 @@ void InventoryGUI::AddTrashSlot(int x, int y, int w, int h)
 	GUI::UIcomponents.push_back(new SimpleItemInventoryCallbackSlotUIComponent(x, y, w, h, INVENTORY_SLOT_TRASH, callbackleft, callbackright, swapTemp));
 }
 
+void InventoryGUI::SetOffset(int xoff, int yoff)
+{
+	xoffset = xoff;
+	yoffset = yoff;
+}
+
 InventoryGUI::InventoryGUI() : swapTemp{ nullptr }
 {
+}
+
+int __CURRENT_OFFSET_X_GUI_INVENTORY_SLOT;
+int __CURRENT_OFFSET_Y_GUI_INVENTORY_SLOT;
+
+void InventoryGUI::DrawGUI()
+{
+	this->PreDrawThisGUI();
+
+	ALLEGRO_TRANSFORM temp_gui_transform = *al_get_current_transform();
+	__CURRENT_OFFSET_X_GUI_INVENTORY_SLOT = xoffset;
+	__CURRENT_OFFSET_Y_GUI_INVENTORY_SLOT = yoffset;
+	al_translate_transform(&temp_gui_transform, xoffset, yoffset);
+	al_use_transform(&temp_gui_transform);
+	for (int p = 1; p <= 3; p++)
+		for (int i = 0; i < UIcomponents.size(); i++)
+		{
+			UIComponent* tmp = UIcomponents[i];
+			al_translate_transform(&temp_gui_transform, tmp->GetXpos(), tmp->GetYpos());
+			al_use_transform(&temp_gui_transform);
+			UIcomponents[i]->Draw(p);
+			al_translate_transform(&temp_gui_transform, -tmp->GetXpos(), -tmp->GetYpos());
+		}
+	al_use_transform(&temp_gui_transform);
+	if (activeSubGUI != nullptr)
+		activeSubGUI->DrawGUI();
+
+	al_translate_transform(&temp_gui_transform, -xoffset, -yoffset);
+	al_use_transform(&temp_gui_transform);
+
+	this->PostDrawThisGUI();
 }
 
 void InventoryGUI::Init()

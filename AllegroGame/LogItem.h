@@ -1,14 +1,17 @@
 #pragma once
 
-		#include "Item.h"
+		#include "FuelItem.h"
 
 		class LogItem :
-			public Item
+			public FuelItem
 		{
 		private:
 			static std::string NAME;
 			static std::string DESCRIPTION;
 			static ALLEGRO_BITMAP* TEXTURE;
+
+			static float BURN_TIME;
+			static float BURN_HEAT;
 
 		public:
 
@@ -17,6 +20,9 @@
 			std::string GetID() const final;
 
 			LogItem();
+
+			virtual float GetBurnTime() const final;
+			virtual float GetBurnHeat() const final;
 
 			virtual Item* Clone() const override;
 

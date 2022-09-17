@@ -18,7 +18,7 @@
 
 //ALLEGRO_THREAD* 
 
-static const float TPS = 50.f;
+const float TPS = 50.f;
 
 GUI* currentGUI;
 GUI* mainMenuGUI;

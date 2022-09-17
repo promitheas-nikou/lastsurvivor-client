@@ -3,6 +3,12 @@
 #include "LootBundle.h"
 #include "World.h"
 
+#include "RectangularUIComponent.h"
+#include "SimpleUIComponent.h"
+#include "BitmapUIComponent.h"
+
+#include "SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h"
+
 class BurnerFurnaceMk1Tile :
     public Tile
 {
@@ -12,23 +18,38 @@ private:
         public GUI
     {
     public:
+
+        BurnerFurnaceMk1Tile* parentTile;
+
+        Item*& InputItemPtrFunc();
+        Item*& FuelItemPtrFunc();
+        Item*& OutputItemPtrFunc();
+
         virtual void PreDrawThisGUI() final;
         virtual void PostDrawThisGUI() final;
 
-        TileGUI(PlayerEntity* p);
+        TileGUI(PlayerEntity* p, BurnerFurnaceMk1Tile* s);
     };
 
     static int MINING_RESISTANCE;
     static ToolType TOOL_TYPE;
     static std::string NAME;
     static ALLEGRO_BITMAP* TEXTURES[2];
+    static ALLEGRO_BITMAP* BURN_ICON_ON;
+    static ALLEGRO_BITMAP* BURN_ICON_OFF;
+    static ALLEGRO_BITMAP* PROGRESS_ICON_OFF;
+    static ALLEGRO_BITMAP* PROGRESS_ICON_ON;
     static const LootBundle* DROP;
     static float BRIGHTNESS;
-    static GUI* TILE_GUI;
+    static TileGUI* TILE_GUI;
     float burnTimeRemaining;
-    Item* fuel;
-    Item* input;
-    Item* output;
+    float burnTimeFull;
+    float progress;
+    float progressPerTick;
+    const SmeltingRecipe* currentRecipe;
+    ItemInventory* fuel;
+    ItemInventory* input;
+    ItemInventory* output;
 public:
     static const std::string ID;
     std::string GetID() const final;
@@ -42,6 +63,11 @@ public:
     virtual int GetMiningResistance() const final;
     virtual std::string GetName() const final;
 
+    virtual void WriteAdditionalDataToFile(std::ofstream& file) final;
+    virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
+
+    virtual void TickUpdate() final;
+
     virtual void RegisterLights() final;
 
     virtual Tile* Clone(World* w, int x, int y) const final;
@@ -51,6 +77,8 @@ public:
     const ItemBundle* GetMiningResult(Tool* tool) const override;
 
     static void Init(nlohmann::json data);
+
+    virtual void InitForWorld(World* w) final;
 
     virtual ~BurnerFurnaceMk1Tile() = default;
 

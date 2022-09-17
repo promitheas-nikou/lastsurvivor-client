@@ -374,6 +374,7 @@ void init_entities()
 void init_recipes()
 {
 	CraftingRecipe::LoadRecipes(json_data["recipes"]["crafting"]);
+	SmeltingRecipe::LoadRecipes(json_data["recipes"]["smelting"]);
 }
 
 void free_resources()

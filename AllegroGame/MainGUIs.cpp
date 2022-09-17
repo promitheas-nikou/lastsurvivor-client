@@ -43,6 +43,8 @@ PlayMenuGUI::PlayMenuGUI()
 			currentGUI = world->GetPlayer();
 			al_stop_samples();
 			al_play_sample(loaded_audio_samples["themes.ingame"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
+			InitAllGroundTilesForWorld(world);
+			InitAllTilesForWorld(world);
 			doWorldTick = true;
 		}
 		al_destroy_native_file_dialog(f);
@@ -139,6 +141,8 @@ WorldCreationMenuGUI::WorldCreationMenuGUI()
 		currentGUI = world->GetPlayer();
 		al_stop_samples();
 		al_play_sample(loaded_audio_samples["themes.ingame"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
+		InitAllGroundTilesForWorld(world);
+		InitAllTilesForWorld(world);
 		doWorldTick = true;
 		
 	}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "CREATE WORLD"));
@@ -163,7 +167,8 @@ void CreditsMenuGUI::PreDrawThisGUI()
 	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 760, ALLEGRO_ALIGN_LEFT, "SPECIAL THANKS TO:");
 	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 760, ALLEGRO_ALIGN_CENTER, "APOSTOLOS ADAMOS");
 	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 800, ALLEGRO_ALIGN_CENTER, "MARKELLA SENEKH");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 840, ALLEGRO_ALIGN_CENTER, "LAZAROS TZHMKAS");
+	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 840, ALLEGRO_ALIGN_CENTER, "DIMITRIS IGNATIADHS");
+	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 880, ALLEGRO_ALIGN_CENTER, "LAZAROS TZHMKAS");
 }
 
 CreditsMenuGUI::CreditsMenuGUI()

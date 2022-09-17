@@ -217,6 +217,18 @@
     <Filter Include="Header Files\Game\Tiles\MachineTiles">
       <UniqueIdentifier>{347bab62-47ce-4d5e-9ac8-cc76623bd0e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents">
+      <UniqueIdentifier>{74b75a74-9a9d-44c3-8524-131e731d3624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents">
+      <UniqueIdentifier>{b44ad2e3-c6e5-471e-b670-eedb68ab3b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents">
+      <UniqueIdentifier>{501fe346-fd2c-4ea9-8c94-3309000f1877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents">
+      <UniqueIdentifier>{1b29ad21-a2d8-402c-8d01-2e8cd847bc19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -305,9 +317,6 @@
     </ClCompile>
     <ClCompile Include="ItemInventory.cpp">
       <Filter>Source Files\Game\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="InventoryGUI.cpp">
-      <Filter>Source Files\Game\GUI</Filter>
     </ClCompile>
     <ClCompile Include="SimpleInventoryGUI.cpp">
       <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
@@ -471,12 +480,6 @@
     <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp">
-      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp">
-      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
-    </ClCompile>
     <ClCompile Include="TextUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -485,9 +488,6 @@
     </ClCompile>
     <ClCompile Include="Config.cpp">
       <Filter>Source Files\Data</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp">
-      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
     <ClCompile Include="LootBundle.cpp">
       <Filter>Source Files\Game\Items\ItemBundles</Filter>
@@ -527,9 +527,6 @@
     </ClCompile>
     <ClCompile Include="SimpleRecipeListGUI.cpp">
       <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp">
-      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClCompile>
     <ClCompile Include="VariableAmountItem.cpp">
       <Filter>Source Files\Game\Items</Filter>
@@ -596,6 +593,33 @@
     </ClCompile>
     <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryFuelStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -702,9 +726,6 @@
     </ClInclude>
     <ClInclude Include="SimpleInventoryGUI.h">
       <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
-    </ClInclude>
-    <ClInclude Include="InventoryGUI.h">
-      <Filter>Header Files\Game\GUI</Filter>
     </ClInclude>
     <ClInclude Include="ItemInventory.h">
       <Filter>Header Files\Game\Items</Filter>
@@ -880,12 +901,6 @@
     <ClInclude Include="SimpleCallbackTextDrawUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h">
-      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h">
-      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
-    </ClInclude>
     <ClInclude Include="FuelItem.h">
       <Filter>Header Files\Game\Items\FuelItems</Filter>
     </ClInclude>
@@ -897,9 +912,6 @@
     </ClInclude>
     <ClInclude Include="AnthraciteCoalChunkItem.h">
       <Filter>Header Files\Game\Items\FuelItems</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h">
-      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
     <ClInclude Include="Config.h">
       <Filter>Header Files\Data</Filter>
@@ -945,9 +957,6 @@
     </ClInclude>
     <ClInclude Include="HematiteChunkItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h">
-      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
     <ClInclude Include="PlaceableItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
@@ -1011,6 +1020,33 @@
     </ClInclude>
     <ClInclude Include="SimpleToggleTextButtonUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryFuelStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

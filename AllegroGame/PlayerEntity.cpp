@@ -892,6 +892,19 @@ void PlayerEntity::DisplayTileGUI(Tile* t, GUI* g)
 	activeSubGUI = g;
 }
 
+InventoryGUI* PlayerEntity::GetMainInventoryGUI(int offsetx, int offsety)
+{
+	InventoryGUI* g = new InventoryGUI();
+	for (int i = 0; i < 9; i++)
+	{
+		g->AddSlot(128 * i + offsetx, 0 + offsety, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
+		g->AddSlot(128 * i + offsetx, 128 + offsety, 128, 128, *inventory->GetItemPtr(i + 9), InventoryGUI::StorageSlotType::GENERIC);
+		g->AddSlot(128 * i + offsetx, 256 + offsety, 128, 128, *inventory->GetItemPtr(i + 18), InventoryGUI::StorageSlotType::GENERIC);
+		g->AddSlot(128 * i + offsetx, 384 + offsety, 128, 128, *inventory->GetItemPtr(i + 27), InventoryGUI::StorageSlotType::GENERIC);
+	}
+	return g;
+}
+
 PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }
 {
 	hunger = MAX_HUNGER;

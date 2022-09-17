@@ -2,6 +2,8 @@
 #include "MainGUIs.h"
 class World;
 
+extern const float TPS;
+
 extern GUI* playMenuGUI;
 extern GUI* mainMenuGUI;
 extern GUI* currentGUI;

@@ -57,6 +57,11 @@ bool Tile::IsEmpty() const
 	return false;
 }
 
+void Tile::InitForWorld(World* w)
+{
+	return;
+}
+
 void Tile::Use(PlayerEntity* user)
 {}
 
@@ -100,4 +105,10 @@ Tile* MakeTile(World* world, std::string id, int x, int y)
 	if (t == nullptr)
 		return nullptr;
 	return t->Clone(world, x, y);
+}
+
+void InitAllTilesForWorld(World* w)
+{
+	for (const std::pair<std::string, const Tile*>& tile : prototype_tiles)
+		const_cast<Tile*>(tile.second)->InitForWorld(w);
 }

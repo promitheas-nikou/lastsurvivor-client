@@ -11,8 +11,10 @@ CraftingRecipe::CraftingRecipe(nlohmann::json data)
     output = new SimpleItemBundle();
     for (nlohmann::json item : data["input"])
         input->AddItem(MakeItemFromJSON(item));
+    inputIndex = new ItemIndex(input);
     for (nlohmann::json item : data["output"])
         output->AddItem(MakeItemFromJSON(item));
+    outputIndex = new ItemIndex(output);
     tier = data.value("tier",0);
 }
 
@@ -30,16 +32,16 @@ int CraftingRecipe::GetTier() const
     return tier;
 }
 
-bool CraftingRecipe::PerformOnInventory(ItemInventory* inventory) const
+bool CraftingRecipe::PerformOnInventories(ItemInventory* in, ItemInventory* out) const
 {
-    if (!inventory->ContainsItemBundleItems(input))
+    if (!in->ContainsItemIndexItems(inputIndex))
         return false;
-    inventory->RemoveConstItemBundle(input);
-    inventory->AddConstItemBundle(output);
+    in->RemoveConstItemBundle(input);
+    out->AddConstItemBundle(output);
     return true;
 }
 
-int CraftingRecipe::CheckTimesPerformOnInventory(ItemInventory* inventory) const
+int CraftingRecipe::CheckTimesCanPerformOnInventory(ItemInventory* inventory) const
 {
     return inventory->CountTimesContainsItemBundleItems(input);
 }
@@ -70,31 +72,41 @@ CraftingRecipe::~CraftingRecipe()
 
 SmeltingRecipe::SmeltingRecipe(nlohmann::json data)
 {
-    inputItem = MakeItemFromJSON(data["input"]);
-    outputItem = MakeItemFromJSON(data["output"]);
-    tier = data.value("tier", 0);
-    minHeat = data.value("minHeat", 100);
+    input = MakeItemFromJSON(data["input"]);
+    output = MakeItemFromJSON(data["output"]);
     duration = data.value("duration", 500);
 }
 
 const Item* SmeltingRecipe::GetInputItem() const
 {
-    return inputItem;
+    return input;
 }
 
 const Item* SmeltingRecipe::GetOutputItem() const
 {
-    return outputItem;
+    return output;
 }
 
-float SmeltingRecipe::GetMinimumHeat() const
+bool SmeltingRecipe::PerformOnInventories(ItemInventory* in, ItemInventory* out) const
 {
-    return minHeat;
+    if(in->ContainsItem(input))
+        if (out->CanAddConstItem(output))
+        {
+            in->RemoveConstItem(input);
+            out->AddConstItem(output);
+            return true;
+        }
+    return false;
 }
 
-int SmeltingRecipe::GetTier() const
+bool SmeltingRecipe::CheckCanPerformOnInventories(ItemInventory* in, ItemInventory* out) const
 {
-    return tier;
+    return (in->ContainsItem(input))&& (out->CanAddConstItem(output));
+}
+
+float SmeltingRecipe::GetDuration() const
+{
+    return duration;
 }
 
 void SmeltingRecipe::LoadRecipes(nlohmann::json data)
@@ -116,6 +128,6 @@ void SmeltingRecipe::UnloadRecipes()
 
 SmeltingRecipe::~SmeltingRecipe()
 {
-    delete inputItem;
-    delete outputItem;
+    delete input;
+    delete output;
 }

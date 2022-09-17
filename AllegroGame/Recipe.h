@@ -15,6 +15,8 @@ class CraftingRecipe
 {
 private:
 	int tier;
+	ItemIndex* inputIndex;
+	ItemIndex* outputIndex;
 	ItemBundle* input;
 	ItemBundle* output;
 
@@ -28,9 +30,8 @@ public:
 	int GetTier() const;
 
 
-	bool PerformOnInventory(ItemInventory* inventory) const;
-
-	int CheckTimesPerformOnInventory(ItemInventory* inventory) const;
+	bool PerformOnInventories(ItemInventory* in, ItemInventory* out) const;
+	int CheckTimesCanPerformOnInventory(ItemInventory* in) const;
 
 	static void LoadRecipes(nlohmann::json data);
 	static void UnloadRecipes();
@@ -42,11 +43,9 @@ public:
 class SmeltingRecipe
 {
 private:
-	int tier;
-	float minHeat;
 	float duration;
-	Item* inputItem;
-	Item* outputItem;
+	Item* input;
+	Item* output;
 
 	SmeltingRecipe(nlohmann::json data);
 
@@ -55,9 +54,10 @@ public:
 	const Item* GetInputItem() const;
 	const Item* GetOutputItem() const;
 
+	bool PerformOnInventories(ItemInventory* in, ItemInventory* out) const;
+	bool CheckCanPerformOnInventories(ItemInventory* in, ItemInventory* out) const;
 
-	float GetMinimumHeat() const;
-	int GetTier() const;
+	float GetDuration() const;
 
 	static void LoadRecipes(nlohmann::json data);
 	static void UnloadRecipes();

@@ -76,6 +76,11 @@ float GroundTile::GetFrictionModifier() const
     return 1.0f;
 }
 
+void GroundTile::InitForWorld(World* w)
+{
+    return;
+}
+
 void GroundTile::PlaySound(SoundType t) const
 {}
 
@@ -90,4 +95,10 @@ GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
     if (gt == nullptr)
         return nullptr;
     return gt->Clone(world, x, y);
+}
+
+void InitAllGroundTilesForWorld(World* w)
+{
+    for (const std::pair<std::string, const GroundTile*>& gtile : prototype_gtiles)
+        const_cast<GroundTile*>(gtile.second)->InitForWorld(w);
 }

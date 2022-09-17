@@ -7,6 +7,8 @@
 #include <fstream>
 #include <allegro5/allegro.h>
 
+#include "AllegroGame.h"
+
 #include "ItemBundle.h"
 
 class World;
@@ -46,6 +48,8 @@ class Tile
 		virtual bool IsTransparent() const;
 		virtual bool IsEmpty() const;
 
+		virtual void InitForWorld(World* w);
+
 		virtual void Use(PlayerEntity* user);
 
 		virtual bool MineWithTool(Tool* tool);
@@ -65,5 +69,7 @@ class Tile
 	};
 
 Tile* MakeTile(World* world, std::string id, int x, int y);
+
+void InitAllTilesForWorld(World* w);
 
 extern std::unordered_map<std::string, const Tile*> prototype_tiles;

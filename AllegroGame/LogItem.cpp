@@ -4,6 +4,8 @@
 std::string LogItem::NAME;
 std::string LogItem::DESCRIPTION;
 ALLEGRO_BITMAP* LogItem::TEXTURE;
+float LogItem::BURN_TIME;
+float LogItem::BURN_HEAT;
 const std::string LogItem::ID = "items.log";
 
 std::string LogItem::GetID() const
@@ -11,8 +13,18 @@ std::string LogItem::GetID() const
 	return ID;
 }
 
-LogItem::LogItem(): Item(NAME, DESCRIPTION)
+LogItem::LogItem(): FuelItem(NAME, DESCRIPTION)
 {}
+
+float LogItem::GetBurnTime() const
+{
+	return BURN_TIME;
+}
+
+float LogItem::GetBurnHeat() const
+{
+	return BURN_HEAT;
+}
 
 Item* LogItem::Clone() const
 {
@@ -30,6 +42,8 @@ void LogItem::Init(nlohmann::json data)
 	NAME = data[DATA_JSON_NAME_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	BURN_TIME = data[DATA_JSON_BURN_TIME_KEY];
+	BURN_HEAT = data[DATA_JSON_BURN_HEAT_KEY];
 }
 
 		

@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "SimplexNoise.h"
 #include <vector>
+#include "AllegroGame.h"
 #include <map>
 
 class LuaInterface;

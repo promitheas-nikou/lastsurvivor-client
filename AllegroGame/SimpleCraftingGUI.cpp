@@ -157,21 +157,21 @@ SimpleCraftingGUI::SingleRecipeExecutionGUI::SingleRecipeExecutionGUI(SimpleCraf
 	TextUtils::DrawCenteredText(loaded_fonts["default"][30], 192, 48, "CRAFT MAX",gameconfig::SOLID_TEXT_COLOR_NORMAL);
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	GUI::UIcomponents.push_back(new SimpleButtonUIComponent(360, SCREEN_HEIGHT-300, 384, 128, b1, [&]() {
-		recipe->PerformOnInventory(inventory);
+		recipe->PerformOnInventories(inventory, inventory);
 		parent->recipeCraftedCallback(recipe, 1);
 	}));
 	GUI::UIcomponents.push_back(new SimpleButtonUIComponent(SCREEN_WIDTH/2-160, SCREEN_HEIGHT - 300, 384, 128, b2, [&]() {
-		recipe->PerformOnInventory(inventory);
-		recipe->PerformOnInventory(inventory);
-		recipe->PerformOnInventory(inventory);
-		recipe->PerformOnInventory(inventory);
-		recipe->PerformOnInventory(inventory);
+		recipe->PerformOnInventories(inventory, inventory);
+		recipe->PerformOnInventories(inventory, inventory);
+		recipe->PerformOnInventories(inventory, inventory);
+		recipe->PerformOnInventories(inventory, inventory);
+		recipe->PerformOnInventories(inventory, inventory);
 		parent->recipeCraftedCallback(recipe, 5);
 	}));
 	GUI::UIcomponents.push_back(new SimpleButtonUIComponent(SCREEN_WIDTH-744, SCREEN_HEIGHT - 300, 384, 128, b3, [&]() {
-		int n = recipe->CheckTimesPerformOnInventory(inventory);
+		int n = recipe->CheckTimesCanPerformOnInventory(inventory);
 		for (int i = 0; i < n; i++)
-			recipe->PerformOnInventory(inventory);
+			recipe->PerformOnInventories(inventory, inventory);
 		parent->recipeCraftedCallback(recipe, n);
 	}));
 

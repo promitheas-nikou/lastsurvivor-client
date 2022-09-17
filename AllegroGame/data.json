@@ -98,6 +98,22 @@
       "filename": "icon.png"
     },
     {
+      "id": "tex.gui.burn_icon/0",
+      "filename": "gui.burn_icon_0.png"
+    },
+    {
+      "id": "tex.gui.burn_icon/1",
+      "filename": "gui.burn_icon_1.png"
+    },
+    {
+      "id": "tex.gui.progress_icon/0",
+      "filename": "gui.progress_bar_0.png"
+    },
+    {
+      "id": "tex.gui.progress_icon/1",
+      "filename": "gui.progress_bar_1.png"
+    },
+    {
       "id": "tex.items.azurite_chunk",
       "filename": "azurite_chunk.png"
     },
@@ -188,6 +204,34 @@
     {
       "id": "tex.gui.inventory_slot",
       "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.in/0",
+      "filename": "automation_slot.in0.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.in/1",
+      "filename": "automation_slot.in1.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.in/2",
+      "filename": "automation_slot.in2.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.out/0",
+      "filename": "automation_slot.out0.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.out/1",
+      "filename": "automation_slot.out1.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.out/2",
+      "filename": "automation_slot.out2.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.fuel/0",
+      "filename": "automation_slot.fuel0.png"
     },
     {
       "id": "tex.gui.inventory_slot_pickaxe",
@@ -1102,7 +1146,9 @@
       "id": "items.stick",
       "name": "Stick",
       "description": "Can be found in trees or produced from Logs. Has many uses.",
-      "texture": "tex.items.stick"
+      "texture": "tex.items.stick",
+      "burn_time": 500,
+      "burn_heat": 400
     },
     {
       "id": "items.sand",
@@ -1163,14 +1209,14 @@
       "name": "Anthracite Coal Chunk",
       "texture": "tex.items.anthracite_coal_chunk",
       "description": "A chunk of high-grade (85-95%) coal ore. Is the hardest coal ore, and the one with the greatest heat content.",
-      "burn_time": 1000,
+      "burn_time": 6000,
       "burn_heat": 900
     },
     {
       "id": "items.lignite_coal_chunk",
       "name": "Lignite Coal Chunk",
       "texture": "tex.items.lignite_coal_chunk",
-      "burn_time": 700,
+      "burn_time": 1500,
       "burn_heat": 550
     },
     {
@@ -1231,7 +1277,9 @@
       "id": "items.log",
       "name": "Log",
       "description": "A wooden log taken from a cut tree. Has many uses.",
-      "texture": "tex.items.log"
+      "texture": "tex.items.log",
+      "burn_time": 1000,
+      "burn_heat": 600
     },
     {
       "id": "items.flask",
@@ -1257,7 +1305,7 @@
   "recipes": {
     "crafting": [
       {
-        "id": "recipes.fence_from_sticks",
+        "id": "craft.fence_from_sticks",
         "input": [
           {
             "id": "items.stick",
@@ -1272,7 +1320,7 @@
         ]
       },
       {
-        "id": "recipes.torch_from_sticks",
+        "id": "craft.torch_from_sticks",
         "input": [
           {
             "id": "items.stick",
@@ -1287,7 +1335,7 @@
         ]
       },
       {
-        "id": "recipes.sticks_from_logs",
+        "id": "craft.sticks_from_logs",
         "input": [
           {
             "id": "items.log",
@@ -1302,7 +1350,7 @@
         ]
       },
       {
-        "id": "recipes.burner_furnace_mk1",
+        "id": "craft.burner_furnace_mk1",
         "input": [
           {
             "id": "items.stone",
@@ -1315,6 +1363,20 @@
             "amount": 1
           }
         ]
+      }
+    ],
+    "smelting": [
+      {
+        "id": "smelt.stone_from_dirt",
+        "duration": 500,
+        "input": {
+          "id": "items.stone",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.dirt",
+          "amount": 1
+        }
       }
     ]
   }

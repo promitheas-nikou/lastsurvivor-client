@@ -249,6 +249,9 @@
     <ClCompile Include="PlaceableItem.cpp" />
     <ClCompile Include="SaplingItem.cpp" />
     <ClCompile Include="SimpleCraftingGUI.cpp" />
+    <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp" />
     <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="MathUtils.cpp" />
@@ -274,6 +277,7 @@
     <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp" />
     <ClCompile Include="SimpleConsumable.cpp" />
     <ClCompile Include="SimpleConsumableItem.cpp" />
+    <ClCompile Include="SimpleItemInventoryFuelStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp" />
@@ -390,6 +394,9 @@
     <ClInclude Include="PlaceableItem.h" />
     <ClInclude Include="SaplingItem.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />
+    <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="LuaInterface.h" />
@@ -417,6 +424,7 @@
     <ClInclude Include="SimpleCallbackTextDrawUIComponent.h" />
     <ClInclude Include="SimpleConsumable.h" />
     <ClInclude Include="SimpleConsumableItem.h" />
+    <ClInclude Include="SimpleItemInventoryFuelStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h" />

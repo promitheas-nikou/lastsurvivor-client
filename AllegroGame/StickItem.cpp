@@ -4,6 +4,8 @@
 std::string StickItem::NAME;
 std::string StickItem::DESCRIPTION;
 ALLEGRO_BITMAP* StickItem::TEXTURE;
+float StickItem::BURN_TIME;
+float StickItem::BURN_HEAT;
 const std::string StickItem::ID = "items.stick";
 
 std::string StickItem::GetID() const
@@ -11,8 +13,18 @@ std::string StickItem::GetID() const
     return ID;
 }
 
-StickItem::StickItem(): Item(NAME, DESCRIPTION)
+StickItem::StickItem(): FuelItem(NAME, DESCRIPTION)
 {}
+
+float StickItem::GetBurnTime() const
+{
+	return BURN_TIME;
+}
+
+float StickItem::GetBurnHeat() const
+{
+	return BURN_HEAT;
+}
 
 Item* StickItem::Clone()const
 {
@@ -30,4 +42,6 @@ void StickItem::Init(nlohmann::json data)
 	NAME = data[DATA_JSON_NAME_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	BURN_TIME = data[DATA_JSON_BURN_TIME_KEY];
+	BURN_HEAT = data[DATA_JSON_BURN_HEAT_KEY];
 }

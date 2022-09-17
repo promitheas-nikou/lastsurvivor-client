@@ -24,6 +24,23 @@ void ItemInventory::AddConstItem(const Item* item)
     delete AddItem(item->Clone());
 }
 
+bool ItemInventory::CanAddConstItem(const Item* item)
+{
+    int amount = item->GetAmount();
+    Item* tmp;
+    for (int i = 0; i < GetSize(); i++)
+    {
+        tmp = GetItem(i);
+        if (tmp == nullptr)
+            return true;
+        if (item->Equals(tmp))
+            amount -= tmp->GetMaxStackSize() - tmp->GetAmount();
+        if (amount <= 0)
+            return true;
+    }
+    return false;
+}
+
 Item* ItemInventory::AddItem(Item* item)
 {
     if (item == nullptr)
@@ -37,7 +54,6 @@ Item* ItemInventory::AddItem(Item* item)
         }
         else
         {
-            Item* newItem;
             SetItem(i, item);
             return nullptr;
         }
@@ -81,6 +97,14 @@ bool ItemInventory::ContainsItemBundleItems(const ItemBundle* bundle) const
     bool val = a->CheckGreaterThan(b);
     delete a;
     delete b;
+    return val;
+}
+
+bool ItemInventory::ContainsItemIndexItems(const ItemIndex* i) const
+{
+    ItemIndex* a = new ItemIndex(this);
+    bool val = a->CheckGreaterThan(i);
+    delete a;
     return val;
 }
 

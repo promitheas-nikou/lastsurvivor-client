@@ -56,6 +56,8 @@ public:
 
     virtual float GetFrictionModifier() const;
 
+	virtual void InitForWorld(World* w);
+
 	virtual void PlaySound(SoundType t) const;
 
 	virtual void RegisterLights();
@@ -64,5 +66,8 @@ public:
 };
 
 GroundTile* MakeGroundTile(World* world, std::string id, int x, int y);
+
+
+void InitAllGroundTilesForWorld(World* w);
 
 extern std::unordered_map<std::string, const GroundTile*> prototype_gtiles;
