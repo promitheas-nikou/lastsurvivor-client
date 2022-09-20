@@ -28,3 +28,5 @@
 #include "BurnerFurnaceMk1Item.h"
 #include "SaplingItem.h"
 #include "FlaskItem.h"
+#include "IronIngotItem.h"
+#include "CopperIngotItem.h"

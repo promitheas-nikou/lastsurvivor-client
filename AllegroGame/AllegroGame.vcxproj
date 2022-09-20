@@ -215,6 +215,7 @@
     <ClCompile Include="ConnectingTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
+    <ClCompile Include="CopperIngotItem.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DebugInfo.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
@@ -233,6 +234,7 @@
     <ClCompile Include="HematiteOreGroundTile.cpp" />
     <ClCompile Include="HostileEntity.cpp" />
     <ClCompile Include="InventoryGUI.cpp" />
+    <ClCompile Include="IronIngotItem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemBundle.cpp" />
     <ClCompile Include="ItemIndex.cpp" />
@@ -357,6 +359,7 @@
     <ClInclude Include="ConnectingTile.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
+    <ClInclude Include="CopperIngotItem.h" />
     <ClInclude Include="DeathGUI.h" />
     <ClInclude Include="DebugInfo.h" />
     <ClInclude Include="dirent.h" />
@@ -376,6 +379,7 @@
     <ClInclude Include="HematiteOreGroundTile.h" />
     <ClInclude Include="HostileEntity.h" />
     <ClInclude Include="InventoryGUI.h" />
+    <ClInclude Include="IronIngotItem.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemBundle.h" />
     <ClInclude Include="ItemIndex.h" />

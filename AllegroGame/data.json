@@ -620,6 +620,14 @@
     {
       "id": "tex.items.flask",
       "filename": "flask_item.png"
+    },
+    {
+      "id": "tex.items.iron_ingot",
+      "filename": "iron_ingot_item.png"
+    },
+    {
+      "id": "tex.items.copper_ingot",
+      "filename": "copper_ingot_item.png"
     }
   ],
   "entities": [
@@ -1290,6 +1298,18 @@
       "hunger": 0.0,
       "water": 5.0,
       "durability": 40
+    },
+    {
+      "id": "items.iron_ingot",
+      "name": "Iron Ingot",
+      "description": "A ingot of iron metal. Has many uses.",
+      "texture": "tex.items.iron_ingot"
+    },
+    {
+      "id": "items.copper_ingot",
+      "name": "Copper Ingot",
+      "description": "A ingot of copper metal. Has many uses.",
+      "texture": "tex.items.copper_ingot"
     }
   ],
   "fonts": [
@@ -1367,14 +1387,62 @@
     ],
     "smelting": [
       {
-        "id": "smelt.stone_from_dirt",
-        "duration": 500,
+        "id": "smelt.iron_ingot_from_hematite_chunk",
+        "duration": 1000,
         "input": {
-          "id": "items.stone",
+          "id": "items.hematite_chunk",
           "amount": 1
         },
         "output": {
-          "id": "items.dirt",
+          "id": "items.iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.iron_ingot_from_magnetite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.magnetite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.copper_ingot_from_azurite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.azurite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.copper_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.copper_ingot_from_malachite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.malachite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.copper_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.iron_ingot_from_lodestone",
+        "duration": 1000,
+        "input": {
+          "id": "items.lodestone",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.iron_ingot",
           "amount": 1
         }
       }

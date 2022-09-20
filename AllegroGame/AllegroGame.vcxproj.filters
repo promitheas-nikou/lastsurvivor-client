@@ -621,6 +621,12 @@
     <ClCompile Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
     </ClCompile>
+    <ClCompile Include="CopperIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="IronIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1047,6 +1053,12 @@
     </ClInclude>
     <ClInclude Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CopperIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="IronIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

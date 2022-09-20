@@ -308,6 +308,8 @@ void init_items()
 		FenceItem::Init(item_data[FenceItem::ID]);
 		TorchItem::Init(item_data[TorchItem::ID]);
 		LogItem::Init(item_data[LogItem::ID]);
+		CopperIngotItem::Init(item_data[CopperIngotItem::ID]);
+		IronIngotItem::Init(item_data[IronIngotItem::ID]);
 		BurnerFurnaceMk1Item::Init(item_data[BurnerFurnaceMk1Item::ID]);
 		FlaskItem::Init(item_data[FlaskItem::ID]);
 
@@ -329,6 +331,8 @@ void init_items()
 		prototype_items[FenceItem::ID] = new FenceItem();
 		prototype_items[TorchItem::ID] = new TorchItem();
 		prototype_items[LogItem::ID] = new LogItem();
+		prototype_items[CopperIngotItem::ID] = new CopperIngotItem();
+		prototype_items[IronIngotItem::ID] = new IronIngotItem();
 		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
 		prototype_items[FlaskItem::ID] = new FlaskItem();
 		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
