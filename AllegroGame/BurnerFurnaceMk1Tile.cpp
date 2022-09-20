@@ -97,12 +97,12 @@ void BurnerFurnaceMk1Tile::TickUpdate()
     }
     else if (!currentRecipe->CheckCanPerformOnInventories(input, output))
             currentRecipe = nullptr;
-    if (burnTimeRemaining <= .0001)
+    if (burnTimeRemaining <= 0.00000000000001)
     {
         FuelItem* f = dynamic_cast<FuelItem*>(fuel->GetItem(0));
         if (f!=nullptr)
         {
-            burnTimeRemaining = f->GetBurnTime();
+            burnTimeRemaining += f->GetBurnTime();
             burnTimeFull = f->GetBurnTime();
             f->RemoveAmount(1);
             if (f->GetAmount() <= 0)
@@ -113,7 +113,7 @@ void BurnerFurnaceMk1Tile::TickUpdate()
         }
         else
         {
-            progress = 0;
+            progress = progressPerTick;
             burnTimeFull = 0;
         }
     }
@@ -126,10 +126,13 @@ void BurnerFurnaceMk1Tile::TickUpdate()
             progress+=progressPerTick;
         
     }
-    if (progress >= 0.9999999)
+    if (progress >= .9999999999999999)
     {
         if (currentRecipe != nullptr)
+        {
             currentRecipe->PerformOnInventories(input, output);
+            progress -= 1;
+        }
     }
 }
 
@@ -199,7 +202,7 @@ Item*& BurnerFurnaceMk1Tile::TileGUI::OutputItemPtrFunc()
 void BurnerFurnaceMk1Tile::TileGUI::PreDrawThisGUI()
 {
     al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(150, 150, 150, 150));
-    float by = 128-(parentTile->burnTimeFull? (parentTile->burnTimeRemaining / parentTile->burnTimeFull)*128:128);
+    float by = 128-(parentTile->burnTimeFull? (parentTile->burnTimeRemaining / parentTile->burnTimeFull)*128:0);
     al_draw_bitmap_region(BURN_ICON_OFF, 0, 0, 128, by, SCREEN_WIDTH / 2 - 64, 228, 0);
     al_draw_bitmap_region(BURN_ICON_ON, 0, by, 128, 128, SCREEN_WIDTH / 2 - 64, 228+by, 0);
     float px = parentTile->progress * 128;
@@ -212,7 +215,7 @@ void BurnerFurnaceMk1Tile::TileGUI::PostDrawThisGUI()
 {
     ALLEGRO_MOUSE_STATE s;
     al_get_mouse_state(&s);
-    FuelItem* f = dynamic_cast<FuelItem*>(parentTile->fuel);
+    FuelItem* f = dynamic_cast<FuelItem*>(parentTile->fuel->GetItem(0));
     if (util_rect_includes_point(SCREEN_WIDTH / 2 - 64, 228, SCREEN_WIDTH / 2 + 64, 356, s.x, s.y))
         {
         al_draw_filled_rectangle(s.x, s.y, s.x + 250, s.y + 80, al_map_rgba(10, 30, 50, 200));
@@ -231,9 +234,9 @@ void BurnerFurnaceMk1Tile::TileGUI::PostDrawThisGUI()
         }
         else
         {
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Current progress: %.1f%%", parentTile->progress);
+            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Current progress: %.1f%%", parentTile->progress * 100);
             al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Progress per second: %.1f%%", parentTile->progressPerTick);
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Time until done: %.1fs", (((100.f - parentTile->progress) / 100) * parentTile->currentRecipe->GetDuration()) / TPS);
+            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Time until done: %.1fs", ((1.f - parentTile->progress) * parentTile->currentRecipe->GetDuration()) / TPS);
         }
     }
 }
