@@ -19,7 +19,7 @@ Item* BerryItem::Clone() const
 	return new BerryItem(*this);
 }
 
-BerryItem::BerryItem() : SimpleConsumableItem(NAME, DESCRIPTION, HEALTH, HUNGER, WATER)
+BerryItem::BerryItem() : Item(NAME, DESCRIPTION), SimpleConsumableItem(HEALTH, HUNGER, WATER)
 {}
 
 void BerryItem::Draw(int x, int y, int width, int height) const

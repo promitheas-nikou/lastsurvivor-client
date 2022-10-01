@@ -1,6 +1,10 @@
 #pragma once
-#include "MainGUIs.h"
+#define ALLEGRO_UNSTABLE
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 class World;
+class GUI;
 
 extern const float TPS;
 

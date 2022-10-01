@@ -3,6 +3,8 @@
 #include "SimpleItemInventoryCallbackSlotUIComponent.h"
 #include "SimpleItemInventoryGenericStorageSlotUIComponent.h"
 #include "SimpleItemInventoryPlaceableStorageSlotUIComponent.h"
+#include "SimpleItemInventoryConsumableStorageSlotUIComponent.h"
+#include "SimpleItemInventoryUsableStorageSlotUIComponent.h"
 #include "SimpleItemInventoryFuelStorageSlotUIComponent.h"
 #include "SimpleItemInventoryViewStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h"
@@ -19,6 +21,7 @@ ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AXE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_MELEE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_RANGED;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_CONSUMABLE;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_USABLE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_PLACEABLE;
 
 bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
@@ -147,6 +150,12 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 	case StorageSlotType::PLACEABLE:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryPlaceableStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_PLACEABLE, itemslot, swapTemp));
 		break;
+	case StorageSlotType::CONSUMABLE:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryConsumableStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_CONSUMABLE, itemslot, swapTemp));
+		break;
+	case StorageSlotType::USABLE:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryUsableStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_USABLE, itemslot, swapTemp));
+		break;
 	case StorageSlotType::FUEL:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
 		break;
@@ -248,6 +257,7 @@ void InventoryGUI::Init()
 	INVENTORY_SLOT_MELEE = loaded_bitmaps["tex.gui.inventory_slot_melee"];
 	INVENTORY_SLOT_RANGED = loaded_bitmaps["tex.gui.inventory_slot_ranged"];
 	INVENTORY_SLOT_CONSUMABLE = loaded_bitmaps["tex.gui.inventory_slot_consumable"];
+	INVENTORY_SLOT_USABLE = loaded_bitmaps["tex.gui.inventory_slot_usable"];
 	INVENTORY_SLOT_PLACEABLE = loaded_bitmaps["tex.gui.inventory_slot_placeable"];
 }
 

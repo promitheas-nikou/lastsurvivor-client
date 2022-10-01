@@ -1,9 +1,8 @@
 #include "AllegroGame.h"
+#include "Logging.h"
 
 #define _CRT_SECURE_NO_WARNINGS
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
+#include "MainGUIs.h"
 #include <Windows.h>
 #include "World.h"
 #include <cstdio>
@@ -13,6 +12,7 @@
 #include "ZombieEntity.h"
 #include "CactusBossEntity.h"
 #include "DebugInfo.h"
+#include <allegro5/allegro_native_dialog.h>
 
 #include "Shader.h"
 
@@ -56,49 +56,48 @@ void EXIT_GAME()
 {
 	al_set_thread_should_stop(worldTickerThread);
 	al_join_thread(worldTickerThread, NULL);
+	lsg_close_session_logs();
 	destroy_graphics();
 	exit(EXIT_SUCCESS);
 }
-
-#include <allegro5/allegro.h>
-#include <allegro5/allegro5.h>
-#include <allegro5/alcompat.h>
 
 #include <iostream>
 
 int main()
 {
+	lsg_open_session_logfile();
 	doWorldTick = false;
 	if (!al_init())
 	{
-		printf("FATAL ALLEGRO LIB LOADING ERROR!!!\n");
+		lsg_write_to_session_log(INFO, "FATAL ALLEGRO LIB LOADING ERROR!!!\n");
 		exit(EXIT_FAILURE);
 	}
+	lsg_open_session_textlog();
 	double BEGIN_TIME = al_get_time();
-	printf("LOADING...\n\n\n");
-	printf("\n======= GRAPHICS =======\n\n");
+	lsg_write_to_session_log(INFO, "STARTING UP...");
+	lsg_write_to_session_log(INFO, "===== PREPARING GRAPHICS =====");
 	init_graphics();
-	printf("\n======= AUDIO =======\n\n");
+	lsg_write_to_session_log(INFO, "===== PREPARING AUDIO =====");
 	init_sound();
-	printf("\n======= LOADING RESOURCES =======\n\n");
+	lsg_write_to_session_log(INFO, "===== LOADING RESOURCES =====");
 	load_resources();
-	printf("\n======= PREPARING DISPLAY =======\n\n");
+	lsg_write_to_session_log(INFO, "===== PREPARING DISPLAY =====");
 	init_window();
 	config_window();
-	printf("\n======= LOADING SHADERS =======\n\n");
+	lsg_write_to_session_log(INFO, "===== LOADING SHADERS =====");
 	load_shaders();
 	//printf("\n\n======	=========================\nINITIALIZING GAME\n===============================\n\n");
-	printf("\n======= INITIALIZING ITEMS =======\n\n");
+	lsg_write_to_session_log(INFO, "===== INITIALIZING ITEMS =====");
 	init_items();
-	printf("\n======= INITIALIZING TILES =======\n\n");
+	lsg_write_to_session_log(INFO, "===== INITIALIZING TILES =====");
 	init_tiles();
-	printf("\n======= LOADING RECIPES =======\n\n");
+	lsg_write_to_session_log(INFO, "===== LOADING RECIPES =====");
 	init_recipes();
-	printf("\n======= INITIALIZING ENTITIES =======\n\n");
+	lsg_write_to_session_log(INFO, "===== INITIALIZING ENTITIES =====");
 	init_entities();
 	World::Init();
 	double LOAD_TIME = al_get_time();
-	printf("\n\n===============================\nDONE LOADING IN %.3lf SECONDS!\n===============================\n\n",LOAD_TIME-BEGIN_TIME);
+	lsg_write_to_session_log(INFO, "DONE LOADING IN %.3lf SECONDS!",LOAD_TIME-BEGIN_TIME);
 
 	al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
 
@@ -121,6 +120,12 @@ int main()
 			{
 			case ALLEGRO_EVENT_DISPLAY_CLOSE:
 				EXIT_GAME();
+				break;
+			case ALLEGRO_EVENT_DISPLAY_SWITCH_OUT:
+				al_clear_keyboard_state(main_display);
+				break;
+			case ALLEGRO_EVENT_NATIVE_DIALOG_CLOSE:
+				lsg_close_session_textlog();
 				break;
 			default:
 				currentGUI->HandleEvent(NEXT_EVENT);

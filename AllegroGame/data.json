@@ -186,22 +186,6 @@
       "filename": "table.png"
     },
     {
-      "id": "tex.cursors.shovel",
-      "filename": "shovel_cursor.png"
-    },
-    {
-      "id": "tex.cursors.pickaxe",
-      "filename": "pickaxe_cursor.png"
-    },
-    {
-      "id": "tex.cursors.wrench",
-      "filename": "wrench_cursor.png"
-    },
-    {
-      "id": "tex.cursors.hammer",
-      "filename": "hammer_cursor.png"
-    },
-    {
       "id": "tex.gui.inventory_slot",
       "filename": "inventory_slot.png"
     },
@@ -259,7 +243,11 @@
     },
     {
       "id": "tex.gui.inventory_slot_consumable",
-      "filename": "inventory_slot.png"
+      "filename": "inventory_slot_consumable.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_usable",
+      "filename": "inventory_slot_usable.png"
     },
     {
       "id": "tex.gui.inventory_slot_placeable",
@@ -404,6 +392,10 @@
     {
       "id": "cursor.wrench",
       "filename": "wrench_cursor.png"
+    },
+    {
+      "id": "cursor.use",
+      "filename": "use_cursor.png"
     },
     {
       "id": "tex.entities.cactus_boss.right/3",
@@ -943,6 +935,12 @@
       "texture": "cursor.ranged",
       "hotx": 16,
       "hoty": 16
+    },
+    {
+      "id": "use",
+      "texture": "cursor.use",
+      "hotx": 16,
+      "hoty": 16
     }
   ],
   "tiles": [
@@ -1380,6 +1378,25 @@
         "output": [
           {
             "id": "items.burner_furnace_mk1",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.flask",
+        "input": [
+          {
+            "id": "items.iron_ingot",
+            "amount": 10
+          },
+          {
+            "id": "items.stick",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.flask",
             "amount": 1
           }
         ]

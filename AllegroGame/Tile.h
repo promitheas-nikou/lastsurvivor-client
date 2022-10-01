@@ -34,6 +34,7 @@ class Tile
 
 		virtual std::string GetName() const = 0;
 
+		virtual bool DoesTickUpdates();
 		virtual void TickUpdate();
 		virtual void RandomTickUpdate();
 		virtual void TileUpdate();

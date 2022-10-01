@@ -210,6 +210,8 @@ Tile* World::RemoveTile(int x, int y)
     if (!IsChunkGenerated(chunkX, chunkY))
         GenerateChunk(chunkX, chunkY);
     Tile* r = GetChunk(chunkX, chunkY)->RemoveTile(subX, subY);
+    if(r->DoesTickUpdates())
+        GetChunk(chunkX, chunkY)->RemoveTickingTile(r);
     TileUpdateAround(x, y);
     return r;
 }
@@ -323,7 +325,12 @@ Tile* World::SetTile(Tile* tile, int x, int y)
         else
             return nullptr;
     }
-    Tile* r = GetChunk(chunkX, chunkY)->SetTile(tile, subX, subY);
+    WorldChunk* c = GetChunk(chunkX, chunkY);
+    Tile* r = c->SetTile(tile, subX, subY);
+    if(tile->DoesTickUpdates())
+        GetChunk(chunkX, chunkY)->AddTickingTile(tile);
+    if (r->DoesTickUpdates())
+        GetChunk(chunkX, chunkY)->RemoveTickingTile(r);
     TileUpdateAround(x, y);
     return r;
 }

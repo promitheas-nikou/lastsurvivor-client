@@ -22,7 +22,7 @@ Item* TorchItem::Clone() const
 	return new TorchItem(*this);
 }
 
-TorchItem::TorchItem() : PlaceableItem(NAME, DESCRIPTION)
+TorchItem::TorchItem() : Item(NAME, DESCRIPTION)
 {}
 
 void TorchItem::Draw(int x, int y, int width, int height) const

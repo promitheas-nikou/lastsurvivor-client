@@ -67,6 +67,7 @@ public:
     virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
 
     virtual void TickUpdate() final;
+    virtual bool DoesTickUpdates() final;
 
     virtual void RegisterLights() final;
 

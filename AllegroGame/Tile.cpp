@@ -17,6 +17,11 @@ void Tile::WriteAdditionalDataToFile(std::ofstream& file)
 	return;
 }
 
+bool Tile::DoesTickUpdates()
+{
+	return false;
+}
+
 void Tile::TickUpdate()
 {
 	return;

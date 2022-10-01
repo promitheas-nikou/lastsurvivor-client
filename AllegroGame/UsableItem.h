@@ -4,12 +4,12 @@
 
 class UsableItem:
 	public virtual Usable,
-	public Item
+	public virtual Item
 {
 public:
 
-	UsableItem(std::string n, std::string d);
+	UsableItem();
 
-	virtual ~UsableItem() = default;
+	virtual ~UsableItem() = 0;
 };
 

@@ -7,7 +7,7 @@ class SimpleConsumableItem :
     public SimpleConsumable
 {
 public:
-    SimpleConsumableItem(std::string name, std::string description, float health, float hunger, float water);
-    virtual ~SimpleConsumableItem() = default;
+    SimpleConsumableItem(float health, float hunger, float water);
+    virtual ~SimpleConsumableItem() = 0;
 };
 

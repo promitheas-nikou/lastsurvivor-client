@@ -21,7 +21,7 @@ Item* FenceItem::Clone() const
 	return new FenceItem(*this);
 }
 
-FenceItem::FenceItem() : PlaceableItem(NAME, DESCRIPTION)
+FenceItem::FenceItem() : Item(NAME, DESCRIPTION)
 {}
 
 void FenceItem::Draw(int x, int y, int width, int height) const

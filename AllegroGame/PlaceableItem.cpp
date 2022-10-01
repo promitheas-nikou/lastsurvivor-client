@@ -1,7 +1,7 @@
 #include "PlaceableItem.h"
 #include "World.h"
 
-PlaceableItem::PlaceableItem(std::string n, std::string d) : UsableItem(n, d)
+PlaceableItem::PlaceableItem() : UsableItem()
 {}
 
 bool PlaceableItem::Use(float x, float y, PlayerEntity * p)

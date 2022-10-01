@@ -22,7 +22,7 @@ Item* BurnerFurnaceMk1Item::Clone() const
 	return new BurnerFurnaceMk1Item(*this);
 }
 
-BurnerFurnaceMk1Item::BurnerFurnaceMk1Item() : PlaceableItem(NAME, DESCRIPTION)
+BurnerFurnaceMk1Item::BurnerFurnaceMk1Item() : Item(NAME, DESCRIPTION)
 {}
 
 void BurnerFurnaceMk1Item::Draw(int x, int y, int width, int height) const

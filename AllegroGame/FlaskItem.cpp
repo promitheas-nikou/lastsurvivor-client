@@ -1,5 +1,8 @@
 #include "FlaskItem.h"
 #include "ResourceLoader.h"
+#include "MathUtils.h"
+#include "PlayerEntity.h"
+#include "World.h"
 #include <allegro5/allegro_primitives.h>
 
 std::string FlaskItem::NAME;
@@ -21,7 +24,7 @@ int FlaskItem::GetMaxStackSize() const
 	return 1;
 }
 
-FlaskItem::FlaskItem() : SimpleConsumableItem(NAME, DESCRIPTION, HEALTH, HUNGER, WATER), durability{ MAX_DURABILITY }
+FlaskItem::FlaskItem() : Item(NAME, DESCRIPTION), SimpleUsableConsumableItem(HEALTH, HUNGER, WATER), durability{ MAX_DURABILITY }
 {}
 
 void FlaskItem::SaveToFile(std::ofstream& file)
@@ -42,6 +45,22 @@ bool FlaskItem::Consume(float xpos, float ypos, PlayerEntity * player)
 		Consumable::Consume(xpos, ypos, player);
 		durability--;
 	}
+	return false;
+}
+
+bool FlaskItem::Use(float xpos, float ypos, PlayerEntity* player)
+{
+	int x = util_floor(xpos);
+	int y = util_floor(ypos);
+	World* w = player->GetContainingWorld();
+	Tile* t = w->GetTile(x, y);
+	if((t!=nullptr) && (t->IsEmpty()))
+		if (w->GetGroundTile(x, y)->GetID() == "gtiles.water")
+		{
+			durability++;
+			if (durability > MAX_DURABILITY)
+				durability = MAX_DURABILITY;
+		}
 	return false;
 }
 

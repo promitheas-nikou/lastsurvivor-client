@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SimpleConsumableItem.h"
+#include "SimpleUsableConsumableItem.h"
 
 class FlaskItem :
-	public SimpleConsumableItem
+	public SimpleUsableConsumableItem
 {
 private:
 	static std::string NAME;
@@ -28,7 +28,9 @@ public:
 	virtual void SaveToFile(std::ofstream& file) final;
 	virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
 
-	virtual bool Consume(float xpos, float ypos, PlayerEntity* player) override;
+	virtual bool Consume(float xpos, float ypos, PlayerEntity* player) final;
+
+	virtual bool Use(float xpos, float ypos, PlayerEntity* player) final;
 
 	virtual Item* Clone() const override;
 

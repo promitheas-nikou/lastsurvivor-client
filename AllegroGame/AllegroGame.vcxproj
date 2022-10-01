@@ -240,6 +240,7 @@
     <ClCompile Include="ItemIndex.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="LodestoneItem.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="LogItem.cpp" />
     <ClCompile Include="LootBundle.cpp" />
     <ClCompile Include="LootObject.cpp" />
@@ -279,9 +280,11 @@
     <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp" />
     <ClCompile Include="SimpleConsumable.cpp" />
     <ClCompile Include="SimpleConsumableItem.cpp" />
+    <ClCompile Include="SimpleItemInventoryConsumableStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryFuelStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryUsableStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleLootBundle.cpp" />
     <ClCompile Include="SimpleMeleeWeapon.cpp" />
@@ -295,12 +298,14 @@
     <ClCompile Include="SimpleTextInputUIComponent.cpp" />
     <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
+    <ClCompile Include="SimpleUsableConsumableItem.cpp" />
     <ClCompile Include="SoundType.cpp" />
     <ClCompile Include="StoneBrickWallTile.cpp" />
     <ClCompile Include="TextUtils.cpp" />
     <ClCompile Include="TorchItem.cpp" />
     <ClCompile Include="TorchTile.cpp" />
     <ClCompile Include="Usable.cpp" />
+    <ClCompile Include="UsableConsumableItem.cpp" />
     <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="VariableAmountItem.cpp" />
     <ClCompile Include="WeightedLootBundle.cpp" />
@@ -387,6 +392,7 @@
     <ClInclude Include="ListAllItems.h" />
     <ClInclude Include="ListAllTiles.h" />
     <ClInclude Include="LodestoneItem.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="LogItem.h" />
     <ClInclude Include="LootBundle.h" />
     <ClInclude Include="LootObject.h" />
@@ -428,9 +434,11 @@
     <ClInclude Include="SimpleCallbackTextDrawUIComponent.h" />
     <ClInclude Include="SimpleConsumable.h" />
     <ClInclude Include="SimpleConsumableItem.h" />
+    <ClInclude Include="SimpleItemInventoryConsumableStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryFuelStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryUsableStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleLootBundle.h" />
     <ClInclude Include="SimpleMeleeWeapon.h" />
@@ -443,12 +451,14 @@
     <ClInclude Include="SimpleTextInputUIComponent.h" />
     <ClInclude Include="SimpleToggleTextButtonUIComponent.h" />
     <ClInclude Include="SimpleTool.h" />
+    <ClInclude Include="SimpleUsableConsumableItem.h" />
     <ClInclude Include="SoundType.h" />
     <ClInclude Include="StoneBrickWallTile.h" />
     <ClInclude Include="TextUtils.h" />
     <ClInclude Include="TorchItem.h" />
     <ClInclude Include="TorchTile.h" />
     <ClInclude Include="Usable.h" />
+    <ClInclude Include="UsableConsumableItem.h" />
     <ClInclude Include="UsableItem.h" />
     <ClInclude Include="VariableAmountItem.h" />
     <ClInclude Include="WeightedLootBundle.h" />
@@ -485,17 +495,17 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" />
-    <Import Project="..\packages\Allegro.5.2.7.1\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.7.1\build\native\Allegro.targets')" />
     <Import Project="..\packages\lua.5.4.4\build\native\Lua.targets" Condition="Exists('..\packages\lua.5.4.4\build\native\Lua.targets')" />
+    <Import Project="..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets')" />
+    <Import Project="..\packages\Allegro.5.2.8\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.8\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\packages\Allegro.5.2.7.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.7.1\build\native\Allegro.targets'))" />
     <Error Condition="!Exists('..\packages\lua.5.4.4\build\native\Lua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\lua.5.4.4\build\native\Lua.targets'))" />
+    <Error Condition="!Exists('..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets'))" />
+    <Error Condition="!Exists('..\packages\Allegro.5.2.8\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.8\build\native\Allegro.targets'))" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>

@@ -5,10 +5,10 @@
 
 class ConsumableItem :
     public virtual Consumable,
-    public Item
+    public virtual Item
 {
 public:
-    ConsumableItem(std::string name, std::string description);
+    ConsumableItem();
 
     virtual void DrawItemDetailsPane(int x, int y) override;
 

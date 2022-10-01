@@ -97,7 +97,7 @@ void BurnerFurnaceMk1Tile::TickUpdate()
     }
     else if (!currentRecipe->CheckCanPerformOnInventories(input, output))
             currentRecipe = nullptr;
-    if (burnTimeRemaining <= 0.00000000000001)
+    if (burnTimeRemaining <= 0.0000000001)
     {
         FuelItem* f = dynamic_cast<FuelItem*>(fuel->GetItem(0));
         if (f!=nullptr)
@@ -126,7 +126,7 @@ void BurnerFurnaceMk1Tile::TickUpdate()
             progress+=progressPerTick;
         
     }
-    if (progress >= .9999999999999999)
+    if (progress >= .9999999999999)
     {
         if (currentRecipe != nullptr)
         {
@@ -136,9 +136,15 @@ void BurnerFurnaceMk1Tile::TickUpdate()
     }
 }
 
+bool BurnerFurnaceMk1Tile::DoesTickUpdates()
+{
+    return true;
+}
+
 void BurnerFurnaceMk1Tile::RegisterLights()
 {
-    world->RegisterLight(World::Light(GetXpos() + .5f, GetYpos() + .5f, BRIGHTNESS));
+    if(burnTimeFull>.0000001)
+        world->RegisterLight(World::Light(GetXpos() + .5f, GetYpos() + .5f, BRIGHTNESS));
 }
 
 Tile* BurnerFurnaceMk1Tile::Clone(World* w, int x, int y) const
@@ -153,7 +159,7 @@ const ItemBundle* BurnerFurnaceMk1Tile::GetMiningResult(Tool* tool) const
 
 void BurnerFurnaceMk1Tile::Draw() const
 {
-    al_draw_bitmap(TEXTURES[0], xpos * 128, ypos * 128, 0);
+    al_draw_bitmap(TEXTURES[(burnTimeRemaining>0)?1:0], xpos * 128, ypos * 128, 0);
 }
 
 void BurnerFurnaceMk1Tile::Init(nlohmann::json data)

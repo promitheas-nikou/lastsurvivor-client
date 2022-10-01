@@ -1,4 +1,5 @@
 #include "ResourceLoader.h"
+#include "Logging.h"
 #include <allegro5/error.h>
 #include <allegro5/allegro_acodec.h>
 #include <fstream>
@@ -106,9 +107,9 @@ void load_resources()
 
 		json textures = json_data["textures"];
 
-		printf("CURRENT DIRECTORY: \"%s\"\n\n", al_get_current_directory());
+		lsg_write_to_session_log(INFO, "CURRENT DIRECTORY: \"%s\"", al_get_current_directory());
 
-		printf("LOADING %d TEXTURE(S):\n", textures.size());
+		lsg_write_to_session_log(INFO, "LOADING %d TEXTURE(S):", textures.size());
 
 		for (json texture_data : textures)
 		{
@@ -116,29 +117,29 @@ void load_resources()
 			std::string filename = texture_data["filename"];
 			al_set_new_bitmap_flags(ALLEGRO_CONVERT_BITMAP | ALLEGRO_MIPMAP | ALLEGRO_MIN_LINEAR);
 			if ((loaded_bitmaps[id] = al_load_bitmap(("textures/"+filename).c_str())) == NULL)
-				printf("\tFAILED TO LOAD TEXTURE 's'(\"%s\")...\n", id.c_str(), filename.c_str());
+				lsg_write_to_session_log(WARNING, "\tFAILED TO LOAD TEXTURE 's'(\"%s\")...", id.c_str(), filename.c_str());
 			else
-				printf("\tSUCCESSFULLY LOADED TEXTURE '%s'(\"%s\")...\n", id.c_str(), filename.c_str());
+				lsg_write_to_session_log(VERBOSE, "\tSUCCESSFULLY LOADED TEXTURE '%s'(\"%s\")...", id.c_str(), filename.c_str());
 		}
 		window_icon = loaded_bitmaps[(std::string)json_data["WINDOW_ICON"]];
-		printf("WINDOW ICON IS TEXTURE #%s\n", ((std::string)json_data["WINDOW_ICON"]).c_str());
+		lsg_write_to_session_log(INFO, "WINDOW ICON IS TEXTURE #%s", ((std::string)json_data["WINDOW_ICON"]).c_str());
 
 		nlohmann::json audios_data = json_data["audio"];
-		printf("LOADING %d AUDIO SAMPLES...\n", audios_data.size());
+		lsg_write_to_session_log(INFO, "LOADING %d AUDIO SAMPLES...", audios_data.size());
 		for (nlohmann::json audio : audios_data)
 		{
 			std::string id = audio["id"];
 			nlohmann::json files = audio["filenames"];
-			printf("\tLOADING AUDIO MULTITRACK '%s':\n", id.c_str());
+			lsg_write_to_session_log(INFO, "\tLOADING AUDIO MULTITRACK '%s':", id.c_str());
 			for (std::string fn : files)
 			{
 				ALLEGRO_SAMPLE* s;
 				//fn = "audio/" + fn;
 				if ((s = al_load_sample(("audio/"+fn).c_str())) == NULL)
-					printf("\t\tFAILED TO LOAD AUDIO SAMPLE \"%s\"...\n", fn.c_str());
+					lsg_write_to_session_log(WARNING, "\t\tFAILED TO LOAD AUDIO SAMPLE \"%s\"...", fn.c_str());
 				else
 				{
-					printf("\t\tSUCCESSFULLY LOADED AUDIO SAMPLE \"%s\"...\n", fn.c_str());
+					lsg_write_to_session_log(VERBOSE, "\t\tSUCCESSFULLY LOADED AUDIO SAMPLE \"%s\"...", fn.c_str());
 					ALLEGRO_SAMPLE_INSTANCE* i = al_create_sample_instance(s);
 					al_set_sample_instance_playmode(i, ALLEGRO_PLAYMODE_ONCE);
 					al_set_sample_instance_speed(i, 1.0f);
@@ -153,7 +154,7 @@ void load_resources()
 		}
 
 		nlohmann::json fonts_data = json_data["fonts"];
-		printf("\nLOADING %d FONT(S)...\n", fonts_data.size());	
+		lsg_write_to_session_log(INFO, "LOADING %d FONT(S)...", fonts_data.size());
 		
 
 		for (nlohmann::json font : fonts_data)
@@ -164,7 +165,7 @@ void load_resources()
 				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
 			for(int i=55;i<=200;i+=5)
 				loaded_fonts[id][i] = al_load_font(fn.c_str(), i, 0);
-			printf("SUCCESSFULLY LOADED FONT '%s'(\"%s\")...\n", id.c_str(), fn.c_str());
+			lsg_write_to_session_log(VERBOSE, "SUCCESSFULLY LOADED FONT '%s'(\"%s\")...", id.c_str(), fn.c_str());
 		}
 
 		nlohmann::json cursor_data = json_data["cursors"];
@@ -181,8 +182,8 @@ void load_resources()
 	}
 	catch (const nlohmann::detail::parse_error& err)
 	{
-		fprintf(stderr,"ERROR PARSING \'data.json\'!!!\nDETAILS:\n");
-		fputs(err.what(),stderr);
+#undef ERROR
+		lsg_write_to_session_log(ERROR,"ERROR PARSING \'data.json\'!!! DETAILS:\n%s",err.what());
 		exit(EXIT_FAILURE);
 	}
 }
@@ -206,26 +207,26 @@ void load_shaders()
 void init_tiles()
 {
 	//try {
-		printf("PARSING TILE DATA...\n");
+	lsg_write_to_session_log(INFO, "PARSING TILE DATA... ");
 		json __ground_tiles = json_data["ground_tiles"];
 		json __tiles = json_data["tiles"];
 		for (json td : __ground_tiles)
 			ground_tile_data[td[DATA_JSON_ID_KEY]] = td;
 		for (json td : __tiles)
 			tile_data[td["id"]] = td;
-		printf("FOUND DATA FOR %d GROUND TILES...\n", ground_tile_data.size());
+		lsg_write_to_session_log(INFO, "FOUND DATA FOR %d GROUND TILES... ", ground_tile_data.size());
 		int counter = 0;
 		for (std::pair<std::string, json> pair : ground_tile_data)
 		{
-			printf("FOUND DATA FOR GROUND TILE \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+			lsg_write_to_session_log(VERBOSE, "FOUND DATA FOR GROUND TILE \"%s\" (\"%s\") ", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
 			gtile_ids_to_keys[counter] = pair.first;
 			gtile_keys_to_ids[pair.first] = counter++;
 		}
 		counter = 0;
-		printf("FOUND DATA FOR %d TILES...\n", tile_data.size());
+		lsg_write_to_session_log(INFO, "FOUND DATA FOR %d TILES... ", tile_data.size());
 		for (std::pair<std::string, json> pair : tile_data)
 		{
-			printf("FOUND DATA FOR TILE \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+			lsg_write_to_session_log(VERBOSE, "FOUND DATA FOR TILE \"%s\" (\"%s\") ", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
 			tile_ids_to_keys[counter] = pair.first;
 			tile_keys_to_ids[pair.first] = counter++;
 		}
@@ -278,16 +279,16 @@ void init_items()
 #ifndef DEBUG
 	try {
 #endif //DEBUG
-		printf("PARSING ITEM DATA...\n");
+		lsg_write_to_session_log(INFO, "PARSING ITEM DATA... ");
 		json __items = json_data["items"];
 		json __loot_bundles = json_data["loot_bundles"];
 		int counter = 0;
 		for (json i : __items)
 			item_data[i["id"]] = i;
-		printf("LOADING %d ITEMS...\n", item_data.size());
+		lsg_write_to_session_log(INFO, "LOADING %d ITEMS... ", item_data.size());
 		for (std::pair<std::string, json> pair : item_data)
 		{
-			printf("FOUND DATA FOR ITEM \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+			lsg_write_to_session_log(VERBOSE, "FOUND DATA FOR ITEM \"%s\" (\"%s\") ", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
 			item_ids_to_keys[counter] = pair.first;
 			item_keys_to_ids[pair.first] = counter++;
 		}
@@ -335,11 +336,11 @@ void init_items()
 		prototype_items[IronIngotItem::ID] = new IronIngotItem();
 		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
 		prototype_items[FlaskItem::ID] = new FlaskItem();
-		printf("LOADING %d LOOT BUNDLES...\n", __loot_bundles.size());
+		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{
 			loaded_loot_bundles[data["id"]] = LootBundle::CreateFromJSON(data);
-			printf("FOUND DATA FOR LOOT BUNDLE \"%s\"\n", ((std::string)data["id"]).c_str());
+			lsg_write_to_session_log(VERBOSE, "FOUND DATA FOR LOOT BUNDLE \"%s\" ", ((std::string)data["id"]).c_str());
 		}
 #ifndef DEBUG
 	}
@@ -360,7 +361,7 @@ void init_entities()
 	int counter = 0;
 	for (std::pair<std::string, json> pair : entity_data)
 	{
-		printf("FOUND DATA FOR ENTITY \"%s\" (\"%s\")\n", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
+		lsg_write_to_session_log(VERBOSE, "FOUND DATA FOR ENTITY \"%s\" (\"%s\")", ((std::string)pair.second[DATA_JSON_ID_KEY]).c_str(), ((std::string)pair.second[DATA_JSON_NAME_KEY]).c_str());
 		entity_ids_to_keys[counter] = pair.first;
 		entity_keys_to_ids[pair.first] = counter++;
 	}
@@ -372,7 +373,7 @@ void init_entities()
 	prototype_entities[CactusBossEntity::RattleProjectile::ID] = new CactusBossEntity::RattleProjectile(nullptr, 0.f, 0.f);
 	prototype_entities[ZombieEntity::ID] = new ZombieEntity(nullptr, 0.f, 0.f);
 	prototype_entities[PlayerEntity::ID] = new PlayerEntity(nullptr, 0.f, 0.f);
-	printf("SUCCESSFULLY INITIALIZED ENTITIES!\n");
+	lsg_write_to_session_log(INFO, "SUCCESSFULLY INITIALIZED ENTITIES!");
 }
 
 void init_recipes()

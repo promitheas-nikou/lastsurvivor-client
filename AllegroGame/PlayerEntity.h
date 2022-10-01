@@ -53,11 +53,12 @@ class PlayerEntity:
 {
 public:
 	enum PlayerActionMode {
-		MELEE = 0x00,
-		RANGED = 0x01,
-		MINING = 0x02,
-		CONFIGURATION = 0x03,
-		BUILDING = 0x04
+		COMBAT,
+		BUILDING,
+		MINING,
+		USE,
+		CONSUME,
+		CONFIGURATION
 	};
 private:
 	bool godMode = false;
@@ -88,15 +89,20 @@ private:
 	RecipeListGUI* recipeGUI;
 	SimpleCraftingGUI* craftingGUI;
 	InventoryGUI* hotbarGUI;
+	InventoryGUI* consumableHotbarGUI;
+	InventoryGUI* usableHotbarGUI;
+	InventoryGUI* placeableHotbarGUI;
 	PauseMenuGUI* pauseGUI;
 	QuestGUI* questGUI;
 	ItemInventory* inventory;
+	ItemInventory* usablesInventory;
+	ItemInventory* consumablesInventory;
+	ItemInventory* placeablesInventory;
 	DeathGUI* deathgui;
 	Item* pickaxeTool;
 	Item* axeTool;
 	Item* shovelTool;
 	Item* pumpTool;
-	Item* placeableItem;
 	Item* meleeWeapon;
 	Item* rangedWeapon;
 

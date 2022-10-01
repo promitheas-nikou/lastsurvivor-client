@@ -22,7 +22,7 @@ Item* SaplingItem::Clone() const
 	return new SaplingItem(*this);
 }
 
-SaplingItem::SaplingItem() : PlaceableItem(NAME, DESCRIPTION)
+SaplingItem::SaplingItem() : Item(NAME, DESCRIPTION)
 {}
 
 void SaplingItem::Draw(int x, int y, int width, int height) const

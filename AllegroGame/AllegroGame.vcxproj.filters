@@ -178,14 +178,8 @@
     <Filter Include="Source Files\Game\Items\UsableItems">
       <UniqueIdentifier>{1752a683-6042-455a-8fd9-f272ecf77255}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Items\UsableItems\ConsumableItems">
-      <UniqueIdentifier>{44e43d30-97bd-4a81-95a4-b328bc291263}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Usables">
       <UniqueIdentifier>{7cbf6497-4d4e-4b13-8049-154c9dfa35fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Items\UsableItems\ConsumableItems">
-      <UniqueIdentifier>{c6e67361-db15-4d69-aa72-14efb2deeea2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Items\FuelItems">
       <UniqueIdentifier>{9bbdba08-f15f-4e9e-a11a-e30e999309c9}</UniqueIdentifier>
@@ -228,6 +222,12 @@
     </Filter>
     <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents">
       <UniqueIdentifier>{1b29ad21-a2d8-402c-8d01-2e8cd847bc19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ConsumableItems">
+      <UniqueIdentifier>{c6e67361-db15-4d69-aa72-14efb2deeea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ConsumableItems">
+      <UniqueIdentifier>{44e43d30-97bd-4a81-95a4-b328bc291263}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -424,7 +424,7 @@
       <Filter>Source Files\Game\Usables\Consumables</Filter>
     </ClCompile>
     <ClCompile Include="SimpleConsumableItem.cpp">
-      <Filter>Source Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
     </ClCompile>
     <ClCompile Include="BerryBushTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
@@ -457,7 +457,7 @@
       <Filter>Source Files\Game\GUI</Filter>
     </ClCompile>
     <ClCompile Include="BerryItem.cpp">
-      <Filter>Source Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
     </ClCompile>
     <ClCompile Include="Usable.cpp">
       <Filter>Source Files\Game\Usables</Filter>
@@ -466,7 +466,7 @@
       <Filter>Source Files\Game\Items\UsableItems</Filter>
     </ClCompile>
     <ClCompile Include="ConsumableItem.cpp">
-      <Filter>Source Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
     </ClCompile>
     <ClCompile Include="PhantomUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents</Filter>
@@ -583,7 +583,7 @@
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="FlaskItem.cpp">
-      <Filter>Source Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
     </ClCompile>
     <ClCompile Include="MainGUIs.cpp">
       <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
@@ -626,6 +626,21 @@
     </ClCompile>
     <ClCompile Include="IronIngotItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryConsumableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleUsableConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\UsableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="UsableConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\UsableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryUsableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -848,13 +863,13 @@
       <Filter>Header Files\Game\Consumables</Filter>
     </ClInclude>
     <ClInclude Include="ConsumableItem.h">
-      <Filter>Header Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
     </ClInclude>
     <ClInclude Include="SimpleConsumableItem.h">
-      <Filter>Header Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
     </ClInclude>
     <ClInclude Include="BerryItem.h">
-      <Filter>Header Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
     </ClInclude>
     <ClInclude Include="BerryBushTile.h">
       <Filter>Header Files\Game\Tiles</Filter>
@@ -1016,7 +1031,7 @@
       <Filter>Header Files\Game\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="FlaskItem.h">
-      <Filter>Header Files\Game\Items\UsableItems\ConsumableItems</Filter>
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
     </ClInclude>
     <ClInclude Include="SimpleNumberInputUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
@@ -1059,6 +1074,21 @@
     </ClInclude>
     <ClInclude Include="IronIngotItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryConsumableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="UsableConsumableItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleUsableConsumableItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryUsableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

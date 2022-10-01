@@ -1,6 +1,7 @@
 #pragma once
 #include "GroundTile.h"
 #include "Tile.h"
+#include <set>
 
 
 class World;
@@ -23,6 +24,9 @@ public:
 	Tile* SetTile(Tile* tile, int x, int y);
 	Tile* RemoveTile(int x, int y);
 
+	void AddTickingTile(Tile* t);
+	void RemoveTickingTile(Tile* t);
+
 	WorldChunk(World* w, int x, int y, bool generate = true);
 
 	friend World;
@@ -32,6 +36,7 @@ private:
 
 	GroundTile* ground_tiles[CHUNK_SIZE_Y][CHUNK_SIZE_X];
 	Tile* tiles[CHUNK_SIZE_Y][CHUNK_SIZE_X];
+	std::set<Tile*> tickingTiles;
 	int chunkX, chunkY;
 
 	void Generate();

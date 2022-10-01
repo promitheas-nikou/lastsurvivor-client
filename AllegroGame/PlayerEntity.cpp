@@ -63,7 +63,6 @@ void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
 	axeTool = Item::LoadFromFile(file);
 	shovelTool = Item::LoadFromFile(file);
 	pumpTool = Item::LoadFromFile(file);
-	placeableItem = Item::LoadFromFile(file);
 	meleeWeapon = Item::LoadFromFile(file);
 	rangedWeapon = Item::LoadFromFile(file);
 
@@ -84,7 +83,6 @@ void PlayerEntity::WriteAdditionalDataToFile(std::ofstream& file)
 	Item::SaveToFile(axeTool, file);
 	Item::SaveToFile(shovelTool, file);
 	Item::SaveToFile(pumpTool, file);
-	Item::SaveToFile(placeableItem, file);
 	Item::SaveToFile(meleeWeapon, file);
 	Item::SaveToFile(rangedWeapon, file);
 	inventory->SaveToFile(file);
@@ -124,14 +122,18 @@ void PlayerEntity::LogToConsole(std::string txt) const
 	history.push_front(std::make_pair(al_map_rgba(110, 110, 110, 255), txt));
 }
 
+constexpr int SELECTED_HOTBAR_SLOT_RECT_WIDTH = 6;
+
 void PlayerEntity::PreDrawThisGUI()
 {
 	al_lock_mutex(worldMutex);
 	loaded_shaders["world"]->Use();
 	containingWorld->Draw();
 	loaded_shaders["default"]->Use();
-	static ALLEGRO_MOUSE_STATE mouseState;
+	ALLEGRO_MOUSE_STATE mouseState;
+	ALLEGRO_KEYBOARD_STATE keyboardState;
 	al_get_mouse_state(&mouseState);
+	al_get_keyboard_state(&keyboardState);
 
 	if (debug >= 1)
 	{
@@ -228,11 +230,8 @@ void PlayerEntity::PreDrawThisGUI()
 	const char* m = "";
 	switch (mode)
 	{
-	case PlayerActionMode::MELEE:
-		m = "MELEE";
-		break;
-	case PlayerActionMode::RANGED:
-		m = "RANGED";
+	case PlayerActionMode::COMBAT:
+		m = "COMBAT";
 		break;
 	case PlayerActionMode::MINING:
 		m = "MINING";
@@ -243,19 +242,27 @@ void PlayerEntity::PreDrawThisGUI()
 	case PlayerActionMode::BUILDING:
 		m = "BUILDING";
 		break;
+	case PlayerActionMode::USE:
+		m = "USE";
+		break;
+	case PlayerActionMode::CONSUME:
+		m = "CONSUME";
+		break;
 	}
 	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s", m);
+
 	switch(guistate)
 	{
 	case PLAYER_GUI_STATE::WORLD:
 	{
 		hotbarGUI->DrawGUI();
+			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
 		switch (mode)
 		{
-		case PlayerActionMode::MELEE:
+		case PlayerActionMode::COMBAT:
 		{
 			if (targetedEntity == nullptr)
-				al_set_mouse_cursor(main_display, loaded_cursors["error"]);
+				al_set_mouse_cursor(main_display, loaded_cursors["ranged"]);
 			else
 				al_set_mouse_cursor(main_display, loaded_cursors["melee"]);
 			break;
@@ -296,13 +303,34 @@ void PlayerEntity::PreDrawThisGUI()
 			}
 			break;
 		}
-		case PlayerActionMode::RANGED:
-			al_set_mouse_cursor(main_display, loaded_cursors["ranged"]);
+		case PlayerActionMode::CONSUME:
+			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
+			al_draw_rectangle(SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + 128 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 + 128 + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, al_map_rgba(255,0,0,255), SELECTED_HOTBAR_SLOT_RECT_WIDTH);
 			break;
 		case PlayerActionMode::BUILDING:
-
+			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
+			al_draw_rectangle(SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + 128 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 + 128 + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, al_map_rgba(0, 0, 255, 255), SELECTED_HOTBAR_SLOT_RECT_WIDTH);
+			break;
+		case PlayerActionMode::USE:
+			al_draw_rectangle(SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + 128 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 + 128 + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, al_map_rgba(0, 255, 0, 255), SELECTED_HOTBAR_SLOT_RECT_WIDTH);
+			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
 			break;
 		}
+
+
+		switch (mode)
+		{
+		case PlayerActionMode::BUILDING:
+			placeableHotbarGUI->DrawGUI();
+			break;
+		case PlayerActionMode::USE:
+			usableHotbarGUI->DrawGUI();
+			break;
+		case PlayerActionMode::CONSUME:
+			consumableHotbarGUI->DrawGUI();
+			break;
+		}
+
 		break;
 	}
 	case PLAYER_GUI_STATE::INVENTORY:
@@ -380,8 +408,6 @@ void PlayerEntity::Draw()
 
 bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 {
-	ALLEGRO_KEYBOARD_STATE s;
-	al_get_keyboard_state(&s);
 	switch (event.keycode)
 	{
 	case ALLEGRO_KEY_W:
@@ -421,21 +447,21 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		}
 		break;
 	case ALLEGRO_KEY_T:
-		if(guistate==PLAYER_GUI_STATE::WORLD)
+		if (guistate == PLAYER_GUI_STATE::WORLD)
 			typing = !typing;
 		break;
 	case ALLEGRO_KEY_R:
-	{
-		char a = al_key_down(&s, ALLEGRO_KEY_LSHIFT);
-		a = a ? 4 : 1;
-		mode = (mode + a) % 5;
-		if (mode == PlayerActionMode::RANGED)
-			if (rangedWeapon != nullptr)
-				dynamic_cast<RangedWeapon*>(rangedWeapon)->SetCollisionCallback([this](Entity* e) {
-					this->EntityKilledRemote(e);
-				});
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+			mode = PlayerActionMode::MINING;
 		break;
-	}
+	case ALLEGRO_KEY_Q:
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+			mode = PlayerActionMode::COMBAT;
+		break;
+	case ALLEGRO_KEY_F:
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+			mode = PlayerActionMode::CONFIGURATION;
+		break;
 	case ALLEGRO_KEY_E:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
@@ -469,19 +495,65 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		}
 		break;
 	case ALLEGRO_KEY_1:
-		
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			selectedHotbarSlot = 0;
+			if(event.modifiers)
+			if (event.modifiers&ALLEGRO_KEYMOD_ALT)
+				mode = PlayerActionMode::USE;
+			else if (event.modifiers & ALLEGRO_KEYMOD_CTRL)
+				mode = PlayerActionMode::CONSUME;
+			else
+				mode = PlayerActionMode::BUILDING;
+		}
 		break;
 	case ALLEGRO_KEY_2:
-
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			selectedHotbarSlot = 1;
+			if (event.modifiers & ALLEGRO_KEYMOD_ALT)
+				mode = PlayerActionMode::USE;
+			else if (event.modifiers & ALLEGRO_KEYMOD_CTRL)
+				mode = PlayerActionMode::CONSUME;
+			else
+				mode = PlayerActionMode::BUILDING;
+		}
 		break;
 	case ALLEGRO_KEY_3:
-
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			selectedHotbarSlot = 2;
+			if (event.modifiers & ALLEGRO_KEYMOD_ALT)
+				mode = PlayerActionMode::USE;
+			else if (event.modifiers & ALLEGRO_KEYMOD_CTRL)
+				mode = PlayerActionMode::CONSUME;
+			else
+				mode = PlayerActionMode::BUILDING;
+		}
 		break;
 	case ALLEGRO_KEY_4:
-
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			selectedHotbarSlot = 3;
+			if (event.modifiers & ALLEGRO_KEYMOD_ALT)
+				mode = PlayerActionMode::USE;
+			else if (event.modifiers & ALLEGRO_KEYMOD_CTRL)
+				mode = PlayerActionMode::CONSUME;
+			else
+				mode = PlayerActionMode::BUILDING;
+		}
 		break;
 	case ALLEGRO_KEY_5:
-
+		if (guistate == PLAYER_GUI_STATE::WORLD)
+		{
+			selectedHotbarSlot = 4;
+			if (event.modifiers & ALLEGRO_KEYMOD_ALT)
+				mode = PlayerActionMode::USE;
+			else if (event.modifiers & ALLEGRO_KEYMOD_CTRL)
+				mode = PlayerActionMode::CONSUME;
+			else
+				mode = PlayerActionMode::BUILDING;
+		}
 		break;
 	case ALLEGRO_KEY_6:
 
@@ -502,7 +574,7 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		showHitbox = !showHitbox;
 		break;
 	case ALLEGRO_KEY_F3:
-		debug = (debug + (al_key_down(&s,ALLEGRO_KEY_LSHIFT)?-1:1)+4) % 4;
+		debug = (debug + ((event.modifiers&ALLEGRO_KEYMOD_SHIFT)?-1:1)+4) % 4;
 		break;
 	}
 	return true;
@@ -538,109 +610,173 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 		float y = GET_MOUSE_YPOS(event);
 		switch (mode)
 		{
-			case PlayerActionMode::MELEE:
+		case PlayerActionMode::COMBAT:
+		{
+			switch (event.button)
 			{
-				switch (event.button)
+			case 1:
+			{
+				Entity* e = containingWorld->GetEntityAtPos(x, y, this);
+				if (e != nullptr)
 				{
-					case 1:
+					MeleeWeapon* mw = dynamic_cast<MeleeWeapon*>(meleeWeapon);
+					if (mw != nullptr)
 					{
-						Entity* e = containingWorld->GetEntityAtPos(x, y, this);
-						if (e != nullptr)
+						float a = e->GetXpos() - GetXpos();
+						float b = e->GetYpos() - GetYpos();
+						if (a * a + b * b <= mw->GetRangeSQ())
+							e->DoDamage(mw);
+						if (e->GetHealth() <= 0.f)
+							if (GetContainingWorld()->GetQuestCollection() != nullptr)
+								GetContainingWorld()->GetQuestCollection()->EntityKilled(e);
+					}
+				}
+			}
+			break;
+			case 2:
+			{
+				UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
+				break;
+			}
+			}
+			break;
+		}
+		case PlayerActionMode::MINING:
+		{
+
+			switch (event.button)
+			{
+			case 1:
+			{
+				float a = x - GetXpos();
+				float b = y - GetYpos();
+				if (a * a + b * b <= RANGESQ)
+					MineTile(floor(x), floor(y));
+				break;
+			}
+			case 2:
+			{
+
+				break;
+			}
+			}
+			break;
+		}
+		case PlayerActionMode::CONFIGURATION:
+		{
+
+			switch (event.button)
+			{
+			case 1:
+			{
+				UseTile(floor(x), floor(y));
+				break;
+			}
+			case 2:
+			{
+				UseTile(floor(x), floor(y));
+				break;
+			}
+			}
+			break;
+		}
+		case PlayerActionMode::BUILDING:
+		{
+			PlaceableItem* pi = dynamic_cast<PlaceableItem*>(placeablesInventory->GetItem(selectedHotbarSlot));
+			if (pi == nullptr)
+				break;
+			if (pi->Use(x, y, this))
+			{
+				pi->RemoveAmount(1);
+				if (pi->GetAmount() <= 0)
+				{
+					delete pi;
+					placeablesInventory->SetItem(selectedHotbarSlot, nullptr);
+				}
+			}
+			break;
+		}
+		case PlayerActionMode::USE:
+		{
+			switch (event.button)
+			{
+			case 1:
+			{
+				Item* i = usablesInventory->GetItem(selectedHotbarSlot);
+				Usable* u = dynamic_cast<Usable*>(i);
+				if (u != nullptr)
+					if (u->Use(GET_MOUSE_XPOS(event), GET_MOUSE_YPOS(event), this))
+					{
+						i->RemoveAmount(1);
+						if (i->GetAmount() <= 0)
 						{
-							MeleeWeapon* mw = dynamic_cast<MeleeWeapon*>(meleeWeapon);
-							if (mw != nullptr)
-							{
-								float a = e->GetXpos() - GetXpos();
-								float b = e->GetYpos() - GetYpos();
-								if (a * a + b * b <= mw->GetRangeSQ())
-									e->DoDamage(mw);
-								if (e->GetHealth() <= 0.f)
-									if (GetContainingWorld()->GetQuestCollection() != nullptr)
-										GetContainingWorld()->GetQuestCollection()->EntityKilled(e);
-							}
+							delete u;
+							usablesInventory->SetItem(selectedHotbarSlot, nullptr);
 						}
 					}
-					break;
-					case 2:
-					{
-						UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
-						break;
-					}
-				}
 				break;
 			}
-			case PlayerActionMode::RANGED:
+			break;
+			case 2:
 			{
-				switch (event.button)
-				{
-					case 1:
-					{
-						if (rangedWeapon != nullptr)
-							dynamic_cast<RangedWeapon*>(rangedWeapon)->Fire(containingWorld, GetXpos(), GetYpos(), GetRotation() - M_PI_2, this);
-					}
-					break;
-					case 2:
-					{
-						UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
-						break;
-					}
-				}
+				UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
 				break;
 			}
-			case PlayerActionMode::MINING:
+			}
+			break;
+		}
+		case PlayerActionMode::CONSUME:
 			{
-
-				switch (event.button)
-				{
-					case 1:
-					{
-						float a = x - GetXpos();
-						float b = y - GetYpos();
-						if(a*a+b*b<=RANGESQ)
-							MineTile(floor(x), floor(y));
-						break;
-					}
-					case 2:
-					{
-
-						break;
-					}
-				}
-				break;
-			}
-			case PlayerActionMode::CONFIGURATION:
+			switch (event.button) {
+			case 1:
 			{
-
-				switch (event.button)
-				{
-				case 1:
-				{
-					UseTile(floor(x), floor(y));
-					break;
-				}
-				case 2:
-				{
-					UseTile(floor(x), floor(y));
-					break;
-				}
-				}
+				Item* i = consumablesInventory->GetItem(selectedHotbarSlot);
+				Consumable* c = dynamic_cast<Consumable*>(i);
+				if (c != nullptr)
+					if (c->Consume(GetXpos(), GetYpos(), this))
+					{
+						i->RemoveAmount(1);
+						if (i->GetAmount() <= 0)
+						{
+							delete c;
+							consumablesInventory->SetItem(selectedHotbarSlot, nullptr);
+						}
+					}
 				break;
 			}
-			case PlayerActionMode::BUILDING:
+			case 2:
 			{
-				if (dynamic_cast<PlaceableItem*>(placeableItem) == nullptr)
-					break;
-				if (dynamic_cast<PlaceableItem*>(placeableItem)->Use(x, y, this))
-				{
-					placeableItem->RemoveAmount(1);
-					if (placeableItem->GetAmount() == 0)
+				Item* i = consumablesInventory->GetItem(selectedHotbarSlot);
+				Usable* u = dynamic_cast<Usable*>(i);
+				if (u != nullptr) {
+					if (u->Use(GET_MOUSE_XPOS(event), GET_MOUSE_YPOS(event), this))
 					{
-						delete placeableItem;
-						placeableItem = nullptr;
+						i->RemoveAmount(1);
+						if (i->GetAmount() <= 0)
+						{
+							delete u;
+							usablesInventory->SetItem(selectedHotbarSlot, nullptr);
+						}
 					}
 				}
+				else
+				{
+					Consumable* c = dynamic_cast<Consumable*>(i);
+					if (c != nullptr)
+						if (c->Consume(GetXpos(), GetYpos(), this))
+						{
+							i->RemoveAmount(1);
+							if (i->GetAmount() <= 0)
+							{
+								delete c;
+								consumablesInventory->SetItem(selectedHotbarSlot, nullptr);
+							}
+						}
+				}
 				break;
 			}
+			}
+		}
 		}
 	}
 	return true;
@@ -900,12 +1036,11 @@ InventoryGUI* PlayerEntity::GetMainInventoryGUI(int offsetx, int offsety)
 		g->AddSlot(128 * i + offsetx, 0 + offsety, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
 		g->AddSlot(128 * i + offsetx, 128 + offsety, 128, 128, *inventory->GetItemPtr(i + 9), InventoryGUI::StorageSlotType::GENERIC);
 		g->AddSlot(128 * i + offsetx, 256 + offsety, 128, 128, *inventory->GetItemPtr(i + 18), InventoryGUI::StorageSlotType::GENERIC);
-		g->AddSlot(128 * i + offsetx, 384 + offsety, 128, 128, *inventory->GetItemPtr(i + 27), InventoryGUI::StorageSlotType::GENERIC);
 	}
 	return g;
 }
 
-PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }
+PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }, selectedHotbarSlot{ 0 }
 {
 	hunger = MAX_HUNGER;
 	water = MAX_WATER;
@@ -913,12 +1048,18 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	if (world == nullptr)
 		return;
 	luaInterface = new LuaInterface(world, true);
-	inventory = new SimpleItemInventory(36);
+	inventory = new SimpleItemInventory(27);
+	usablesInventory = new SimpleItemInventory(5);
+	consumablesInventory = new SimpleItemInventory(5);
+	placeablesInventory = new SimpleItemInventory(5);
 	meleeWeapon = new SimpleSword();
 	rangedWeapon = new GunItem();
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
+	consumableHotbarGUI = new InventoryGUI();
+	usableHotbarGUI = new InventoryGUI();
+	placeableHotbarGUI = new InventoryGUI();
 	pauseGUI = new PauseMenuGUI(this);
 	craftingGUI = new SimpleCraftingGUI();
 	craftingGUI->SetRecipeList(loaded_crafting_recipes);
@@ -939,13 +1080,53 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		questGUI = new QuestGUI(QuestCollection::GetNullCollection());
 	for (int i = 0; i < 9; i++)
 	{
-		hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::VIEW);
-		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT - 280, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
-		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128, *inventory->GetItemPtr(i+9), InventoryGUI::StorageSlotType::GENERIC);
-		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128, *inventory->GetItemPtr(i+18), InventoryGUI	::StorageSlotType::GENERIC);
-		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128, *inventory->GetItemPtr(i+27), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 192, 128, 128, *inventory->GetItemPtr(i), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 - 64, 128, 128, *inventory->GetItemPtr(i+9), InventoryGUI::StorageSlotType::GENERIC);
+		inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9 + 128 * i, SCREEN_HEIGHT / 2 + 64, 128, 128, *inventory->GetItemPtr(i+18), InventoryGUI::StorageSlotType::GENERIC);
 	}
-	inventoryGUI->AddCallbackSlot(SCREEN_WIDTH / 2 - 191, SCREEN_HEIGHT - 140, 128, 128, [this](Item* item) {
+	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 280, 128, 128, meleeWeapon, InventoryGUI::StorageSlotType::MELEE);
+	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 280, 128, 128, rangedWeapon, InventoryGUI::StorageSlotType::RANGED);
+
+	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::PLACEABLE);
+	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::PLACEABLE);
+	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::PLACEABLE);
+	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::PLACEABLE);
+	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::PLACEABLE);
+
+	usableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::USABLE);
+	usableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::USABLE);
+	usableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::USABLE);
+	usableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::USABLE);
+	usableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::USABLE);
+
+	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::CONSUMABLE);
+	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::CONSUMABLE);
+	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::CONSUMABLE);
+	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::CONSUMABLE);
+	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::CONSUMABLE);
+
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 280, 128, 128, meleeWeapon, InventoryGUI::StorageSlotType::MELEE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 280, 128, 128, rangedWeapon, InventoryGUI::StorageSlotType::RANGED);
+
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::PLACEABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::PLACEABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::PLACEABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::PLACEABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::PLACEABLE);
+
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::USABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::USABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::USABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::USABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 280, 128, 128, *usablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::USABLE);
+
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 152, 128, 128, *consumablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::CONSUMABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 152, 128, 128, *consumablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::CONSUMABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 152, 128, 128, *consumablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::CONSUMABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 152, 128, 128, *consumablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::CONSUMABLE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 152, 128, 128, *consumablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::CONSUMABLE);
+
+	inventoryGUI->AddCallbackSlot(SCREEN_WIDTH / 2 + 9 * 64, SCREEN_HEIGHT - 152, 128, 128, [this](Item* item) {
 		Consumable* c = dynamic_cast<Consumable*>(item);
 		if (c == nullptr)
 			return item;
@@ -975,8 +1156,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 		}
 		return item;
 	});
-	inventoryGUI->AddTrashSlot(SCREEN_WIDTH / 2 + 64, SCREEN_HEIGHT - 140, 128, 128);
-	inventoryGUI->AddSlot(100, SCREEN_HEIGHT - 150, 128, 128, placeableItem, InventoryGUI::StorageSlotType::PLACEABLE);
+	inventoryGUI->AddTrashSlot(SCREEN_WIDTH / 2 + 9*64, SCREEN_HEIGHT - 280, 128, 128);
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
 	TEXTURE = loaded_bitmaps["tex.entities.player"];

@@ -1,6 +1,7 @@
 #include "Recipe.h"
 #include "SimpleItemBundle.h"
 #include "ItemIndex.h"
+#include "Logging.h"
 
 std::unordered_map<std::string, const SmeltingRecipe*> loaded_smelting_recipes;
 std::unordered_map<std::string, const CraftingRecipe*> loaded_crafting_recipes;
@@ -48,13 +49,13 @@ int CraftingRecipe::CheckTimesCanPerformOnInventory(ItemInventory* inventory) co
 
 void CraftingRecipe::LoadRecipes(nlohmann::json data)
 {
-    printf("Loading crafting recipes:");
+    lsg_write_to_session_log(INFO,"Loading crafting recipes:");
     for (nlohmann::json rec : data)
     {
         loaded_crafting_recipes[rec["id"]] = new CraftingRecipe(rec);
-        printf("\tSuccessfully loaded crafting recipe #%s!\n", ((std::string)rec["id"]).c_str());
+        lsg_write_to_session_log(VERBOSE,"\tSuccessfully loaded crafting recipe #%s!", ((std::string)rec["id"]).c_str());
     }
-
+    lsg_write_to_session_log(INFO, "Done loading crafting recipe!");
 }
 
 void CraftingRecipe::UnloadRecipes()
@@ -111,12 +112,13 @@ float SmeltingRecipe::GetDuration() const
 
 void SmeltingRecipe::LoadRecipes(nlohmann::json data)
 {
-    printf("Loading smelting recipes:");
+    lsg_write_to_session_log(INFO,"Loading smelting recipes:");
     for (nlohmann::json rec : data)
     {
         loaded_smelting_recipes[rec["id"]] = new SmeltingRecipe(rec);
-        printf("\tSuccessfully loaded smelting recipe #%s!\n", ((std::string)rec["id"]).c_str());
+        lsg_write_to_session_log(VERBOSE,"\tSuccessfully loaded smelting recipe #%s!", ((std::string)rec["id"]).c_str());
     }
+    lsg_write_to_session_log(INFO, "Loading crafting recipes:");
 }
 
 void SmeltingRecipe::UnloadRecipes()

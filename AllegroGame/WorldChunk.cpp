@@ -16,12 +16,8 @@ void WorldChunk::Generate()
 
 void WorldChunk::Tick()
 {
-    for (int y = 0; y < CHUNK_SIZE_Y; y++)
-        for (int x = 0; x < CHUNK_SIZE_X; x++)
-        {
-            ground_tiles[y][x]->TickUpdate();
-            tiles[y][x]->TickUpdate();
-        }
+    for (Tile* t : tickingTiles)
+        t->TickUpdate();
     tiles[rand() % CHUNK_SIZE_X][rand() % CHUNK_SIZE_Y]->RandomTickUpdate();
 }
 
@@ -54,6 +50,16 @@ Tile* WorldChunk::RemoveTile(int x, int y)
     Tile* tmp = tiles[y][x];
     tiles[y][x] = MakeTile(world, "tiles.air", x, y);
     return tmp;
+}
+
+void WorldChunk::AddTickingTile(Tile* t)
+{
+    tickingTiles.insert(t);
+}
+
+void WorldChunk::RemoveTickingTile(Tile* t)
+{
+    tickingTiles.erase(t);
 }
 
 WorldChunk::WorldChunk(World* w, int x, int y, bool generate): world(w), chunkX(x), chunkY(y)
