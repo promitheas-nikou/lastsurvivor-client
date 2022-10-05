@@ -313,6 +313,9 @@ void init_items()
 		IronIngotItem::Init(item_data[IronIngotItem::ID]);
 		BurnerFurnaceMk1Item::Init(item_data[BurnerFurnaceMk1Item::ID]);
 		FlaskItem::Init(item_data[FlaskItem::ID]);
+		CharcoalItem::Init(item_data[CharcoalItem::ID]);
+		BrickWallItem::Init(item_data[BrickWallItem::ID]);
+		StoneBrickWallItem::Init(item_data[StoneBrickWallItem::ID]);
 
 		prototype_items[StoneItem::ID] = new StoneItem();
 		prototype_items[DirtItem::ID] = new DirtItem();
@@ -336,6 +339,9 @@ void init_items()
 		prototype_items[IronIngotItem::ID] = new IronIngotItem();
 		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
 		prototype_items[FlaskItem::ID] = new FlaskItem();
+		prototype_items[CharcoalItem::ID] = new CharcoalItem();
+		prototype_items[BrickWallItem::ID] = new BrickWallItem();
+		prototype_items[StoneBrickWallItem::ID] = new StoneBrickWallItem();
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

@@ -39,8 +39,8 @@ bool SimpleCraftingGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 	scroll -= event.dz;
 	if (scroll < 0)
 		scroll = 0;
-	if (scroll >= recipes.size() - pageHeight)
-		scroll = recipes.size()-pageHeight-1;
+	if (scroll > recipes.size() - pageHeight)
+		scroll = recipes.size()-pageHeight;
 	return true;
 }
 

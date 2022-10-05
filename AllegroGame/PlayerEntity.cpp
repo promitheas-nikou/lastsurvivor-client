@@ -66,8 +66,12 @@ void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
 	meleeWeapon = Item::LoadFromFile(file);
 	rangedWeapon = Item::LoadFromFile(file);
 
+	placeablesInventory = ItemInventory::LoadFromFile(file);
+	consumablesInventory = ItemInventory::LoadFromFile(file);
+	usablesInventory = ItemInventory::LoadFromFile(file);
+
 	uint32_t a;
-	file.read(reinterpret_cast<char*>(&a), sizeof(uint32_t));
+	file.read(reinterpret_cast<char*>(&a), sizeof(uint32_t)); //ignoring saved size, using explicitly specified size
 	for (int i = 0; i < inventory->GetSize(); i++)
 	{
 		inventory->SetItem(i, Item::LoadFromFile(file));
@@ -85,6 +89,11 @@ void PlayerEntity::WriteAdditionalDataToFile(std::ofstream& file)
 	Item::SaveToFile(pumpTool, file);
 	Item::SaveToFile(meleeWeapon, file);
 	Item::SaveToFile(rangedWeapon, file);
+
+	placeablesInventory->SaveToFile(file);
+	consumablesInventory->SaveToFile(file);
+	usablesInventory->SaveToFile(file);
+
 	inventory->SaveToFile(file);
 }
 

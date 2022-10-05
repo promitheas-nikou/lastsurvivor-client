@@ -6,6 +6,7 @@
 //CONSUMABLE
 
 #include "BerryItem.h"
+#include "FlaskItem.h"
 
 //RESOURCE
 
@@ -20,6 +21,9 @@
 #include "AnthraciteCoalChunkItem.h"
 #include "LodestoneItem.h"
 #include "LogItem.h"
+#include "IronIngotItem.h"
+#include "CopperIngotItem.h"
+#include "CharcoalItem.h"
 
 //PLACEABLE
 
@@ -27,6 +31,5 @@
 #include "TorchItem.h"
 #include "BurnerFurnaceMk1Item.h"
 #include "SaplingItem.h"
-#include "FlaskItem.h"
-#include "IronIngotItem.h"
-#include "CopperIngotItem.h"
+#include "BrickWallItem.h"
+#include "StoneBrickWallItem.h"

@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +149,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -204,6 +205,7 @@
     <ClCompile Include="BerryBushTile.cpp" />
     <ClCompile Include="BerryItem.cpp" />
     <ClCompile Include="BitmapUIComponent.cpp" />
+    <ClCompile Include="BrickWallItem.cpp" />
     <ClCompile Include="BrickWallTile.cpp" />
     <ClCompile Include="BurnerFurnaceMk1Item.cpp" />
     <ClCompile Include="BurnerFurnaceMk1Tile.cpp" />
@@ -211,6 +213,7 @@
     <ClCompile Include="CactusBossEntity.cpp" />
     <ClCompile Include="ChancedLootBundle.cpp" />
     <ClCompile Include="AnthraciteCoalChunkItem.cpp" />
+    <ClCompile Include="CharcoalItem.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="ConnectingTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
@@ -300,6 +303,7 @@
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SimpleUsableConsumableItem.cpp" />
     <ClCompile Include="SoundType.cpp" />
+    <ClCompile Include="StoneBrickWallItem.cpp" />
     <ClCompile Include="StoneBrickWallTile.cpp" />
     <ClCompile Include="TextUtils.cpp" />
     <ClCompile Include="TorchItem.cpp" />
@@ -353,6 +357,7 @@
     <ClInclude Include="BerryBushTile.h" />
     <ClInclude Include="BerryItem.h" />
     <ClInclude Include="BitmapUIComponent.h" />
+    <ClInclude Include="BrickWallItem.h" />
     <ClInclude Include="BrickWallTile.h" />
     <ClInclude Include="BurnerFurnaceMk1Item.h" />
     <ClInclude Include="BurnerFurnaceMk1Tile.h" />
@@ -360,6 +365,7 @@
     <ClInclude Include="CactusBossEntity.h" />
     <ClInclude Include="ChancedLootBundle.h" />
     <ClInclude Include="AnthraciteCoalChunkItem.h" />
+    <ClInclude Include="CharcoalItem.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConnectingTile.h" />
     <ClInclude Include="Consumable.h" />
@@ -453,6 +459,7 @@
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SimpleUsableConsumableItem.h" />
     <ClInclude Include="SoundType.h" />
+    <ClInclude Include="StoneBrickWallItem.h" />
     <ClInclude Include="StoneBrickWallTile.h" />
     <ClInclude Include="TextUtils.h" />
     <ClInclude Include="TorchItem.h" />

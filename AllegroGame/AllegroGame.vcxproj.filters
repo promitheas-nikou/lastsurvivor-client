@@ -642,6 +642,15 @@
     <ClCompile Include="SimpleItemInventoryUsableStorageSlotUIComponent.cpp">
       <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
     </ClCompile>
+    <ClCompile Include="CharcoalItem.cpp">
+      <Filter>Source Files\Game\Items\FuelItems</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBrickWallItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickWallItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1089,6 +1098,15 @@
     </ClInclude>
     <ClInclude Include="SimpleItemInventoryUsableStorageSlotUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="CharcoalItem.h">
+      <Filter>Header Files\Game\Items\FuelItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickWallItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneBrickWallItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

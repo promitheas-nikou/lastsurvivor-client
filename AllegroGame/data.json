@@ -98,6 +98,10 @@
       "filename": "icon.png"
     },
     {
+      "id": "tex.items.charcoal",
+      "filename": "charcoal_item.png"
+    },
+    {
       "id": "tex.gui.burn_icon/0",
       "filename": "gui.burn_icon_0.png"
     },
@@ -1131,6 +1135,14 @@
   ],
   "items": [
     {
+      "id": "items.charcoal",
+      "name": "Charcoal",
+      "description": "A piece of wood that has been heated to remove impurities. Serves as an excelent fuel.",
+      "texture": "tex.items.charcoal",
+      "burn_time": 2500,
+      "burn_heat": 800
+    },
+    {
       "id": "items.grass",
       "name": "Grass",
       "description": "",
@@ -1274,6 +1286,18 @@
       "texture": "tex.items.torch"
     },
     {
+      "id": "items.brick_wall",
+      "name": "Brick Wall",
+      "description": "A wall created from fired clay bricks.",
+      "texture": "tex.tiles.brick_wall"
+    },
+    {
+      "id": "items.stone_brick_wall",
+      "name": "Stone Brick Wall",
+      "description": "A wall created from stone bricks put together.",
+      "texture": "tex.tiles.stone_brick_wall"
+    },
+    {
       "id": "items.burner_furnace_mk1",
       "name": "Burner Furnace Mk1",
       "description": "A furnace that can be used to melt ore.",
@@ -1333,6 +1357,36 @@
         "output": [
           {
             "id": "items.fence",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.brick_wall_from_stone",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 8
+          }
+        ],
+        "output": [
+          {
+            "id": "items.brick_wall",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.stone_brick_wall_from_stone",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 6
+          }
+        ],
+        "output": [
+          {
+            "id": "items.stone_brick_wall",
             "amount": 1
           }
         ]
@@ -1412,6 +1466,18 @@
         },
         "output": {
           "id": "items.iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.charcoal_from_wood",
+        "duration": 1000,
+        "input": {
+          "id": "items.log",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.charcoal",
           "amount": 1
         }
       },
