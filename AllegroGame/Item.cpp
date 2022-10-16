@@ -48,7 +48,10 @@ int Item::RemoveAmount(int targetAmount)
 
 Item* Item::SetAmount(int a)
 {
-    amount = a;
+    if (a == -1)
+        amount = GetMaxStackSize();
+    else
+        amount = a;
     return this;
 }
 

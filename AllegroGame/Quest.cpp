@@ -70,8 +70,10 @@ bool Quest::EntityKillRequirement::Check() const
     return progress >= count;
 }
 
-Quest::Quest(std::string id, std::string n, ALLEGRO_BITMAP* b, bool c, bool u) : id{ id }, name{ n }, icon{ b }, completed{ c }, unlocked{ u }
-{}
+Quest::Quest(std::string id, std::string n, std::string iid, int xpos, int ypos, bool c, bool u) : id{ id }, name{ n }, iconid{ iid }, x{ xpos }, y{ ypos }, completed{ c }, unlocked{ u }
+{
+    icon = loaded_bitmaps[iconid];
+}
 
 bool Quest::IsCompleted() const
 {
@@ -141,6 +143,96 @@ void Quest::EntityKilled(Entity* entity)
                 r.Progress(entity);
 }
 
+int Quest::GetXpos() const
+{
+    return x;
+}
+
+int Quest::GetYpos() const
+{
+    return y;
+}
+
+int Quest::GetTileMineRequirementCount() const
+{
+    return tile_requirements.size();
+}
+
+void Quest::EraseTileMineRequirement(int index)
+{
+    tile_requirements.erase(tile_requirements.begin() + index);
+}
+
+void Quest::AddTileMineRequirement(std::string id, int count)
+{
+    tile_requirements.push_back(TileMineRequirement(id, count));
+}
+
+const Quest::TileMineRequirement& Quest::GetTileMineRequirement(int index) const
+{
+    return tile_requirements[index];
+}
+
+int Quest::GetGroundTileMineRequirementCount() const
+{
+    return gtile_requirements.size();
+}
+
+void Quest::EraseGroundTileMineRequirement(int index)
+{
+    gtile_requirements.erase(gtile_requirements.begin() + index);
+}
+
+void Quest::AddGroundTileMineRequirement(std::string id, int count)
+{
+    gtile_requirements.push_back(GroundTileMineRequirement(id, count));
+}
+
+const Quest::GroundTileMineRequirement& Quest::GetGroundTileMineRequirement(int index) const
+{
+    return gtile_requirements[index];
+}
+
+int Quest::GetEntityKillRequirementCount() const
+{
+    return kill_requirements.size();
+}
+
+void Quest::EraseEntityKillRequirement(int index)
+{
+    kill_requirements.erase(kill_requirements.begin() + index);
+}
+
+void Quest::AddEntityKillRequirement(std::string id, int count)
+{
+    kill_requirements.push_back(EntityKillRequirement(id, count));
+}
+
+const Quest::EntityKillRequirement& Quest::GetEntityKillRequirement(int index) const
+{
+    return kill_requirements[index];
+}
+
+int Quest::GetQuestCompletionRequirementCount() const
+{
+    return quest_requirements.size();
+}
+
+void Quest::EraseQuestCompletionRequirement(int index)
+{
+    quest_requirements.erase(quest_requirements.begin() + index);
+}
+
+void Quest::AddQuestCompletionRequirement(std::string id)
+{
+    quest_requirements.push_back(QuestCompletionRequirement(id));
+}
+
+const Quest::QuestCompletionRequirement& Quest::GetQuestCompletionRequirement(int index) const
+{
+    return quest_requirements[index];
+}
+
 ALLEGRO_BITMAP* Quest::GetIcon() const
 {
     return icon;
@@ -157,16 +249,18 @@ std::string Quest::GetID() const
     return id;
 }
 
+std::string Quest::GetIconID() const
+{
+    return iconid;
+}
+
 #include <iostream>
 
 Quest* Quest::MakeFromJSON(nlohmann::json data, QuestCollection* col)
 {
     std::cout << data << std::endl;
-    Quest* q = new Quest(data["id"],data["name"], loaded_bitmaps[data["icon"]],data["completed"], data["unlocked"]);
-    q->iconid = data["icon"];
+    Quest* q = new Quest(data["id"],data["name"], data["icon"], data["xpos"], data["ypos"], data["completed"], data["unlocked"]);
     q->collection = col;
-    q->x = data["xpos"];
-    q->y = data["ypos"];
 
     int i = 0;
 
@@ -184,8 +278,23 @@ Quest* Quest::MakeFromJSON(nlohmann::json data, QuestCollection* col)
             q->kill_requirements.push_back(EntityKillRequirement(req["entity"], req.value("progress", 0), req["count"]));
         i++;
     }
-    printf("LOADED QUEST \"%s\"\n", q->GetID().c_str());
     return q;
+}
+
+Quest* Quest::MakeNewQuest(std::string id, std::string n, std::string iid, int xpos, int ypos, bool c, bool u)
+{
+    return new Quest(id,n,iid,xpos, ypos,c,u);
+}
+
+void Quest::Modify(std::string n, std::string iid, int xpos, int ypos, bool c, bool u)
+{
+    name = n;
+    iconid = iid;
+    icon = loaded_bitmaps[iid];
+    x = xpos;
+    y = ypos;
+    completed = c;
+    unlocked = u;
 }
 
 nlohmann::json Quest::SerializeToJSON()

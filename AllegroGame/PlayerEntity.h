@@ -22,9 +22,11 @@ class RangedWeaponItem;
 #include "LuaInterface.h"
 #include "PlaceableItem.h"
 #include "AudioMultiTrackCollection.h"
+#include "CreativeItemGUI.h"
+#include "QuestEditingGUI.h"
 #undef PlaySound
 
-enum class PLAYER_GUI_STATE { WORLD, PAUSE, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE };
+enum class PLAYER_GUI_STATE { WORLD, PAUSE, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE, CREATIVE, QUEST_EDIT };
 
 class WaterGroundTile;
 
@@ -94,6 +96,8 @@ private:
 	InventoryGUI* placeableHotbarGUI;
 	PauseMenuGUI* pauseGUI;
 	QuestGUI* questGUI;
+	CreativeItemGUI* creativeGUI;
+	QuestEditingGUI* questEditingGUI;
 	ItemInventory* inventory;
 	ItemInventory* usablesInventory;
 	ItemInventory* consumablesInventory;
@@ -159,6 +163,7 @@ public:
 	void MineTile(int x, int y);
 
 	void GiveConstItem(const Item* item);
+	Item* GiveItem(Item* item);
 	void GiveConstItemBundle(const ItemBundle* bundle);
 
 	void Tick() final;

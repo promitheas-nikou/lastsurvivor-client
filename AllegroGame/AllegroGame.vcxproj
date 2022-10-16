@@ -219,6 +219,7 @@
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
     <ClCompile Include="CopperIngotItem.cpp" />
+    <ClCompile Include="CreativeItemGUI.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DebugInfo.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
@@ -253,6 +254,7 @@
     <ClCompile Include="MalachiteChunkItem.cpp" />
     <ClCompile Include="MalachiteOreGroundTile.cpp" />
     <ClCompile Include="PlaceableItem.cpp" />
+    <ClCompile Include="QuestEditingGUI.cpp" />
     <ClCompile Include="SaplingItem.cpp" />
     <ClCompile Include="SimpleCraftingGUI.cpp" />
     <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp" />
@@ -371,6 +373,7 @@
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="CopperIngotItem.h" />
+    <ClInclude Include="CreativeItemGUI.h" />
     <ClInclude Include="DeathGUI.h" />
     <ClInclude Include="DebugInfo.h" />
     <ClInclude Include="dirent.h" />
@@ -408,6 +411,7 @@
     <ClInclude Include="MalachiteChunkItem.h" />
     <ClInclude Include="MalachiteOreGroundTile.h" />
     <ClInclude Include="PlaceableItem.h" />
+    <ClInclude Include="QuestEditingGUI.h" />
     <ClInclude Include="SaplingItem.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />
     <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h" />

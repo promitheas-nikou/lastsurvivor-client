@@ -3,16 +3,10 @@
 #include <allegro5/allegro_font.h>
 #include "ResourceLoader.h"
 #include "Graphics.h"
+#include <set>
 
-std::vector<bool> questDrawnVisTable;
+std::set<Quest*> questDrawnVisTable;
 QuestGUI* __qg;
-
-void QuestGUI::AddQuestDisplayConfiguration(QuestDisplayConfiguration* config)
-{
-	config->id = displayConfig.size();
-	displayConfig.push_back(config);
-	questLink[config->quest] = config;
-}
 
 void QuestGUI::PreDrawThisGUI()
 {
@@ -22,17 +16,19 @@ void QuestGUI::PreDrawThisGUI()
 	if (curQuest == nullptr)
 	{
 		questDrawnVisTable.clear();
-		questDrawnVisTable.resize(displayConfig.size()); 
-		for (QuestDisplayConfiguration* conf : displayConfig)
+		for (int i=0;i<questCollection->GetQuestCount();i++)
 		{
-			conf->DrawIcon(curx, cury);
+			if (questDrawnVisTable.count(questCollection->GetQuest(i)))
+				continue;
+			questDrawnVisTable.insert(questCollection->GetQuest(i));
+			QuestDrawIcon(questCollection->GetQuest(i), curx, cury);
 		}
 		if (curQuestHover != nullptr)
-			curQuestHover->DrawHover(curx, cury);
+			QuestDrawHover(curQuestHover, curx, cury);
 	}
 	else
 	{
-		curQuest->DrawFull();
+		QuestDrawFull(curQuest);
 	}
 }
 
@@ -48,11 +44,11 @@ bool QuestGUI::ClickRightDown(int xRel, int yRel)
 
 bool QuestGUI::ClickLeftDown(int xRel, int yRel)
 {
-	for (QuestDisplayConfiguration* conf : displayConfig)
+	for (int i = 0; i < questCollection->GetQuestCount(); i++)
 	{
-		if (conf->Contains(xRel + curx, yRel + cury))
+		if (QuestContains(questCollection->GetQuest(i), xRel + curx, yRel + cury))
 		{
-			curQuest = conf;
+			curQuest = questCollection->GetQuest(i);
 			return true;
 		}
 	}
@@ -71,11 +67,11 @@ bool QuestGUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 
 bool QuestGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
-	for (QuestDisplayConfiguration* conf : displayConfig)
+	for (int i = 0; i < questCollection->GetQuestCount(); i++)
 	{
-		if (conf->Contains(event.x + curx, event.y + cury))
+		if (QuestContains(questCollection->GetQuest(i), event.x + curx, event.y + cury))
 		{
-			curQuestHover = conf;
+			curQuestHover = questCollection->GetQuest(i);
 			return true;
 		}
 	}
@@ -92,51 +88,46 @@ bool QuestGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 }
 
 QuestGUI::QuestGUI(QuestCollection* col) : curx{ 0 }, cury{ 0 }, curQuest{ nullptr }, questCollection{ col }, curQuestHover{ nullptr }
-{
-	for (const std::pair<std::string, Quest*>& q : col->quests)
-	{
-		AddQuestDisplayConfiguration(new QuestDisplayConfiguration(q.second));
-	}
-}
+{}
 
 const ALLEGRO_COLOR COMPLETED_COLOR = al_map_rgba(40, 200, 0, 255);
 const ALLEGRO_COLOR NOT_COMPLETED_COLOR = al_map_rgba(80, 80, 80, 255);
 
-void QuestGUI::QuestDisplayConfiguration::DrawIcon(int curx, int cury) const
+void QuestGUI::QuestDrawIcon(Quest* quest, int curx, int cury) const
 {
 	ALLEGRO_BITMAP* b = quest->GetIcon();
-	if (questDrawnVisTable[id])
+	if (questDrawnVisTable.count(quest))
 	{
-		al_draw_filled_rectangle(x - curx - 16, y - cury - 16, x + width - curx + 16, y + height - cury + 16, quest->IsCompleted() ? COMPLETED_COLOR : NOT_COMPLETED_COLOR);
+		al_draw_filled_rectangle(quest->GetXpos() - curx - 16, quest->GetYpos() - cury - 16, quest->GetXpos() + WIDTH - curx + 16, quest->GetYpos() + HEIGHT - cury + 16, quest->IsCompleted() ? COMPLETED_COLOR : NOT_COMPLETED_COLOR);
 		//al_draw_filled_rectangle(x - curx, y - cury, x + width - curx, y + height - cury, al_map_rgba(255, 255, 255, 255));
-		al_draw_scaled_bitmap(b, 0, 0, al_get_bitmap_width(b), al_get_bitmap_height(b), x - curx, y - cury, width, height, 0);
+		al_draw_scaled_bitmap(b, 0, 0, al_get_bitmap_width(b), al_get_bitmap_height(b), quest->GetXpos() - curx, quest->GetYpos() - cury, WIDTH, HEIGHT, 0);
 		return;
 	}
-	questDrawnVisTable[id] = true;
+	questDrawnVisTable.insert(quest);
 	for (Quest::QuestCompletionRequirement q : quest->quest_requirements)
 	{
-		QuestDisplayConfiguration* c = __qg->questLink[q.targetquest];
-		al_draw_line(x - curx + width / 2, y - cury + height / 2, c->x - curx + c->width / 2, c->y - cury + c->height / 2, al_map_rgba(0, 0, 0, 255), 5.f);
-		c->DrawIcon(curx, cury);
+		Quest* t = q.targetquest;
+		al_draw_line(quest->GetXpos() - curx + WIDTH / 2, quest->GetYpos() - cury + HEIGHT / 2, t->GetXpos() - curx + WIDTH / 2, t->GetYpos() - cury + HEIGHT / 2, al_map_rgba(0, 0, 0, 255), 5.f);
+		QuestDrawIcon(t, curx, cury);
 	}
-	al_draw_filled_rectangle(x - curx - 16, y - cury - 16, x + width - curx + 16, y + height - cury + 16, quest->IsCompleted() ? COMPLETED_COLOR : NOT_COMPLETED_COLOR);
+	al_draw_filled_rectangle(quest->GetXpos() - curx - 16, quest->GetYpos() - cury - 16, quest->GetXpos() + WIDTH - curx + 16, quest->GetYpos() + HEIGHT - cury + 16, quest->IsCompleted() ? COMPLETED_COLOR : NOT_COMPLETED_COLOR);
 	//al_draw_filled_rectangle(x - curx, y - cury, x + width - curx, y + height - cury, al_map_rgba(255,255,255,255));
-	al_draw_scaled_bitmap(b, 0, 0, al_get_bitmap_width(b), al_get_bitmap_height(b), x - curx, y - cury, width, height, 0);
+	al_draw_scaled_bitmap(b, 0, 0, al_get_bitmap_width(b), al_get_bitmap_height(b), quest->GetXpos() - curx, quest->GetYpos() - cury, WIDTH, HEIGHT, 0);
 }
 
-void QuestGUI::QuestDisplayConfiguration::DrawHover(int curx, int cury) const
+void QuestGUI::QuestDrawHover(Quest* quest, int curx, int cury) const
 {
 	ALLEGRO_BITMAP* b = quest->GetIcon();
-	al_draw_filled_rectangle(x - curx - 50, y - cury - 50, x - curx + width + 50, y - cury + height + 50, quest->IsCompleted() ? COMPLETED_COLOR : NOT_COMPLETED_COLOR);
-	al_draw_scaled_bitmap(b, 0, 0, al_get_bitmap_width(b), al_get_bitmap_height(b), x - curx, y - cury-40, width, height, 0);
-	al_draw_filled_rectangle(x - curx - 45, y - cury + height - 40, x - curx + width + 45, y - cury + height + 45, al_map_rgba(255, 255, 255, 255));
-	al_draw_text(loaded_fonts["default"][20], al_map_rgba(0, 0, 0, 255), x - curx - 45, y - cury + height - 40, 0, quest->GetName().c_str());
+	al_draw_filled_rectangle(quest->GetXpos() - curx - 50, quest->GetYpos() - cury - 50, quest->GetXpos() - curx + WIDTH + 50, quest->GetYpos() - cury + HEIGHT + 50, quest->IsCompleted() ? COMPLETED_COLOR : NOT_COMPLETED_COLOR);
+	al_draw_scaled_bitmap(b, 0, 0, al_get_bitmap_width(b), al_get_bitmap_height(b), quest->GetXpos() - curx, quest->GetYpos() - cury-40, WIDTH, HEIGHT, 0);
+	al_draw_filled_rectangle(quest->GetXpos() - curx - 45, quest->GetYpos() - cury + HEIGHT - 40, quest->GetXpos() - curx + WIDTH + 45, quest->GetYpos() - cury + HEIGHT + 45, al_map_rgba(255, 255, 255, 255));
+	al_draw_text(loaded_fonts["default"][20], al_map_rgba(0, 0, 0, 255), quest->GetXpos() - curx - 45, quest->GetYpos() - cury + HEIGHT - 40, 0, quest->GetName().c_str());
 }
 
 static const ALLEGRO_COLOR QUEST_REQ_INCOMPLETE = al_map_rgba(255, 0, 0, 255);
 static const ALLEGRO_COLOR QUEST_REQ_COMPLETE = al_map_rgba(0, 255, 0, 255);
 
-void QuestGUI::QuestDisplayConfiguration::DrawFull() const
+void QuestGUI::QuestDrawFull(Quest* quest) const
 {
 	ALLEGRO_BITMAP* b = quest->GetIcon();
 	al_draw_filled_rectangle(32, 32, SCREEN_WIDTH-32, 320, al_map_rgba(255,255,255,255));
@@ -169,11 +160,7 @@ void QuestGUI::QuestDisplayConfiguration::DrawFull() const
 		al_draw_textf(loaded_fonts["default"][40], r.Check() ? QUEST_REQ_COMPLETE : QUEST_REQ_INCOMPLETE, 64, Y += 40, 0, "Kill Entity \"%s\" (%d/%d)", prototype_entities[r.entityid]->GetName().c_str(), r.progress, r.count);
 }
 
-bool QuestGUI::QuestDisplayConfiguration::Contains(int xp, int yp) const
+bool QuestGUI::QuestContains(Quest* q, int xp, int yp) const
 {
-	return (xp >= x) && (xp <= x + width) && (yp >= y) && (yp <= y + height);
-}
-
-QuestGUI::QuestDisplayConfiguration::QuestDisplayConfiguration(Quest* q) : x{ q->x }, y{ q->y }, width{ 128 }, height{ 128 }, quest{ q }
-{
+	return (xp >= q->GetXpos()) && (xp <= q->GetXpos() + WIDTH) && (yp >= q->GetYpos()) && (yp <= q->GetYpos() + HEIGHT);
 }

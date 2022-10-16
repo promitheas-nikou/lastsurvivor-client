@@ -23,7 +23,7 @@ private:
 	int x;
 	int y;
 	QuestCollection* collection;
-
+public:
 	class QuestCompletionRequirement {
 	public:
 		std::string id;
@@ -68,13 +68,13 @@ private:
 		void Progress(Entity* entity);
 		bool Check() const;	
 	};
-
+private:
 	std::vector<QuestCompletionRequirement> quest_requirements;
 	std::vector<TileMineRequirement> tile_requirements;
 	std::vector<GroundTileMineRequirement> gtile_requirements;
 	std::vector<EntityKillRequirement> kill_requirements;
 
-	Quest(std::string id, std::string n, ALLEGRO_BITMAP* b, bool c, bool u);
+	Quest(std::string id, std::string n, std::string iid, int xpos, int ypos, bool c, bool u);
 public:
 	bool IsCompleted() const;
 	bool IsUnlocked() const;
@@ -89,13 +89,39 @@ public:
 	void GroundTileMined(GroundTile* gtile, Tool* tool);
 	void EntityKilled(Entity* entity);
 
+	int GetXpos() const;
+	int GetYpos() const;
+
+	int GetTileMineRequirementCount() const;
+	void EraseTileMineRequirement(int index);
+	void AddTileMineRequirement(std::string id, int count);
+	const TileMineRequirement& GetTileMineRequirement(int index) const;
+
+	int GetGroundTileMineRequirementCount() const;
+	void EraseGroundTileMineRequirement(int index);
+	void AddGroundTileMineRequirement(std::string id, int count);
+	const GroundTileMineRequirement& GetGroundTileMineRequirement(int index) const;
+
+	int GetEntityKillRequirementCount() const;
+	void EraseEntityKillRequirement(int index);
+	void AddEntityKillRequirement(std::string id, int count);
+	const EntityKillRequirement& GetEntityKillRequirement(int index) const;
+
+	int GetQuestCompletionRequirementCount() const;
+	void EraseQuestCompletionRequirement(int index);
+	void AddQuestCompletionRequirement(std::string id);
+	const QuestCompletionRequirement& GetQuestCompletionRequirement(int index) const;
+
 	ALLEGRO_BITMAP* GetIcon() const;
 
 	void Resolve();
 
 	std::string GetID() const;
+	std::string GetIconID() const;
 
 	static Quest *MakeFromJSON(nlohmann::json data, QuestCollection* col);
+	static Quest *MakeNewQuest(std::string id, std::string n, std::string iid, int xpos, int ypos, bool c, bool u);
+	void Modify(std::string n, std::string iid, int xpos, int ypos, bool c, bool u);
 	nlohmann::json SerializeToJSON();
 	friend QuestCollection;
 	friend class QuestGUI;

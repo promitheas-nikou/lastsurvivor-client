@@ -16,5 +16,7 @@ namespace gameconfig {
 	extern ALLEGRO_COLOR TEXT_COLOR;
 	extern ALLEGRO_COLOR ALT_TEXT_COLOR;
 
+	extern int GUI_DEFAULT_LINE_HEIGHT;
+
 };
 

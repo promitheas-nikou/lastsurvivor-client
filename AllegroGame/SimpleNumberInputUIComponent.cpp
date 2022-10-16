@@ -74,5 +74,10 @@ std::string SimpleNumberInputUIComponent::GetTextBuffer()
     return edit_text;
 }
 
+void SimpleNumberInputUIComponent::SetTextBuffer(std::string buf)
+{
+    edit_text = buf;
+}
+
 SimpleNumberInputUIComponent::SimpleNumberInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edit_txt, std::string pst_txt, int flags) : UIComponent(x, y, w, h), background_color{ bc }, text_color{ tc }, pre_text{ pre_txt }, edit_text{ edit_txt }, post_text{ pst_txt }, flags{ flags }, alert{false}, alert_background_color{al_map_rgba(255,255,255,255)}, alert_text_color{al_map_rgba(0,0,0,255)}
 {}

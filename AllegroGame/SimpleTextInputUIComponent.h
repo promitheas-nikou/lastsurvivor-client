@@ -23,6 +23,7 @@ public:
     void SetAlert(std::string temp_string, ALLEGRO_COLOR text_color, ALLEGRO_COLOR back_color);
     void ClearTextBuffer();
     std::string GetTextBuffer();
+    void SetTextBuffer(std::string s);
 
     SimpleTextInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edt_txt, std::string pst_txt, int flags);
 };

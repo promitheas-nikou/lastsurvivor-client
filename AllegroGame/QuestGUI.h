@@ -7,32 +7,21 @@ class QuestGUI :
     public GUI
 {
 public:
-    
-    class QuestDisplayConfiguration {
-    public:
-        int x;
-        int y;
-        int width;
-        int height;
-        int id;
-        Quest* quest;
-        void DrawIcon(int curx, int cury) const;
-        void DrawHover(int curx, int cury) const;
-        void DrawFull() const;
-        bool Contains(int x, int y) const;
-        QuestDisplayConfiguration(Quest* q);
-    };
 private:
-    QuestCollection* questCollection;
-    std::vector<QuestDisplayConfiguration*> displayConfig;
-    std::map<Quest*, QuestDisplayConfiguration*> questLink;
 
+    const int WIDTH = 128;
+    const int HEIGHT = 128;
+
+    void QuestDrawIcon(Quest* q, int curx, int cury) const;
+    void QuestDrawHover(Quest* q, int curx, int cury) const;
+    void QuestDrawFull(Quest* q) const;
+    bool QuestContains(Quest* q, int x, int y) const;
+    QuestCollection* questCollection;
+
+    mutable Quest* curQuest;
+    mutable Quest* curQuestHover;
     mutable int curx;
     mutable int cury;
-    mutable QuestDisplayConfiguration* curQuest;
-    mutable QuestDisplayConfiguration* curQuestHover;
-
-    void AddQuestDisplayConfiguration(QuestDisplayConfiguration* config);
 public:
 
     virtual void PreDrawThisGUI() override;

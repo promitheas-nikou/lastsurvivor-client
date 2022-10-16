@@ -503,6 +503,30 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 			activeSubGUI = nullptr;
 		}
 		break;
+	case ALLEGRO_KEY_F4:
+		if (guistate == PLAYER_GUI_STATE::CREATIVE)
+		{
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = nullptr;
+		}
+		else
+		{
+			guistate = PLAYER_GUI_STATE::CREATIVE;
+			activeSubGUI = creativeGUI;
+		}
+		break;
+	case ALLEGRO_KEY_F5:
+		if (guistate == PLAYER_GUI_STATE::QUEST_EDIT)
+		{
+			guistate = PLAYER_GUI_STATE::WORLD;
+			activeSubGUI = nullptr;
+		}
+		else
+		{
+			guistate = PLAYER_GUI_STATE::QUEST_EDIT;
+			activeSubGUI = questEditingGUI;
+		}
+		break;
 	case ALLEGRO_KEY_1:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
@@ -926,8 +950,26 @@ void PlayerEntity::GiveConstItem(const Item* item)
 {
 	if (item == nullptr)
 		return;
+	if (item->GetAmount() == 0)
+	{
+		delete item;
+		return;
+	}
 	PushNotification(std::format("+{} {}", item->GetAmount(), item->GetName()));
 	inventory->AddConstItem(item);
+}
+
+Item* PlayerEntity::GiveItem(Item* item)
+{
+	if (item == nullptr)
+		return nullptr;
+	if (item->GetAmount() == 0)
+	{
+		delete item;
+		return nullptr;
+	}
+	PushNotification(std::format("+{} {}", item->GetAmount(), item->GetName()));
+	return inventory->AddItem(item);
 }
 
 void PlayerEntity::GiveConstItemBundle(const ItemBundle* bundle)
@@ -1070,6 +1112,10 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	usableHotbarGUI = new InventoryGUI();
 	placeableHotbarGUI = new InventoryGUI();
 	pauseGUI = new PauseMenuGUI(this);
+	questEditingGUI = new QuestEditingGUI(this);
+	questEditingGUI->SetQuestCollection(GetContainingWorld()->GetQuestCollection());
+	creativeGUI = new CreativeItemGUI(this);
+	creativeGUI->SetItemsList(prototype_items);
 	craftingGUI = new SimpleCraftingGUI();
 	craftingGUI->SetRecipeList(loaded_crafting_recipes);
 	craftingGUI->SetInventory(inventory);
@@ -1207,8 +1253,11 @@ void PlayerEntity::PauseMenuGUI::PreDrawThisGUI()
 
 PlayerEntity::PauseMenuGUI::PauseMenuGUI(PlayerEntity* p)
 {
-	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 300, 300, 100, [p]() {
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 300, 300, 100, [this,p]() {
 		doWorldTick = true;
+		p->godMode = godmode_tb->GetIsToggledOn();
+		p->GetContainingWorld()->doTileTick = tile_tick_tb->GetIsToggledOn();
+		p->GetContainingWorld()->doEntityTick = entity_tick_tb->GetIsToggledOn();
 		p->guistate = PLAYER_GUI_STATE::WORLD;
 		p->activeSubGUI = nullptr;
 		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "RESUME GAME"));

@@ -2,13 +2,13 @@
 
 #include "WorldChunk.h"
 #include "Entity.h"
-#include "PlayerEntity.h"
 #include "GroundTile.h"
 #include "Tile.h"
 #include "SimplexNoise.h"
 #include <vector>
 #include "AllegroGame.h"
 #include <map>
+#include "PlayerEntity.h"
 
 class LuaInterface;
 

@@ -80,11 +80,17 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 	if(selectedComponent!=nullptr)
 		switch (event.type) {
 		case ALLEGRO_EVENT_KEY_DOWN:
-			return selectedComponent->KeyDown(event.keyboard);
+			if(selectedComponent->KeyDown(event.keyboard))
+				return true;
+			break;
 		case ALLEGRO_EVENT_KEY_UP:
-			return selectedComponent->KeyUp(event.keyboard);
+			if(selectedComponent->KeyUp(event.keyboard))
+				return true;
+			break;
 		case ALLEGRO_EVENT_KEY_CHAR:
-			return selectedComponent->KeyChar(event.keyboard);
+			if(selectedComponent->KeyChar(event.keyboard))
+				return true;
+			break;
 		}
 	for (int i = 0; i < UIcomponents.size(); i++)
 	{

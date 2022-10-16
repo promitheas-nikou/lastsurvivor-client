@@ -44,5 +44,10 @@ bool SimpleToggleTextButtonUIComponent::GetIsToggledOn() const
 	return isToggled;
 }
 
+void SimpleToggleTextButtonUIComponent::SetIsToggledOn(bool on)
+{
+	isToggled = on;
+}
+
 SimpleToggleTextButtonUIComponent::SimpleToggleTextButtonUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string txt, bool isOn) : UIComponent(x, y, w, h), background_color{ bc }, text_color{ tc }, text{ txt }, isToggled{ isOn }
 {}

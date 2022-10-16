@@ -760,6 +760,7 @@ World* World::CreateNewWorld(std::string name, uint64_t seed, std::function<void
 {
     World* w = new World(true, seed, name, game_version_name, game_version_minor, game_version_major);
     w->GenerateChunk(0, 0);
+    w->questCollection = QuestCollection::MakeNewCollection();
     w->player = new PlayerEntity(w, 0, 0);
     return w;
 }

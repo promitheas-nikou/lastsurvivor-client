@@ -24,6 +24,7 @@ public:
     void ClearTextBuffer();
     long long GetInputNumber();
     std::string GetTextBuffer();
+    void SetTextBuffer(std::string buf);
 
     SimpleNumberInputUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string pre_txt, std::string edit_txt, std::string pst_txt, int flags);
 };

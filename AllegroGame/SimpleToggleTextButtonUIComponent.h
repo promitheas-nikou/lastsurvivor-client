@@ -22,6 +22,7 @@ public:
 	virtual bool ClickRightDown(int xRel, int yRel) final;
 
 	bool GetIsToggledOn() const;
+	void SetIsToggledOn(bool on);
 
 	SimpleToggleTextButtonUIComponent(int x, int y, int w, int h, ALLEGRO_COLOR bc, ALLEGRO_COLOR tc, std::string txt, bool isOn = false);
 };

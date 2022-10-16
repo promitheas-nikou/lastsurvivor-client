@@ -13,3 +13,4 @@ ALLEGRO_COLOR gameconfig::SOLID_TEXT_COLOR_ERROR = al_map_rgba(255, 0, 0, 255);
 ALLEGRO_COLOR gameconfig::TRANSPARENT_BACKGROUND_COLOR = al_map_rgba(150, 150, 150, 150);
 ALLEGRO_COLOR gameconfig::TEXT_COLOR = al_map_rgba(0, 0, 0, 255);
 ALLEGRO_COLOR gameconfig::ALT_TEXT_COLOR = al_map_rgba(100,100,100,255);
+int gameconfig::GUI_DEFAULT_LINE_HEIGHT = 64;
