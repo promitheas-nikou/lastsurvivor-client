@@ -88,6 +88,7 @@ public:
 	float GetMaxHealth() const;
 
 	void ApplyForce(float dx, float dy);
+	void ApplyForceRotated(float f);
 	void setSpeed(float dx, float dy);
 
 	void rotateTo(float targetRotation);

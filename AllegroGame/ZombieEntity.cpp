@@ -1,6 +1,7 @@
 #include "ZombieEntity.h"
 #include "ResourceLoader.h"
 #include "World.h"
+#include "MathUtils.h"
 
 float ZombieEntity::SPEED;
 float ZombieEntity::DAMAGE;
@@ -18,9 +19,9 @@ void ZombieEntity::Tick()
 {	
 	float xdif = GetXpos() - containingWorld->GetPlayer()->GetXpos();
 	float ydif = GetYpos() - containingWorld->GetPlayer()->GetYpos();
-	float angle = 3.14159265358979f+atan2f(ydif, xdif);
+	float angle = atan2f(ydif, xdif) - M_PI_2;
 	SetRotation(angle);
-	Entity::ApplyForce(SPEED * cosf(angle), SPEED * sinf(angle));
+	Entity::ApplyForceRotated(SPEED);
 	HostileEntity::Tick();
 	if(CooldownReady())
 		if (xdif * xdif + ydif * ydif < REACHSQ)
@@ -34,7 +35,7 @@ void ZombieEntity::Draw()
 {
 	int x = floor(GetXpos() * 128);
 	int y = floor(GetYpos() * 128);
-	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, GetRotation()+3.14159265358f/2, 0);
+	al_draw_rotated_bitmap(TEXTURE, 64, 64, x, y, GetRotation(), 0);
 }
 
 std::string ZombieEntity::GetID() const

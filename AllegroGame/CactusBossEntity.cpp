@@ -22,7 +22,7 @@ void CactusBossEntity::Tick()
 	graphicsCounter = (graphicsCounter + 1) % 40;
 	float xdif = GetXpos() - containingWorld->GetPlayer()->GetXpos();
 	float ydif = GetYpos() - containingWorld->GetPlayer()->GetYpos();
-	float angle = 3.14159265358979f + atan2f(ydif, xdif);
+	float angle = atan2f(ydif, xdif) - M_PI_2;
 	SetRotation(angle);
 	Entity::ApplyForce(speed * cosf(angle), speed * sinf(angle));
 	HostileEntity::Tick();
@@ -100,11 +100,12 @@ void CactusBossEntity::RattleProjectile::Draw()
 
 	int x = floor((GetXpos()) * 128);
 	int y = floor((GetYpos()) * 128);
-	al_draw_rotated_bitmap(BULLET_TEXTURES[animCounter / 10], 64, 64, x - 192, y - 192, GetRotation(), 0);
+	ALLEGRO_BITMAP* b = BULLET_TEXTURES[animCounter / 10];
+	int w = al_get_bitmap_width(b);
+	int h = al_get_bitmap_height(b);
+	al_draw_rotated_bitmap(b, w/2, h/2, x, y, GetRotation(), 0);
 
 }
-
-int asdassdad = 0;
 
 Entity* CactusBossEntity::RattleProjectile::Clone(World* w, float x, float y) const
 {
@@ -127,7 +128,7 @@ void CactusBossEntity::RattleProjectile::Tick()
 		}
 }
 
-CactusBossEntity::RattleProjectile::RattleProjectile(World* w, float angle, float xpos, float ypos): Projectile(w, xpos, ypos, .03f* cosf(angle), .03f* sinf(angle))
+CactusBossEntity::RattleProjectile::RattleProjectile(World* w, float angle, float xpos, float ypos): Projectile(w, xpos, ypos, .03f* (-sinf(-angle)), .03f* (-cosf(-angle)), angle)
 {
 	SetHasFriction(false);
 	SetKillOnCollision(true);

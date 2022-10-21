@@ -17,6 +17,9 @@
 #include "CactusBossEntity.h"
 #include "ZombieEntity.h"
 #include "PlayerEntity.h"
+#include "CowPassiveEntity.h"
+#include "SheepPassiveEntity.h"
+#include "PigPassiveEntity.h"
 #include "AudioMultiTrackCollection.h"
 #include "AudioSampleInstanceMultiTrack.h"
 #include "AudioSampleMultiTrack.h"
@@ -56,6 +59,7 @@ const std::string DATA_JSON_FIRE_SPEED_KEY = "projectile_speed";
 const std::string DATA_JSON_HEALTH_KEY = "health";
 const std::string DATA_JSON_MAX_HEALTH_KEY = "max_health";
 const std::string DATA_JSON_HUNGER_KEY = "hunger";
+const std::string DATA_JSON_MASS_KEY = "mass";
 const std::string DATA_JSON_WATER_KEY = "water";
 const std::string DATA_JSON_BURN_TIME_KEY = "burn_time";
 const std::string DATA_JSON_BURN_HEAT_KEY = "burn_heat";
@@ -375,10 +379,16 @@ void init_entities()
 	CactusBossEntity::RattleProjectile::Init(entity_data[CactusBossEntity::RattleProjectile::ID]);
 	ZombieEntity::Init(entity_data[ZombieEntity::ID]);
 	PlayerEntity::Init(entity_data[PlayerEntity::ID]);
+	CowPassiveEntity::Init(entity_data[CowPassiveEntity::ID]);
+	SheepPassiveEntity::Init(entity_data[SheepPassiveEntity::ID]);
+	PigPassiveEntity::Init(entity_data[PigPassiveEntity::ID]);
 	prototype_entities[CactusBossEntity::ID] = new CactusBossEntity(nullptr, 0.f, 0.f);
 	prototype_entities[CactusBossEntity::RattleProjectile::ID] = new CactusBossEntity::RattleProjectile(nullptr, 0.f, 0.f);
 	prototype_entities[ZombieEntity::ID] = new ZombieEntity(nullptr, 0.f, 0.f);
 	prototype_entities[PlayerEntity::ID] = new PlayerEntity(nullptr, 0.f, 0.f);
+	prototype_entities[CowPassiveEntity::ID] = new CowPassiveEntity(nullptr, 0.f, 0.f);
+	prototype_entities[SheepPassiveEntity::ID] = new SheepPassiveEntity(nullptr, 0.f, 0.f);
+	prototype_entities[PigPassiveEntity::ID] = new PigPassiveEntity(nullptr, 0.f, 0.f);
 	lsg_write_to_session_log(INFO, "SUCCESSFULLY INITIALIZED ENTITIES!");
 }
 

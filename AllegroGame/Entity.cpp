@@ -197,6 +197,11 @@ void Entity::ApplyForce(float dx, float dy)
     yvel += dy / mass;
 }
 
+void Entity::ApplyForceRotated(float f)
+{
+    ApplyForce(-sinf(-GetRotation()) * f, -cosf(-GetRotation()) * f);
+}
+
 void Entity::setSpeed(float dx, float dy)
 {
     xvel = dx;

@@ -1,4 +1,5 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <allegro5/allegro5.h>
 
 enum LOGGING_LEVEL {VERBOSE=1, INFO=2, WARNING=3, ERROR=4, FATAL=5};

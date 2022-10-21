@@ -1,8 +1,8 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 1.14",
-  "VER_MINOR": 14,
-  "VER_MAJOR": 1,
+  "VERSION": "ALPHA 2.1",
+  "VER_MINOR": 1,
+  "VER_MAJOR": 2,
   "WINDOW_ICON": "icon",
   "shaders": [
     {
@@ -652,6 +652,30 @@
       "rangesq": 0.4,
       "speed": 0.005,
       "name": "Zombie",
+      "texture": "tex.entities.zombie"
+    },
+    {
+      "id": "entities.cow",
+      "max_health": 50,
+      "speed": 0.005,
+      "mass": 1.0,
+      "name": "Cow",
+      "texture": "tex.entities.zombie"
+    },
+    {
+      "id": "entities.sheep",
+      "max_health": 50,
+      "speed": 0.005,
+      "mass": 1.0,
+      "name": "Sheep",
+      "texture": "tex.entities.zombie"
+    },
+    {
+      "id": "entities.pig",
+      "max_health": 50,
+      "speed": 0.005,
+      "mass": 1.0,
+      "name": "Pig",
       "texture": "tex.entities.zombie"
     },
     {

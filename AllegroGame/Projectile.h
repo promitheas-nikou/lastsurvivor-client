@@ -5,6 +5,7 @@ class Projectile :
 {
 protected:
     Projectile(World* w, float x, float y, float velx, float vely);
+    Projectile(World* w, float x, float y, float velx, float vely, float rotation);
 
     void DoDamage(float damage) const override;
     void DoDamage(MeleeWeapon* weapon) const override;

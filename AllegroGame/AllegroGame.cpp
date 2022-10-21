@@ -1,7 +1,8 @@
+
+#define _CRT_SECURE_NO_WARNINGS
 #include "AllegroGame.h"
 #include "Logging.h"
 
-#define _CRT_SECURE_NO_WARNINGS
 #include "MainGUIs.h"
 #include <Windows.h>
 #include "World.h"
@@ -69,7 +70,7 @@ int main()
 	doWorldTick = false;
 	if (!al_init())
 	{
-		lsg_write_to_session_log(INFO, "FATAL ALLEGRO LIB LOADING ERROR!!!\n");
+		lsg_write_to_session_log(FATAL, "FATAL ALLEGRO LIB LOADING ERROR!!!\n%x: %s\n", al_get_errno(), strerror(al_get_errno()));
 		exit(EXIT_FAILURE);
 	}
 	lsg_open_session_textlog();
@@ -135,6 +136,7 @@ int main()
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
 		currentGUI->DrawGUI();
+		
 		DebugInfo::framesEnd.push(al_get_time());
 		if (DebugInfo::framesEnd.size() > DebugInfo::FRAMES_RECORD_NUM)
 			DebugInfo::framesEnd.pop();

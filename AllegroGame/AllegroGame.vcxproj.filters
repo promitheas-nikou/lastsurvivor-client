@@ -229,6 +229,18 @@
     <Filter Include="Source Files\Game\Items\ConsumableItems">
       <UniqueIdentifier>{44e43d30-97bd-4a81-95a4-b328bc291263}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Entities\PassiveEntities">
+      <UniqueIdentifier>{5735f1f3-58cf-4280-b541-742217442564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities\PassiveEntities">
+      <UniqueIdentifier>{9a3699e0-6ce9-48a9-9f3a-48b5adef893e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities\HostileEntities">
+      <UniqueIdentifier>{a8e46696-f716-4d19-9b2d-eb1ef4adf33c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities\HostileEntities">
+      <UniqueIdentifier>{1cabb623-ed31-4206-88f1-35484cbe17c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -330,26 +342,17 @@
     <ClCompile Include="DirtItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ItemBundle.cpp">
       <Filter>Source Files\Game\Items\ItemBundles</Filter>
     </ClCompile>
     <ClCompile Include="GroundTileMiner.cpp">
       <Filter>Source Files\Game\GroundTiles</Filter>
     </ClCompile>
-    <ClCompile Include="HostileEntity.cpp">
-      <Filter>Source Files\Game\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="SimplexNoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimpleItemBundle.cpp">
       <Filter>Source Files\Game\Items\ItemBundles</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombieEntity.cpp">
-      <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
     <ClCompile Include="LuaInterface.cpp">
       <Filter>Source Files\Lua</Filter>
@@ -428,9 +431,6 @@
     </ClCompile>
     <ClCompile Include="BerryBushTile.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
-    </ClCompile>
-    <ClCompile Include="CactusBossEntity.cpp">
-      <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
     <ClCompile Include="AudioSampleInstanceMultiTrack.cpp">
       <Filter>Source Files\Game\Audio</Filter>
@@ -657,6 +657,30 @@
     <ClCompile Include="QuestEditingGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteSheet.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="PassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="CowPassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieEntity.cpp">
+      <Filter>Source Files\Game\Entities\HostileEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="HostileEntity.cpp">
+      <Filter>Source Files\Game\Entities\HostileEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="CactusBossEntity.cpp">
+      <Filter>Source Files\Game\Entities\HostileEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepPassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="PigPassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -666,11 +690,11 @@
     <None Include="world_shader.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="LuaDefault.lua">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="vdd-docs\items.dirt.json">
       <Filter>Resource Files\VDD-Docs</Filter>
+    </None>
+    <None Include="lua-api\LuaDefault.lua">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -787,14 +811,8 @@
     <ClInclude Include="ItemBundle.h">
       <Filter>Header Files\Game\Items\ItemBundles</Filter>
     </ClInclude>
-    <ClInclude Include="HostileEntity.h">
-      <Filter>Header Files\Game\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleItemBundle.h">
       <Filter>Header Files\Game\Items\ItemBundles</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombieEntity.h">
-      <Filter>Header Files\Game\Entities</Filter>
     </ClInclude>
     <ClInclude Include="LuaInterface.h">
       <Filter>Header Files\Lua</Filter>
@@ -891,9 +909,6 @@
     </ClInclude>
     <ClInclude Include="AudioSampleInstanceMultiTrack.h">
       <Filter>Header Files\Game\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="CactusBossEntity.h">
-      <Filter>Header Files\Game\Entities</Filter>
     </ClInclude>
     <ClInclude Include="SoundType.h">
       <Filter>Header Files\Game\Audio</Filter>
@@ -1021,9 +1036,6 @@
     <ClInclude Include="DebugInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AllegroGame.h">
-      <Filter>Source Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleTextInputUIComponent.h">
       <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
     </ClInclude>
@@ -1119,6 +1131,30 @@
     </ClInclude>
     <ClInclude Include="QuestEditingGUI.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllegroGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="CowPassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="CactusBossEntity.h">
+      <Filter>Header Files\Game\Entities\HostileEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="HostileEntity.h">
+      <Filter>Header Files\Game\Entities\HostileEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieEntity.h">
+      <Filter>Header Files\Game\Entities\HostileEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="PigPassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepPassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -265,7 +265,6 @@ void PlayerEntity::PreDrawThisGUI()
 	case PLAYER_GUI_STATE::WORLD:
 	{
 		hotbarGUI->DrawGUI();
-			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
 		switch (mode)
 		{
 		case PlayerActionMode::COMBAT:

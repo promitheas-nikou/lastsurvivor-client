@@ -75,7 +75,7 @@ void lsg_write_to_session_log(LOGGING_LEVEL level, const char* format, ...)
 	if (session_allegro_textlog)
 		if(current_logging_level<=level)
 			al_append_native_text_log(session_allegro_textlog, "[%s | %s] %s\n", timestr, lsg_get_logging_level_name(level), msg);
-
+	printf("[%s | %s] %s\n", timestr, lsg_get_logging_level_name(level), msg);
 	va_end(argp);
 }
 

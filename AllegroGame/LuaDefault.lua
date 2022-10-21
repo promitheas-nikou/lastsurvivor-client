@@ -1,4 +1,4 @@
---- @module lua-default
+
 
 --- Replace ground tiles in an area: `fillgtilesreplace`
 -- API function to replace all ground tiles in an area that have a specific id.
@@ -10,6 +10,7 @@
 -- @tparam number ey The ending y coordinate for the fill. Must be greater than sy
 -- @note 
 --
+
 function fillgtiles(id,sx,sy,ex,ey)
 	for y=sy,ey do
 		for x=sx,ex do
@@ -18,7 +19,6 @@ function fillgtiles(id,sx,sy,ex,ey)
 	end
 	return true
 end
-
 function filltiles(id,sx,sy,ex,ey)
 	for y=sy,ey do
 		for x=sx,ex do
@@ -69,6 +69,11 @@ function filltilesreplace(id,rid,sx,sy,ex,ey)
 	return true
 end
 
-local __print = print
-print = consoleprint
+do
+	local __consoleprint = consoleprint
+	local __print = print
+	print = function(v)
+		__consoleprint(tostring(v))
+	end
+end
 consoleprint = nil

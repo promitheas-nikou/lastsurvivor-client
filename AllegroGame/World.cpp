@@ -500,8 +500,12 @@ void World::Draw()
     {
         loaded_shaders["default"]->Use();
         al_draw_rectangle((player->GetXpos() - player->GetXsize() / 2) * 128, (player->GetYpos() - player->GetYsize() / 2) * 128, (player->GetXpos() + player->GetXsize() / 2) * 128, (player->GetYpos() + player->GetYsize() / 2) * 128, al_map_rgba(255, 255, 255, 255), 3.f);
+        al_draw_line(player->GetXpos() * 128, player->GetYpos() * 128, player->GetXpos() * 128 - sinf(-player->GetRotation()) * 32, player->GetYpos() * 128 - cosf(-player->GetRotation()) * 32, al_map_rgba(0, 0, 255, 255), 4);
         for (Entity* e : entities)
+        {
             al_draw_rectangle((e->GetXpos() - e->GetXsize() / 2) * 128, (e->GetYpos() - e->GetYsize() / 2) * 128, (e->GetXpos() + e->GetXsize() / 2) * 128, (e->GetYpos() + e->GetYsize() / 2) * 128, al_map_rgba(255, 255, 255, 255), 3.f);
+            al_draw_line(e->GetXpos() * 128, e->GetYpos() * 128, e->GetXpos() * 128 - sinf(-e->GetRotation()) * 32, e->GetYpos() * 128 - cosf(-e->GetRotation()) * 32, al_map_rgba(0, 0, 255, 255), 4);
+        }
     }
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
     al_use_transform(&draw_transform);

@@ -219,6 +219,7 @@
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
     <ClCompile Include="CopperIngotItem.cpp" />
+    <ClCompile Include="CowPassiveEntity.cpp" />
     <ClCompile Include="CreativeItemGUI.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DebugInfo.cpp" />
@@ -253,9 +254,12 @@
     <ClCompile Include="MainGUIs.cpp" />
     <ClCompile Include="MalachiteChunkItem.cpp" />
     <ClCompile Include="MalachiteOreGroundTile.cpp" />
+    <ClCompile Include="PassiveEntity.cpp" />
+    <ClCompile Include="PigPassiveEntity.cpp" />
     <ClCompile Include="PlaceableItem.cpp" />
     <ClCompile Include="QuestEditingGUI.cpp" />
     <ClCompile Include="SaplingItem.cpp" />
+    <ClCompile Include="SheepPassiveEntity.cpp" />
     <ClCompile Include="SimpleCraftingGUI.cpp" />
     <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.cpp" />
@@ -338,7 +342,7 @@
     <ClCompile Include="zip.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LuaDefault.lua" />
+    <None Include="lua-api\LuaDefault.lua" />
     <None Include="packages.config" />
     <None Include="vdd-docs\items.dirt.json" />
     <None Include="world_shader.frag" />
@@ -373,6 +377,7 @@
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="CopperIngotItem.h" />
+    <ClInclude Include="CowPassiveEntity.h" />
     <ClInclude Include="CreativeItemGUI.h" />
     <ClInclude Include="DeathGUI.h" />
     <ClInclude Include="DebugInfo.h" />
@@ -410,9 +415,12 @@
     <ClInclude Include="MainGUIs.h" />
     <ClInclude Include="MalachiteChunkItem.h" />
     <ClInclude Include="MalachiteOreGroundTile.h" />
+    <ClInclude Include="PassiveEntity.h" />
+    <ClInclude Include="PigPassiveEntity.h" />
     <ClInclude Include="PlaceableItem.h" />
     <ClInclude Include="QuestEditingGUI.h" />
     <ClInclude Include="SaplingItem.h" />
+    <ClInclude Include="SheepPassiveEntity.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />
     <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h" />

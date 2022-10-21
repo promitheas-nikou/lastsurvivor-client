@@ -70,5 +70,5 @@ function filltilesreplace(id,rid,sx,sy,ex,ey)
 end
 
 local __print = print
-print = consoleprint
+print = function(v)consoleprint(tostring(v))end
 consoleprint = nil
