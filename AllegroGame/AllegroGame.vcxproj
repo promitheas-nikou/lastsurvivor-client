@@ -218,6 +218,9 @@
     <ClCompile Include="ConnectingTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
+    <ClCompile Include="CookedPigMeatItem.cpp" />
+    <ClCompile Include="CookedSheepMeatItem.cpp" />
+    <ClCompile Include="CoopedCowMeatItem.cpp" />
     <ClCompile Include="CopperIngotItem.cpp" />
     <ClCompile Include="CowPassiveEntity.cpp" />
     <ClCompile Include="CreativeItemGUI.cpp" />
@@ -258,6 +261,9 @@
     <ClCompile Include="PigPassiveEntity.cpp" />
     <ClCompile Include="PlaceableItem.cpp" />
     <ClCompile Include="QuestEditingGUI.cpp" />
+    <ClCompile Include="RawCowMeatItem.cpp" />
+    <ClCompile Include="RawPigMeatItem.cpp" />
+    <ClCompile Include="RawSheepMeatItem.cpp" />
     <ClCompile Include="SaplingItem.cpp" />
     <ClCompile Include="SheepPassiveEntity.cpp" />
     <ClCompile Include="SimpleCraftingGUI.cpp" />
@@ -376,6 +382,9 @@
     <ClInclude Include="ConnectingTile.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ConsumableItem.h" />
+    <ClInclude Include="CookedPigMeatItem.h" />
+    <ClInclude Include="CookedSheepMeatItem.h" />
+    <ClInclude Include="CookedCowMeatItem.h" />
     <ClInclude Include="CopperIngotItem.h" />
     <ClInclude Include="CowPassiveEntity.h" />
     <ClInclude Include="CreativeItemGUI.h" />
@@ -419,6 +428,9 @@
     <ClInclude Include="PigPassiveEntity.h" />
     <ClInclude Include="PlaceableItem.h" />
     <ClInclude Include="QuestEditingGUI.h" />
+    <ClInclude Include="RawCowMeatItem.h" />
+    <ClInclude Include="RawPigMeatItem.h" />
+    <ClInclude Include="RawSheepMeatItem.h" />
     <ClInclude Include="SaplingItem.h" />
     <ClInclude Include="SheepPassiveEntity.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />

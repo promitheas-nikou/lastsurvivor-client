@@ -30,6 +30,9 @@
 #include "MagnetiteOreGroundTile.h"
 #include "TorchTile.h"
 #include "BurnerFurnaceMk1Tile.h"
+#define _INIT_TILE(classname){classname::Init(tile_data[classname::ID]);prototype_tiles[classname::ID] = new classname(nullptr, 0, 0);}
+#define _INIT_GTILE(classname){classname::Init(ground_tile_data[classname::ID]);prototype_gtiles[classname::ID] = new classname(nullptr, 0, 0);}
+#define _INIT_ITEM(classname){classname::Init(item_data[classname::ID]);prototype_items[classname::ID] = new classname();}
 
 #include "Recipe.h"
 
@@ -234,40 +237,25 @@ void init_tiles()
 			tile_ids_to_keys[counter] = pair.first;
 			tile_keys_to_ids[pair.first] = counter++;
 		}
-		GrassGroundTile::Init(ground_tile_data[GrassGroundTile::ID]);
-		DirtGroundTile::Init(ground_tile_data[DirtGroundTile::ID]);
-		StoneGroundTile::Init(ground_tile_data[StoneGroundTile::ID]);
-		SandGroundTile::Init(ground_tile_data[SandGroundTile::ID]);
-		WaterGroundTile::Init(ground_tile_data[WaterGroundTile::ID]);
-		MalachiteOreGroundTile::Init(ground_tile_data[MalachiteOreGroundTile::ID]);
-		AzuriteOreGroundTile::Init(ground_tile_data[AzuriteOreGroundTile::ID]);
-		HematiteOreGroundTile::Init(ground_tile_data[HematiteOreGroundTile::ID]);
-		MagnetiteOreGroundTile::Init(ground_tile_data[MagnetiteOreGroundTile::ID]);
-		prototype_gtiles[GrassGroundTile::ID] = new GrassGroundTile(nullptr, 0, 0);
-		prototype_gtiles[DirtGroundTile::ID] = new DirtGroundTile(nullptr, 0, 0);
-		prototype_gtiles[StoneGroundTile::ID] = new StoneGroundTile(nullptr, 0, 0);
-		prototype_gtiles[SandGroundTile::ID] = new SandGroundTile(nullptr, 0, 0);
-		prototype_gtiles[WaterGroundTile::ID] = new WaterGroundTile(nullptr, 0, 0);
-		prototype_gtiles[MalachiteOreGroundTile::ID] = new MalachiteOreGroundTile(nullptr, 0, 0);
-		prototype_gtiles[AzuriteOreGroundTile::ID] = new AzuriteOreGroundTile(nullptr, 0, 0);
-		prototype_gtiles[HematiteOreGroundTile::ID] = new HematiteOreGroundTile(nullptr, 0, 0);
-		prototype_gtiles[MagnetiteOreGroundTile::ID] = new MagnetiteOreGroundTile(nullptr, 0, 0);
+		_INIT_GTILE(GrassGroundTile)
+		_INIT_GTILE(DirtGroundTile)
+		_INIT_GTILE(StoneGroundTile)
+		_INIT_GTILE(SandGroundTile)
+		_INIT_GTILE(WaterGroundTile)
+		_INIT_GTILE(AzuriteOreGroundTile)
+		_INIT_GTILE(MalachiteOreGroundTile)
+		_INIT_GTILE(HematiteOreGroundTile)
+		_INIT_GTILE(MagnetiteOreGroundTile)
 
-		TreeTile::Init(tile_data[TreeTile::ID]);
-		BerryBushTile::Init(tile_data[BerryBushTile::ID]);
-		FenceTile::Init(tile_data[FenceTile::ID]);
-		TorchTile::Init(tile_data[TorchTile::ID]);
-		BurnerFurnaceMk1Tile::Init(tile_data[BurnerFurnaceMk1Tile::ID]);
-		BrickWallTile::Init(tile_data[BrickWallTile::ID]);
-		StoneBrickWallTile::Init(tile_data[StoneBrickWallTile::ID]);
+		_INIT_TILE(TreeTile)
+		_INIT_TILE(BerryBushTile)
+		_INIT_TILE(FenceTile)
+		_INIT_TILE(TorchTile)
+		_INIT_TILE(BurnerFurnaceMk1Tile)
+		_INIT_TILE(BrickWallTile)
+		_INIT_TILE(StoneBrickWallTile)
+
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
-		prototype_tiles[TreeTile::ID] = new TreeTile(nullptr, 0, 0);
-		prototype_tiles[BerryBushTile::ID] = new BerryBushTile(nullptr, 0, 0);
-		prototype_tiles[FenceTile::ID] = new FenceTile(nullptr, 0, 0);
-		prototype_tiles[TorchTile::ID] = new TorchTile(nullptr, 0, 0);
-		prototype_tiles[BurnerFurnaceMk1Tile::ID] = new BurnerFurnaceMk1Tile(nullptr, 0, 0);
-		prototype_tiles[BrickWallTile::ID] = new BrickWallTile(nullptr, 0, 0);
-		prototype_tiles[StoneBrickWallTile::ID] = new StoneBrickWallTile(nullptr, 0, 0);
 	/* }
 	catch (const nlohmann::json::type_error& err)
 	{
@@ -296,56 +284,37 @@ void init_items()
 			item_ids_to_keys[counter] = pair.first;
 			item_keys_to_ids[pair.first] = counter++;
 		}
-		StoneItem::Init(item_data[StoneItem::ID]);
-		DirtItem::Init(item_data[DirtItem::ID]);
-		StickItem::Init(item_data[StickItem::ID]);
-		SandItem::Init(item_data[SandItem::ID]);
-		SimpleSword::Init(item_data[SimpleSword::ID]);
-		GunItem::Init(item_data[GunItem::ID]);
-		BerryItem::Init(item_data[BerryItem::ID]);
-		AnthraciteCoalChunkItem::Init(item_data[AnthraciteCoalChunkItem::ID]);
-		MalachiteChunkItem::Init(item_data[MalachiteChunkItem::ID]);
-		MagnetiteChunkItem::Init(item_data[MagnetiteChunkItem::ID]);
-		HematiteChunkItem::Init(item_data[HematiteChunkItem::ID]);
-		AzuriteChunkItem::Init(item_data[AzuriteChunkItem::ID]);
-		LodestoneItem::Init(item_data[LodestoneItem::ID]);
-		SaplingItem::Init(item_data[SaplingItem::ID]);
-		FenceItem::Init(item_data[FenceItem::ID]);
-		TorchItem::Init(item_data[TorchItem::ID]);
-		LogItem::Init(item_data[LogItem::ID]);
-		CopperIngotItem::Init(item_data[CopperIngotItem::ID]);
-		IronIngotItem::Init(item_data[IronIngotItem::ID]);
-		BurnerFurnaceMk1Item::Init(item_data[BurnerFurnaceMk1Item::ID]);
-		FlaskItem::Init(item_data[FlaskItem::ID]);
-		CharcoalItem::Init(item_data[CharcoalItem::ID]);
-		BrickWallItem::Init(item_data[BrickWallItem::ID]);
-		StoneBrickWallItem::Init(item_data[StoneBrickWallItem::ID]);
-
-		prototype_items[StoneItem::ID] = new StoneItem();
-		prototype_items[DirtItem::ID] = new DirtItem();
-		prototype_items[StickItem::ID] = new StickItem();
-		prototype_items[SandItem::ID] = new SandItem();
-		prototype_items[SimpleSword::ID] = new SimpleSword();
-		prototype_items[GunItem::ID] = new GunItem();
-		prototype_items[BerryItem::ID] = new BerryItem();
-		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
-		prototype_items[AnthraciteCoalChunkItem::ID] = new AnthraciteCoalChunkItem();
-		prototype_items[MalachiteChunkItem::ID] = new MalachiteChunkItem();
-		prototype_items[MagnetiteChunkItem::ID] = new MagnetiteChunkItem();
-		prototype_items[HematiteChunkItem::ID] = new HematiteChunkItem();
-		prototype_items[AzuriteChunkItem::ID] = new AzuriteChunkItem();
-		prototype_items[LodestoneItem::ID] = new LodestoneItem();
-		prototype_items[SaplingItem::ID] = new SaplingItem();
-		prototype_items[FenceItem::ID] = new FenceItem();
-		prototype_items[TorchItem::ID] = new TorchItem();
-		prototype_items[LogItem::ID] = new LogItem();
-		prototype_items[CopperIngotItem::ID] = new CopperIngotItem();
-		prototype_items[IronIngotItem::ID] = new IronIngotItem();
-		prototype_items[BurnerFurnaceMk1Item::ID] = new BurnerFurnaceMk1Item();
-		prototype_items[FlaskItem::ID] = new FlaskItem();
-		prototype_items[CharcoalItem::ID] = new CharcoalItem();
-		prototype_items[BrickWallItem::ID] = new BrickWallItem();
-		prototype_items[StoneBrickWallItem::ID] = new StoneBrickWallItem();
+		_INIT_ITEM(StoneItem)
+		_INIT_ITEM(DirtItem)
+		_INIT_ITEM(StickItem)
+		_INIT_ITEM(SandItem)
+		_INIT_ITEM(SimpleSword)
+		_INIT_ITEM(GunItem)
+		_INIT_ITEM(BerryItem)
+		_INIT_ITEM(AnthraciteCoalChunkItem)
+		_INIT_ITEM(MalachiteChunkItem)
+		_INIT_ITEM(HematiteChunkItem)
+		_INIT_ITEM(MagnetiteChunkItem)
+		_INIT_ITEM(AzuriteChunkItem)
+		_INIT_ITEM(BerryItem)
+		_INIT_ITEM(LodestoneItem)
+		_INIT_ITEM(SaplingItem)
+		_INIT_ITEM(FenceItem)
+		_INIT_ITEM(TorchItem)
+		_INIT_ITEM(LogItem)
+		_INIT_ITEM(CopperIngotItem)
+		_INIT_ITEM(IronIngotItem)
+		_INIT_ITEM(BurnerFurnaceMk1Item)
+		_INIT_ITEM(FlaskItem)
+		_INIT_ITEM(CharcoalItem)
+		_INIT_ITEM(BrickWallItem)
+		_INIT_ITEM(StoneBrickWallItem)
+		_INIT_ITEM(RawCowMeatItem)
+		_INIT_ITEM(RawPigMeatItem)
+		_INIT_ITEM(RawSheepMeatItem)
+		_INIT_ITEM(CookedCowMeatItem)
+		_INIT_ITEM(CookedPigMeatItem)
+		_INIT_ITEM(CookedSheepMeatItem)
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

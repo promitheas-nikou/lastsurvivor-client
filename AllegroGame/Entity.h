@@ -11,6 +11,7 @@
 class World;
 class WorldChunk;
 class PlayerEntity;
+class ItemBundle;
 
 class Entity
 {
@@ -111,6 +112,8 @@ public:
 	virtual float getFriction() const;
 
 	virtual void PlaySound(SoundType st) const;
+
+	virtual ItemBundle* GetKillingDrops() const;
 
 	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys);
 	Entity(World* w, float xpos, float ypos, float maxHealth, float mass, float initialVelocityX, float initialVelocityY);

@@ -618,12 +618,40 @@
       "filename": "flask_item.png"
     },
     {
+      "id": "tex.items.cow_meat_raw",
+      "filename": "raw_beef.png"
+    },
+    {
+      "id": "tex.items.sheep_meat_raw",
+      "filename": "raw_beef.png"
+    },
+    {
+      "id": "tex.items.pig_meat_raw",
+      "filename": "raw_pork.png"
+    },
+    {
+      "id": "tex.items.cow_meat_cooked",
+      "filename": "cooked_beef.png"
+    },
+    {
+      "id": "tex.items.sheep_meat_cooked",
+      "filename": "cooked_beef.png"
+    },
+    {
+      "id": "tex.items.pig_meat_cooked",
+      "filename": "cooked_pork.png"
+    },
+    {
       "id": "tex.items.iron_ingot",
       "filename": "iron_ingot_item.png"
     },
     {
       "id": "tex.items.copper_ingot",
       "filename": "copper_ingot_item.png"
+    },
+    {
+      "id": "tex.entities.pig",
+      "filename": "pig_entity.png"
     }
   ],
   "entities": [
@@ -660,7 +688,8 @@
       "speed": 0.005,
       "mass": 1.0,
       "name": "Cow",
-      "texture": "tex.entities.zombie"
+      "drops": "loot.entities.cow.kill",
+      "texture": "tex.entities.pig"
     },
     {
       "id": "entities.sheep",
@@ -668,7 +697,8 @@
       "speed": 0.005,
       "mass": 1.0,
       "name": "Sheep",
-      "texture": "tex.entities.zombie"
+      "drops": "loot.entities.sheep.kill",
+      "texture": "tex.entities.pig"
     },
     {
       "id": "entities.pig",
@@ -676,7 +706,8 @@
       "speed": 0.005,
       "mass": 1.0,
       "name": "Pig",
-      "texture": "tex.entities.zombie"
+      "drops": "loot.entities.pig.kill",
+      "texture": "tex.entities.pig"
     },
     {
       "id": "entities.cactus_boss",
@@ -733,7 +764,43 @@
       "type": "null"
     },
     {
-      "id": "gtiles.grass.mine.any",
+      "id": "loot.entities.cow.kill",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.cow_meat_raw",
+          "minamount": 1,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.entities.sheep.kill",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.sheep_meat_raw",
+          "minamount": 1,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.entities.pig.kill",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.pig_meat_raw",
+          "minamount": 1,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.dirt.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -744,18 +811,7 @@
       ]
     },
     {
-      "id": "gtiles.dirt.mine.any",
-      "type": "simple",
-      "objects": [
-        {
-          "type": "item",
-          "id": "items.dirt",
-          "amount": 1
-        }
-      ]
-    },
-    {
-      "id": "gtiles.stone.mine.any",
+      "id": "loot.gtiles.stone.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -766,7 +822,7 @@
       ]
     },
     {
-      "id": "gtiles.sand.mine.any",
+      "id": "loot.gtiles.sand.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -777,7 +833,7 @@
       ]
     },
     {
-      "id": "gtiles.malachite_ore.mine.any",
+      "id": "loot.gtiles.malachite_ore.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -788,7 +844,7 @@
       ]
     },
     {
-      "id": "gtiles.azurite_ore.mine.any",
+      "id": "loot.gtiles.azurite_ore.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -799,7 +855,7 @@
       ]
     },
     {
-      "id": "gtiles.hematite_ore.mine.any",
+      "id": "loot.gtiles.hematite_ore.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -810,7 +866,7 @@
       ]
     },
     {
-      "id": "gtiles.magnetite_ore.mine.any",
+      "id": "loot.gtiles.magnetite_ore.mine.any",
       "type": "weighted",
       "objects": [
         {
@@ -843,7 +899,7 @@
       ]
     },
     {
-      "id": "tiles.tree.mine.any",
+      "id": "loot.tiles.tree.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -867,7 +923,7 @@
       ]
     },
     {
-      "id": "tiles.berry_bush.mine.any",
+      "id": "loot.tiles.berry_bush.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -879,7 +935,7 @@
       ]
     },
     {
-      "id": "tiles.berry_bush.collect.any",
+      "id": "loot.tiles.berry_bush.collect.any",
       "type": "simple",
       "objects": [
         {
@@ -891,7 +947,7 @@
       ]
     },
     {
-      "id": "tiles.fence.mine.any",
+      "id": "loot.tiles.fence.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -903,7 +959,7 @@
       ]
     },
     {
-      "id": "tiles.burner_furnace_mk1.mine.any",
+      "id": "loot.tiles.burner_furnace_mk1.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -915,7 +971,7 @@
       ]
     },
     {
-      "id": "tiles.torch.mine.any",
+      "id": "loot.tiles.torch.mine.any",
       "type": "simple",
       "objects": [
         {
@@ -986,7 +1042,7 @@
         "tex.tiles.tree/2",
         "tex.tiles.tree/3"
       ],
-      "drops": "tiles.tree.mine.any",
+      "drops": "loot.tiles.tree.mine.any",
       "mining_resistance": 5
     },
     {
@@ -994,7 +1050,7 @@
       "name": "Torch",
       "tool": "axe",
       "texture": "tex.tiles.torch",
-      "drops": "tiles.torch.mine.any",
+      "drops": "loot.tiles.torch.mine.any",
       "mining_resistance": 3,
       "brightness": 768.0
     },
@@ -1006,8 +1062,8 @@
         "tex.tiles.berry_bush/0",
         "tex.tiles.berry_bush/1"
       ],
-      "drops": "tiles.berry_bush.mine.any",
-      "collection_drops": "tiles.berry_bush.collect.any",
+      "drops": "loot.tiles.berry_bush.mine.any",
+      "collection_drops": "loot.tiles.berry_bush.collect.any",
       "mining_resistance": 3
     },
     {
@@ -1034,7 +1090,7 @@
         "tex.tiles.fence/15",
         "tex.tiles.fence/16"
       ],
-      "drops": "tiles.fence.mine.any"
+      "drops": "loot.tiles.fence.mine.any"
     },
     {
       "id": "tiles.burner_furnace_mk1",
@@ -1044,7 +1100,7 @@
         "tex.tiles.burner_furnace_mk1/0",
         "tex.tiles.burner_furnace_mk1/1"
       ],
-      "drops": "tiles.burner_furnace_mk1.mine.any",
+      "drops": "loot.tiles.burner_furnace_mk1.mine.any",
       "mining_resistance": 8,
       "brightness": 512.0
     },
@@ -1054,7 +1110,7 @@
       "name": "Brick Wall",
       "tool": "pickaxe",
       "texture": "tex.tiles.brick_wall",
-      "drops": "gtiles.stone.mine.any"
+      "drops": "loot.gtiles.stone.mine.any"
     },
     {
       "id": "tiles.stone_brick_wall",
@@ -1062,7 +1118,7 @@
       "name": "Stone Brick Wall",
       "tool": "pickaxe",
       "texture": "tex.tiles.stone_brick_wall",
-      "drops": "gtiles.stone.mine.any"
+      "drops": "loot.gtiles.stone.mine.any"
     }
   ],
   "ground_tiles": [
@@ -1071,7 +1127,7 @@
       "name": "Grass",
       "tool": "shovel",
       "mining_resistance": 3,
-      "drops": "gtiles.grass.mine.any",
+      "drops": "loot.gtiles.dirt.mine.any",
       "texture": "tex.gtiles.grass",
       "audio": [
         {
@@ -1085,7 +1141,7 @@
       "name": "Dirt",
       "tool": "shovel",
       "mining_resistance": 2,
-      "drops": "gtiles.dirt.mine.any",
+      "drops": "loot.gtiles.dirt.mine.any",
       "texture": "tex.gtiles.dirt",
       "audio": [
         {
@@ -1099,7 +1155,7 @@
       "name": "Stone",
       "tool": "pickaxe",
       "mining_resistance": 4,
-      "drops": "gtiles.stone.mine.any",
+      "drops": "loot.gtiles.stone.mine.any",
       "texture": "tex.gtiles.stone"
     },
     {
@@ -1107,7 +1163,7 @@
       "name": "Sand",
       "tool": "shovel",
       "mining_resistance": 4,
-      "drops": "gtiles.sand.mine.any",
+      "drops": "loot.gtiles.sand.mine.any",
       "texture": "tex.gtiles.sand",
       "audio": [
         {
@@ -1129,7 +1185,7 @@
       "name": "Malachite Ore",
       "tool": "pickaxe",
       "mining_resistance": 10,
-      "drops": "gtiles.malachite_ore.mine.any",
+      "drops": "loot.gtiles.malachite_ore.mine.any",
       "texture": "tex.gtiles.malachite_ore"
     },
     {
@@ -1137,7 +1193,7 @@
       "name": "Azurite Ore",
       "tool": "pickaxe",
       "mining_resistance": 10,
-      "drops": "gtiles.azurite_ore.mine.any",
+      "drops": "loot.gtiles.azurite_ore.mine.any",
       "texture": "tex.gtiles.azurite_ore"
     },
     {
@@ -1145,7 +1201,7 @@
       "name": "Hematite Ore",
       "tool": "pickaxe",
       "mining_resistance": 15,
-      "drops": "gtiles.hematite_ore.mine.any",
+      "drops": "loot.gtiles.hematite_ore.mine.any",
       "texture": "tex.gtiles.hematite_ore"
     },
     {
@@ -1153,11 +1209,65 @@
       "name": "Magnetite Ore",
       "tool": "pickaxe",
       "mining_resistance": 15,
-      "drops": "gtiles.magnetite_ore.mine.any",
+      "drops": "loot.gtiles.magnetite_ore.mine.any",
       "texture": "tex.gtiles.magnetite_ore"
     }
   ],
   "items": [
+    {
+      "id": "items.cow_meat_raw",
+      "name": "Raw Beef",
+      "description": "A juicy piece of steak, that can be cooked to become a very nutricious meal.",
+      "texture": "tex.items.cow_meat_raw",
+      "health": -5,
+      "hunger": 15,
+      "water": 15
+    },
+    {
+      "id": "items.pig_meat_raw",
+      "name": "Raw Pork",
+      "description": "A juicy piece of pork, that can be cooked to become a very nutricious meal.",
+      "texture": "tex.items.pig_meat_raw",
+      "health": -5,
+      "hunger": 15,
+      "water": 5
+    },
+    {
+      "id": "items.sheep_meat_raw",
+      "name": "Raw Mutton",
+      "description": "A juicy piece of mutton, that can be cooked to become a very nutricious meal.",
+      "texture": "tex.items.sheep_meat_raw",
+      "health": -5,
+      "hunger": 15,
+      "water": 5
+    },
+    {
+      "id": "items.cow_meat_cooked",
+      "name": "Cooked Beef",
+      "description": "A juicy piece of steak. Cooked to perfection.",
+      "texture": "tex.items.cow_meat_cooked",
+      "health": 15,
+      "hunger": 60,
+      "water": 20
+    },
+    {
+      "id": "items.pig_meat_cooked",
+      "name": "Cooked Pork",
+      "description": "A juicy piece of pork. Cooked to perfection.",
+      "texture": "tex.items.pig_meat_cooked",
+      "health": 15,
+      "hunger": 60,
+      "water": 20
+    },
+    {
+      "id": "items.sheep_meat_cooked",
+      "name": "Cooked Mutton",
+      "description": "A juicy piece of mutton. Cooked to perfection.",
+      "texture": "tex.items.sheep_meat_cooked",
+      "health": 15,
+      "hunger": 60,
+      "water": 20
+    },
     {
       "id": "items.charcoal",
       "name": "Charcoal",
@@ -1550,6 +1660,42 @@
         },
         "output": {
           "id": "items.iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.cook_pig_meat",
+        "duration": 500,
+        "input": {
+          "id": "items.pig_meat_raw",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.pig_meat_cooked",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.cook_cow_meat",
+        "duration": 500,
+        "input": {
+          "id": "items.cow_meat_raw",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.cow_meat_cooked",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.cook_sheep_meat",
+        "duration": 500,
+        "input": {
+          "id": "items.sheep_meat_raw",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.sheep_meat_cooked",
           "amount": 1
         }
       }

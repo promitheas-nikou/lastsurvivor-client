@@ -1,6 +1,7 @@
 #pragma once
 #include "PassiveEntity.h"
 #include "json.h"
+#include "LootBundle.h"
 
 class PigPassiveEntity :
     public PassiveEntity
@@ -10,6 +11,7 @@ private:
     static float MAX_HEALTH;
     static float MASS;
     static ALLEGRO_BITMAP* TEXTURE;
+    static const LootBundle* DROP;
     static std::string NAME;
 public:
     static const std::string ID;
@@ -17,6 +19,8 @@ public:
     virtual void Tick() override;
     virtual void Draw() override;
     virtual std::string GetID() const final;
+
+    virtual ItemBundle* GetKillingDrops() const final;
 
     static void Init(nlohmann::json data);
 

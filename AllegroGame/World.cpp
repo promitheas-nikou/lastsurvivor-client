@@ -218,7 +218,8 @@ Tile* World::RemoveTile(int x, int y)
 
 void World::AddEntity(Entity* e)
 {
-    entities.push_back(e);
+    if(e!=nullptr)
+        entities.push_back(e);
 }
 
 void World::Tick()
@@ -491,7 +492,7 @@ void World::Draw()
             //else nothing
 
 
-    //DRAW ENTITIES
+    //DRAW ENTITIES 
     for (Entity* e : entities)
         if(!e->IsDead())
             e->Draw();
@@ -570,7 +571,7 @@ World* World::LoadWorldFromFile(std::string filename)
             int cy = std::stoi(key.substr(pos+1));
             WorldChunk* chunk = new WorldChunk(world, cx, cy, false);
 
-            std::ifstream chunkdata = std::ifstream(chunkdatadir / (std::string)value);
+            std::ifstream chunkdata = std::ifstream(chunkdatadir / (std::string)value, std::ios::binary);
 
             for (int y = 0; y < WorldChunk::CHUNK_SIZE_Y; y++)
                 for (int x = 0; x < WorldChunk::CHUNK_SIZE_X; x++)
@@ -582,6 +583,8 @@ World* World::LoadWorldFromFile(std::string filename)
                     chunkdata.read(reinterpret_cast<char*>(&tileid), sizeof(uint32_t));
                     chunk->tiles[y][x] = MakeTile(world, cur_tile_keys[tileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
                     chunk->tiles[y][x]->LoadAdditionalDataFromFile(chunkdata);
+                    if (chunk->tiles[y][x]->DoesTickUpdates())
+                        chunk->AddTickingTile(chunk->tiles[y][x]);
                 }
             chunkdata.close();
             world->chunks[cy][cx] = chunk;
@@ -589,7 +592,7 @@ World* World::LoadWorldFromFile(std::string filename)
 
 
 
-        std::ifstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION);
+        std::ifstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, std::ios::binary);
         uint32_t pid;
         playerdata.read(reinterpret_cast<char*>(&pid), sizeof(uint32_t));
         world->player = dynamic_cast<PlayerEntity*>(MakeEntity(world, cur_entities_ids[pid], 0, 0));
@@ -598,7 +601,7 @@ World* World::LoadWorldFromFile(std::string filename)
             for (const std::filesystem::directory_entry& entry : std::filesystem::directory_iterator(entitydatadir))
             {
                 uint32_t eid;
-                std::ifstream entitydata(entry);
+                std::ifstream entitydata(entry, std::ios::binary);
                 entitydata.read(reinterpret_cast<char*>(&eid), sizeof(uint32_t));
                 Entity* e = MakeEntity(world, cur_entities_ids[eid], 0, 0);
                 e->LoadAdditionalDataFromFile(entitydata);
@@ -698,7 +701,7 @@ void World::SaveToFile(std::string filename)
             std::string key = std::format("{}" WORLD_SAVE_COORDINATE_DELIMETER "{}", p2.first, p1.first);
             std::string filename = key + WORLD_SAVE_CHUNKDATA_FILE_EXTENSION;
             manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY][key] = filename;
-            std::ofstream chunkdata(chunkdatadir / filename);
+            std::ofstream chunkdata(chunkdatadir / filename, std::ios::binary);
             for (int y = 0; y < WorldChunk::CHUNK_SIZE_Y; y++)
                 for (int x = 0; x < WorldChunk::CHUNK_SIZE_X; x++)
                 {
@@ -716,7 +719,7 @@ void World::SaveToFile(std::string filename)
     manif_file.flush();
     manif_file.close();
 
-    std::ofstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION);
+    std::ofstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, std::ios::binary);
     
     playerdata.write(reinterpret_cast<char*>(&entity_keys_to_ids[player->GetID()]), sizeof(uint32_t));
     player->WriteAdditionalDataToFile(playerdata);
@@ -726,7 +729,7 @@ void World::SaveToFile(std::string filename)
     int counter = 0;
     for (Entity* e : entities)
     {
-        std::ofstream entitydatafile(entitydatadir / std::format("{}" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, counter++));
+        std::ofstream entitydatafile(entitydatadir / std::format("{}" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, counter++), std::ios::binary);
         entitydatafile.write(reinterpret_cast<char*>(&entity_keys_to_ids[e->GetID()]), sizeof(uint32_t));
         e->WriteAdditionalDataToFile(entitydatafile);
         entitydatafile.flush();

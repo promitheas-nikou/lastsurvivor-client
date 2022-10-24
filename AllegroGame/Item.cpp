@@ -109,6 +109,7 @@ void Item::SaveToFile(Item* item, std::ofstream& file)
 
 Item* Item::LoadFromFile(std::ifstream &file)
 {
+    int len = file.tellg();
     uint32_t i;
     file.read(reinterpret_cast<char*>(&i), sizeof(uint32_t));
     if (i == 0xFFFFFFFF)

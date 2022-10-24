@@ -28,6 +28,7 @@ public:
 	virtual int GetSize() const = 0;
 	virtual void SaveToFile(std::ofstream& file);
 	static ItemInventory* LoadFromFile(std::ifstream& file);
+	virtual void OverrideFromFile(std::ifstream& file) = 0;
 	
 	virtual ~ItemInventory() = default;
 };

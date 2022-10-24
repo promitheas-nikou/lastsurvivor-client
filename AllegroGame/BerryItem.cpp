@@ -19,7 +19,22 @@ Item* BerryItem::Clone() const
 	return new BerryItem(*this);
 }
 
-BerryItem::BerryItem() : Item(NAME, DESCRIPTION), SimpleConsumableItem(HEALTH, HUNGER, WATER)
+float BerryItem::GetHealthBoost() const
+{
+	return HEALTH;
+}
+
+float BerryItem::GetFoodBoost() const
+{
+	return HUNGER;
+}
+
+float BerryItem::GetWaterBoost() const
+{
+	return WATER;
+}
+
+BerryItem::BerryItem() : Item(NAME, DESCRIPTION)
 {}
 
 void BerryItem::Draw(int x, int y, int width, int height) const

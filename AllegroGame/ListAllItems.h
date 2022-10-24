@@ -7,6 +7,12 @@
 
 #include "BerryItem.h"
 #include "FlaskItem.h"
+#include "RawCowMeatItem.h"
+#include "RawSheepMeatItem.h"
+#include "RawPigMeatItem.h"
+#include "CookedCowMeatItem.h"
+#include "CookedSheepMeatItem.h"
+#include "CookedPigMeatItem.h"
 
 //RESOURCE
 

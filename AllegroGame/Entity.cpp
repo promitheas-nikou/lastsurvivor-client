@@ -319,6 +319,11 @@ float Entity::getFriction() const
 void Entity::PlaySound(SoundType st) const
 {}
 
+ItemBundle* Entity::GetKillingDrops() const
+{
+    return nullptr;
+}
+
 Entity::Entity(World* w, float x, float y, float maxHealth, float mass, float initialVelocityX, float initialVelocityY, float xs, float ys) : containingWorld{ w }, xpos{ x }, ypos{ y }, mass{ mass }, xvel{ initialVelocityX }, yvel{ initialVelocityY }, health{ maxHealth }, maxHealth{ maxHealth }, xsize{ xs }, ysize{ ys }
 {}
 

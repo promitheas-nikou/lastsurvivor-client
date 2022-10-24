@@ -35,7 +35,7 @@ bool BurnerFurnaceMk1Tile::CanWalkThrough() const
 void BurnerFurnaceMk1Tile::Use(PlayerEntity* user)
 {
     TILE_GUI->parentTile = this;
-    user->DisplayTileGUI(this,TILE_GUI);
+    user->DisplayTileGUI(this, TILE_GUI);
 
 }
 

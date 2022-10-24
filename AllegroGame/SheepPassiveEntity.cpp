@@ -6,6 +6,7 @@ const std::string SheepPassiveEntity::ID = "entities.sheep";
 float SheepPassiveEntity::SPEED;
 float SheepPassiveEntity::MAX_HEALTH;
 float SheepPassiveEntity::MASS;
+const LootBundle* SheepPassiveEntity::DROP;
 ALLEGRO_BITMAP* SheepPassiveEntity::TEXTURE;
 std::string SheepPassiveEntity::NAME;
 
@@ -31,12 +32,18 @@ std::string SheepPassiveEntity::GetID() const
 	return ID;
 }
 
+ItemBundle* SheepPassiveEntity::GetKillingDrops() const
+{
+	return DROP->ConstCollapseToItemBundle();
+}
+
 void SheepPassiveEntity::Init(nlohmann::json data)
 {
 	SPEED = data[DATA_JSON_SPEED_KEY];
 	MASS = data[DATA_JSON_MASS_KEY];
 	MAX_HEALTH = data[DATA_JSON_MAX_HEALTH_KEY];
 	NAME = data[DATA_JSON_NAME_KEY];
+	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "SimpleConsumableItem.h"
+#include "ConsumableItem.h"
 
 class BerryItem :
-    public SimpleConsumableItem
+    public ConsumableItem
 {
 private:
     static std::string NAME;
@@ -18,6 +18,10 @@ public:
     std::string GetID() const final;
 
     virtual Item* Clone() const override;
+
+    virtual float GetHealthBoost() const final;
+    virtual float GetFoodBoost() const final;
+    virtual float GetWaterBoost() const final;
 
     BerryItem();
 

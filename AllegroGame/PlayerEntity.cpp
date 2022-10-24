@@ -56,8 +56,8 @@ void PlayerEntity::AddResult(const ItemBundle* b)
 void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
 {
 	Entity::LoadAdditionalDataFromFile(file);
-	file.read(reinterpret_cast<char*>(&hunger), sizeof(int));
-	file.read(reinterpret_cast<char*>(&water), sizeof(int));
+	file.read(reinterpret_cast<char*>(&hunger), sizeof(float));
+	file.read(reinterpret_cast<char*>(&water), sizeof(float));
 
 	pickaxeTool = Item::LoadFromFile(file);
 	axeTool = Item::LoadFromFile(file);
@@ -66,23 +66,18 @@ void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
 	meleeWeapon = Item::LoadFromFile(file);
 	rangedWeapon = Item::LoadFromFile(file);
 
-	placeablesInventory = ItemInventory::LoadFromFile(file);
-	consumablesInventory = ItemInventory::LoadFromFile(file);
-	usablesInventory = ItemInventory::LoadFromFile(file);
+	placeablesInventory->OverrideFromFile(file);
+	consumablesInventory->OverrideFromFile(file);
+	placeablesInventory->OverrideFromFile(file);
 
-	uint32_t a;
-	file.read(reinterpret_cast<char*>(&a), sizeof(uint32_t)); //ignoring saved size, using explicitly specified size
-	for (int i = 0; i < inventory->GetSize(); i++)
-	{
-		inventory->SetItem(i, Item::LoadFromFile(file));
-	}
+	inventory->OverrideFromFile(file);
 }
 
 void PlayerEntity::WriteAdditionalDataToFile(std::ofstream& file)
 {
 	Entity::WriteAdditionalDataToFile(file);
-	file.write(reinterpret_cast<char*>(&hunger), sizeof(int));
-	file.write(reinterpret_cast<char*>(&water), sizeof(int));
+	file.write(reinterpret_cast<char*>(&hunger), sizeof(float));
+	file.write(reinterpret_cast<char*>(&water), sizeof(float));
 	Item::SaveToFile(pickaxeTool, file);
 	Item::SaveToFile(axeTool, file);
 	Item::SaveToFile(shovelTool, file);
@@ -659,8 +654,11 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 						if (a * a + b * b <= mw->GetRangeSQ())
 							e->DoDamage(mw);
 						if (e->GetHealth() <= 0.f)
+						{
+							AddResult(e->GetKillingDrops());
 							if (GetContainingWorld()->GetQuestCollection() != nullptr)
 								GetContainingWorld()->GetQuestCollection()->EntityKilled(e);
+						}
 					}
 				}
 			}
@@ -770,7 +768,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 						i->RemoveAmount(1);
 						if (i->GetAmount() <= 0)
 						{
-							delete c;
+							delete i;
 							consumablesInventory->SetItem(selectedHotbarSlot, nullptr);
 						}
 					}
@@ -786,7 +784,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 						i->RemoveAmount(1);
 						if (i->GetAmount() <= 0)
 						{
-							delete u;
+							delete i;
 							usablesInventory->SetItem(selectedHotbarSlot, nullptr);
 						}
 					}
@@ -979,7 +977,6 @@ void PlayerEntity::GiveConstItemBundle(const ItemBundle* bundle)
 
 void PlayerEntity::Tick()
 {
-
 	if (Entity::IsDead())
 	{
 		guistate = PLAYER_GUI_STATE::DEATH;

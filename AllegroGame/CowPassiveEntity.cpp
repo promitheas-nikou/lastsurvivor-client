@@ -6,6 +6,7 @@ const std::string CowPassiveEntity::ID = "entities.cow";
 float CowPassiveEntity::SPEED;
 float CowPassiveEntity::MAX_HEALTH;
 float CowPassiveEntity::MASS;
+const LootBundle* CowPassiveEntity::DROP;
 ALLEGRO_BITMAP* CowPassiveEntity::TEXTURE;
 std::string CowPassiveEntity::NAME;
 
@@ -31,12 +32,18 @@ std::string CowPassiveEntity::GetID() const
 	return ID;
 }
 
+ItemBundle* CowPassiveEntity::GetKillingDrops() const
+{
+	return DROP->ConstCollapseToItemBundle();
+}
+
 void CowPassiveEntity::Init(nlohmann::json data)
 {
 	SPEED = data[DATA_JSON_SPEED_KEY];
 	MASS = data[DATA_JSON_MASS_KEY];
 	MAX_HEALTH = data[DATA_JSON_MAX_HEALTH_KEY];
 	NAME = data[DATA_JSON_NAME_KEY];
+	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }
 

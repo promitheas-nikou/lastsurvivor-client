@@ -681,6 +681,24 @@
     <ClCompile Include="PigPassiveEntity.cpp">
       <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
     </ClCompile>
+    <ClCompile Include="RawCowMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RawSheepMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RawPigMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CookedPigMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CookedSheepMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CoopedCowMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1155,6 +1173,24 @@
     </ClInclude>
     <ClInclude Include="SheepPassiveEntity.h">
       <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="RawCowMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RawSheepMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RawPigMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CookedCowMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CookedSheepMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CookedPigMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
