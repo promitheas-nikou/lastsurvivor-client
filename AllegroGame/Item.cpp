@@ -46,13 +46,13 @@ int Item::RemoveAmount(int targetAmount)
     return removeAmount;
 }
 
-Item* Item::SetAmount(int a)
+int Item::SetAmount(int a)
 {
     if (a == -1)
         amount = GetMaxStackSize();
     else
         amount = a;
-    return this;
+    return amount;
 }
 
 bool Item::Equals(const Item& item) const
@@ -140,6 +140,24 @@ int Item::AddAmount(int a)
         return tmp;
     }
     return 0;
+}
+
+Item* Item::RemoveAmountX(int targetAmount)
+{
+    RemoveAmount(targetAmount);
+    return this;
+}
+
+Item* Item::AddAmountX(int a)
+{
+    AddAmount(a);
+    return this;
+}
+
+Item* Item::SetAmountX(int targetAmount)
+{
+    SetAmount(targetAmount);
+    return this;
 }
 
 void Item::DrawText(int x, int y, ALLEGRO_FONT* font, ALLEGRO_COLOR color, int align) const

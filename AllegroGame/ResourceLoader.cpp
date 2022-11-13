@@ -68,6 +68,10 @@ const std::string DATA_JSON_BURN_TIME_KEY = "burn_time";
 const std::string DATA_JSON_BURN_HEAT_KEY = "burn_heat";
 const std::string DATA_JSON_BRIGHTNESS_KEY = "brightness";
 const std::string DATA_JSON_DURABILITY_KEY = "durability";
+const std::string DATA_JSON_CONVEYOR_MAX_ITEMS_KEY = "conveyor_max_items";
+const std::string DATA_JSON_CONVEYOR_SPEED_KEY = "conveyor_speed";
+const std::string DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY = "conveyor_item_dist";
+const std::string DATA_JSON_TILE_ID_KEY = "tile";
 
 nlohmann::json json_data;
 
@@ -254,6 +258,8 @@ void init_tiles()
 		_INIT_TILE(BurnerFurnaceMk1Tile)
 		_INIT_TILE(BrickWallTile)
 		_INIT_TILE(StoneBrickWallTile)
+		_INIT_TILE(BasicConveyorTile)
+		_INIT_TILE(BasicBinTile)
 
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
 	/* }
@@ -315,6 +321,11 @@ void init_items()
 		_INIT_ITEM(CookedCowMeatItem)
 		_INIT_ITEM(CookedPigMeatItem)
 		_INIT_ITEM(CookedSheepMeatItem)
+		_INIT_ITEM(BoneItem)
+		_INIT_ITEM(BasicConveyorItem)
+		_INIT_ITEM(SteelIngotItem)
+		_INIT_ITEM(CastIronIngotItem)
+		_INIT_ITEM(BasicBinItem)
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

@@ -54,7 +54,7 @@ void FenceTile::Draw() const
     al_draw_bitmap(TEXTURES[GetConnectionsChar()], xpos * 128, ypos * 128, 0);
 }
 
-Tile* FenceTile::Clone(World* w, int x, int y) const
+Tile* FenceTile::Clone(World* w, int x, int y, Direction d) const
 {
     return new FenceTile(w, x, y);
 }

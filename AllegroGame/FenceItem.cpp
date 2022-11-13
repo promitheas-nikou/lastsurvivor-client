@@ -2,6 +2,7 @@
 #include "ResourceLoader.h"
 
 std::string FenceItem::NAME;
+std::string FenceItem::TILE_ID;
 std::string FenceItem::DESCRIPTION;
 ALLEGRO_BITMAP* FenceItem::TEXTURE;
 const std::string FenceItem::ID = "items.fence";
@@ -11,9 +12,9 @@ std::string FenceItem::GetID() const
 	return ID;
 }
 
-Tile* FenceItem::GetTile(World* w, int x, int y)
+Tile* FenceItem::GetTile(World* w, int x, int y, Direction d)
 {
-	return MakeTile(w, "tiles.fence", x, y);
+	return MakeTile(w, TILE_ID, x, y, d);
 }
 
 Item* FenceItem::Clone() const
@@ -33,6 +34,7 @@ void FenceItem::Draw(int x, int y, int width, int height) const
 void FenceItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	TILE_ID = data[DATA_JSON_TILE_ID_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

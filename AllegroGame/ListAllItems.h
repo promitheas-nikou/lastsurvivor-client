@@ -39,3 +39,8 @@
 #include "SaplingItem.h"
 #include "BrickWallItem.h"
 #include "StoneBrickWallItem.h"
+#include "BoneItem.h"
+#include "BasicConveyorItem.h"
+#include "CastIronIngotItem.h"
+#include "SteelIngotItem.h"
+#include "BasicBinItem.h"

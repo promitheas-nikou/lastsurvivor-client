@@ -43,7 +43,7 @@ bool CreativeItemGUI::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 		if (ind < itemsList.size())
 		{
 			if (player)
-				delete player->GiveItem(itemsList[ind]->Clone()->SetAmount((event.button==1)?1:-1));
+				delete player->GiveItem(itemsList[ind]->Clone()->SetAmountX((event.button==1)?1:-1));
 		}
 	}
 	return true;

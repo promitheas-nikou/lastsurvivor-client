@@ -63,6 +63,8 @@ void EXIT_GAME()
 }
 
 #include <iostream>
+#include "FixedQueue.h"
+
 
 int main()
 {

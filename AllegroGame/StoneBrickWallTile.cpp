@@ -40,7 +40,7 @@ std::string StoneBrickWallTile::GetName() const
     return NAME;
 }
 
-Tile* StoneBrickWallTile::Clone(World* w, int x, int y) const
+Tile* StoneBrickWallTile::Clone(World* w, int x, int y, Direction d) const
 {
     return new StoneBrickWallTile(w, x, y);
 }

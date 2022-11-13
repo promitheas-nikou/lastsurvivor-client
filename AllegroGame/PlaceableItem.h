@@ -10,7 +10,7 @@ class PlaceableItem :
 protected:
     PlaceableItem();
 public:
-    virtual Tile* GetTile(World* w, int x, int y) = 0;
+    virtual Tile* GetTile(World* w, int x, int y, Direction d) = 0;
     virtual bool Use(float x, float y, PlayerEntity* p) final;
 };
 

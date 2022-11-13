@@ -8,7 +8,7 @@ LootObject* CreateLootObjectFromJSON(nlohmann::json data) {
 
 	if (data["type"] == "item")
 	{
-		return MakeItemFromID(data["id"])->SetAmount(data["amount"]);
+		return MakeItemFromID(data["id"])->SetAmountX(data["amount"]);
 	}
 	else if (data["type"] == "varamount_item")
 	{

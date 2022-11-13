@@ -83,6 +83,7 @@ private:
 	static ALLEGRO_BITMAP* TEXTURE;
 	LuaInterface* luaInterface;
 	enum class PLAYER_GUI_STATE guistate;
+	Direction buildRotation = Direction::NORTH;
 	int historyViewIndex;
 	int GUItimer;
 	char keys_pressed;
@@ -161,6 +162,8 @@ public:
 
 	void UseTile(int x, int y);
 	void MineTile(int x, int y);
+
+	Direction GetBuildingRotation() const;
 
 	void GiveConstItem(const Item* item);
 	Item* GiveItem(Item* item);

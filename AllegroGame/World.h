@@ -9,12 +9,15 @@
 #include "AllegroGame.h"
 #include <map>
 #include "PlayerEntity.h"
+#include "Directions.h"
 
 class LuaInterface;
 
 class World
 {
 private:
+	uint64_t timeAbsolute;
+	int gametime;
 	bool doTileTick = true;
 	bool doEntityTick = true;
 	int WorldGameVersionMinor;
@@ -25,8 +28,6 @@ private:
 	QuestCollection* questCollection;
 
 	SimplexNoise randgen;
-
-	int gametime; //90000 ticks (30 minutes) is 1 day
 
 	ALLEGRO_COLOR CalcAmbientColor();
 
@@ -67,6 +68,9 @@ public:
 
 	inline WorldChunk* GetChunk(int x, int y);
 
+	int GetGameTime() const;
+	uint64_t GetGameTimeAbsolute() const;
+
 	Tile* RemoveTile(int x, int y);
 
 	void AddEntity(Entity* e);
@@ -81,6 +85,7 @@ public:
 	GroundTile* SetGroundTile(GroundTile* gtile, int x, int y);
 
 	Tile* GetTile(int x, int y);
+	Tile* GetTileRelative(int x, int y, Direction d);
 	Tile* SetTile(Tile* tile, int x, int y);
 
 	bool IsChunkGenerated(int x, int y);

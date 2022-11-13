@@ -40,7 +40,7 @@ std::string BerryBushTile::GetName() const
     return NAME;
 }
 
-Tile* BerryBushTile::Clone(World* w, int x, int y) const
+Tile* BerryBushTile::Clone(World* w, int x, int y, Direction d) const
 {
     return new BerryBushTile(w, x, y);
 }

@@ -253,7 +253,7 @@ void PlayerEntity::PreDrawThisGUI()
 		m = "CONSUME";
 		break;
 	}
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s", m);
+	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s (%s)", m, buildRotation.ToString().c_str());
 
 	switch(guistate)
 	{
@@ -453,9 +453,12 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 			typing = !typing;
 		break;
-	case ALLEGRO_KEY_R:
+	case ALLEGRO_KEY_X:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 			mode = PlayerActionMode::MINING;
+		break;
+	case ALLEGRO_KEY_R:
+		buildRotation = buildRotation >> 1;
 		break;
 	case ALLEGRO_KEY_Q:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
@@ -941,6 +944,11 @@ void PlayerEntity::MineTile(int x, int y)
 			GiveConstItem(b->GetItem(i));
 		containingWorld->RemoveTile(x, y);
 	}
+}
+
+Direction PlayerEntity::GetBuildingRotation() const
+{
+	return buildRotation;
 }
 	
 void PlayerEntity::GiveConstItem(const Item* item)

@@ -25,6 +25,7 @@ public:
 	virtual void RemoveConstItem(const Item* item);
 	virtual void RemoveConstItemBundle(const ItemBundle* bundle);
 	virtual ItemBundle* AddItemBundle(ItemBundle* bundle);
+	virtual Item* PullItem();
 	virtual int GetSize() const = 0;
 	virtual void SaveToFile(std::ofstream& file);
 	static ItemInventory* LoadFromFile(std::ifstream& file);

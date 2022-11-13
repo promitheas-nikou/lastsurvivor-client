@@ -27,7 +27,7 @@ int AirTile::GetMiningResistance() const
 	return 0;
 }
 
-Tile* AirTile::Clone(World* w, int x, int y) const
+Tile* AirTile::Clone(World* w, int x, int y, Direction d) const
 {
 	return new AirTile(w, x, y);
 }

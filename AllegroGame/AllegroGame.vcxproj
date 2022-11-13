@@ -202,15 +202,21 @@
     <ClCompile Include="AudioSampleMultiTrack.cpp" />
     <ClCompile Include="AzuriteChunkItem.cpp" />
     <ClCompile Include="AzuriteOreGroundTile.cpp" />
+    <ClCompile Include="BasicBinItem.cpp" />
+    <ClCompile Include="BasicConveyorItem.cpp" />
+    <ClCompile Include="BasicConveyorTile.cpp" />
     <ClCompile Include="BerryBushTile.cpp" />
     <ClCompile Include="BerryItem.cpp" />
+    <ClCompile Include="BasicBinTile.cpp" />
     <ClCompile Include="BitmapUIComponent.cpp" />
+    <ClCompile Include="BoneItem.cpp" />
     <ClCompile Include="BrickWallItem.cpp" />
     <ClCompile Include="BrickWallTile.cpp" />
     <ClCompile Include="BurnerFurnaceMk1Item.cpp" />
     <ClCompile Include="BurnerFurnaceMk1Tile.cpp" />
     <ClCompile Include="ButtonUIComponent.cpp" />
     <ClCompile Include="CactusBossEntity.cpp" />
+    <ClCompile Include="CastIronIngotItem.cpp" />
     <ClCompile Include="ChancedLootBundle.cpp" />
     <ClCompile Include="AnthraciteCoalChunkItem.cpp" />
     <ClCompile Include="CharcoalItem.cpp" />
@@ -226,11 +232,14 @@
     <ClCompile Include="CreativeItemGUI.cpp" />
     <ClCompile Include="DeathGUI.cpp" />
     <ClCompile Include="DebugInfo.cpp" />
+    <ClCompile Include="DirectedTile.cpp" />
+    <ClCompile Include="Directions.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="DirtItem.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FenceItem.cpp" />
     <ClCompile Include="FenceTile.cpp" />
+    <ClCompile Include="FixedQueue.cpp" />
     <ClCompile Include="FlaskItem.cpp" />
     <ClCompile Include="FuelItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -315,6 +324,7 @@
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SimpleUsableConsumableItem.cpp" />
     <ClCompile Include="SoundType.cpp" />
+    <ClCompile Include="SteelIngotItem.cpp" />
     <ClCompile Include="StoneBrickWallItem.cpp" />
     <ClCompile Include="StoneBrickWallTile.cpp" />
     <ClCompile Include="TextUtils.cpp" />
@@ -350,7 +360,6 @@
   <ItemGroup>
     <None Include="lua-api\LuaDefault.lua" />
     <None Include="packages.config" />
-    <None Include="vdd-docs\items.dirt.json" />
     <None Include="world_shader.frag" />
     <None Include="world_shader.vert" />
   </ItemGroup>
@@ -366,15 +375,21 @@
     <ClInclude Include="AudioSampleMultiTrack.h" />
     <ClInclude Include="AzuriteChunkItem.h" />
     <ClInclude Include="AzuriteOreGroundTile.h" />
+    <ClInclude Include="BasicBinItem.h" />
+    <ClInclude Include="BasicConveyorItem.h" />
+    <ClInclude Include="BasicConveyorTile.h" />
     <ClInclude Include="BerryBushTile.h" />
     <ClInclude Include="BerryItem.h" />
+    <ClInclude Include="BasicBinTile.h" />
     <ClInclude Include="BitmapUIComponent.h" />
+    <ClInclude Include="BoneItem.h" />
     <ClInclude Include="BrickWallItem.h" />
     <ClInclude Include="BrickWallTile.h" />
     <ClInclude Include="BurnerFurnaceMk1Item.h" />
     <ClInclude Include="BurnerFurnaceMk1Tile.h" />
     <ClInclude Include="ButtonUIComponent.h" />
     <ClInclude Include="CactusBossEntity.h" />
+    <ClInclude Include="CastIronIngotItem.h" />
     <ClInclude Include="ChancedLootBundle.h" />
     <ClInclude Include="AnthraciteCoalChunkItem.h" />
     <ClInclude Include="CharcoalItem.h" />
@@ -390,12 +405,15 @@
     <ClInclude Include="CreativeItemGUI.h" />
     <ClInclude Include="DeathGUI.h" />
     <ClInclude Include="DebugInfo.h" />
+    <ClInclude Include="DirectedTile.h" />
+    <ClInclude Include="Directions.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="DirtItem.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FenceItem.h" />
     <ClInclude Include="FenceTile.h" />
+    <ClInclude Include="FixedQueue.h" />
     <ClInclude Include="FlaskItem.h" />
     <ClInclude Include="FuelItem.h" />
     <ClInclude Include="Graphics.h" />
@@ -403,6 +421,7 @@
     <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GunItem.h" />
+    <ClInclude Include="ItemIOInterface.h" />
     <ClInclude Include="HematiteChunkItem.h" />
     <ClInclude Include="HematiteOreGroundTile.h" />
     <ClInclude Include="HostileEntity.h" />
@@ -483,6 +502,7 @@
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SimpleUsableConsumableItem.h" />
     <ClInclude Include="SoundType.h" />
+    <ClInclude Include="SteelIngotItem.h" />
     <ClInclude Include="StoneBrickWallItem.h" />
     <ClInclude Include="StoneBrickWallTile.h" />
     <ClInclude Include="TextUtils.h" />
@@ -540,7 +560,7 @@
   </Target>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties data_1json__JsonSchema="https://beaujs.com/schema.json" vdd-docs_4items_1dirt_1json__JsonSchema="https://beaujs.com/schema.json" />
+      <UserProperties data_1json__JsonSchema="https://beaujs.com/schema.json" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

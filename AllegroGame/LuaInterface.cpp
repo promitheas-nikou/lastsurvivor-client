@@ -130,3 +130,4 @@ int LuaInterface::lua_SpawnEntity(lua_State* state)
 	ptr->world->AddEntity(MakeEntity(ptr->world, lua_tostring(state, 1), lua_tonumber(state, 2), lua_tonumber(state, 3)));
 	return 0;
 }
+

@@ -32,6 +32,18 @@ bool BurnerFurnaceMk1Tile::CanWalkThrough() const
     return false;
 }
 
+Item* BurnerFurnaceMk1Tile::PushItem(Item* i, Direction d, ItemIOInterface* from)
+{
+    return input->AddItem(i);
+}
+
+Item* BurnerFurnaceMk1Tile::PullItem(Direction d, ItemIOInterface* to)
+{
+    Item* r = output->GetItem(0);
+    output->SetItem(0, nullptr);
+    return r;
+}
+
 void BurnerFurnaceMk1Tile::Use(PlayerEntity* user)
 {
     TILE_GUI->parentTile = this;
@@ -82,8 +94,11 @@ void BurnerFurnaceMk1Tile::LoadAdditionalDataFromFile(std::ifstream& file)
     progressPerTick = 0;
 }
 
-void BurnerFurnaceMk1Tile::TickUpdate()
+void BurnerFurnaceMk1Tile::TickUpdate(uint64_t T)
 {
+    if (lastT >= T)
+        return;
+    lastT = T;
     if (currentRecipe == nullptr)
     {
         for (const std::pair<std::string, const SmeltingRecipe*>& r : loaded_smelting_recipes)
@@ -136,7 +151,7 @@ void BurnerFurnaceMk1Tile::TickUpdate()
     }
 }
 
-bool BurnerFurnaceMk1Tile::DoesTickUpdates()
+bool BurnerFurnaceMk1Tile::DoesTickUpdates() const
 {
     return true;
 }
@@ -147,7 +162,7 @@ void BurnerFurnaceMk1Tile::RegisterLights()
         world->RegisterLight(World::Light(GetXpos() + .5f, GetYpos() + .5f, BRIGHTNESS));
 }
 
-Tile* BurnerFurnaceMk1Tile::Clone(World* w, int x, int y) const
+Tile* BurnerFurnaceMk1Tile::Clone(World* w, int x, int y, Direction d) const
 {
     return new BurnerFurnaceMk1Tile(w, x, y);
 }

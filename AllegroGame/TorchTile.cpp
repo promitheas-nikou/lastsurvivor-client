@@ -45,7 +45,7 @@ void TorchTile::RegisterLights()
     world->RegisterLight(World::Light(GetXpos() + .5f, GetYpos() + .5f,BRIGHTNESS));
 }
 
-Tile* TorchTile::Clone(World* w, int x, int y) const
+Tile* TorchTile::Clone(World* w, int x, int y, Direction d) const
 {
     return new TorchTile(w, x, y);
 }

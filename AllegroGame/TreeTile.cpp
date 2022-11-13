@@ -38,7 +38,7 @@ std::string TreeTile::GetName() const
     return NAME;
 }
 
-Tile* TreeTile::Clone(World* w, int x, int y) const
+Tile* TreeTile::Clone(World* w, int x, int y, Direction d) const
 {
     return new TreeTile(w, x, y);
 }

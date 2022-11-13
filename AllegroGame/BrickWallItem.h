@@ -8,6 +8,7 @@ class BrickWallItem :
 {
 private:
     static std::string NAME;
+    static std::string TILE_ID;
     static std::string DESCRIPTION;
     static ALLEGRO_BITMAP* TEXTURE;
 
@@ -17,7 +18,7 @@ public:
 
     std::string GetID() const final;
 
-    virtual Tile* GetTile(World* w, int x, int y) override;
+    virtual Tile* GetTile(World* w, int x, int y, Direction d) override;
 
     virtual Item* Clone() const override;
 

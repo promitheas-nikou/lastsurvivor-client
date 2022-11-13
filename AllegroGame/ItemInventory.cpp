@@ -155,6 +155,18 @@ ItemBundle* ItemInventory::AddItemBundle(ItemBundle* bundle)
     return bundle->AddToInventory(this);
 }
 
+Item* ItemInventory::PullItem()
+{
+    Item* r;
+    for(int i=0;i<GetSize();i++)
+        if (r = GetItem(i))
+        {
+            SetItem(i, nullptr);
+            return r;
+        }
+    return nullptr;
+}
+
 void ItemInventory::SaveToFile(std::ofstream& file)
 {
     uint32_t v;

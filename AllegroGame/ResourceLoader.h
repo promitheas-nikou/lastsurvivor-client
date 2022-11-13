@@ -44,6 +44,10 @@ const extern std::string DATA_JSON_BURN_TIME_KEY;
 const extern std::string DATA_JSON_BURN_HEAT_KEY;
 const extern std::string DATA_JSON_BRIGHTNESS_KEY;
 const extern std::string DATA_JSON_DURABILITY_KEY;
+const extern std::string DATA_JSON_CONVEYOR_MAX_ITEMS_KEY;
+const extern std::string DATA_JSON_CONVEYOR_SPEED_KEY;
+const extern std::string DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY;
+const extern std::string DATA_JSON_TILE_ID_KEY;
 
 extern nlohmann::json json_data;
 

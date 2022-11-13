@@ -1,7 +1,7 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 2.1",
-  "VER_MINOR": 1,
+  "VERSION": "ALPHA 2.3",
+  "VER_MINOR": 3,
   "VER_MAJOR": 2,
   "WINDOW_ICON": "icon",
   "shaders": [
@@ -100,6 +100,30 @@
     {
       "id": "tex.items.charcoal",
       "filename": "charcoal_item.png"
+    },
+    {
+      "id": "tex.items.basic_conveyor",
+      "filename": "basic_conveyor_north.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/0",
+      "filename": "basic_conveyor_north.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/1",
+      "filename": "basic_conveyor_east.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/2",
+      "filename": "basic_conveyor_south.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/3",
+      "filename": "basic_conveyor_west.png"
+    },
+    {
+      "id": "tex.items.bone",
+      "filename": "bone_item.png"
     },
     {
       "id": "tex.gui.burn_icon/0",
@@ -623,7 +647,7 @@
     },
     {
       "id": "tex.items.sheep_meat_raw",
-      "filename": "raw_beef.png"
+      "filename": "raw_mutton.png"
     },
     {
       "id": "tex.items.pig_meat_raw",
@@ -635,7 +659,7 @@
     },
     {
       "id": "tex.items.sheep_meat_cooked",
-      "filename": "cooked_beef.png"
+      "filename": "cooked_mutton.png"
     },
     {
       "id": "tex.items.pig_meat_cooked",
@@ -646,12 +670,44 @@
       "filename": "iron_ingot_item.png"
     },
     {
+      "id": "tex.items.steel_ingot",
+      "filename": "steel_ingot_item.png"
+    },
+    {
+      "id": "tex.items.cast_iron_ingot",
+      "filename": "cast_iron_ingot_item.png"
+    },
+    {
       "id": "tex.items.copper_ingot",
       "filename": "copper_ingot_item.png"
     },
     {
       "id": "tex.entities.pig",
       "filename": "pig_entity.png"
+    },
+    {
+      "id": "tex.tiles.basic_bin",
+      "filename": "bin_tile.png"
+    },
+    {
+      "id": "tex.items.basic_bin",
+      "filename": "bin_tile.png"
+    },
+    {
+      "id": "tex.entities.sheep/0/0",
+      "filename": "sheep_entity_white_normal.png"
+    },
+    {
+      "id": "tex.entities.sheep/0/1",
+      "filename": "sheep_entity_white_baby.png"
+    },
+    {
+      "id": "tex.entities.sheep/1/0",
+      "filename": "sheep_entity_black_normal.png"
+    },
+    {
+      "id": "tex.entities.sheep/1/1",
+      "filename": "sheep_entity_black_baby.png"
     }
   ],
   "entities": [
@@ -698,7 +754,7 @@
       "mass": 1.0,
       "name": "Sheep",
       "drops": "loot.entities.sheep.kill",
-      "texture": "tex.entities.pig"
+      "texture": "tex.entities.sheep/0/0"
     },
     {
       "id": "entities.pig",
@@ -923,14 +979,26 @@
       ]
     },
     {
-      "id": "loot.tiles.berry_bush.mine.any",
+      "id": "loot.tiles.basic_bin.mine.any",
       "type": "simple",
       "objects": [
         {
           "type": "varamount_item",
           "id": "items.stick",
-          "minamount": 0,
-          "maxamount": 3
+          "minamount": 5,
+          "maxamount": 9
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.basic_conveyor.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.iron_ingot",
+          "minamount": 3,
+          "maxamount": 4
         }
       ]
     },
@@ -964,7 +1032,7 @@
       "objects": [
         {
           "type": "varamount_item",
-          "id": "items.rock",
+          "id": "items.stone",
           "minamount": 3,
           "maxamount": 4
         }
@@ -1046,6 +1114,22 @@
       "mining_resistance": 5
     },
     {
+      "id": "tiles.basic_conveyor",
+      "name": "Basic Conveyor",
+      "tool": "pickaxe",
+      "textures": [
+        "tex.tiles.basic_conveyor/0",
+        "tex.tiles.basic_conveyor/1",
+        "tex.tiles.basic_conveyor/2",
+        "tex.tiles.basic_conveyor/3"
+      ],
+      "drops": "loot.tiles.basic_conveyor.mine.any",
+      "mining_resistance": 5,
+      "conveyor_speed": 0.02,
+      "conveyor_max_items": 2,
+      "conveyor_item_dist": 0.5
+    },
+    {
       "id": "tiles.torch",
       "name": "Torch",
       "tool": "axe",
@@ -1103,6 +1187,14 @@
       "drops": "loot.tiles.burner_furnace_mk1.mine.any",
       "mining_resistance": 8,
       "brightness": 512.0
+    },
+    {
+      "id": "tiles.basic_bin",
+      "mining_resistance": 5,
+      "name": "Basic Bin",
+      "tool": "axe",
+      "texture": "tex.tiles.basic_bin",
+      "drops": "loot.tiles.basic_bin.mine.any"
     },
     {
       "id": "tiles.brick_wall",
@@ -1214,6 +1306,38 @@
     }
   ],
   "items": [
+    {
+      "id": "items.basic_bin",
+      "name": "Basic Bin",
+      "description": "A wooden bin that can be used to store a few items.",
+      "texture": "tex.items.basic_bin",
+      "tile": "tiles.basic_bin"
+    },
+    {
+      "id": "items.cast_iron_ingot",
+      "name": "Cast Iron Ingot",
+      "description": "An ingot of cast iron, that is much harder, and has a much higher melting point than iron. Made by processing steel metal with coal.",
+      "texture": "tex.items.cast_iron_ingot"
+    },
+    {
+      "id": "items.steel_ingot",
+      "name": "Steel Ingot",
+      "description": "An ingot of steel metal, that is harder, and has a higher melting point than iron. Made by processing iron metal with coal.",
+      "texture": "tex.items.steel_ingot"
+    },
+    {
+      "id": "items.basic_conveyor",
+      "name": "Basic Conveyor",
+      "description": "A basic conveyor that can be used to move items slowly.",
+      "texture": "tex.items.basic_conveyor",
+      "tile": "tiles.basic_conveyor"
+    },
+    {
+      "id": "items.bone",
+      "name": "Bone",
+      "description": "A bone taken from the corpse of an animal. Has many uses.",
+      "texture": "tex.items.bone"
+    },
     {
       "id": "items.cow_meat_raw",
       "name": "Raw Beef",
@@ -1405,37 +1529,43 @@
       "id": "items.sapling",
       "name": "Sapling",
       "description": "A sapling that was found near a tree that was cut down. Plant it again, so that it may grow to become a tree. May be occasionally found when cutting trees.",
-      "texture": "tex.items.sapling"
+      "texture": "tex.items.sapling",
+      "tile": "tiles.sapling"
     },
     {
       "id": "items.fence",
       "name": "Fence",
       "description": "A fence created from wood. May be placed to block the path of players or other entities.",
-      "texture": "tex.items.fence"
+      "texture": "tex.items.fence",
+      "tile": "tiles.fence"
     },
     {
       "id": "items.torch",
       "name": "Torch",
       "description": "A torch created from wood. Can be used to provide light at nighttime.",
-      "texture": "tex.items.torch"
+      "texture": "tex.items.torch",
+      "tile": "tiles.torch"
     },
     {
       "id": "items.brick_wall",
       "name": "Brick Wall",
       "description": "A wall created from fired clay bricks.",
-      "texture": "tex.tiles.brick_wall"
+      "texture": "tex.tiles.brick_wall",
+      "tile": "tiles.brick_wall"
     },
     {
       "id": "items.stone_brick_wall",
       "name": "Stone Brick Wall",
       "description": "A wall created from stone bricks put together.",
-      "texture": "tex.tiles.stone_brick_wall"
+      "texture": "tex.tiles.stone_brick_wall",
+      "tile": "tiles.stone_brick_wall"
     },
     {
       "id": "items.burner_furnace_mk1",
       "name": "Burner Furnace Mk1",
       "description": "A furnace that can be used to melt ore.",
-      "texture": "tex.items.burner_furnace_mk1"
+      "texture": "tex.items.burner_furnace_mk1",
+      "tile": "tiles.burner_furnace_mk1"
     },
     {
       "id": "items.log",
@@ -1591,6 +1721,30 @@
       }
     ],
     "smelting": [
+      {
+        "id": "smelt.cast_iron_ingot_from_steel_ingot",
+        "duration": 1000,
+        "input": {
+          "id": "items.steel_ingot",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.cast_iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.steel_ingot_from_iron_ingot",
+        "duration": 1000,
+        "input": {
+          "id": "items.iron_ingot",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.steel_ingot",
+          "amount": 1
+        }
+      },
       {
         "id": "smelt.iron_ingot_from_hematite_chunk",
         "duration": 1000,

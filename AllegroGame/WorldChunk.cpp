@@ -17,7 +17,7 @@ void WorldChunk::Generate()
 void WorldChunk::Tick()
 {
     for (Tile* t : tickingTiles)
-        t->TickUpdate();
+        t->TickUpdate(world->GetGameTimeAbsolute());
     tiles[rand() % CHUNK_SIZE_X][rand() % CHUNK_SIZE_Y]->RandomTickUpdate();
 }
 

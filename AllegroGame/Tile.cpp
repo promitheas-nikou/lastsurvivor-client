@@ -7,6 +7,16 @@
 Tile::Tile(World* w, int x, int y): world(w), xpos(x), ypos(y)
 {}
 
+Item* Tile::PushItem(Item * i, Direction d, ItemIOInterface * from)
+{
+	return i;
+}
+
+Item* Tile::PullItem(Direction d, ItemIOInterface* to)
+{
+	return nullptr;
+}
+
 void Tile::LoadAdditionalDataFromFile(std::ifstream &file)
 {
 	return;
@@ -17,12 +27,12 @@ void Tile::WriteAdditionalDataToFile(std::ofstream& file)
 	return;
 }
 
-bool Tile::DoesTickUpdates()
+bool Tile::DoesTickUpdates() const
 {
 	return false;
 }
 
-void Tile::TickUpdate()
+void Tile::TickUpdate(uint64_t T)
 {
 	return;
 }
@@ -36,6 +46,9 @@ void Tile::TileUpdate()
 {
 	return;
 }
+
+void Tile::DrawOver() const
+{}
 
 bool Tile::CanWalkThrough() const
 {
@@ -60,6 +73,11 @@ bool Tile::IsTransparent() const
 bool Tile::IsEmpty() const
 {
 	return false;
+}
+
+Direction Tile::GetDirection() const
+{
+	return Direction::GetDefaultDirection();
 }
 
 void Tile::InitForWorld(World* w)
@@ -104,12 +122,12 @@ void Tile::RegisterLights()
 
 std::unordered_map<std::string, const Tile*> prototype_tiles;
 
-Tile* MakeTile(World* world, std::string id, int x, int y)
+Tile* MakeTile(World* world, std::string id, int x, int y, Direction d)
 {
 	const Tile* t = prototype_tiles[id];
 	if (t == nullptr)
 		return nullptr;
-	return t->Clone(world, x, y);
+	return t->Clone(world, x, y, d);
 }
 
 void InitAllTilesForWorld(World* w)

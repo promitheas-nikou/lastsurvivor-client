@@ -25,7 +25,7 @@ public:
 
     virtual void RegisterLights() final;
 
-    virtual Tile* Clone(World* w, int x, int y) const final;
+    virtual Tile* Clone(World* w, int x, int y, Direction d) const final;
 
     void Draw() const final;
 

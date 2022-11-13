@@ -57,6 +57,9 @@ public:
     virtual bool IsTransparent() const final;
     virtual bool CanWalkThrough() const final;
 
+    virtual Item* PushItem(Item* i, Direction d, ItemIOInterface* from) final;
+    virtual Item* PullItem(Direction d, ItemIOInterface* to) final;
+
     virtual void Use(PlayerEntity* user) final;
 
     virtual ToolType GetOptimalToolType() const final;
@@ -66,12 +69,12 @@ public:
     virtual void WriteAdditionalDataToFile(std::ofstream& file) final;
     virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
 
-    virtual void TickUpdate() final;
-    virtual bool DoesTickUpdates() final;
+    virtual void TickUpdate(uint64_t T) final;
+    virtual bool DoesTickUpdates() const final;
 
     virtual void RegisterLights() final;
 
-    virtual Tile* Clone(World* w, int x, int y) const final;
+    virtual Tile* Clone(World* w, int x, int y, Direction d) const final;
 
     void Draw() const final;
 

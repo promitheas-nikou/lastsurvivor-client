@@ -20,6 +20,7 @@
 #define WORLD_SAVE_MANIFEST_SEED_KEY "SEED"
 #define WORLD_SAVE_MANIFEST_VERSION_KEY "VERSION"
 #define WORLD_SAVE_MANIFEST_GAMETIME_KEY "GAMETIME"
+#define WORLD_SAVE_MANIFEST_ABSOLUTETIME_KEY "ABSOLUTETIME"
 #define WORLD_SAVE_MANIFEST_VER_MAJOR_KEY "VER_MAJOR"
 #define WORLD_SAVE_MANIFEST_VER_MINOR_KEY "VER_MINOR"
 #define WORLD_SAVE_MANIFEST_NAME_KEY "NAME"
@@ -201,6 +202,16 @@ WorldChunk* World::GetChunk(int x, int y)
     return chunks[y][x];
 }
 
+int World::GetGameTime() const
+{
+    return gametime;
+}
+
+uint64_t World::GetGameTimeAbsolute() const
+{
+    return timeAbsolute;
+}
+
 Tile* World::RemoveTile(int x, int y)
 {
     int subX = positive_modulo(x, 16);
@@ -224,7 +235,6 @@ void World::AddEntity(Entity* e)
 
 void World::Tick()
 {
-    static int tick_counter=0;
     loadedChunkCount = 0;
     if(doTileTick)
         for (const std::pair<int, std::map<int, WorldChunk*>> &m : chunks)
@@ -241,7 +251,7 @@ void World::Tick()
                     entities[i]->Tick();
     player->Tick();
 
-    if ((tick_counter++ % ENTITY_UPDATE_RATE)==0)
+    if (((timeAbsolute/16) % ENTITY_UPDATE_RATE)==0)
         UpdateEntityVector();
     gametime = (gametime + 1) % 90000;
 
@@ -250,6 +260,7 @@ void World::Tick()
         DebugInfo::ticksEnd.pop();
     if(DebugInfo::ticksEnd.size()>1)
         TPSmeasured = (19*TPSmeasured + (DebugInfo::TICKS_RECORD_NUM-1) / (DebugInfo::ticksEnd.back() - DebugInfo::ticksEnd.front()))/20;
+    timeAbsolute+=16;
 }
 
 PlayerEntity* World::GetPlayer() const
@@ -313,6 +324,26 @@ Tile* World::GetTile(int x, int y)
     return t;
 }
 
+Tile* World::GetTileRelative(int x, int y, Direction d)
+{
+    switch (d)
+    {
+    case Direction::NORTH:
+        return GetTile(x, y - 1);
+    case Direction::SOUTH:
+        return GetTile(x, y + 1);
+    case Direction::EAST:
+        return GetTile(x + 1, y);
+    case Direction::WEST:
+        return GetTile(x - 1, y);
+    case Direction::UP:
+    case Direction::DOWN:
+    case Direction::AETHER:
+    default:
+        return nullptr;
+    }
+}
+
 Tile* World::SetTile(Tile* tile, int x, int y)
 {
     int subX = positive_modulo(x, 16);
@@ -329,9 +360,9 @@ Tile* World::SetTile(Tile* tile, int x, int y)
     WorldChunk* c = GetChunk(chunkX, chunkY);
     Tile* r = c->SetTile(tile, subX, subY);
     if(tile->DoesTickUpdates())
-        GetChunk(chunkX, chunkY)->AddTickingTile(tile);
+        c->AddTickingTile(tile);
     if (r->DoesTickUpdates())
-        GetChunk(chunkX, chunkY)->RemoveTickingTile(r);
+        c->RemoveTickingTile(r);
     TileUpdateAround(x, y);
     return r;
 }
@@ -489,6 +520,10 @@ void World::Draw()
         for (int y = drawBeginY; y < drawEndY; y++)
             if((tmpTile = GetTile(x, y)) != nullptr)
                 tmpTile->Draw();
+    for (int x = drawBeginX; x < drawEndX; x++)
+        for (int y = drawBeginY; y < drawEndY; y++)
+            if((tmpTile = GetTile(x, y)) != nullptr)
+                tmpTile->DrawOver();
             //else nothing
 
 
@@ -544,6 +579,7 @@ World* World::LoadWorldFromFile(std::string filename)
         }
 
         world->gametime = manifest[WORLD_SAVE_MANIFEST_GAMETIME_KEY];
+        world->timeAbsolute = manifest[WORLD_SAVE_MANIFEST_ABSOLUTETIME_KEY];
         if ((manifest[WORLD_SAVE_MANIFEST_CHUNK_X_SIZE_KEY] != WorldChunk::CHUNK_SIZE_X) || (manifest[WORLD_SAVE_MANIFEST_CHUNK_Y_SIZE_KEY] != WorldChunk::CHUNK_SIZE_Y))
             throw std::format_error("WORLD FILE HAS DIFFERENT CHUNK SIZE!!!");
         std::map<uint32_t, std::string> cur_tile_keys;
@@ -673,6 +709,7 @@ void World::SaveToFile(std::string filename)
     manifest[WORLD_SAVE_MANIFEST_DYNAMIC_WORLDGEN_KEY] = doDynamicWorldGen;
     manifest[WORLD_SAVE_MANIFEST_SEED_KEY] = SEED;
     manifest[WORLD_SAVE_MANIFEST_GAMETIME_KEY] = gametime;
+    manifest[WORLD_SAVE_MANIFEST_ABSOLUTETIME_KEY] = timeAbsolute;
     manifest[WORLD_SAVE_MANIFEST_CHUNKS_KEY] = nlohmann::json::object();
     manifest[WORLD_SAVE_MANIFEST_HAS_QUESTS_BOOL_KEY] = GetQuestCollection() != nullptr;
     if (GetQuestCollection() != nullptr)

@@ -3,6 +3,7 @@
 #include "BurnerFurnaceMk1Tile.h"
 
 std::string BurnerFurnaceMk1Item::NAME;
+std::string BurnerFurnaceMk1Item::TILE_ID;
 std::string BurnerFurnaceMk1Item::DESCRIPTION;
 ALLEGRO_BITMAP* BurnerFurnaceMk1Item::TEXTURE;
 const std::string BurnerFurnaceMk1Item::ID = "items.burner_furnace_mk1";
@@ -12,9 +13,9 @@ std::string BurnerFurnaceMk1Item::GetID() const
 	return ID;
 }
 
-Tile* BurnerFurnaceMk1Item::GetTile(World* w, int x, int y)
+Tile* BurnerFurnaceMk1Item::GetTile(World* w, int x, int y, Direction d)
 {
-	return new BurnerFurnaceMk1Tile(w,x,y);
+	return MakeTile(w, TILE_ID, x, y, d);
 }
 
 Item* BurnerFurnaceMk1Item::Clone() const
@@ -34,6 +35,7 @@ void BurnerFurnaceMk1Item::Draw(int x, int y, int width, int height) const
 void BurnerFurnaceMk1Item::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	TILE_ID = data[DATA_JSON_TILE_ID_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

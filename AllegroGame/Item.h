@@ -38,7 +38,11 @@ public:
 
 	virtual int GetAmount() const;
 	virtual int RemoveAmount(int targetAmount);
-	virtual Item* SetAmount(int a);
+	virtual int AddAmount(int targetAmount);
+	virtual int SetAmount(int targetAmount);
+	virtual Item* RemoveAmountX(int targetAmount);
+	virtual Item* AddAmountX(int targetAmount);
+	virtual Item* SetAmountX(int targetAmount);
 
 	virtual bool Equals(const Item& item) const;
 	virtual bool Equals(const Item* item) const;
@@ -55,8 +59,6 @@ public:
 	virtual void AddConstToInventory(ItemInventory* inv) const override;
 
 	virtual Item* Clone() const = 0;
-
-	virtual int AddAmount(int a);
 
 	virtual void Draw(int x, int y, int width, int height) const = 0;
 	virtual void DrawText(int x, int y, ALLEGRO_FONT* font, ALLEGRO_COLOR color, int align) const;

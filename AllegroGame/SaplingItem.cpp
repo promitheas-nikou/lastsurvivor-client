@@ -3,6 +3,7 @@
 #include "TreeTile.h"
 
 std::string SaplingItem::NAME;
+std::string SaplingItem::TILE_ID;
 std::string SaplingItem::DESCRIPTION;
 ALLEGRO_BITMAP* SaplingItem::TEXTURE;
 const std::string SaplingItem::ID = "items.sapling";
@@ -12,9 +13,9 @@ std::string SaplingItem::GetID() const
 	return ID;
 }
 
-Tile* SaplingItem::GetTile(World* w, int x, int y)
+Tile* SaplingItem::GetTile(World* w, int x, int y, Direction d)
 {
-	return new TreeTile(w,x,y,0);
+	return MakeTile(w, TILE_ID, x, y, d);
 }
 
 Item* SaplingItem::Clone() const
@@ -34,6 +35,7 @@ void SaplingItem::Draw(int x, int y, int width, int height) const
 void SaplingItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
+	TILE_ID = data[DATA_JSON_TILE_ID_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
 	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
 }

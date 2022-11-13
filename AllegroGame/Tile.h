@@ -8,16 +8,20 @@
 #include <allegro5/allegro.h>
 
 #include "AllegroGame.h"
+#include "Directions.h"
 
 #include "ItemBundle.h"
+#include "ItemIOInterface.h"
 
 class World;
 
 class PlayerEntity;
 
-class Tile
+class Tile:
+	public ItemIOInterface
 {
 	protected:
+		uint64_t lastT = 0;
 		World* world;
 
 		const int xpos, ypos;
@@ -27,6 +31,9 @@ class Tile
 		Tile(World* w, int x, int y);
 
 	public:
+		virtual Item* PushItem(Item* i, Direction d, ItemIOInterface* from) override;
+		virtual Item* PullItem(Direction d, ItemIOInterface* to) override;
+
 		virtual std::string GetID() const = 0;
 
 		virtual void LoadAdditionalDataFromFile(std::ifstream &file);
@@ -34,20 +41,23 @@ class Tile
 
 		virtual std::string GetName() const = 0;
 
-		virtual bool DoesTickUpdates();
-		virtual void TickUpdate();
+		virtual bool DoesTickUpdates() const;
+		virtual void TickUpdate(uint64_t T);
 		virtual void RandomTickUpdate();
 		virtual void TileUpdate();
 
 		virtual void Draw() const = 0;
+		virtual void DrawOver() const;
 
-		virtual Tile* Clone(World* w, int x, int y) const = 0;
+		virtual Tile* Clone(World* w, int x, int y, Direction d) const = 0;
 
 		virtual bool CanWalkThrough() const;
 		virtual bool canSwimThrough() const;
 		virtual bool canFlyThrough() const;
 		virtual bool IsTransparent() const;
 		virtual bool IsEmpty() const;
+		
+		virtual Direction GetDirection() const;
 
 		virtual void InitForWorld(World* w);
 
@@ -69,7 +79,7 @@ class Tile
 		virtual ~Tile() = default;
 	};
 
-Tile* MakeTile(World* world, std::string id, int x, int y);
+Tile* MakeTile(World* world, std::string id, int x, int y, Direction d=Direction::NORTH);
 
 void InitAllTilesForWorld(World* w);
 

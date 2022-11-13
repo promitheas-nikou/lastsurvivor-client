@@ -8,3 +8,5 @@
 
 #include "BrickWallTile.h"
 #include "StoneBrickWallTile.h"
+#include "BasicConveyorTile.h"
+#include "BasicBinTile.h"

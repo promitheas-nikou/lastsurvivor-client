@@ -5,14 +5,14 @@
 void VariableAmountItem::AddConstToInventory(ItemInventory* inv) const
 {
 	int newAmount = minAmount + (rand() % (maxAmount - minAmount));
-	delete inv->AddItem(MakeItemFromID(id)->SetAmount(newAmount));
+	delete inv->AddItem(MakeItemFromID(id)->SetAmountX(newAmount));
 }
 
 ItemBundle* VariableAmountItem::ConstCollapseToItemBundle() const
 {
 	int newAmount = minAmount + (rand() % (maxAmount - minAmount + 1));
 	SimpleItemBundle* b = new SimpleItemBundle();
-	b->AddItem(MakeItemFromID(id)->SetAmount(newAmount));
+	b->AddItem(MakeItemFromID(id)->SetAmountX(newAmount));
 	return b;
 }
 

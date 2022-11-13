@@ -241,6 +241,21 @@
     <Filter Include="Header Files\Game\Entities\HostileEntities">
       <UniqueIdentifier>{1cabb623-ed31-4206-88f1-35484cbe17c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Automation">
+      <UniqueIdentifier>{7e22ea8d-3e07-466e-bfc2-eaf47bd1dcb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Automation">
+      <UniqueIdentifier>{f83ce84d-9308-45bc-a589-b97ba06f312d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles\MachineTiles">
+      <UniqueIdentifier>{d8c9bb90-85e3-42c6-afe0-91b4aa99f1df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles\StorageTiles">
+      <UniqueIdentifier>{c0c541d2-59a0-4ffb-9cc2-23fbe670b6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tiles\StorageTiles">
+      <UniqueIdentifier>{cae74a3a-8a39-45ef-8877-90474e164469}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -699,6 +714,36 @@
     <ClCompile Include="CoopedCowMeatItem.cpp">
       <Filter>Source Files\Game\Items\ConsumableItems</Filter>
     </ClCompile>
+    <ClCompile Include="BoneItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicConveyorItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CastIronIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SteelIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="FixedQueue.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Directions.cpp">
+      <Filter>Source Files\Game\World</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicConveyorTile.cpp">
+      <Filter>Source Files\Game\Tiles\MachineTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBinTile.cpp">
+      <Filter>Source Files\Game\Tiles\StorageTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBinItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectedTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -707,9 +752,6 @@
     </None>
     <None Include="world_shader.vert">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="vdd-docs\items.dirt.json">
-      <Filter>Resource Files\VDD-Docs</Filter>
     </None>
     <None Include="lua-api\LuaDefault.lua">
       <Filter>Resource Files</Filter>
@@ -1027,14 +1069,8 @@
     <ClInclude Include="HematiteChunkItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
-    <ClInclude Include="PlaceableItem.h">
-      <Filter>Header Files\Game\Items\ResourceItems</Filter>
-    </ClInclude>
     <ClInclude Include="VariableAmountItem.h">
       <Filter>Header Files\Game\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="FenceItem.h">
-      <Filter>Header Files\Game\Items\ResourceItems</Filter>
     </ClInclude>
     <ClInclude Include="TorchTile.h">
       <Filter>Header Files\Game\Tiles</Filter>
@@ -1191,6 +1227,45 @@
     </ClInclude>
     <ClInclude Include="CookedPigMeatItem.h">
       <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Directions.h">
+      <Filter>Header Files\Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemIOInterface.h">
+      <Filter>Header Files\Game\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="FenceItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaceableItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicConveyorItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CastIronIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SteelIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedQueue.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicConveyorTile.h">
+      <Filter>Header Files\Game\Tiles\MachineTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicBinTile.h">
+      <Filter>Header Files\Game\Tiles\StorageTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicBinItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectedTile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
