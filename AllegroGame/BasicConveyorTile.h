@@ -10,7 +10,7 @@ private:
     static int MINING_RESISTANCE;
     static ToolType TOOL_TYPE;
     static std::string NAME;
-    static ALLEGRO_BITMAP* TEXTURES[4];
+    static ALLEGRO_BITMAP* TEXTURES[16];
     static const LootBundle* DROP;
     static int CONVEYOR_MAX_ITEMS;
     static float CONVEYOR_ITEMS_DIST;

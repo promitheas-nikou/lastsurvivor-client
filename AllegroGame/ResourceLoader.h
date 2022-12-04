@@ -48,6 +48,7 @@ const extern std::string DATA_JSON_CONVEYOR_MAX_ITEMS_KEY;
 const extern std::string DATA_JSON_CONVEYOR_SPEED_KEY;
 const extern std::string DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY;
 const extern std::string DATA_JSON_TILE_ID_KEY;
+const extern std::string DATA_JSON_AUDIO_TYPE_KEY;
 
 extern nlohmann::json json_data;
 
@@ -57,6 +58,7 @@ extern int game_version_major;
 extern int game_version_minor;
 
 extern ALLEGRO_BITMAP* window_icon;
+extern ALLEGRO_BITMAP* global_texture_atlas;
 
 extern std::unordered_map<std::string, std::map<int, ALLEGRO_FONT*>> loaded_fonts;
 extern std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
@@ -64,6 +66,10 @@ extern std::unordered_map<std::string, LootBundle*> loaded_loot_bundles;
 extern std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
 extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_samples;
 extern std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;
+extern ALLEGRO_MIXER* game_master_audio_mixer;
+extern ALLEGRO_MIXER* game_theme_music_audio_mixer;
+extern ALLEGRO_MIXER* game_tile_passive_audio_mixer;
+extern ALLEGRO_MIXER* game_combat_audio_mixer;
 extern std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 extern std::unordered_map<std::string, Shader*> loaded_shaders;
 

@@ -509,6 +509,7 @@ void World::Draw()
 
     al_build_transform(&draw_transform, -offset_x, -offset_y, 1, 1, 0);
     al_use_transform(&draw_transform);
+    al_hold_bitmap_drawing(true);
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
             if ((tmpGTile = GetGroundTile(x, y)) != nullptr)
@@ -543,6 +544,7 @@ void World::Draw()
             al_draw_line(e->GetXpos() * 128, e->GetYpos() * 128, e->GetXpos() * 128 - sinf(-e->GetRotation()) * 32, e->GetYpos() * 128 - cosf(-e->GetRotation()) * 32, al_map_rgba(0, 0, 255, 255), 4);
         }
     }
+    al_hold_bitmap_drawing(false);
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
     al_use_transform(&draw_transform);
 }

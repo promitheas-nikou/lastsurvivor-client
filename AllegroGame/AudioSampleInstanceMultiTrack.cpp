@@ -11,7 +11,7 @@ void AudioSampleInstanceMultiTrack::Play() const
 			return;
 	ALLEGRO_SAMPLE_INSTANCE* s = (*sampleInstances)[rand() % sampleInstances->size()];
 	lastPlaying = s;
-	al_play_sample_instance(s);	
+	al_play_sample_instance(s);
 }
 
 void AudioSampleInstanceMultiTrack::Stop() const

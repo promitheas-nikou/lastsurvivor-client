@@ -13,6 +13,7 @@ extern GUI* mainMenuGUI;
 extern GUI* currentGUI;
 extern GUI* creditsMenuGUI;
 extern GUI* worldCreationGUI;
+extern GUI* settingsMenuGUI;
 extern World* world;
 extern bool doWorldTick;
 

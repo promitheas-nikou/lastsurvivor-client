@@ -247,6 +247,7 @@
     <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GunItem.cpp" />
+    <ClCompile Include="HazardWarnings.cpp" />
     <ClCompile Include="HematiteChunkItem.cpp" />
     <ClCompile Include="HematiteOreGroundTile.cpp" />
     <ClCompile Include="HostileEntity.cpp" />
@@ -421,6 +422,7 @@
     <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GunItem.h" />
+    <ClInclude Include="HazardWarnings.h" />
     <ClInclude Include="ItemIOInterface.h" />
     <ClInclude Include="HematiteChunkItem.h" />
     <ClInclude Include="HematiteOreGroundTile.h" />

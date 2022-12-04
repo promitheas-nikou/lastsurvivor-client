@@ -9,7 +9,7 @@ std::string BasicConveyorTile::NAME;
 int BasicConveyorTile::CONVEYOR_MAX_ITEMS = 1;
 float BasicConveyorTile::CONVEYOR_ITEMS_DIST;
 float BasicConveyorTile::CONVEYOR_SPEED;
-ALLEGRO_BITMAP* BasicConveyorTile::TEXTURES[4];
+ALLEGRO_BITMAP* BasicConveyorTile::TEXTURES[16];
 const LootBundle* BasicConveyorTile::DROP;
 const std::string BasicConveyorTile::ID = "tiles.basic_conveyor";
 
@@ -141,7 +141,7 @@ Item* BasicConveyorTile::PullItem(Direction d, ItemIOInterface* to)
 
 void BasicConveyorTile::Draw() const
 {
-	al_draw_bitmap(TEXTURES[(uint8_t)direction], xpos * 128, ypos * 128, 0);
+	al_draw_bitmap(TEXTURES[((uint8_t)direction)*4+(((lastT))%4)], xpos * 128, ypos * 128, 0);
 }
 
 void BasicConveyorTile::WriteAdditionalDataToFile(std::ofstream& file)
@@ -222,7 +222,7 @@ const ItemBundle* BasicConveyorTile::GetMiningResult(Tool* tool) const
 
 void BasicConveyorTile::Init(nlohmann::json data)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 16; i++)
 		TEXTURES[i] = loaded_bitmaps[data[DATA_JSON_TEXTURE_LIST_KEY][i]];
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);

@@ -5,6 +5,7 @@
 #include "json.h"
 #include <fstream>
 #include "LootObject.h"
+#include "HazardWarnings.h"
 
 
 class World;

@@ -576,9 +576,6 @@
     <ClCompile Include="BurnerFurnaceMk1Item.cpp">
       <Filter>Source Files\Game\Items\PlaceableItems</Filter>
     </ClCompile>
-    <ClCompile Include="BurnerFurnaceMk1Tile.cpp">
-      <Filter>Source Files\Game\Tiles</Filter>
-    </ClCompile>
     <ClCompile Include="DebugInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -669,9 +666,6 @@
     <ClCompile Include="CreativeItemGUI.cpp">
       <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
     </ClCompile>
-    <ClCompile Include="QuestEditingGUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteSheet.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
@@ -742,6 +736,15 @@
       <Filter>Source Files\Game\Items\PlaceableItems</Filter>
     </ClCompile>
     <ClCompile Include="DirectedTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestEditingGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerFurnaceMk1Tile.cpp">
+      <Filter>Source Files\Game\Tiles\MachineTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="HazardWarnings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1183,9 +1186,6 @@
     <ClInclude Include="CreativeItemGUI.h">
       <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
     </ClInclude>
-    <ClInclude Include="QuestEditingGUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AllegroGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1265,6 +1265,12 @@
       <Filter>Header Files\Game\Items\PlaceableItems</Filter>
     </ClInclude>
     <ClInclude Include="DirectedTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestEditingGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="HazardWarnings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

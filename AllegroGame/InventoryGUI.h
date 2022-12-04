@@ -11,6 +11,13 @@ class InventoryGUI :
 {
 public:
     static ALLEGRO_BITMAP* INVENTORY_SLOT_GENERIC;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_IN_0;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_IN_1;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_IN_2;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_OUT_0;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_OUT_1;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_OUT_2;
+    static ALLEGRO_BITMAP* INVENTORY_SLOT_AUTO_FUEL;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_CALLBACK;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_TRASH;
     static ALLEGRO_BITMAP* INVENTORY_SLOT_SHOVEL;
@@ -33,7 +40,27 @@ protected:
     
 public:
 
-    enum StorageSlotType { GENERIC, VIEW, SHOVEL, PICKAXE, AXE, MELEE, RANGED, CONSUMABLE, PLACEABLE, FUEL, OUTPUT, USABLE };
+	enum StorageSlotType {
+		GENERIC,
+        VIEW,
+        SHOVEL,
+        PICKAXE,
+        AXE,
+        MELEE,
+        RANGED,
+        CONSUMABLE,
+        PLACEABLE,
+        FUEL,
+        AUTO_FUEL,
+        OUTPUT,
+        USABLE,
+        AUTO_IN_0,
+        AUTO_IN_1,
+		AUTO_IN_2,
+        AUTO_OUT_0,
+        AUTO_OUT_1,
+		AUTO_OUT_2
+	};
 
     InventoryGUI();
 

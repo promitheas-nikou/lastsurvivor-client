@@ -268,12 +268,12 @@ BurnerFurnaceMk1Tile::TileGUI::TileGUI(PlayerEntity* p, BurnerFurnaceMk1Tile* s)
     InventoryGUI* g = p->GetMainInventoryGUI(SCREEN_WIDTH/2-(9*64),SCREEN_HEIGHT-128*4);
     g->AddDynamicSlot(SCREEN_WIDTH/2-320, 100, 128, 128, [this]() {
         return &this->InputItemPtrFunc();
-    }, InventoryGUI::StorageSlotType::GENERIC);
+    }, InventoryGUI::StorageSlotType::AUTO_IN_0);
     g->AddDynamicSlot(SCREEN_WIDTH/2-64, 356, 128, 128, [this]() {
         return &this->FuelItemPtrFunc();
-        }, InventoryGUI::StorageSlotType::FUEL);
+        }, InventoryGUI::StorageSlotType::AUTO_FUEL);
     g->AddDynamicSlot(SCREEN_WIDTH/2+192, 100, 128, 128, [this]() {
         return &this->OutputItemPtrFunc();
-    }, InventoryGUI::StorageSlotType::OUTPUT);
+    }, InventoryGUI::StorageSlotType::AUTO_OUT_0);
     activeSubGUI = g;
 }

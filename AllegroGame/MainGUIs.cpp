@@ -20,9 +20,10 @@ void EXIT_GAME();
 
 MainMenuGUI::MainMenuGUI()
 {
-	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 100, 300, 100, []() {currentGUI = playMenuGUI;}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "PLAY"));
-	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 250, 300, 100, []() {currentGUI = creditsMenuGUI; al_stop_samples(); al_play_sample(loaded_audio_samples["themes.credits"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL); }, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "CREDITS"));
-	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 400, 300, 100, []() {EXIT_GAME(); }, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "QUIT"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 100, 300, 100, []() {currentGUI = playMenuGUI; }, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "PLAY"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 250, 300, 100, []() {currentGUI = settingsMenuGUI; }, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "SETTINGS"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 400, 300, 100, []() {currentGUI = creditsMenuGUI; al_stop_samples(); al_play_sample(loaded_audio_samples["themes.credits"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL); }, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "CREDITS"));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 550, 300, 100, []() {EXIT_GAME(); }, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "QUIT"));
 }
 
 void PlayMenuGUI::PreDrawThisGUI()
@@ -178,3 +179,29 @@ CreditsMenuGUI::CreditsMenuGUI()
 	}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "BACK"));
 }
 
+void SettingsMenuGUI::PreDrawThisGUI()
+{
+	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
+}
+
+SettingsMenuGUI::SettingsMenuGUI()
+{
+	SimpleNumberInputUIComponent* masterVolume;
+	SimpleNumberInputUIComponent* themeMusicVolume;
+	SimpleNumberInputUIComponent* combatVolume;
+	SimpleNumberInputUIComponent* tilePassiveVolume;
+	UIcomponents.push_back(masterVolume = new SimpleNumberInputUIComponent(128, 320, SCREEN_WIDTH - 256, gameconfig::GUI_DEFAULT_LINE_HEIGHT, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "MASTER VOLUME (/1000): {", "0", "}", 0));
+	UIcomponents.push_back(themeMusicVolume = new SimpleNumberInputUIComponent(128, 320 + 1 * gameconfig::GUI_DEFAULT_LINE_HEIGHT, SCREEN_WIDTH - 256, gameconfig::GUI_DEFAULT_LINE_HEIGHT, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "MUSIC THEME VOLUME (/1000): {", "1000", "}", 0));
+	UIcomponents.push_back(combatVolume = new SimpleNumberInputUIComponent(128, 320 + 2 * gameconfig::GUI_DEFAULT_LINE_HEIGHT, SCREEN_WIDTH - 256, gameconfig::GUI_DEFAULT_LINE_HEIGHT, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "COMBAT VOLUME (/1000): {", "1000", "}", 0));
+	UIcomponents.push_back(tilePassiveVolume = new SimpleNumberInputUIComponent(128, 320 + 3 * gameconfig::GUI_DEFAULT_LINE_HEIGHT, SCREEN_WIDTH - 256, gameconfig::GUI_DEFAULT_LINE_HEIGHT, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "TILE PASSIVE VOLUME (/1000): {", "1000", "}", 0));
+	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT - 100, 300, 100, [masterVolume,themeMusicVolume,combatVolume,tilePassiveVolume]() {
+		al_set_mixer_gain(game_master_audio_mixer, std::max(0.f, std::min(1.f, masterVolume->GetInputNumber()/1000.f)));
+		al_set_mixer_gain(game_theme_music_audio_mixer, std::max(0.f, std::min(1.f, themeMusicVolume->GetInputNumber()/1000.f)));
+		al_set_mixer_gain(game_combat_audio_mixer, std::max(0.f, std::min(1.f, combatVolume->GetInputNumber()/1000.f)));
+		al_set_mixer_gain(game_tile_passive_audio_mixer, std::max(0.f, std::min(1.f, tilePassiveVolume->GetInputNumber()/1000.f)));
+		if (world)
+			currentGUI = world->GetPlayer();
+		else
+			currentGUI = mainMenuGUI;
+		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "BACK"));
+}

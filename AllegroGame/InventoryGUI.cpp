@@ -13,6 +13,13 @@
 
 
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_GENERIC;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_IN_0;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_IN_1;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_IN_2;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_OUT_0;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_OUT_1;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_OUT_2;
+ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_AUTO_FUEL;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_CALLBACK;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_TRASH;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_SHOVEL;
@@ -159,6 +166,27 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 	case StorageSlotType::FUEL:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
 		break;
+	case StorageSlotType::AUTO_FUEL:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_FUEL, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AUTO_IN_0:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_IN_0, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AUTO_IN_1:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_IN_1, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AUTO_IN_2:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_IN_2, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AUTO_OUT_0:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_0, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AUTO_OUT_1:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_1, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AUTO_OUT_2:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_2, itemslot, swapTemp));
+		break;
 	default:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));
 	}
@@ -171,8 +199,29 @@ void InventoryGUI::AddDynamicSlot(int x, int y, int w, int h, std::function<Item
 	case StorageSlotType::FUEL:
 		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslotfunc, swapTemp));
 		break;
+	case StorageSlotType::AUTO_FUEL:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryFuelStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_FUEL, itemslotfunc, swapTemp));
+		break;
 	case StorageSlotType::OUTPUT:
 		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryOutputStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::AUTO_IN_0:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_IN_0, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::AUTO_IN_1:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_IN_1, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::AUTO_IN_2:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_IN_2, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::AUTO_OUT_0:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryOutputStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_0, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::AUTO_OUT_1:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryOutputStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_1, itemslotfunc, swapTemp));
+		break;
+	case StorageSlotType::AUTO_OUT_2:
+		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryOutputStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_2, itemslotfunc, swapTemp));
 		break;
 	default:
 		GUI::UIcomponents.push_back(new SimpleDynamicItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslotfunc, swapTemp));
@@ -259,6 +308,13 @@ void InventoryGUI::Init()
 	INVENTORY_SLOT_CONSUMABLE = loaded_bitmaps["tex.gui.inventory_slot_consumable"];
 	INVENTORY_SLOT_USABLE = loaded_bitmaps["tex.gui.inventory_slot_usable"];
 	INVENTORY_SLOT_PLACEABLE = loaded_bitmaps["tex.gui.inventory_slot_placeable"];
+	INVENTORY_SLOT_AUTO_IN_0 = loaded_bitmaps["tex.gui.automation_slot.in/0"];
+	INVENTORY_SLOT_AUTO_IN_1 = loaded_bitmaps["tex.gui.automation_slot.in/1"];
+	INVENTORY_SLOT_AUTO_IN_2 = loaded_bitmaps["tex.gui.automation_slot.in/2"];
+	INVENTORY_SLOT_AUTO_OUT_0 = loaded_bitmaps["tex.gui.automation_slot.out/0"];
+	INVENTORY_SLOT_AUTO_OUT_1 = loaded_bitmaps["tex.gui.automation_slot.out/1"];
+	INVENTORY_SLOT_AUTO_OUT_2 = loaded_bitmaps["tex.gui.automation_slot.out/2"];
+	INVENTORY_SLOT_AUTO_FUEL = loaded_bitmaps["tex.gui.automation_slot.fuel"];
 }
 
 void InventoryGUI::PreDrawThisGUI()

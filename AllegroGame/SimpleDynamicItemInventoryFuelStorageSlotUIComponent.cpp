@@ -5,32 +5,7 @@ bool SimpleDynamicItemInventoryFuelStorageSlotUIComponent::ClickRightDown(int xR
 {
     Item*& itemptr = *(itemptrfunc());
 
-    if (swapptr != nullptr)
-    {
-        if (swapptr->Equals(itemptr))
-        {
-            if (itemptr->AddAmount(1))
-                return true;
-            swapptr->RemoveAmount(1);
-            if (swapptr->GetAmount() == 0)
-            {
-                delete swapptr;
-                swapptr = nullptr;
-            }
-        }
-        else if (itemptr == nullptr)
-        {
-            itemptr = swapptr->Clone();
-            itemptr->SetAmount(1);
-            swapptr->RemoveAmount(1);
-            if (swapptr->GetAmount() == 0)
-            {
-                delete swapptr;
-                swapptr = nullptr;
-            }
-        }
-    }
-    else
+    if (swapptr == nullptr)
     {
         if (itemptr == nullptr)
             return true;
@@ -43,6 +18,31 @@ bool SimpleDynamicItemInventoryFuelStorageSlotUIComponent::ClickRightDown(int xR
             delete itemptr;
             itemptr = nullptr;
         }
+        return true;
+    }
+    if (dynamic_cast<FuelItem*>(swapptr) == nullptr)
+        return true;
+    if (swapptr->Equals(itemptr))
+    {
+        if (itemptr->AddAmount(1))
+            return true;
+        swapptr->RemoveAmount(1);
+        if (swapptr->GetAmount() == 0)
+        {
+            delete swapptr;
+            swapptr = nullptr;
+        }
+    }
+    else if (itemptr == nullptr)
+    {
+        itemptr = swapptr->Clone();
+        itemptr->SetAmount(1);
+        swapptr->RemoveAmount(1);
+        if (swapptr->GetAmount() == 0)
+        {
+            delete swapptr;
+            swapptr = nullptr;
+        }
     }
     return true;
 }
@@ -51,15 +51,22 @@ bool SimpleDynamicItemInventoryFuelStorageSlotUIComponent::ClickLeftDown(int xRe
 {
     Item*& itemptr = *(itemptrfunc());
 
-    if (swapptr == nullptr || itemptr == nullptr)
+    if (swapptr == nullptr)
     {
         std::swap(itemptr, swapptr);
-        return 0;
+        return true;
     }
-    if (itemptr->GetMaxStackSize() == 1 || itemptr->GetMaxStackSize() == 1)
+    if (dynamic_cast<FuelItem*>(swapptr) == nullptr)
+        return true;
+    if (itemptr == nullptr)
     {
         std::swap(itemptr, swapptr);
-        return 0;
+        return true;
+    }
+    if (swapptr->GetMaxStackSize() == 1 || itemptr->GetMaxStackSize() == 1)
+    {
+        std::swap(itemptr, swapptr);
+        return true;
     }
     if (swapptr->Equals(itemptr))
     {

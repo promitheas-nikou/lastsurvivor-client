@@ -32,3 +32,12 @@ public:
     virtual void PreDrawThisGUI() final;
     CreditsMenuGUI();
 };
+
+
+class SettingsMenuGUI :
+    public GUI
+{
+public:
+    virtual void PreDrawThisGUI() final;
+    SettingsMenuGUI();
+};

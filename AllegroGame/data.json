@@ -15,6 +15,7 @@
     {
       "id": "themes.credits",
       "wait": true,
+      "type": "theme_music",
       "filenames": [
         "menu_theme_2.wav"
       ]
@@ -22,13 +23,23 @@
     {
       "id": "themes.ingame",
       "wait": true,
+      "type": "theme_music",
       "filenames": [
         "menu_theme_2.wav"
       ]
     },
     {
+      "id": "themes.menu",
+      "wait": true,
+      "type": "theme_music",
+      "filenames": [
+        "menu_theme_1.wav"
+      ]
+    },
+    {
       "id": "gtiles.dirt.walk",
       "wait": true,
+      "type": "tile_passive",
       "filenames": [
         "dirt_walk_0.wav",
         "dirt_walk_1.wav",
@@ -40,6 +51,7 @@
     {
       "id": "gtiles.grass.walk",
       "wait": true,
+      "type": "tile_passive",
       "filenames": [
         "dirt_walk_0.wav",
         "dirt_walk_1.wav",
@@ -51,6 +63,7 @@
     {
       "id": "gtiles.sand.walk",
       "wait": true,
+      "type": "tile_passive",
       "filenames": [
         "sand_walk_0.wav",
         "sand_walk_1.wav",
@@ -64,6 +77,7 @@
     {
       "id": "entities.rattle_bullet.hit",
       "wait": false,
+      "type": "combat",
       "filenames": [
         "arrow_hit_0.wav"
       ]
@@ -71,6 +85,7 @@
     {
       "id": "entities.generic_bullet.hit",
       "wait": false,
+      "type": "combat",
       "filenames": [
         "arrow_hit_0.wav"
       ]
@@ -78,17 +93,11 @@
     {
       "id": "entities.player.hurt",
       "wait": true,
+      "type": "combat",
       "filenames": [
         "player_hurt_0.wav",
         "player_hurt_1.wav",
         "player_hurt_2.wav"
-      ]
-    },
-    {
-      "id": "themes.menu",
-      "wait": true,
-      "filenames": [
-        "menu_theme_1.wav"
       ]
     }
   ],
@@ -106,20 +115,68 @@
       "filename": "basic_conveyor_north.png"
     },
     {
-      "id": "tex.tiles.basic_conveyor/0",
-      "filename": "basic_conveyor_north.png"
+      "id": "tex.tiles.basic_conveyor/north/0",
+      "filename": "basic_conveyor_north_0.png"
     },
     {
-      "id": "tex.tiles.basic_conveyor/1",
-      "filename": "basic_conveyor_east.png"
+      "id": "tex.tiles.basic_conveyor/north/1",
+      "filename": "basic_conveyor_north_1.png"
     },
     {
-      "id": "tex.tiles.basic_conveyor/2",
-      "filename": "basic_conveyor_south.png"
+      "id": "tex.tiles.basic_conveyor/north/2",
+      "filename": "basic_conveyor_north_2.png"
     },
     {
-      "id": "tex.tiles.basic_conveyor/3",
-      "filename": "basic_conveyor_west.png"
+      "id": "tex.tiles.basic_conveyor/north/3",
+      "filename": "basic_conveyor_north_3.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/0",
+      "filename": "basic_conveyor_south_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/1",
+      "filename": "basic_conveyor_south_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/2",
+      "filename": "basic_conveyor_south_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/3",
+      "filename": "basic_conveyor_south_3.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/0",
+      "filename": "basic_conveyor_east_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/1",
+      "filename": "basic_conveyor_east_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/2",
+      "filename": "basic_conveyor_east_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/3",
+      "filename": "basic_conveyor_east_3.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/0",
+      "filename": "basic_conveyor_west_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/1",
+      "filename": "basic_conveyor_west_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/2",
+      "filename": "basic_conveyor_west_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/3",
+      "filename": "basic_conveyor_west_3.png"
     },
     {
       "id": "tex.items.bone",
@@ -242,7 +299,7 @@
       "filename": "automation_slot.out2.png"
     },
     {
-      "id": "tex.gui.automation_slot.fuel/0",
+      "id": "tex.gui.automation_slot.fuel",
       "filename": "automation_slot.fuel0.png"
     },
     {
@@ -1118,10 +1175,22 @@
       "name": "Basic Conveyor",
       "tool": "pickaxe",
       "textures": [
-        "tex.tiles.basic_conveyor/0",
-        "tex.tiles.basic_conveyor/1",
-        "tex.tiles.basic_conveyor/2",
-        "tex.tiles.basic_conveyor/3"
+        "tex.tiles.basic_conveyor/north/0",
+        "tex.tiles.basic_conveyor/north/1",
+        "tex.tiles.basic_conveyor/north/2",
+        "tex.tiles.basic_conveyor/north/3",
+        "tex.tiles.basic_conveyor/east/0",
+        "tex.tiles.basic_conveyor/east/1",
+        "tex.tiles.basic_conveyor/east/2",
+        "tex.tiles.basic_conveyor/east/3",
+        "tex.tiles.basic_conveyor/south/0",
+        "tex.tiles.basic_conveyor/south/1",
+        "tex.tiles.basic_conveyor/south/2",
+        "tex.tiles.basic_conveyor/south/3",
+        "tex.tiles.basic_conveyor/west/0",
+        "tex.tiles.basic_conveyor/west/1",
+        "tex.tiles.basic_conveyor/west/2",
+        "tex.tiles.basic_conveyor/west/3"
       ],
       "drops": "loot.tiles.basic_conveyor.mine.any",
       "mining_resistance": 5,

@@ -26,6 +26,7 @@ GUI* mainMenuGUI;
 GUI* playMenuGUI;
 GUI* creditsMenuGUI;
 GUI* worldCreationGUI;
+GUI* settingsMenuGUI;
 World* world;
 bool doWorldTick;
 
@@ -102,10 +103,10 @@ int main()
 	double LOAD_TIME = al_get_time();
 	lsg_write_to_session_log(INFO, "DONE LOADING IN %.3lf SECONDS!",LOAD_TIME-BEGIN_TIME);
 
-	al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_set_sample_instance_playmode(loaded_audio_sample_instances["themes.menu"][0], ALLEGRO_PLAYMODE_LOOP);
+	al_play_sample_instance(loaded_audio_sample_instances["themes.menu"][0]);
 
 	char keys_pressed = 0; //NULL,NULL,NULL,NULL,W,A,S,D
-
 	printf("\n");
 	worldMutex = al_create_mutex();
 	worldTickerThread = al_create_thread(&WorldTickerFunc, world);
@@ -114,6 +115,7 @@ int main()
 	playMenuGUI = new PlayMenuGUI();
 	worldCreationGUI = new WorldCreationMenuGUI();
 	creditsMenuGUI = new CreditsMenuGUI();
+	settingsMenuGUI = new SettingsMenuGUI();
 	currentGUI = mainMenuGUI;
 	while (true)
 	{
@@ -136,7 +138,6 @@ int main()
 		}
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-
 		currentGUI->DrawGUI();
 		
 		DebugInfo::framesEnd.push(al_get_time());

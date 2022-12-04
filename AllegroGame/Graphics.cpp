@@ -32,6 +32,30 @@ void init_sound()
 	if(!al_init_acodec_addon())
 		lsg_write_to_session_log(ERROR, "FAILED TO INSTALL AUDIO!!!PROCEEDING INITIALIZATION WITH NO AUDIO!!!");
 	al_reserve_samples(40);
+	unsigned int freq = al_get_mixer_frequency(al_get_default_mixer());
+	ALLEGRO_AUDIO_DEPTH depth = al_get_mixer_depth(al_get_default_mixer());
+	ALLEGRO_CHANNEL_CONF conf = al_get_mixer_channels(al_get_default_mixer());
+	game_master_audio_mixer = al_create_mixer(freq, depth, conf);
+	game_theme_music_audio_mixer = al_create_mixer(freq, depth, conf);
+	game_tile_passive_audio_mixer = al_create_mixer(freq, depth, conf);
+	game_combat_audio_mixer = al_create_mixer(freq, depth, conf);
+	/*
+	
+	bool r1 = al_attach_mixer_to_voice(game_master_audio_mixer, al_get_default_voice());
+	bool r2 = al_attach_mixer_to_voice(game_theme_music_audio_mixer, al_get_default_voice());
+	bool r3 = al_attach_mixer_to_voice(game_tile_passive_audio_mixer, al_get_default_voice());
+	bool r4 = al_attach_mixer_to_voice(game_combat_audio_mixer, al_get_default_voice());
+	*/
+	
+	al_detach_mixer(game_master_audio_mixer);
+	al_attach_mixer_to_mixer(game_master_audio_mixer, al_get_default_mixer());
+	al_detach_mixer(game_theme_music_audio_mixer);
+	al_attach_mixer_to_mixer(game_theme_music_audio_mixer, game_master_audio_mixer);
+	al_detach_mixer(game_tile_passive_audio_mixer);
+	al_attach_mixer_to_mixer(game_tile_passive_audio_mixer, game_master_audio_mixer);
+	al_detach_mixer(game_combat_audio_mixer);
+	al_attach_mixer_to_mixer(game_combat_audio_mixer, game_master_audio_mixer);
+	al_set_mixer_gain(game_master_audio_mixer, 0.f);
 	lsg_write_to_session_log(INFO, "AUDIO SUCCESSFULLY INITIALIZED!");
 }
 

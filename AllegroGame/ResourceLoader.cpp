@@ -34,6 +34,8 @@
 #define _INIT_GTILE(classname){classname::Init(ground_tile_data[classname::ID]);prototype_gtiles[classname::ID] = new classname(nullptr, 0, 0);}
 #define _INIT_ITEM(classname){classname::Init(item_data[classname::ID]);prototype_items[classname::ID] = new classname();}
 
+#include "MathUtils.h"
+
 #include "Recipe.h"
 
 #define DEBUG
@@ -72,6 +74,7 @@ const std::string DATA_JSON_CONVEYOR_MAX_ITEMS_KEY = "conveyor_max_items";
 const std::string DATA_JSON_CONVEYOR_SPEED_KEY = "conveyor_speed";
 const std::string DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY = "conveyor_item_dist";
 const std::string DATA_JSON_TILE_ID_KEY = "tile";
+const std::string DATA_JSON_AUDIO_TYPE_KEY = "type";
 
 nlohmann::json json_data;
 
@@ -79,6 +82,10 @@ std::unordered_map<std::string, ALLEGRO_MOUSE_CURSOR*> loaded_cursors;
 std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;	
 std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE*>> loaded_audio_samples;
 std::unordered_map<std::string, std::vector<ALLEGRO_SAMPLE_INSTANCE*>> loaded_audio_sample_instances;
+ALLEGRO_MIXER* game_master_audio_mixer;
+ALLEGRO_MIXER* game_theme_music_audio_mixer;
+ALLEGRO_MIXER* game_tile_passive_audio_mixer;
+ALLEGRO_MIXER* game_combat_audio_mixer;
 std::unordered_map<std::string, AudioMultiTrack*> loaded_audio_multi_tracks;
 std::unordered_map<std::string, Shader*> loaded_shaders;
 std::unordered_map<std::string, LootBundle*> loaded_loot_bundles;
@@ -107,6 +114,111 @@ int game_version_minor;
 
 ALLEGRO_BITMAP* window_icon;
 
+ALLEGRO_BITMAP* global_texture_atlas;
+
+class AtlasTextureDescriptor {
+public:
+	ALLEGRO_BITMAP* bmp;
+	std::string key;
+	int size;
+	int xpos;
+	int ypos;
+	int width;
+	int height;
+	int id;
+	AtlasTextureDescriptor(std::string id, ALLEGRO_BITMAP* b) : key( id ), bmp { b }, xpos{ 0 }, ypos{ 0 }, id{ 0 } {
+#undef max
+		int m = std::max(al_get_bitmap_height(b), al_get_bitmap_width(b));
+		int v = msb32(m);
+		width = al_get_bitmap_width(b);
+		height = al_get_bitmap_height(b);
+		size = (m == v) ? m : v << 1;
+	}
+
+	bool operator<(const AtlasTextureDescriptor& d) const {
+		return size < d.size;
+	}
+
+	bool operator>(const AtlasTextureDescriptor& d) const {
+		return size > d.size;
+	}
+};
+
+int get_atlas_xpos_by_id(long long id) {
+	int r = 0;
+	int shift = 1;
+	while (id > 0) {
+		if (id & 1)
+			r += shift;
+		shift <<= 1;
+		id >>= 2;
+	}
+	return r;
+}
+
+int get_atlas_ypos_by_id(long long id) {
+	int r = 0;
+	int shift = 1;
+	while (id > 0) {
+		if (id & 2)
+			r += shift;
+		shift <<= 1;
+		id >>= 2;
+	}
+	return r;
+}
+
+void gen_tex_atlas() {
+	int ATLAS_INITIAL_SIZE = 16384;
+	lsg_write_to_session_log(INFO, "GENERATING TEXTURE ATLAS...");
+	lsg_write_to_session_log(INFO, "PRE-ALLOCATING BITMAP %dx%d FOR ATLAS...", ATLAS_INITIAL_SIZE, ATLAS_INITIAL_SIZE);
+	al_set_new_bitmap_flags(ALLEGRO_CONVERT_BITMAP);
+	global_texture_atlas = al_create_bitmap(ATLAS_INITIAL_SIZE, ATLAS_INITIAL_SIZE);
+
+	lsg_write_to_session_log(INFO, "DONE! SORTING LOADED BITMAPS...");
+	std::vector<AtlasTextureDescriptor> bitmaps_list;
+	for (const std::pair<std::string, ALLEGRO_BITMAP*>& p : loaded_bitmaps) {
+		if(p.second)
+			bitmaps_list.push_back(AtlasTextureDescriptor(p.first, p.second));
+	}
+	std::sort(bitmaps_list.begin(), bitmaps_list.end(), std::greater());
+
+	lsg_write_to_session_log(INFO, "DONE! COPYING BITMAPS TO ATLAS...");
+	al_set_target_bitmap(global_texture_atlas);
+	int id = 0;
+	int maxx = 0, maxy = 0;
+	for (int i = 0; i < bitmaps_list.size(); i++)
+	{
+		AtlasTextureDescriptor& desc = bitmaps_list[i];
+		int drawx = get_atlas_xpos_by_id(id);
+		int drawy = get_atlas_ypos_by_id(id);
+		desc.xpos = drawx;
+		desc.ypos = drawy;
+		al_draw_bitmap(desc.bmp, drawx,  drawy, 0);
+		maxx = std::max(maxx, drawx + al_get_bitmap_width(desc.bmp));
+		maxy = std::max(maxy, drawy + al_get_bitmap_height(desc.bmp));
+		id += desc.size * desc.size;
+	}
+	lsg_write_to_session_log(INFO, "DONE! CLIPPING ATLAS AND CACHING...");
+	al_set_new_bitmap_flags(ALLEGRO_CONVERT_BITMAP);
+	ALLEGRO_BITMAP* compressed_atlas = al_create_bitmap(maxx, maxy);
+	al_set_target_bitmap(compressed_atlas);
+	al_draw_bitmap_region(global_texture_atlas, 0, 0, maxx, maxy, 0, 0, 0);
+	al_destroy_bitmap(global_texture_atlas);
+	global_texture_atlas = compressed_atlas;
+	al_save_bitmap("textures/atlas.png", global_texture_atlas);
+	lsg_write_to_session_log(INFO, "DONE!");
+	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
+	std::unordered_map<std::string, ALLEGRO_BITMAP*> new_textures;
+	for (int i = 0; i < bitmaps_list.size(); i++)
+	{
+		AtlasTextureDescriptor& desc = bitmaps_list[i];
+		al_destroy_bitmap(desc.bmp);
+		new_textures[desc.key] = al_create_sub_bitmap(global_texture_atlas, desc.xpos, desc.ypos, desc.width, desc.height);
+	}
+	loaded_bitmaps = new_textures;
+}
+
 void load_resources()
 {
 	try
@@ -132,6 +244,7 @@ void load_resources()
 			else
 				lsg_write_to_session_log(VERBOSE, "\tSUCCESSFULLY LOADED TEXTURE '%s'(\"%s\")...", id.c_str(), filename.c_str());
 		}
+		gen_tex_atlas();
 		window_icon = loaded_bitmaps[(std::string)json_data["WINDOW_ICON"]];
 		lsg_write_to_session_log(INFO, "WINDOW ICON IS TEXTURE #%s", ((std::string)json_data["WINDOW_ICON"]).c_str());
 
@@ -154,7 +267,17 @@ void load_resources()
 					ALLEGRO_SAMPLE_INSTANCE* i = al_create_sample_instance(s);
 					al_set_sample_instance_playmode(i, ALLEGRO_PLAYMODE_ONCE);
 					al_set_sample_instance_speed(i, 1.0f);
-					al_attach_sample_instance_to_mixer(i, al_get_default_mixer());
+					ALLEGRO_MIXER* mixer = game_master_audio_mixer;
+					if (audio[DATA_JSON_AUDIO_TYPE_KEY] == "tile_passive") {
+						mixer = game_tile_passive_audio_mixer;
+					}
+					else if (audio[DATA_JSON_AUDIO_TYPE_KEY] == "combat") {
+						mixer = game_combat_audio_mixer;
+					}
+					else if (audio[DATA_JSON_AUDIO_TYPE_KEY] == "theme_music") {
+						mixer = game_theme_music_audio_mixer;
+					}
+					al_attach_sample_instance_to_mixer(i, mixer);
 					loaded_audio_samples[id].push_back(s);
 					loaded_audio_sample_instances[id].push_back(i);
 				}
