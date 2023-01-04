@@ -26,7 +26,7 @@ class Tile:
 
 		const int xpos, ypos;
 
-		mutable int miningDamageDone;
+		mutable float miningDamageDone;
 
 		Tile(World* w, int x, int y);
 
@@ -67,9 +67,9 @@ class Tile:
 
 		virtual const ItemBundle* GetMiningResult(Tool* tool) const;
 
-		virtual int GetMiningResistance() const = 0;
-		virtual ToolType GetOptimalToolType() const = 0;
-		virtual int GetMiningDamageDone() const;
+		virtual float GetMiningResistance() const = 0;
+		virtual Tool::ToolType GetOptimalToolType() const = 0;
+		virtual float GetMiningDamageDone() const;
 
 		int GetXpos() const;
 		int GetYpos() const;

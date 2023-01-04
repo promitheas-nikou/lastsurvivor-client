@@ -44,3 +44,11 @@
 #include "CastIronIngotItem.h"
 #include "SteelIngotItem.h"
 #include "BasicBinItem.h"
+#include "GlassSlabItem.h"
+
+//TOOLS
+
+#include "WoodenShovelItem.h"
+#include "WoodenPickaxeItem.h"
+#include "WoodenAxeItem.h"
+

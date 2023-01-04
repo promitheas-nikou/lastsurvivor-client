@@ -90,7 +90,7 @@ void Tile::Use(PlayerEntity* user)
 
 bool Tile::MineWithTool(Tool* tool)
 {
-	if ((tool!=nullptr)&&(static_cast<char>(tool->GetMiningType()) & static_cast<char>(this->GetOptimalToolType())))
+	if ((tool!=nullptr)&&(static_cast<char>(tool->GetToolType()) & static_cast<char>(this->GetOptimalToolType())))
 		miningDamageDone += tool->GetMiningDamage();
 	else
 		miningDamageDone++;
@@ -102,7 +102,7 @@ const ItemBundle* Tile::GetMiningResult(Tool* tool) const
 	return nullptr;
 }
 
-int Tile::GetMiningDamageDone() const
+float Tile::GetMiningDamageDone() const
 {
 	return miningDamageDone;
 }

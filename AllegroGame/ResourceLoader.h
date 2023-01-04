@@ -49,6 +49,9 @@ const extern std::string DATA_JSON_CONVEYOR_SPEED_KEY;
 const extern std::string DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY;
 const extern std::string DATA_JSON_TILE_ID_KEY;
 const extern std::string DATA_JSON_AUDIO_TYPE_KEY;
+const extern std::string DATA_JSON_MINING_TYPE_KEY;
+const extern std::string DATA_JSON_MINING_DAMAGE_KEY;
+const extern std::string DATA_JSON_MINING_LEVEL_KEY;
 
 extern nlohmann::json json_data;
 

@@ -32,10 +32,14 @@ public:
 	friend World;
 
 private:
+
+	GroundTile*& GetGroundTileRef(int x, int y);
+	Tile*& GetTileRef(int x, int y);
+
 	World* world;
 
-	GroundTile* ground_tiles[CHUNK_SIZE_Y][CHUNK_SIZE_X];
-	Tile* tiles[CHUNK_SIZE_Y][CHUNK_SIZE_X];
+	GroundTile* ground_tiles[CHUNK_SIZE_Y*CHUNK_SIZE_X];
+	Tile* tiles[CHUNK_SIZE_Y*CHUNK_SIZE_X];
 	std::set<Tile*> tickingTiles;
 	int chunkX, chunkY;
 

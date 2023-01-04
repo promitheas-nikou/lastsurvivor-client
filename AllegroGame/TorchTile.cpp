@@ -25,12 +25,12 @@ bool TorchTile::CanWalkThrough() const
     return false;
 }
 
-ToolType TorchTile::GetOptimalToolType() const
+Tool::ToolType TorchTile::GetOptimalToolType() const
 {
     return TOOL_TYPE;
 }
 
-int TorchTile::GetMiningResistance() const
+float TorchTile::GetMiningResistance() const
 {
     return MINING_RESISTANCE;
 }

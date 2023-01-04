@@ -23,9 +23,9 @@ protected:
 
 	std::string name;
 
-	ToolType requiredTool;
+	Tool::ToolType requiredTool;
 
-	GroundTile(World* w, int x, int y, std::string n, ToolType t);
+	GroundTile(World* w, int x, int y, std::string n, Tool::ToolType t);
 
 public:
 	virtual std::string GetID() const = 0;
@@ -44,7 +44,7 @@ public:
 
 	virtual int GetMiningResistance() const;
 
-	virtual ToolType GetRequiredToolType() const;
+	virtual Tool::ToolType GetRequiredToolType() const;
 
 	virtual int GetDamageDealtByTool(Tool* tool) const;
 	virtual void Use(PlayerEntity* p);

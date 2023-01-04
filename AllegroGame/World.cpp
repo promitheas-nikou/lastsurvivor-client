@@ -473,7 +473,7 @@ void World::Draw()
     int drawEndY = floor(player->GetYpos()) + OPTION_DRAW_TILES_DOWN;
 
     LIGHTS.clear();
-
+    loaded_shaders["world"]->Use();
     Tile* tmpTile;
     GroundTile* tmpGTile;
     for (int x = drawBeginX-6; x < drawEndX+6; x++)
@@ -509,7 +509,7 @@ void World::Draw()
 
     al_build_transform(&draw_transform, -offset_x, -offset_y, 1, 1, 0);
     al_use_transform(&draw_transform);
-    al_hold_bitmap_drawing(true);
+    //al_hold_bitmap_drawing(true);
     for (int x = drawBeginX; x < drawEndX; x++)
         for (int y = drawBeginY; y < drawEndY; y++)
             if ((tmpGTile = GetGroundTile(x, y)) != nullptr)
@@ -533,6 +533,7 @@ void World::Draw()
         if(!e->IsDead())
             e->Draw();
     player->Draw();
+    al_hold_bitmap_drawing(false);
     if (player->showHitbox)
     {
         loaded_shaders["default"]->Use();
@@ -543,8 +544,8 @@ void World::Draw()
             al_draw_rectangle((e->GetXpos() - e->GetXsize() / 2) * 128, (e->GetYpos() - e->GetYsize() / 2) * 128, (e->GetXpos() + e->GetXsize() / 2) * 128, (e->GetYpos() + e->GetYsize() / 2) * 128, al_map_rgba(255, 255, 255, 255), 3.f);
             al_draw_line(e->GetXpos() * 128, e->GetYpos() * 128, e->GetXpos() * 128 - sinf(-e->GetRotation()) * 32, e->GetYpos() * 128 - cosf(-e->GetRotation()) * 32, al_map_rgba(0, 0, 255, 255), 4);
         }
+        
     }
-    al_hold_bitmap_drawing(false);
     al_build_transform(&draw_transform, 0, 0, 1, 1, 0);
     al_use_transform(&draw_transform);
 }
@@ -616,13 +617,13 @@ World* World::LoadWorldFromFile(std::string filename)
                 {
                     uint32_t gtileid,tileid;
                     chunkdata.read(reinterpret_cast<char*>(&gtileid), sizeof(uint32_t));
-                    chunk->ground_tiles[y][x] = MakeGroundTile(world, cur_gtile_keys[gtileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
-                    chunk->ground_tiles[y][x]->LoadAdditionalDataFromFile(chunkdata);
+                    chunk->GetGroundTileRef(x, y) = MakeGroundTile(world, cur_gtile_keys[gtileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
+                    chunk->GetGroundTile(x, y)->LoadAdditionalDataFromFile(chunkdata);
                     chunkdata.read(reinterpret_cast<char*>(&tileid), sizeof(uint32_t));
-                    chunk->tiles[y][x] = MakeTile(world, cur_tile_keys[tileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
-                    chunk->tiles[y][x]->LoadAdditionalDataFromFile(chunkdata);
-                    if (chunk->tiles[y][x]->DoesTickUpdates())
-                        chunk->AddTickingTile(chunk->tiles[y][x]);
+                    chunk->GetTileRef(x, y) = MakeTile(world, cur_tile_keys[tileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
+                    chunk->GetTile(x, y)->LoadAdditionalDataFromFile(chunkdata);
+                    if (chunk->GetTile(x,y)->DoesTickUpdates())
+                        chunk->AddTickingTile(chunk->GetTile(x,y));
                 }
             chunkdata.close();
             world->chunks[cy][cx] = chunk;
@@ -744,10 +745,10 @@ void World::SaveToFile(std::string filename)
             for (int y = 0; y < WorldChunk::CHUNK_SIZE_Y; y++)
                 for (int x = 0; x < WorldChunk::CHUNK_SIZE_X; x++)
                 {
-                    GroundTile* gt = p2.second->ground_tiles[y][x];
+                    GroundTile* gt = p2.second->GetGroundTile(x,y);
                     chunkdata.write(reinterpret_cast<char*>(&gtile_keys_to_ids[gt->GetID()]), sizeof(uint32_t));
                     gt->WriteAdditionalDataToFile(chunkdata);
-                    Tile* t = p2.second->tiles[y][x];
+                    Tile* t = p2.second->GetTile(x, y);
                     chunkdata.write(reinterpret_cast<char*>(&tile_keys_to_ids[t->GetID()]), sizeof(uint32_t));
                     t->WriteAdditionalDataToFile(chunkdata);
                 }

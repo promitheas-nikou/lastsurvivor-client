@@ -17,12 +17,12 @@ std::string AirTile::GetName() const
 	return "Air";
 }
 
-ToolType AirTile::GetOptimalToolType() const
+Tool::ToolType AirTile::GetOptimalToolType() const
 {
-	return ToolType::NONE;
+	return Tool::ToolType::NONE;
 }
 
-int AirTile::GetMiningResistance() const
+float AirTile::GetMiningResistance() const
 {
 	return 0;
 }

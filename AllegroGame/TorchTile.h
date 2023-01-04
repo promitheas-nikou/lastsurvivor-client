@@ -20,7 +20,7 @@ public:
     virtual bool CanWalkThrough() const final;
 
     virtual ToolType GetOptimalToolType() const final;
-    virtual int GetMiningResistance() const final;
+    virtual float GetMiningResistance() const final;
     virtual std::string GetName() const final;
 
     virtual void RegisterLights() final;

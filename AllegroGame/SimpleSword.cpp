@@ -5,7 +5,7 @@ std::string SimpleSword::NAME;
 ALLEGRO_BITMAP* SimpleSword::TEXTURE;
 float SimpleSword::DAMAGE;
 float SimpleSword::RANGESQ;
-const std::string SimpleSword::ID = "items.sword";
+const std::string SimpleSword::ID = "items.wooden_sword";
 
 std::string SimpleSword::GetID() const
 {

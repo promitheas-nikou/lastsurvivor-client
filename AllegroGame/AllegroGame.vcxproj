@@ -132,7 +132,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -147,7 +147,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -162,7 +162,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -180,7 +180,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -236,12 +236,14 @@
     <ClCompile Include="Directions.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
     <ClCompile Include="DirtItem.cpp" />
+    <ClCompile Include="DrawUtils.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FenceItem.cpp" />
     <ClCompile Include="FenceTile.cpp" />
     <ClCompile Include="FixedQueue.cpp" />
     <ClCompile Include="FlaskItem.cpp" />
     <ClCompile Include="FuelItem.cpp" />
+    <ClCompile Include="GlassSlabItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GroundTileMiner.cpp" />
@@ -280,12 +282,12 @@
     <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp" />
     <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="MeleeWeaponItem.cpp" />
     <ClCompile Include="PhantomUIComponent.cpp" />
-    <ClCompile Include="PickaxeToolItem.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Quest.cpp" />
@@ -300,7 +302,6 @@
     <ClCompile Include="SandGroundTile.cpp" />
     <ClCompile Include="SandItem.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShovelToolItem.cpp" />
     <ClCompile Include="SimpleButtonUIComponent.cpp" />
     <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp" />
     <ClCompile Include="SimpleConsumable.cpp" />
@@ -308,7 +309,10 @@
     <ClCompile Include="SimpleItemInventoryConsumableStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryFuelStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp" />
+    <ClCompile Include="ItemInventoryStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryUsableStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp" />
     <ClCompile Include="SimpleLootBundle.cpp" />
@@ -336,6 +340,9 @@
     <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="VariableAmountItem.cpp" />
     <ClCompile Include="WeightedLootBundle.cpp" />
+    <ClCompile Include="WoodenAxeItem.cpp" />
+    <ClCompile Include="WoodenPickaxeItem.cpp" />
+    <ClCompile Include="WoodenShovelItem.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
     <ClCompile Include="SimpleInventoryGUI.cpp" />
     <ClCompile Include="SimpleItemBundle.cpp" />
@@ -411,12 +418,14 @@
     <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
     <ClInclude Include="DirtItem.h" />
+    <ClInclude Include="DrawUtils.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FenceItem.h" />
     <ClInclude Include="FenceTile.h" />
     <ClInclude Include="FixedQueue.h" />
     <ClInclude Include="FlaskItem.h" />
     <ClInclude Include="FuelItem.h" />
+    <ClInclude Include="GlassSlabItem.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GroundTileMiner.h" />
@@ -458,6 +467,7 @@
     <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="LuaInterface.h" />
@@ -465,7 +475,6 @@
     <ClInclude Include="MeleeWeaponItem.h" />
     <ClInclude Include="miniz.h" />
     <ClInclude Include="PhantomUIComponent.h" />
-    <ClInclude Include="PickaxeToolItem.h" />
     <ClInclude Include="PlayerEntity.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Quest.h" />
@@ -480,7 +489,6 @@
     <ClInclude Include="SandGroundTile.h" />
     <ClInclude Include="SandItem.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShovelToolItem.h" />
     <ClInclude Include="SimpleButtonUIComponent.h" />
     <ClInclude Include="SimpleCallbackTextDrawUIComponent.h" />
     <ClInclude Include="SimpleConsumable.h" />
@@ -488,7 +496,10 @@
     <ClInclude Include="SimpleItemInventoryConsumableStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryFuelStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h" />
+    <ClInclude Include="ItemInventoryStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryUsableStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h" />
     <ClInclude Include="SimpleLootBundle.h" />
@@ -515,6 +526,9 @@
     <ClInclude Include="UsableItem.h" />
     <ClInclude Include="VariableAmountItem.h" />
     <ClInclude Include="WeightedLootBundle.h" />
+    <ClInclude Include="WoodenAxeItem.h" />
+    <ClInclude Include="WoodenPickaxeItem.h" />
+    <ClInclude Include="WoodenShovelItem.h" />
     <ClInclude Include="ZombieEntity.h" />
     <ClInclude Include="SimpleInventoryGUI.h" />
     <ClInclude Include="SimpleItemBundle.h" />

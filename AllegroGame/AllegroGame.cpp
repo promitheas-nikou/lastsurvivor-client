@@ -17,6 +17,8 @@
 
 #include "Shader.h"
 
+#define MIN_FPS 20
+
 //ALLEGRO_THREAD* 
 
 const float TPS = 50.f;

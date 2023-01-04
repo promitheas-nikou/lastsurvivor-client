@@ -1,8 +1,8 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 2.3",
-  "VER_MINOR": 3,
-  "VER_MAJOR": 2,
+  "VERSION": "ALPHA 3.2",
+  "VER_MINOR": 2,
+  "VER_MAJOR": 3,
   "WINDOW_ICON": "icon",
   "shaders": [
     {
@@ -109,6 +109,30 @@
     {
       "id": "tex.items.charcoal",
       "filename": "charcoal_item.png"
+    },
+    {
+      "id": "tex.items.wooden_sword",
+      "filename": "wooden_sword.png"
+    },
+    {
+      "id": "tex.items.wooden_pickaxe",
+      "filename": "wooden_pickaxe.png"
+    },
+    {
+      "id": "tex.items.wooden_shovel",
+      "filename": "wooden_shovel.png"
+    },
+    {
+      "id": "tex.items.wooden_axe",
+      "filename": "wooden_axe.png"
+    },
+    {
+      "id": "tex.items.wooden_hoe",
+      "filename": "wooden_hoe.png"
+    },
+    {
+      "id": "tex.items.glass_slab",
+      "filename": "glass_slab.png"
     },
     {
       "id": "tex.items.basic_conveyor",
@@ -1376,6 +1400,12 @@
   ],
   "items": [
     {
+      "id": "items.glass_slab",
+      "name": "Glass Slab",
+      "description": "A slab of glass. Can be produced by melting glass in a furnace. Can be used to construct many things.",
+      "texture": "tex.items.glass_slab"
+    },
+    {
       "id": "items.basic_bin",
       "name": "Basic Bin",
       "description": "A wooden bin that can be used to store a few items.",
@@ -1502,29 +1532,39 @@
       "texture": "tex.items.sand"
     },
     {
-      "id": "items.tools.pickaxe",
-      "name": "Pickaxe",
-      "texture": "tex.items.pickaxe",
-      "mine_damage": 2
-    },
-    {
-      "id": "items.tools.shovel",
-      "name": "Shovel",
-      "texture": "tex.items.shovel",
-      "mine_damage": 2
-    },
-    {
-      "id": "items.tools.axe",
-      "name": "Axe",
-      "texture": "tex.items.axe",
-      "mine_damage": 2
-    },
-    {
-      "id": "items.sword",
-      "name": "Sword",
-      "texture": "tex.items.sword",
+      "id": "items.wooden_sword",
+      "name": "Wooden Sword",
+      "description": "Wooden Sword",
+      "texture": "tex.items.wooden_sword",
       "rangesq": 4,
       "damage": 10
+    },
+    {
+      "id": "items.wooden_shovel",
+      "name": "Wooden Shovel",
+      "description": "Wooden Shovel",
+      "texture": "tex.items.wooden_shovel",
+      "damage": 2,
+      "level": 1,
+      "type": "shovel"
+    },
+    {
+      "id": "items.wooden_pickaxe",
+      "name": "Wooden Pickaxe",
+      "description": "Wooden Pickaxe",
+      "texture": "tex.items.wooden_pickaxe",
+      "damage": 2,
+      "level": 1,
+      "type": "pickaxe"
+    },
+    {
+      "id": "items.wooden_axe",
+      "name": "Wooden Axe",
+      "description": "Wooden Axe",
+      "texture": "tex.items.wooden_axe",
+      "damage": 2,
+      "level": 1,
+      "type": "axe"
     },
     {
       "id": "items.gun",
@@ -1690,6 +1730,63 @@
         "output": [
           {
             "id": "items.fence",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.wooden_pickaxe_from_wood",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 10
+          },
+          {
+            "id": "items.log",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.wooden_pickaxe",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.wooden_shovel_from_wood",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 10
+          },
+          {
+            "id": "items.log",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.wooden_shovel",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.wooden_axe_from_wood",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 10
+          },
+          {
+            "id": "items.log",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.wooden_axe",
             "amount": 1
           }
         ]

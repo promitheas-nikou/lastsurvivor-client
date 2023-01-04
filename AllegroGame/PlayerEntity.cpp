@@ -22,6 +22,8 @@
 #include <algorithm>
 #include "AllegroGame.h"
 #include "SimpleTextButtonUIComponent.h"
+#include "Config.h"
+#include "DrawUtils.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -141,19 +143,19 @@ void PlayerEntity::PreDrawThisGUI()
 
 	if (debug >= 1)
 	{
-		al_draw_filled_rectangle(100, 50, 300, 180, al_map_rgba(0, 150, 255, 150));
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 55, 0, "TIME: %d", GetContainingWorld()->gametime);
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(0, 0, 0, 255), 110, 135, 0, "FPS: %.1lf", DebugInfo::framesEnd.empty() ? 0 : DebugInfo::FRAMES_RECORD_NUM / (DebugInfo::framesEnd.back() - DebugInfo::framesEnd.front()));
+		al_draw_filled_rectangle(100, 50, 300, 180, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_0);
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 55, 0, "TIME: %d", GetContainingWorld()->gametime);
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 135, 0, "FPS: %.1lf", DebugInfo::framesEnd.empty() ? 0 : DebugInfo::FRAMES_RECORD_NUM / (DebugInfo::framesEnd.back() - DebugInfo::framesEnd.front()));
 	}
 
 	float x = GET_MOUSE_XPOS(mouseState);
 	float y = GET_MOUSE_YPOS(mouseState);
 	if (debug >= 2)
 	{
-		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 500, 50, SCREEN_WIDTH / 2 - 270, 250, al_map_rgba(150, 255, 0, 150));
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 490), 60, 0, "Chunk X: %d", (int)util_floor(x / WorldChunk::CHUNK_SIZE_X));
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 490), 95, 0, "Chunk Y: %d", (int)util_floor(y / WorldChunk::CHUNK_SIZE_Y));
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 500, 50, SCREEN_WIDTH / 2 - 270, 250, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_1);
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 490), 60, 0, "Chunk X: %d", (int)util_floor(x / WorldChunk::CHUNK_SIZE_X));
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 490), 95, 0, "Chunk Y: %d", (int)util_floor(y / WorldChunk::CHUNK_SIZE_Y));
 	}
 
 	Tile* targetedTile = containingWorld->GetTile(floor(x), floor(y));
@@ -175,14 +177,14 @@ void PlayerEntity::PreDrawThisGUI()
 
 	if (debug >= 3)
 	{
-		al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 270, 50, SCREEN_WIDTH / 2 + 600, 250, al_map_rgba(0, 200, 130, 150));
-		al_draw_text(loaded_fonts["default"][25], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
-		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
-		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
-		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
-		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
-		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
-		al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
+		al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 270, 50, SCREEN_WIDTH / 2 + 600, 250, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_2);
+		al_draw_text(loaded_fonts["default"][25], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
+		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
+		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
+		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
+		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
+		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
+		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
 	}
 	if (infoMenu) {
 		if (targetedTile != nullptr) {
@@ -206,23 +208,24 @@ void PlayerEntity::PreDrawThisGUI()
 			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 150, 150, 150));
 			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 150, 150, 150));
 		}
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", targetedGroundTile==nullptr?"<NULL>":targetedGroundTile->GetName().c_str());
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity != nullptr) ? targetedEntity->GetName().c_str() : "None");
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", targetedGroundTile==nullptr?"<NULL>":targetedGroundTile->GetName().c_str());
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
+		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity != nullptr) ? targetedEntity->GetName().c_str() : "None");
 		if (targetedEntity != nullptr)
 		{
-			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 0, 0, 150));
-			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedEntity->GetHealth() / targetedEntity->maxHealth)), 205, al_map_rgba(255, 0, 0, 150));
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0);
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190 * (targetedEntity->GetHealth() / targetedEntity->maxHealth)), 205, gameconfig::PLAYER_MENU_PROGBAR_FILL_COLOR_0);
 		}
 		else
-			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, al_map_rgba(150, 150, 150, 150));
+			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_1);
 	}
 	int yn = SCREEN_HEIGHT - 20;
 	for (std::list<PlayerNotification*>::reverse_iterator it = notifications.rbegin(); it!=notifications.rend();)
 	{
 		if ((*it)->ShouldBeRemoved(GUItimer))
 		{
+			delete (*it);
 			notifications.erase(--(it.base()));
 		}
 		else
@@ -253,7 +256,7 @@ void PlayerEntity::PreDrawThisGUI()
 		m = "CONSUME";
 		break;
 	}
-	al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s (%s)", m, buildRotation.ToString().c_str());
+	al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s (%s)", m, buildRotation.ToString().c_str());
 
 	switch(guistate)
 	{
@@ -304,6 +307,17 @@ void PlayerEntity::PreDrawThisGUI()
 				al_set_mouse_cursor(main_display, loaded_cursors["axe"]);
 				break;
 			}
+
+			if(showCursorInfoBox)
+				if (targetedTile || targetedGroundTile)
+				{
+					al_draw_filled_rectangle(mouseState.x, mouseState.y, mouseState.x + 200, mouseState.y + 100, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_0);
+					al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, mouseState.x + 100, mouseState.y + 10, ALLEGRO_ALIGN_CENTER, "[%c]%s", targetedTile && !targetedTile->IsEmpty() ? 'T' : 'G', targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetName().c_str() : targetedGroundTile->GetName().c_str());
+					float a = targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetMiningDamageDone() : ((targetedGroundTile == GroundTileMiner::GetTarget()) ? GroundTileMiner::GetMiningDamageDone() : 0);
+					float b = targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetMiningResistance() : targetedGroundTile->GetMiningResistance();
+					DrawUtils::DrawProgressBarWriteValue(mouseState.x + 10, mouseState.y + 70, mouseState.x + 190, mouseState.y + 90, gameconfig::PLAYER_MENU_PROGBAR_FILL_COLOR_0, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0, loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), DRAW_UTILS_WRITE_PERCENTAGE_NUMBER_FORMAT_FLOAT_RATIO, b-a, b);
+				}
+			
 			break;
 		}
 		case PlayerActionMode::CONSUME:
@@ -480,6 +494,9 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 			activeSubGUI = nullptr;
 		}
 		break;
+	case ALLEGRO_KEY_ALT:
+		showCursorInfoBox = true;
+		break;
 	case ALLEGRO_KEY_ESCAPE:
 		if (guistate == PLAYER_GUI_STATE::WORLD)
 		{
@@ -625,6 +642,9 @@ bool PlayerEntity::KeyUp(ALLEGRO_KEYBOARD_EVENT& event)
 		break;
 	case ALLEGRO_KEY_D:
 		keys_pressed &= 0b11111110;
+		break;
+	case ALLEGRO_KEY_ALT:
+		showCursorInfoBox = false;
 		break;
 	}
 	return true;
@@ -910,6 +930,18 @@ void PlayerEntity::MineTile(int x, int y)
 	if (tile->IsEmpty())
 	{
 		SetTarget(containingWorld,x,y);
+		if(GroundTileMiner::GetTarget())
+			switch (GroundTileMiner::GetTarget()->GetRequiredToolType()) {
+			case Tool::ToolType::PICKAXE:
+				GroundTileMiner::SetTool(dynamic_cast<ToolItem*>(pickaxeTool));
+				break;
+			case Tool::ToolType::SHOVEL:
+				GroundTileMiner::SetTool(dynamic_cast<ToolItem*>(shovelTool));
+				break;
+			case Tool::ToolType::AXE:
+				GroundTileMiner::SetTool(dynamic_cast<ToolItem*>(axeTool));
+				break;
+			}
 		this->Mine();
 		return;
 	}
@@ -919,21 +951,21 @@ void PlayerEntity::MineTile(int x, int y)
 	switch (tile->GetOptimalToolType())
 	{
 	case ToolType::PICKAXE:
-		t = dynamic_cast<Tool*>(pickaxeTool);
+		t = dynamic_cast<ToolItem*>(pickaxeTool);
 		break;
 	case ToolType::AXE:
-		t = dynamic_cast<Tool*>(axeTool);
+		t = dynamic_cast<ToolItem*>(axeTool);
 		break;
 	case ToolType::SHOVEL:
-		t = dynamic_cast<Tool*>(shovelTool);
+		t = dynamic_cast<ToolItem*>(shovelTool);
 		break;
 	case ToolType::PUMP:
-		t = dynamic_cast<Tool*>(pumpTool);
+		t = dynamic_cast<ToolItem*>(pumpTool);
 		break;
 	case ToolType::NONE:
 		break;
 	}
-	success = tile->MineWithTool(nullptr);
+	success = tile->MineWithTool(t);
 	if (success)
 	{
 		if (GetContainingWorld()->GetQuestCollection() != nullptr)
@@ -1107,8 +1139,8 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	usablesInventory = new SimpleItemInventory(5);
 	consumablesInventory = new SimpleItemInventory(5);
 	placeablesInventory = new SimpleItemInventory(5);
-	meleeWeapon = new SimpleSword();
-	rangedWeapon = new GunItem();
+	meleeWeapon = nullptr;
+	rangedWeapon = nullptr;
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
@@ -1145,6 +1177,15 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	}
 	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 280, 128, 128, meleeWeapon, InventoryGUI::StorageSlotType::MELEE);
 	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 280, 128, 128, rangedWeapon, InventoryGUI::StorageSlotType::RANGED);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 280, 128, 128, meleeWeapon, InventoryGUI::StorageSlotType::MELEE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 280, 128, 128, rangedWeapon, InventoryGUI::StorageSlotType::RANGED);
+
+	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 152, 128, 128, pickaxeTool, InventoryGUI::StorageSlotType::PICKAXE);
+	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 152, 128, 128, shovelTool, InventoryGUI::StorageSlotType::SHOVEL);
+	hotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 5, SCREEN_HEIGHT - 152, 128, 128, axeTool, InventoryGUI::StorageSlotType::AXE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 152, 128, 128, pickaxeTool, InventoryGUI::StorageSlotType::PICKAXE);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 152, 128, 128, shovelTool, InventoryGUI::StorageSlotType::SHOVEL);
+	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 5, SCREEN_HEIGHT - 152, 128, 128, axeTool, InventoryGUI::StorageSlotType::AXE);
 
 	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::PLACEABLE);
 	placeableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 280, 128, 128, *placeablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::PLACEABLE);
@@ -1163,9 +1204,6 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 3, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(2), InventoryGUI::StorageSlotType::CONSUMABLE);
 	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 5, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(3), InventoryGUI::StorageSlotType::CONSUMABLE);
 	consumableHotbarGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 7, SCREEN_HEIGHT - 280, 128, 128, *consumablesInventory->GetItemPtr(4), InventoryGUI::StorageSlotType::CONSUMABLE);
-
-	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 9, SCREEN_HEIGHT - 280, 128, 128, meleeWeapon, InventoryGUI::StorageSlotType::MELEE);
-	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 7, SCREEN_HEIGHT - 280, 128, 128, rangedWeapon, InventoryGUI::StorageSlotType::RANGED);
 
 	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 - 64 * 1, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(0), InventoryGUI::StorageSlotType::PLACEABLE);
 	inventoryGUI->AddSlot(SCREEN_WIDTH / 2 + 64 * 1, SCREEN_HEIGHT - 408, 128, 128, *placeablesInventory->GetItemPtr(1), InventoryGUI::StorageSlotType::PLACEABLE);
@@ -1250,10 +1288,17 @@ PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, in
 	return p;
 }
 
+PlayerNotification::~PlayerNotification()
+{
+	al_destroy_bitmap(content);
+}
+
 void PlayerEntity::PauseMenuGUI::PreDrawThisGUI()
 {
 	al_draw_filled_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, al_map_rgba(150, 150, 150, 150));
 }
+
+#include "AllegroGame.h"
 
 PlayerEntity::PauseMenuGUI::PauseMenuGUI(PlayerEntity* p)
 {
@@ -1282,6 +1327,7 @@ PlayerEntity::PauseMenuGUI::PauseMenuGUI(PlayerEntity* p)
 			p->PushNotification("SUCCESSFULLY SAVED WORLD!!!", 24);
 			al_destroy_native_file_dialog(f);
 			delete p->GetContainingWorld();
+			::world = nullptr;
 			al_stop_samples();
 			al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
 			currentGUI = mainMenuGUI;
@@ -1294,6 +1340,7 @@ PlayerEntity::PauseMenuGUI::PauseMenuGUI(PlayerEntity* p)
 		}, al_map_rgba(255, 255, 255, 255), al_map_rgba(0, 0, 0, 255), "SAVE AND EXIT"));
 	UIcomponents.push_back(new SimpleTextButtonUIComponent(SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 150, 300, 100, [p]() {
 		delete p->GetContainingWorld();
+		::world = nullptr;
 		al_stop_samples();
 		al_play_sample(loaded_audio_samples["themes.menu"][0], 1., 1., 1., ALLEGRO_PLAYMODE_LOOP, NULL);
 		currentGUI = mainMenuGUI;

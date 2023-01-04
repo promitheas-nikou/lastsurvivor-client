@@ -8,7 +8,13 @@ class ToolItem:
 	public virtual Item
 {
 protected:
-	ToolItem(std::string name);
-	virtual ~ToolItem() = default;
+
+	ToolItem() = default;
+
+	virtual int GetMaxStackSize() const override;
+
+	virtual void DrawItemDetailsPane(int x, int y);
+
+	virtual ~ToolItem() = 0;
 };
 

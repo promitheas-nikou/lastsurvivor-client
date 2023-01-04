@@ -25,12 +25,12 @@ bool BrickWallTile::CanWalkThrough() const
     return false;
 }
 
-ToolType BrickWallTile::GetOptimalToolType() const
+Tool::ToolType BrickWallTile::GetOptimalToolType() const
 {
     return TOOL_TYPE;
 }
 
-int BrickWallTile::GetMiningResistance() const
+float BrickWallTile::GetMiningResistance() const
 {
     return MINING_RESISTANCE;
 }

@@ -38,12 +38,12 @@ Item* BasicBinTile::PullItem(Direction d, ItemIOInterface* to)
     return inventory->PullItem();
 }
 
-ToolType BasicBinTile::GetOptimalToolType() const
+Tool::ToolType BasicBinTile::GetOptimalToolType() const
 {
     return TOOL_TYPE;
 }
 
-int BasicBinTile::GetMiningResistance() const
+float BasicBinTile::GetMiningResistance() const
 {
     return MINING_RESISTANCE;
 }

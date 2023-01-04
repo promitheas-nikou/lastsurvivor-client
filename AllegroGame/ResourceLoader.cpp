@@ -75,6 +75,9 @@ const std::string DATA_JSON_CONVEYOR_SPEED_KEY = "conveyor_speed";
 const std::string DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY = "conveyor_item_dist";
 const std::string DATA_JSON_TILE_ID_KEY = "tile";
 const std::string DATA_JSON_AUDIO_TYPE_KEY = "type";
+const std::string DATA_JSON_MINING_TYPE_KEY = "type";
+const std::string DATA_JSON_MINING_DAMAGE_KEY = "damage";
+const std::string DATA_JSON_MINING_LEVEL_KEY = "level";
 
 nlohmann::json json_data;
 
@@ -449,6 +452,10 @@ void init_items()
 		_INIT_ITEM(SteelIngotItem)
 		_INIT_ITEM(CastIronIngotItem)
 		_INIT_ITEM(BasicBinItem)
+		_INIT_ITEM(GlassSlabItem)
+		_INIT_ITEM(WoodenShovelItem)
+		_INIT_ITEM(WoodenAxeItem)
+		_INIT_ITEM(WoodenPickaxeItem)
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

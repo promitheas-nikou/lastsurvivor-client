@@ -63,7 +63,7 @@ public:
     virtual void Use(PlayerEntity* user) final;
 
     virtual ToolType GetOptimalToolType() const final;
-    virtual int GetMiningResistance() const final;
+    virtual float GetMiningResistance() const final;
     virtual std::string GetName() const final;
 
     virtual void WriteAdditionalDataToFile(std::ofstream& file) final;

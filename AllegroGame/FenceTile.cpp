@@ -24,12 +24,12 @@ bool FenceTile::CanWalkThrough() const
     return false;
 }
 
-ToolType FenceTile::GetOptimalToolType() const
+Tool::ToolType FenceTile::GetOptimalToolType() const
 {
     return TOOL_TYPE;
 }
 
-int FenceTile::GetMiningResistance() const
+float FenceTile::GetMiningResistance() const
 {
     return MINING_RESISTANCE;
 }

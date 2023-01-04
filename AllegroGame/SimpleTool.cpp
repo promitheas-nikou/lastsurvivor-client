@@ -5,7 +5,7 @@ void SimpleTool::SetToolType(ToolType newtype)
     type = newtype;
 }
 
-void SimpleTool::SetDamage(int dmg)
+void SimpleTool::SetDamage(float dmg)
 {
     damage = dmg;
 }
@@ -13,12 +13,12 @@ void SimpleTool::SetDamage(int dmg)
 SimpleTool::SimpleTool(ToolType t, int d) : type{ t }, damage{ d }
 {}
 
-ToolType SimpleTool::GetMiningType() const
+Tool::ToolType SimpleTool::GetToolType() const
 {
     return type;
 }
 
-int SimpleTool::GetMiningDamage() const
+float SimpleTool::GetMiningDamage() const
 {
     return damage;
 }

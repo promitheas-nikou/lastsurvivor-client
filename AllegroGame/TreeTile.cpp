@@ -23,12 +23,12 @@ bool TreeTile::CanWalkThrough() const
     return false;
 }
 
-ToolType TreeTile::GetOptimalToolType() const
+Tool::ToolType TreeTile::GetOptimalToolType() const
 {
     return TOOL_TYPE;
 }
 
-int TreeTile::GetMiningResistance() const
+float TreeTile::GetMiningResistance() const
 {
     return MINING_RESISTANCE;
 }

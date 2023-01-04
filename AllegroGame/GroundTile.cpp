@@ -9,7 +9,7 @@
 #include <format>
 #include "ResourceLoader.h"
 
-GroundTile::GroundTile(World* w, int x, int y, std::string n, ToolType t) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ t } {}
+GroundTile::GroundTile(World* w, int x, int y, std::string n, Tool::ToolType t) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ t } {}
 
 void GroundTile::LoadAdditionalDataFromFile(std::ifstream &file)
 {
@@ -51,7 +51,7 @@ int GroundTile::GetMiningResistance() const
     return 10;
 }
 
-ToolType GroundTile::GetRequiredToolType() const
+Tool::ToolType GroundTile::GetRequiredToolType() const
 {
     return requiredTool;
 }
@@ -60,7 +60,7 @@ int GroundTile::GetDamageDealtByTool(Tool* tool) const
 {
     if (tool == nullptr)
         return 1;
-    return (static_cast<char>(tool->GetMiningType()) & static_cast<char>(GetRequiredToolType())) ? tool->GetMiningDamage() : 1;
+    return (static_cast<char>(tool->GetToolType()) & static_cast<char>(GetRequiredToolType())) ? tool->GetMiningDamage() : 1;
 }
 
 void GroundTile::Use(PlayerEntity* p)

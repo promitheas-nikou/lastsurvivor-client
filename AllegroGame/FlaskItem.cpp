@@ -24,7 +24,7 @@ int FlaskItem::GetMaxStackSize() const
 	return 1;
 }
 
-FlaskItem::FlaskItem() : Item(NAME, DESCRIPTION), SimpleUsableConsumableItem(HEALTH, HUNGER, WATER), durability{ MAX_DURABILITY }
+FlaskItem::FlaskItem() : Item(NAME, DESCRIPTION), durability{ MAX_DURABILITY }
 {}
 
 void FlaskItem::SaveToFile(std::ofstream& file)
@@ -36,6 +36,21 @@ void FlaskItem::SaveToFile(std::ofstream& file)
 void FlaskItem::LoadAdditionalDataFromFile(std::ifstream& file)
 {
 	file.read(reinterpret_cast<char*>(&durability), sizeof(int));
+}
+
+float FlaskItem::GetHealthBoost() const
+{
+	return HEALTH;
+}
+
+float FlaskItem::GetFoodBoost() const
+{
+	return HUNGER;
+}
+
+float FlaskItem::GetWaterBoost() const
+{
+	return WATER;
 }
 
 bool FlaskItem::Consume(float xpos, float ypos, PlayerEntity * player)

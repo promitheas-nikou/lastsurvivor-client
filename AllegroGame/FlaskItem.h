@@ -3,7 +3,7 @@
 #include "SimpleUsableConsumableItem.h"
 
 class FlaskItem :
-	public SimpleUsableConsumableItem
+	public UsableConsumableItem
 {
 private:
 	static std::string NAME;
@@ -27,6 +27,10 @@ public:
 
 	virtual void SaveToFile(std::ofstream& file) final;
 	virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
+
+	virtual float GetHealthBoost() const final;
+	virtual float GetFoodBoost() const final;
+	virtual float GetWaterBoost() const final;
 
 	virtual bool Consume(float xpos, float ypos, PlayerEntity* player) final;
 

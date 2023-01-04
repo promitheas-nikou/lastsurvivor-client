@@ -256,6 +256,12 @@
     <Filter Include="Header Files\Game\Tiles\StorageTiles">
       <UniqueIdentifier>{cae74a3a-8a39-45ef-8877-90474e164469}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems\AxeToolItems">
+      <UniqueIdentifier>{a3eab837-391d-4162-8be5-e04051961d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems\AxeToolItem">
+      <UniqueIdentifier>{15810015-28c8-41bb-9a39-aa0a811e7ec8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
@@ -317,12 +323,6 @@
     </ClCompile>
     <ClCompile Include="SimpleToolItem.cpp">
       <Filter>Source Files\Game\Items\ToolItems</Filter>
-    </ClCompile>
-    <ClCompile Include="PickaxeToolItem.cpp">
-      <Filter>Source Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
-    </ClCompile>
-    <ClCompile Include="ShovelToolItem.cpp">
-      <Filter>Source Files\Game\Items\ToolItems\ShovelToolItems</Filter>
     </ClCompile>
     <ClCompile Include="StoneItem.cpp">
       <Filter>Source Files\Game\Items\ResourceItems</Filter>
@@ -428,9 +428,6 @@
     </ClCompile>
     <ClCompile Include="GunItem.cpp">
       <Filter>Source Files\Game\Items\WeaponItems</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleTool.cpp">
-      <Filter>Source Files\Game\Items\ToolItems</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\Game\Entities\Projectiles</Filter>
@@ -747,6 +744,36 @@
     <ClCompile Include="HazardWarnings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DrawUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTool.cpp">
+      <Filter>Source Files\Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventoryStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="GlassSlabItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenShovelItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\ShovelToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenAxeItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\AxeToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenPickaxeItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -820,14 +847,8 @@
     <ClInclude Include="ToolItem.h">
       <Filter>Header Files\Game\Items\ToolItems</Filter>
     </ClInclude>
-    <ClInclude Include="PickaxeToolItem.h">
-      <Filter>Header Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleToolItem.h">
       <Filter>Header Files\Game\Items\ToolItems</Filter>
-    </ClInclude>
-    <ClInclude Include="ShovelToolItem.h">
-      <Filter>Header Files\Game\Items\ToolItems\ShovelToolItems</Filter>
     </ClInclude>
     <ClInclude Include="StoneItem.h">
       <Filter>Header Files\Game\Items\ResourceItems</Filter>
@@ -1272,6 +1293,33 @@
     </ClInclude>
     <ClInclude Include="HazardWarnings.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventoryStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassSlabItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenShovelItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\ShovelToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenPickaxeItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenAxeItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\AxeToolItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

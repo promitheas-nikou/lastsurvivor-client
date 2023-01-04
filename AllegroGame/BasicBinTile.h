@@ -42,7 +42,7 @@ public:
     virtual Item* PullItem(Direction d, ItemIOInterface* to) final;
 
     virtual ToolType GetOptimalToolType() const final;
-    virtual int GetMiningResistance() const final;
+    virtual float GetMiningResistance() const final;
     virtual std::string GetName() const final;
 
     virtual Tile* Clone(World* w, int x, int y, Direction d) const final;

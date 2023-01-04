@@ -7,6 +7,9 @@
 #include "SimpleItemInventoryUsableStorageSlotUIComponent.h"
 #include "SimpleItemInventoryFuelStorageSlotUIComponent.h"
 #include "SimpleItemInventoryViewStorageSlotUIComponent.h"
+#include "SimpleItemInventoryAxeToolStorageSlotUIComponent.h"
+#include "SimpleItemInventoryShovelToolStorageSlotUIComponent.h"
+#include "SimpleItemInventoryPickaxeToolStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h"
@@ -186,6 +189,15 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 		break;
 	case StorageSlotType::AUTO_OUT_2:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AUTO_OUT_2, itemslot, swapTemp));
+		break;
+	case StorageSlotType::AXE:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryAxeToolStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_AXE	, itemslot, swapTemp));
+		break;
+	case StorageSlotType::SHOVEL:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryShovelToolStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_SHOVEL, itemslot, swapTemp));
+		break;
+	case StorageSlotType::PICKAXE:
+		GUI::UIcomponents.push_back(new SimpleItemInventoryPickaxeToolStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_PICKAXE	, itemslot, swapTemp));
 		break;
 	default:
 		GUI::UIcomponents.push_back(new SimpleItemInventoryGenericStorageSlotUIComponent(x, y, w, h, INVENTORY_SLOT_GENERIC, itemslot, swapTemp));

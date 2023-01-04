@@ -10,14 +10,14 @@ private:
 protected:
 
     void SetToolType(ToolType newtype);
-    void SetDamage(int dmg);
+    void SetDamage(float dmg);
 
 public:
 
     SimpleTool(ToolType t, int d);
 
-    virtual ToolType GetMiningType() const final;
-    virtual int GetMiningDamage() const final;
+    virtual ToolType GetToolType() const final;
+    virtual float GetMiningDamage() const final;
 
     virtual ~SimpleTool() = default;
 

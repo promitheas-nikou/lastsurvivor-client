@@ -45,6 +45,7 @@ public:
 	void Draw(int x, int y, int width, int height, int new_timer);
 	bool ShouldBeRemoved(int new_timer);
 	static PlayerNotification* MakeTextNotification(std::string txt, int w, int h, int t, int fontsize = 30);
+	~PlayerNotification();
 	friend class PlayerEntity;
 };
 
@@ -79,6 +80,7 @@ private:
 	char debug = 0;
 	bool infoMenu = false;
 	bool showHitbox = false;
+	bool showCursorInfoBox = false;
 	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
 	static ALLEGRO_BITMAP* TEXTURE;
 	LuaInterface* luaInterface;

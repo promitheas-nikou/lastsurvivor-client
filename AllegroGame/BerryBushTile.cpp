@@ -25,12 +25,12 @@ bool BerryBushTile::CanWalkThrough() const
     return false;
 }
 
-ToolType BerryBushTile::GetOptimalToolType() const
+Tool::ToolType BerryBushTile::GetOptimalToolType() const
 {
     return TOOL_TYPE;
 }
 
-int BerryBushTile::GetMiningResistance() const
+float BerryBushTile::GetMiningResistance() const
 {
     return MINING_RESISTANCE;
 }

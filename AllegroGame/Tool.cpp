@@ -1,6 +1,6 @@
 #include "Tool.h"
 
-ToolType Tool::GetToolTypeFromString(std::string str)
+Tool::ToolType Tool::GetToolTypeFromString(std::string str)
 {
 	if (str == "pickaxe")
 		return ToolType::PICKAXE;
@@ -13,3 +13,30 @@ ToolType Tool::GetToolTypeFromString(std::string str)
 	return ToolType::NONE;
 }
 
+bool Tool::IsShovel() const
+{
+	return GetToolType() & ToolType::SHOVEL;
+}
+
+bool Tool::IsPickaxe() const
+{
+	return GetToolType() & ToolType::PICKAXE;
+}
+
+bool Tool::IsAxe() const
+{
+	return GetToolType() & ToolType::AXE;
+}
+
+bool Tool::IsPump() const
+{
+	return GetToolType() & ToolType::PUMP;
+}
+
+Tool::ToolType::ToolType(char v) : val{ v }
+{}
+
+Tool::ToolType::operator ToolType_t() const
+{
+	return val;
+}

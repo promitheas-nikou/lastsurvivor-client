@@ -38,12 +38,12 @@ bool BasicConveyorTile::CanWalkThrough() const
 	return false;
 }
 
-ToolType BasicConveyorTile::GetOptimalToolType() const
+Tool::ToolType BasicConveyorTile::GetOptimalToolType() const
 {
 	return TOOL_TYPE;
 }
 
-int BasicConveyorTile::GetMiningResistance() const
+float BasicConveyorTile::GetMiningResistance() const
 {
 	return MINING_RESISTANCE;
 }
