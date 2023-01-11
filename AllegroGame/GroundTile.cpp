@@ -2,16 +2,23 @@
 #include "GrassGroundTile.h"
 #include "StoneGroundTile.h"
 #include "DirtGroundTile.h"
+#include "SandGroundTile.h"
+#include "WaterGroundTile.h"
 #include "allegro5/allegro_font.h"
 #include <iostream>
 #include <format>
 #include "ResourceLoader.h"
 
-GroundTile::GroundTile(World* w, int x, int y, std::string n): world(w), xpos(x), ypos(y), name(n) {}
+GroundTile::GroundTile(World* w, int x, int y, std::string n, Tool::ToolType t) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ t } {}
 
-ALLEGRO_BITMAP* GroundTile::GetTexture() const
+void GroundTile::LoadAdditionalDataFromFile(std::ifstream &file)
 {
-    return nullptr;
+    return;
+}
+
+void GroundTile::WriteAdditionalDataToFile(std::ofstream& file)
+{
+    return;
 }
 
 std::string GroundTile::GetName() const
@@ -39,26 +46,59 @@ void GroundTile::TileUpdate()
     return;
 }
 
-void GroundTile::Draw() const
-{
-    al_draw_bitmap(GetTexture(), xpos*128, ypos*128, 0);
-    //al_draw_textf(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, "%d:%d", xpos, ypos);
-}
-
 int GroundTile::GetMiningResistance() const
 {
-    return 0;
+    return 10;
 }
 
-GroundTile* MakeGroundTile(World* world, int id, int x, int y)
+Tool::ToolType GroundTile::GetRequiredToolType() const
 {
-    switch (id)
-    {
-    case GrassGroundTile::ID:
-        return new GrassGroundTile(world, x, y);
-    case DirtGroundTile::ID:
-        return new DirtGroundTile(world, x, y);
-    case StoneGroundTile::ID:
-        return new StoneGroundTile(world, x, y);
-    }
+    return requiredTool;
+}
+
+int GroundTile::GetDamageDealtByTool(Tool* tool) const
+{
+    if (tool == nullptr)
+        return 1;
+    return (static_cast<char>(tool->GetToolType()) & static_cast<char>(GetRequiredToolType())) ? tool->GetMiningDamage() : 1;
+}
+
+void GroundTile::Use(PlayerEntity* p)
+{}
+
+const ItemBundle* GroundTile::GetMiningResult(Tool* tool) const
+{
+    return nullptr;
+}
+
+float GroundTile::GetFrictionModifier() const
+{
+    return 1.0f;
+}
+
+void GroundTile::InitForWorld(World* w)
+{
+    return;
+}
+
+void GroundTile::PlaySound(SoundType t) const
+{}
+
+void GroundTile::RegisterLights()
+{}
+
+std::unordered_map<std::string, const GroundTile*> prototype_gtiles;
+
+GroundTile* MakeGroundTile(World* world, std::string id, int x, int y)
+{
+    const GroundTile* gt = prototype_gtiles[id];
+    if (gt == nullptr)
+        return nullptr;
+    return gt->Clone(world, x, y);
+}
+
+void InitAllGroundTilesForWorld(World* w)
+{
+    for (const std::pair<std::string, const GroundTile*>& gtile : prototype_gtiles)
+        const_cast<GroundTile*>(gtile.second)->InitForWorld(w);
 }

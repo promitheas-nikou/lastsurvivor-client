@@ -1,20 +1,38 @@
 #pragma once
 #include "GroundTile.h"
+#include "ItemBundle.h"
+#include "AudioMultiTrackCollection.h"
+#include "LootBundle.h"
+#undef PlaySound
+
 class DirtGroundTile :
     public GroundTile
 {
 private:
 	static std::string NAME;
 	static ALLEGRO_BITMAP* TEXTURE;
+	static const LootBundle* DROP;
+	static int MINING_RESISTANCE;
+	static ToolType TOOL_TYPE;
+	static AudioMultiTrackCollection AUDIO_TRACKS;
 public:
-	static const int ID = 2;
+	static const std::string ID;
 
-	int GetID() const final;
+	std::string GetID() const final;
+
+	virtual GroundTile* Clone(World* w, int x, int y) const final;
 
 	DirtGroundTile(World* w, int x, int y);
 
 	static void Init(nlohmann::json data);
-	ALLEGRO_BITMAP* GetTexture() const final;
+	void Draw() const final;
 
+	const ItemBundle* GetMiningResult(Tool* tool) const final;
+
+	virtual void PlaySound(SoundType t) const override;
+
+	int GetMiningResistance() const final;
+
+	virtual ~DirtGroundTile() = default;
 };
 

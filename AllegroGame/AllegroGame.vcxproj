@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -72,9 +72,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>true</Allegro_AddonVideo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>true</Allegro_AddonVideo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -89,6 +111,8 @@
     <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
     <Allegro_AddonDialog>true</Allegro_AddonDialog>
     <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <IncludePath>C:\Users\promitheas\source\repos\AllegroGame\lib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\promitheas\source\repos\AllegroGame\lib\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -108,8 +132,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,8 +147,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,13 +162,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,9 +180,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,25 +196,177 @@
   <ItemGroup>
     <ClCompile Include="AirTile.cpp" />
     <ClCompile Include="AllegroGame.cpp" />
+    <ClCompile Include="AudioMultiTrack.cpp" />
+    <ClCompile Include="AudioMultiTrackCollection.cpp" />
+    <ClCompile Include="AudioSampleInstanceMultiTrack.cpp" />
+    <ClCompile Include="AudioSampleMultiTrack.cpp" />
+    <ClCompile Include="AzuriteChunkItem.cpp" />
+    <ClCompile Include="AzuriteOreGroundTile.cpp" />
+    <ClCompile Include="BasicBinItem.cpp" />
+    <ClCompile Include="BasicConveyorItem.cpp" />
+    <ClCompile Include="BasicConveyorTile.cpp" />
+    <ClCompile Include="BerryBushTile.cpp" />
+    <ClCompile Include="BerryItem.cpp" />
+    <ClCompile Include="BasicBinTile.cpp" />
+    <ClCompile Include="BitmapUIComponent.cpp" />
+    <ClCompile Include="BoneItem.cpp" />
+    <ClCompile Include="BrickWallItem.cpp" />
+    <ClCompile Include="BrickWallTile.cpp" />
+    <ClCompile Include="BurnerFurnaceMk1Item.cpp" />
+    <ClCompile Include="BurnerFurnaceMk1Tile.cpp" />
+    <ClCompile Include="ButtonUIComponent.cpp" />
+    <ClCompile Include="CactusBossEntity.cpp" />
+    <ClCompile Include="CastIronIngotItem.cpp" />
+    <ClCompile Include="ChancedLootBundle.cpp" />
+    <ClCompile Include="AnthraciteCoalChunkItem.cpp" />
+    <ClCompile Include="CharcoalItem.cpp" />
+    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="ConnectingTile.cpp" />
+    <ClCompile Include="Consumable.cpp" />
+    <ClCompile Include="ConsumableItem.cpp" />
+    <ClCompile Include="CookedPigMeatItem.cpp" />
+    <ClCompile Include="CookedSheepMeatItem.cpp" />
+    <ClCompile Include="CoopedCowMeatItem.cpp" />
+    <ClCompile Include="CopperIngotItem.cpp" />
+    <ClCompile Include="CowPassiveEntity.cpp" />
+    <ClCompile Include="CreativeItemGUI.cpp" />
+    <ClCompile Include="DeathGUI.cpp" />
+    <ClCompile Include="DebugInfo.cpp" />
+    <ClCompile Include="DirectedTile.cpp" />
+    <ClCompile Include="Directions.cpp" />
     <ClCompile Include="DirtGroundTile.cpp" />
+    <ClCompile Include="DirtItem.cpp" />
+    <ClCompile Include="DrawUtils.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FenceItem.cpp" />
+    <ClCompile Include="FenceTile.cpp" />
+    <ClCompile Include="FixedQueue.cpp" />
+    <ClCompile Include="FlaskItem.cpp" />
+    <ClCompile Include="FuelItem.cpp" />
+    <ClCompile Include="GlassSlabItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
+    <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="GunItem.cpp" />
+    <ClCompile Include="HazardWarnings.cpp" />
+    <ClCompile Include="HematiteChunkItem.cpp" />
+    <ClCompile Include="HematiteOreGroundTile.cpp" />
+    <ClCompile Include="HostileEntity.cpp" />
+    <ClCompile Include="InventoryGUI.cpp" />
+    <ClCompile Include="IronIngotItem.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemBundle.cpp" />
+    <ClCompile Include="ItemIndex.cpp" />
+    <ClCompile Include="ItemInventory.cpp" />
+    <ClCompile Include="LodestoneItem.cpp" />
+    <ClCompile Include="Logging.cpp" />
+    <ClCompile Include="LogItem.cpp" />
+    <ClCompile Include="LootBundle.cpp" />
+    <ClCompile Include="LootObject.cpp" />
+    <ClCompile Include="MagnetiteChunkItem.cpp" />
+    <ClCompile Include="MagnetiteOreGroundTile.cpp" />
+    <ClCompile Include="MainGUIs.cpp" />
+    <ClCompile Include="MalachiteChunkItem.cpp" />
+    <ClCompile Include="MalachiteOreGroundTile.cpp" />
+    <ClCompile Include="PassiveEntity.cpp" />
+    <ClCompile Include="PigPassiveEntity.cpp" />
+    <ClCompile Include="PlaceableItem.cpp" />
+    <ClCompile Include="QuestEditingGUI.cpp" />
+    <ClCompile Include="RawCowMeatItem.cpp" />
+    <ClCompile Include="RawPigMeatItem.cpp" />
+    <ClCompile Include="RawSheepMeatItem.cpp" />
+    <ClCompile Include="SaplingItem.cpp" />
+    <ClCompile Include="SheepPassiveEntity.cpp" />
+    <ClCompile Include="SimpleCraftingGUI.cpp" />
+    <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp" />
+    <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="MeleeWeaponItem.cpp" />
+    <ClCompile Include="PhantomUIComponent.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
-    <ClCompile Include="Reflection.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Quest.cpp" />
+    <ClCompile Include="QuestCollection.cpp" />
+    <ClCompile Include="QuestGUI.cpp" />
+    <ClCompile Include="RangedWeapon.cpp" />
+    <ClCompile Include="RangedWeaponItem.cpp" />
+    <ClCompile Include="Recipe.cpp" />
+    <ClCompile Include="RecipeListGUI.cpp" />
+    <ClCompile Include="RectangularUIComponent.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
+    <ClCompile Include="SandGroundTile.cpp" />
+    <ClCompile Include="SandItem.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SimpleButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp" />
+    <ClCompile Include="SimpleConsumable.cpp" />
+    <ClCompile Include="SimpleConsumableItem.cpp" />
+    <ClCompile Include="SimpleItemInventoryConsumableStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryFuelStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp" />
+    <ClCompile Include="ItemInventoryStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryUsableStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp" />
+    <ClCompile Include="SimpleLootBundle.cpp" />
+    <ClCompile Include="SimpleMeleeWeapon.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="SimpleMeleeWeaponItem.cpp" />
+    <ClCompile Include="SimpleNumberInputUIComponent.cpp" />
+    <ClCompile Include="SimpleRecipeListGUI.cpp" />
+    <ClCompile Include="SimpleSword.cpp" />
+    <ClCompile Include="SimpleTextButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleTextDrawUIComponent.cpp" />
+    <ClCompile Include="SimpleTextInputUIComponent.cpp" />
+    <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp" />
+    <ClCompile Include="SimpleTool.cpp" />
+    <ClCompile Include="SimpleUsableConsumableItem.cpp" />
+    <ClCompile Include="SoundType.cpp" />
+    <ClCompile Include="SteelIngotItem.cpp" />
+    <ClCompile Include="StoneBrickWallItem.cpp" />
+    <ClCompile Include="StoneBrickWallTile.cpp" />
+    <ClCompile Include="TextUtils.cpp" />
+    <ClCompile Include="TorchItem.cpp" />
+    <ClCompile Include="TorchTile.cpp" />
+    <ClCompile Include="Usable.cpp" />
+    <ClCompile Include="UsableConsumableItem.cpp" />
+    <ClCompile Include="UsableItem.cpp" />
+    <ClCompile Include="VariableAmountItem.cpp" />
+    <ClCompile Include="WeightedLootBundle.cpp" />
+    <ClCompile Include="WoodenAxeItem.cpp" />
+    <ClCompile Include="WoodenPickaxeItem.cpp" />
+    <ClCompile Include="WoodenShovelItem.cpp" />
+    <ClCompile Include="ZombieEntity.cpp" />
+    <ClCompile Include="SimpleInventoryGUI.cpp" />
+    <ClCompile Include="SimpleItemBundle.cpp" />
+    <ClCompile Include="SimpleItemInventory.cpp" />
+    <ClCompile Include="SimpleToolItem.cpp" />
+    <ClCompile Include="SimpleUIComponent.cpp" />
+    <ClCompile Include="SimplexNoise.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="StickItem.cpp" />
     <ClCompile Include="StoneGroundTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
+    <ClCompile Include="StoneItem.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="ToolItem.cpp" />
+    <ClCompile Include="TreeTile.cpp" />
+    <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="WaterGroundTile.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldChunk.cpp" />
+    <ClCompile Include="zip.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="lua-api\LuaDefault.lua" />
     <None Include="packages.config" />
     <None Include="world_shader.frag" />
     <None Include="world_shader.vert" />
@@ -193,24 +376,181 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirTile.h" />
+    <ClInclude Include="AllegroGame.h" />
+    <ClInclude Include="AudioMultiTrack.h" />
+    <ClInclude Include="AudioMultiTrackCollection.h" />
+    <ClInclude Include="AudioSampleInstanceMultiTrack.h" />
+    <ClInclude Include="AudioSampleMultiTrack.h" />
+    <ClInclude Include="AzuriteChunkItem.h" />
+    <ClInclude Include="AzuriteOreGroundTile.h" />
+    <ClInclude Include="BasicBinItem.h" />
+    <ClInclude Include="BasicConveyorItem.h" />
+    <ClInclude Include="BasicConveyorTile.h" />
+    <ClInclude Include="BerryBushTile.h" />
+    <ClInclude Include="BerryItem.h" />
+    <ClInclude Include="BasicBinTile.h" />
+    <ClInclude Include="BitmapUIComponent.h" />
+    <ClInclude Include="BoneItem.h" />
+    <ClInclude Include="BrickWallItem.h" />
+    <ClInclude Include="BrickWallTile.h" />
+    <ClInclude Include="BurnerFurnaceMk1Item.h" />
+    <ClInclude Include="BurnerFurnaceMk1Tile.h" />
+    <ClInclude Include="ButtonUIComponent.h" />
+    <ClInclude Include="CactusBossEntity.h" />
+    <ClInclude Include="CastIronIngotItem.h" />
+    <ClInclude Include="ChancedLootBundle.h" />
+    <ClInclude Include="AnthraciteCoalChunkItem.h" />
+    <ClInclude Include="CharcoalItem.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="ConnectingTile.h" />
+    <ClInclude Include="Consumable.h" />
+    <ClInclude Include="ConsumableItem.h" />
+    <ClInclude Include="CookedPigMeatItem.h" />
+    <ClInclude Include="CookedSheepMeatItem.h" />
+    <ClInclude Include="CookedCowMeatItem.h" />
+    <ClInclude Include="CopperIngotItem.h" />
+    <ClInclude Include="CowPassiveEntity.h" />
+    <ClInclude Include="CreativeItemGUI.h" />
+    <ClInclude Include="DeathGUI.h" />
+    <ClInclude Include="DebugInfo.h" />
+    <ClInclude Include="DirectedTile.h" />
+    <ClInclude Include="Directions.h" />
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="DirtGroundTile.h" />
+    <ClInclude Include="DirtItem.h" />
+    <ClInclude Include="DrawUtils.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FenceItem.h" />
+    <ClInclude Include="FenceTile.h" />
+    <ClInclude Include="FixedQueue.h" />
+    <ClInclude Include="FlaskItem.h" />
+    <ClInclude Include="FuelItem.h" />
+    <ClInclude Include="GlassSlabItem.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassGroundTile.h" />
+    <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="GunItem.h" />
+    <ClInclude Include="HazardWarnings.h" />
+    <ClInclude Include="ItemIOInterface.h" />
+    <ClInclude Include="HematiteChunkItem.h" />
+    <ClInclude Include="HematiteOreGroundTile.h" />
+    <ClInclude Include="HostileEntity.h" />
+    <ClInclude Include="InventoryGUI.h" />
+    <ClInclude Include="IronIngotItem.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemBundle.h" />
+    <ClInclude Include="ItemIndex.h" />
+    <ClInclude Include="ItemInventory.h" />
+    <ClInclude Include="ListAllItems.h" />
+    <ClInclude Include="ListAllTiles.h" />
+    <ClInclude Include="LodestoneItem.h" />
+    <ClInclude Include="Logging.h" />
+    <ClInclude Include="LogItem.h" />
+    <ClInclude Include="LootBundle.h" />
+    <ClInclude Include="LootObject.h" />
+    <ClInclude Include="MagnetiteChunkItem.h" />
+    <ClInclude Include="MagnetiteOreGroundTile.h" />
+    <ClInclude Include="MainGUIs.h" />
+    <ClInclude Include="MalachiteChunkItem.h" />
+    <ClInclude Include="MalachiteOreGroundTile.h" />
+    <ClInclude Include="PassiveEntity.h" />
+    <ClInclude Include="PigPassiveEntity.h" />
+    <ClInclude Include="PlaceableItem.h" />
+    <ClInclude Include="QuestEditingGUI.h" />
+    <ClInclude Include="RawCowMeatItem.h" />
+    <ClInclude Include="RawPigMeatItem.h" />
+    <ClInclude Include="RawSheepMeatItem.h" />
+    <ClInclude Include="SaplingItem.h" />
+    <ClInclude Include="SheepPassiveEntity.h" />
+    <ClInclude Include="SimpleCraftingGUI.h" />
+    <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h" />
     <ClInclude Include="json.h" />
+    <ClInclude Include="LuaInterface.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="MeleeWeaponItem.h" />
+    <ClInclude Include="miniz.h" />
+    <ClInclude Include="PhantomUIComponent.h" />
     <ClInclude Include="PlayerEntity.h" />
-    <ClInclude Include="Reflection.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Quest.h" />
+    <ClInclude Include="QuestCollection.h" />
+    <ClInclude Include="QuestGUI.h" />
+    <ClInclude Include="RangedWeapon.h" />
+    <ClInclude Include="RangedWeaponItem.h" />
+    <ClInclude Include="Recipe.h" />
+    <ClInclude Include="RecipeListGUI.h" />
+    <ClInclude Include="RectangularUIComponent.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="SandGroundTile.h" />
+    <ClInclude Include="SandItem.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SimpleButtonUIComponent.h" />
+    <ClInclude Include="SimpleCallbackTextDrawUIComponent.h" />
+    <ClInclude Include="SimpleConsumable.h" />
+    <ClInclude Include="SimpleConsumableItem.h" />
+    <ClInclude Include="SimpleItemInventoryConsumableStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryFuelStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h" />
+    <ClInclude Include="ItemInventoryStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryUsableStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h" />
+    <ClInclude Include="SimpleLootBundle.h" />
+    <ClInclude Include="SimpleMeleeWeapon.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="SimpleMeleeWeaponItem.h" />
+    <ClInclude Include="SimpleNumberInputUIComponent.h" />
+    <ClInclude Include="SimpleSword.h" />
+    <ClInclude Include="SimpleTextButtonUIComponent.h" />
+    <ClInclude Include="SimpleTextDrawUIComponent.h" />
+    <ClInclude Include="SimpleTextInputUIComponent.h" />
+    <ClInclude Include="SimpleToggleTextButtonUIComponent.h" />
+    <ClInclude Include="SimpleTool.h" />
+    <ClInclude Include="SimpleUsableConsumableItem.h" />
+    <ClInclude Include="SoundType.h" />
+    <ClInclude Include="SteelIngotItem.h" />
+    <ClInclude Include="StoneBrickWallItem.h" />
+    <ClInclude Include="StoneBrickWallTile.h" />
+    <ClInclude Include="TextUtils.h" />
+    <ClInclude Include="TorchItem.h" />
+    <ClInclude Include="TorchTile.h" />
+    <ClInclude Include="Usable.h" />
+    <ClInclude Include="UsableConsumableItem.h" />
+    <ClInclude Include="UsableItem.h" />
+    <ClInclude Include="VariableAmountItem.h" />
+    <ClInclude Include="WeightedLootBundle.h" />
+    <ClInclude Include="WoodenAxeItem.h" />
+    <ClInclude Include="WoodenPickaxeItem.h" />
+    <ClInclude Include="WoodenShovelItem.h" />
+    <ClInclude Include="ZombieEntity.h" />
+    <ClInclude Include="SimpleInventoryGUI.h" />
+    <ClInclude Include="SimpleItemBundle.h" />
+    <ClInclude Include="SimpleItemInventory.h" />
+    <ClInclude Include="SimpleRecipeListGUI.h" />
+    <ClInclude Include="SimpleToolItem.h" />
+    <ClInclude Include="SimpleUIComponent.h" />
+    <ClInclude Include="SimplexNoise.h" />
+    <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="StickItem.h" />
     <ClInclude Include="StoneGroundTile.h" />
     <ClInclude Include="GroundTile.h" />
+    <ClInclude Include="StoneItem.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tool.h" />
+    <ClInclude Include="ToolItem.h" />
+    <ClInclude Include="TreeTile.h" />
+    <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="WaterGroundTile.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldChunk.h" />
+    <ClInclude Include="zip.h" />
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">
@@ -222,19 +562,21 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" />
-    <Import Project="..\packages\Allegro.5.2.7.1\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.7.1\build\native\Allegro.targets')" />
+    <Import Project="..\packages\lua.5.4.4\build\native\Lua.targets" Condition="Exists('..\packages\lua.5.4.4\build\native\Lua.targets')" />
+    <Import Project="..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets')" />
+    <Import Project="..\packages\Allegro.5.2.8\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.8\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\packages\Allegro.5.2.7.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.7.1\build\native\Allegro.targets'))" />
+    <Error Condition="!Exists('..\packages\lua.5.4.4\build\native\Lua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\lua.5.4.4\build\native\Lua.targets'))" />
+    <Error Condition="!Exists('..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets'))" />
+    <Error Condition="!Exists('..\packages\Allegro.5.2.8\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.8\build\native\Allegro.targets'))" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties data_1json__JsonSchema="https://appsemble.app/api.json" />
+      <UserProperties data_1json__JsonSchema="https://beaujs.com/schema.json" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

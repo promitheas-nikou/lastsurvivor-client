@@ -1,257 +1,2024 @@
 ﻿{
-  "NAME": "Game",
-  "VERSION": "ALPHA 0.0.1",
-  "VER_MINOR": 0,
-  "VER_MAJOR": 0,
-  "WINDOW_ICON": 1,
+  "NAME": "Last Survivor",
+  "VERSION": "ALPHA 3.2",
+  "VER_MINOR": 2,
+  "VER_MAJOR": 3,
+  "WINDOW_ICON": "icon",
   "shaders": [
     {
-      "id": 1,
+      "id": "world",
       "vertex": "world_shader.vert",
       "fragment": "world_shader.frag"
     }
   ],
+  "audio": [
+    {
+      "id": "themes.credits",
+      "wait": true,
+      "type": "theme_music",
+      "filenames": [
+        "menu_theme_2.wav"
+      ]
+    },
+    {
+      "id": "themes.ingame",
+      "wait": true,
+      "type": "theme_music",
+      "filenames": [
+        "menu_theme_2.wav"
+      ]
+    },
+    {
+      "id": "themes.menu",
+      "wait": true,
+      "type": "theme_music",
+      "filenames": [
+        "menu_theme_1.wav"
+      ]
+    },
+    {
+      "id": "gtiles.dirt.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
+      "id": "gtiles.grass.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
+      "id": "gtiles.sand.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "sand_walk_0.wav",
+        "sand_walk_1.wav",
+        "sand_walk_2.wav",
+        "sand_walk_3.wav",
+        "sand_walk_4.wav",
+        "sand_walk_5.wav",
+        "sand_walk_6.wav"
+      ]
+    },
+    {
+      "id": "entities.rattle_bullet.hit",
+      "wait": false,
+      "type": "combat",
+      "filenames": [
+        "arrow_hit_0.wav"
+      ]
+    },
+    {
+      "id": "entities.generic_bullet.hit",
+      "wait": false,
+      "type": "combat",
+      "filenames": [
+        "arrow_hit_0.wav"
+      ]
+    },
+    {
+      "id": "entities.player.hurt",
+      "wait": true,
+      "type": "combat",
+      "filenames": [
+        "player_hurt_0.wav",
+        "player_hurt_1.wav",
+        "player_hurt_2.wav"
+      ]
+    }
+  ],
   "textures": [
     {
-      "id": 1,
+      "id": "icon",
       "filename": "icon.png"
     },
     {
-      "id": 2,
+      "id": "tex.items.charcoal",
+      "filename": "charcoal_item.png"
+    },
+    {
+      "id": "tex.items.wooden_sword",
+      "filename": "wooden_sword.png"
+    },
+    {
+      "id": "tex.items.wooden_pickaxe",
+      "filename": "wooden_pickaxe.png"
+    },
+    {
+      "id": "tex.items.wooden_shovel",
+      "filename": "wooden_shovel.png"
+    },
+    {
+      "id": "tex.items.wooden_axe",
+      "filename": "wooden_axe.png"
+    },
+    {
+      "id": "tex.items.wooden_hoe",
+      "filename": "wooden_hoe.png"
+    },
+    {
+      "id": "tex.items.glass_slab",
+      "filename": "glass_slab.png"
+    },
+    {
+      "id": "tex.items.basic_conveyor",
+      "filename": "basic_conveyor_north.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/north/0",
+      "filename": "basic_conveyor_north_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/north/1",
+      "filename": "basic_conveyor_north_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/north/2",
+      "filename": "basic_conveyor_north_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/north/3",
+      "filename": "basic_conveyor_north_3.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/0",
+      "filename": "basic_conveyor_south_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/1",
+      "filename": "basic_conveyor_south_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/2",
+      "filename": "basic_conveyor_south_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/south/3",
+      "filename": "basic_conveyor_south_3.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/0",
+      "filename": "basic_conveyor_east_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/1",
+      "filename": "basic_conveyor_east_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/2",
+      "filename": "basic_conveyor_east_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/east/3",
+      "filename": "basic_conveyor_east_3.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/0",
+      "filename": "basic_conveyor_west_0.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/1",
+      "filename": "basic_conveyor_west_1.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/2",
+      "filename": "basic_conveyor_west_2.png"
+    },
+    {
+      "id": "tex.tiles.basic_conveyor/west/3",
+      "filename": "basic_conveyor_west_3.png"
+    },
+    {
+      "id": "tex.items.bone",
+      "filename": "bone_item.png"
+    },
+    {
+      "id": "tex.gui.burn_icon/0",
+      "filename": "gui.burn_icon_0.png"
+    },
+    {
+      "id": "tex.gui.burn_icon/1",
+      "filename": "gui.burn_icon_1.png"
+    },
+    {
+      "id": "tex.gui.progress_icon/0",
+      "filename": "gui.progress_bar_0.png"
+    },
+    {
+      "id": "tex.gui.progress_icon/1",
+      "filename": "gui.progress_bar_1.png"
+    },
+    {
+      "id": "tex.items.azurite_chunk",
+      "filename": "azurite_chunk.png"
+    },
+    {
+      "id": "tex.items.malachite_chunk",
+      "filename": "malachite_chunk.png"
+    },
+    {
+      "id": "tex.items.hematite_chunk",
+      "filename": "hematite_chunk.png"
+    },
+    {
+      "id": "tex.items.magnetite_chunk",
+      "filename": "magnetite_chunk.png"
+    },
+    {
+      "id": "tex.items.sapling",
+      "filename": "tree_0.png"
+    },
+    {
+      "id": "tex.items.lodestone",
+      "filename": "lodestone.png"
+    },
+    {
+      "id": "tex.gtiles.grass",
       "filename": "grass.png"
     },
     {
-      "id": 3,
+      "id": "tex.gtiles.dirt",
       "filename": "dirt.png"
     },
     {
-      "id": 4,
+      "id": "tex.gtiles.stone",
       "filename": "stone.png"
     },
     {
-      "id": 5,
+      "id": "tex.gtiles.limestone",
       "filename": "limestone.png"
     },
     {
-      "id": 6,
+      "id": "tex.gtiles.sand",
+      "filename": "sand.png"
+    },
+    {
+      "id": "tex.gtiles.water",
+      "filename": "water.png"
+    },
+    {
+      "id": "tex.gtiles.iron_ore",
       "filename": "iron_ore.png"
     },
     {
-      "id": 7,
+      "id": "tex.gtiles.malachite_ore",
+      "filename": "malachite_ore.png"
+    },
+    {
+      "id": "tex.gtiles.azurite_ore",
+      "filename": "azurite_ore.png"
+    },
+    {
+      "id": "tex.gtiles.hematite_ore",
+      "filename": "hematite_ore.png"
+    },
+    {
+      "id": "tex.gtiles.magnetite_ore",
+      "filename": "magnetite_ore.png"
+    },
+    {
+      "id": "tex.tiles.table",
       "filename": "table.png"
     },
     {
-      "id": 8,
-      "filename": "shovel_cursor.png"
+      "id": "tex.gui.inventory_slot",
+      "filename": "inventory_slot.png"
     },
     {
-      "id": 9,
-      "filename": "pickaxe_cursor.png"
+      "id": "tex.gui.automation_slot.in/0",
+      "filename": "automation_slot.in0.png"
     },
     {
-      "id": 10,
-      "filename": "wrench_cursor.png"
+      "id": "tex.gui.automation_slot.in/1",
+      "filename": "automation_slot.in1.png"
     },
     {
-      "id": 11,
-      "filename": "hammer_cursor.png"
+      "id": "tex.gui.automation_slot.in/2",
+      "filename": "automation_slot.in2.png"
     },
     {
-      "id": 12,
-      "filename": "hotbar_slot.png"
+      "id": "tex.gui.automation_slot.out/0",
+      "filename": "automation_slot.out0.png"
     },
     {
-      "id": 13,
-      "filename": "hotbar_slot_selected.png"
+      "id": "tex.gui.automation_slot.out/1",
+      "filename": "automation_slot.out1.png"
     },
     {
-      "id": 14,
+      "id": "tex.gui.automation_slot.out/2",
+      "filename": "automation_slot.out2.png"
+    },
+    {
+      "id": "tex.gui.automation_slot.fuel",
+      "filename": "automation_slot.fuel0.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_pickaxe",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_axe",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_shovel",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_melee",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_ranged",
+      "filename": "inventory_slot.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_function",
+      "filename": "inventory_slot_consume.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_consumable",
+      "filename": "inventory_slot_consumable.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_usable",
+      "filename": "inventory_slot_usable.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_placeable",
+      "filename": "inventory_slot_placeable.png"
+    },
+    {
+      "id": "tex.gui.inventory_slot_trash",
+      "filename": "trash_slot.png"
+    },
+    {
+      "id": "tex.gui.crafting_arrow",
+      "filename": "crafting_arrow.png"
+    },
+    {
+      "id": "tex.gui.quest_icon_incomplete",
       "filename": "quest_icon_not_completed_background.png"
     },
     {
-      "id": 15,
+      "id": "tex.gui.quest_icon_complete",
       "filename": "quest_icon_completed_background.png"
     },
     {
-      "id": 16,
+      "id": "tex.gui.quest_icon_select",
       "filename": "quest_icon_selected.png"
     },
     {
-      "id": 17,
-      "filename": "background_main_menu.png"
+      "id": "tex.gui.health_icon",
+      "filename": "health_icon.png"
     },
     {
-      "id": 18,
+      "id": "tex.gui.hunger_icon",
+      "filename": "hunger_icon.png"
+    },
+    {
+      "id": "tex.gui.water_icon",
+      "filename": "water_icon.png"
+    },
+    {
+      "id": "tex.gui.death",
+      "filename": "death.png"
+    },
+    {
+      "id": "tex.entities.player",
       "filename": "player.png"
-    } 
+    },
+    {
+      "id": "tex.entities.zombie",
+      "filename": "zombie.png"
+    },
+    {
+      "id": "tex.entities.magmaboss",
+      "filename": "magmaboss.png"
+    },
+    {
+      "id": "tex.entities.red_bullet",
+      "filename": "red_bullet.png"
+    },
+    {
+      "id": "tex.entities.blue_bullet",
+      "filename": "blue_bullet.png"
+    },
+    {
+      "id": "tex.entities.green_bullet",
+      "filename": "green_bullet.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/0",
+      "filename": "left_cactusman_0.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/1",
+      "filename": "left_cactusman_1.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/2",
+      "filename": "left_cactusman_2.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/3",
+      "filename": "left_cactusman_3.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.left/4",
+      "filename": "left_cactusman_throw.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/0",
+      "filename": "front_cactusman_0.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/1",
+      "filename": "front_cactusman_1.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/2",
+      "filename": "front_cactusman_2.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/3",
+      "filename": "front_cactusman_3.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.front/4",
+      "filename": "front_cactusman_throw.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/0",
+      "filename": "right_cactusman_0.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/1",
+      "filename": "right_cactusman_1.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/2",
+      "filename": "right_cactusman_2.png"
+    },
+    {
+      "id": "cursor.error",
+      "filename": "error_cursor.png"
+    },
+    {
+      "id": "cursor.pickaxe",
+      "filename": "pickaxe_cursor.png"
+    },
+    {
+      "id": "cursor.shovel",
+      "filename": "shovel_cursor.png"
+    },
+    {
+      "id": "cursor.axe",
+      "filename": "axe_cursor.png"
+    },
+    {
+      "id": "cursor.melee",
+      "filename": "melee_cursor.png"
+    },
+    {
+      "id": "cursor.ranged",
+      "filename": "ranged_cursor.png"
+    },
+    {
+      "id": "cursor.wrench",
+      "filename": "wrench_cursor.png"
+    },
+    {
+      "id": "cursor.use",
+      "filename": "use_cursor.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/3",
+      "filename": "right_cactusman_3.png"
+    },
+    {
+      "id": "tex.entities.cactus_boss.right/4",
+      "filename": "right_cactusman_throw.png"
+    },
+    {
+      "id": "tex.entities.rattle/0",
+      "filename": "rattle_0.png"
+    },
+    {
+      "id": "tex.entities.rattle/1",
+      "filename": "rattle_1.png"
+    },
+    {
+      "id": "tex.entities.rattle/2",
+      "filename": "rattle_2.png"
+    },
+    {
+      "id": "tex.entities.rattle/3",
+      "filename": "rattle_3.png"
+    },
+    {
+      "id": "tex.entities.rattle/4",
+      "filename": "rattle_4.png"
+    },
+    {
+      "id": "tex.entities.rattle/5",
+      "filename": "rattle_5.png"
+    },
+    {
+      "id": "tex.entities.rattle/6",
+      "filename": "rattle_6.png"
+    },
+    {
+      "id": "tex.entities.rattle/7",
+      "filename": "rattle_7.png"
+    },
+    {
+      "id": "tex.tiles.tree/0",
+      "filename": "tree_0.png"
+    },
+    {
+      "id": "tex.tiles.tree/1",
+      "filename": "tree_1.png"
+    },
+    {
+      "id": "tex.tiles.tree/2",
+      "filename": "tree_2.png"
+    },
+    {
+      "id": "tex.tiles.tree/3",
+      "filename": "tree_3.png"
+    },
+    {
+      "id": "tex.items.dirt",
+      "filename": "dirt_pile.png"
+    },
+    {
+      "id": "tex.items.stone",
+      "filename": "rock.png"
+    },
+    {
+      "id": "tex.items.sand",
+      "filename": "sand_pile.png"
+    },
+    {
+      "id": "tex.items.sword",
+      "filename": "sword.png"
+    },
+    {
+      "id": "tex.items.stick",
+      "filename": "stick.png"
+    },
+    {
+      "id": "tex.items.berry",
+      "filename": "berry_item.png"
+    },
+    {
+      "id": "tex.tiles.berry_bush/0",
+      "filename": "berry_bush_0.png"
+    },
+    {
+      "id": "tex.tiles.berry_bush/1",
+      "filename": "berry_bush_1.png"
+    },
+    {
+      "id": "tex.tiles.fence/0",
+      "filename": "fence0000.png"
+    },
+    {
+      "id": "tex.tiles.fence/1",
+      "filename": "fence0001.png"
+    },
+    {
+      "id": "tex.tiles.fence/2",
+      "filename": "fence0010.png"
+    },
+    {
+      "id": "tex.tiles.fence/3",
+      "filename": "fence0011.png"
+    },
+    {
+      "id": "tex.tiles.fence/4",
+      "filename": "fence0100.png"
+    },
+    {
+      "id": "tex.tiles.fence/5",
+      "filename": "fence0101.png"
+    },
+    {
+      "id": "tex.tiles.fence/6",
+      "filename": "fence0110.png"
+    },
+    {
+      "id": "tex.tiles.fence/7",
+      "filename": "fence0111.png"
+    },
+    {
+      "id": "tex.tiles.fence/8",
+      "filename": "fence1000.png"
+    },
+    {
+      "id": "tex.tiles.fence/9",
+      "filename": "fence1001.png"
+    },
+    {
+      "id": "tex.tiles.fence/10",
+      "filename": "fence1010.png"
+    },
+    {
+      "id": "tex.tiles.fence/11",
+      "filename": "fence1011.png"
+    },
+    {
+      "id": "tex.tiles.fence/12",
+      "filename": "fence1100.png"
+    },
+    {
+      "id": "tex.tiles.fence/13",
+      "filename": "fence1101.png"
+    },
+    {
+      "id": "tex.tiles.fence/14",
+      "filename": "fence1110.png"
+    },
+    {
+      "id": "tex.tiles.fence/15",
+      "filename": "fence1111.png"
+    },
+    {
+      "id": "tex.items.fence",
+      "filename": "fence1111.png"
+    },
+    {
+      "id": "tex.gui.itemicon",
+      "filename": "itemicon.png"
+    },
+    {
+      "id": "tex.gui.tilesicon",
+      "filename": "tilesicon.png"
+    },
+    {
+      "id": "tex.gui.gtilesicon",
+      "filename": "gtilesicon.png"
+    },
+    {
+      "id": "tex.gui.entitiesicon",
+      "filename": "entitiesicon.png"
+    },
+    {
+      "id": "tex.items.anthracite_coal_chunk",
+      "filename": "anthracite_coal_chunk.png"
+    },
+    {
+      "id": "tex.tiles.torch",
+      "filename": "torch.png"
+    },
+    {
+      "id": "tex.items.torch",
+      "filename": "torch.png"
+    },
+    {
+      "id": "tex.tiles.burner_furnace_mk1/0",
+      "filename": "burner_furnace_mk1_off.png"
+    },
+    {
+      "id": "tex.tiles.burner_furnace_mk1/1",
+      "filename": "burner_furnace_mk1_on.png"
+    },
+    {
+      "id": "tex.items.burner_furnace_mk1",
+      "filename": "burner_furnace_mk1_off.png"
+    },
+    {
+      "id": "tex.items.log",
+      "filename": "log_item.png"
+    },
+    {
+      "id": "tex.tiles.brick_wall",
+      "filename": "brick_wall.png"
+    },
+    {
+      "id": "tex.tiles.stone_brick_wall",
+      "filename": "stone_brick_wall.png"
+    },
+    {
+      "id": "tex.tiles.null",
+      "filename": "void_tile.png"
+    },
+    {
+      "id": "tex.items.flask",
+      "filename": "flask_item.png"
+    },
+    {
+      "id": "tex.items.cow_meat_raw",
+      "filename": "raw_beef.png"
+    },
+    {
+      "id": "tex.items.sheep_meat_raw",
+      "filename": "raw_mutton.png"
+    },
+    {
+      "id": "tex.items.pig_meat_raw",
+      "filename": "raw_pork.png"
+    },
+    {
+      "id": "tex.items.cow_meat_cooked",
+      "filename": "cooked_beef.png"
+    },
+    {
+      "id": "tex.items.sheep_meat_cooked",
+      "filename": "cooked_mutton.png"
+    },
+    {
+      "id": "tex.items.pig_meat_cooked",
+      "filename": "cooked_pork.png"
+    },
+    {
+      "id": "tex.items.iron_ingot",
+      "filename": "iron_ingot_item.png"
+    },
+    {
+      "id": "tex.items.steel_ingot",
+      "filename": "steel_ingot_item.png"
+    },
+    {
+      "id": "tex.items.cast_iron_ingot",
+      "filename": "cast_iron_ingot_item.png"
+    },
+    {
+      "id": "tex.items.copper_ingot",
+      "filename": "copper_ingot_item.png"
+    },
+    {
+      "id": "tex.entities.pig",
+      "filename": "pig_entity.png"
+    },
+    {
+      "id": "tex.tiles.basic_bin",
+      "filename": "bin_tile.png"
+    },
+    {
+      "id": "tex.items.basic_bin",
+      "filename": "bin_tile.png"
+    },
+    {
+      "id": "tex.entities.sheep/0/0",
+      "filename": "sheep_entity_white_normal.png"
+    },
+    {
+      "id": "tex.entities.sheep/0/1",
+      "filename": "sheep_entity_white_baby.png"
+    },
+    {
+      "id": "tex.entities.sheep/1/0",
+      "filename": "sheep_entity_black_normal.png"
+    },
+    {
+      "id": "tex.entities.sheep/1/1",
+      "filename": "sheep_entity_black_baby.png"
+    }
+  ],
+  "entities": [
+    {
+      "id": "entities.player",
+      "name": "Player",
+      "max_health": 100,
+      "max_water": 100,
+      "max_hunger": 100,
+      "water_loss_per_tick": 0.025,
+      "hunger_loss_per_tick": 0.01,
+      "health_loss_from_water_per_tick": 0.05,
+      "health_loss_from_hunger_per_tick": 0.05,
+      "rangesq": 9,
+      "audio": [
+        {
+          "type": "entity_hurt",
+          "id": "entities.player.hurt"
+        }
+      ]
+    },
+    {
+      "id": "entities.zombie",
+      "max_health": 100,
+      "damage": 3,
+      "rangesq": 0.4,
+      "speed": 0.005,
+      "name": "Zombie",
+      "texture": "tex.entities.zombie"
+    },
+    {
+      "id": "entities.cow",
+      "max_health": 50,
+      "speed": 0.005,
+      "mass": 1.0,
+      "name": "Cow",
+      "drops": "loot.entities.cow.kill",
+      "texture": "tex.entities.pig"
+    },
+    {
+      "id": "entities.sheep",
+      "max_health": 50,
+      "speed": 0.005,
+      "mass": 1.0,
+      "name": "Sheep",
+      "drops": "loot.entities.sheep.kill",
+      "texture": "tex.entities.sheep/0/0"
+    },
+    {
+      "id": "entities.pig",
+      "max_health": 50,
+      "speed": 0.005,
+      "mass": 1.0,
+      "name": "Pig",
+      "drops": "loot.entities.pig.kill",
+      "texture": "tex.entities.pig"
+    },
+    {
+      "id": "entities.cactus_boss",
+      "max_health": 100,
+      "name": "Cactus Boss",
+      "textures_left": [
+        "tex.entities.cactus_boss.left/0",
+        "tex.entities.cactus_boss.left/1",
+        "tex.entities.cactus_boss.left/2",
+        "tex.entities.cactus_boss.left/3",
+        "tex.entities.cactus_boss.left/4"
+      ],
+      "textures_right": [
+        "tex.entities.cactus_boss.right/0",
+        "tex.entities.cactus_boss.right/1",
+        "tex.entities.cactus_boss.right/2",
+        "tex.entities.cactus_boss.right/3",
+        "tex.entities.cactus_boss.right/4"
+      ],
+      "textures_front": [
+        "tex.entities.cactus_boss.front/0",
+        "tex.entities.cactus_boss.front/1",
+        "tex.entities.cactus_boss.front/2",
+        "tex.entities.cactus_boss.front/3",
+        "tex.entities.cactus_boss.front/4"
+      ]
+    },
+    {
+      "id": "entities.projectiles.cactus_boss_rattle",
+      "name": "Rattle",
+      "damage": 10.0,
+      "projectile_speed": 0.5,
+      "textures": [
+        "tex.entities.rattle/0",
+        "tex.entities.rattle/1",
+        "tex.entities.rattle/2",
+        "tex.entities.rattle/3",
+        "tex.entities.rattle/4",
+        "tex.entities.rattle/5",
+        "tex.entities.rattle/6",
+        "tex.entities.rattle/7"
+      ],
+      "audio": [
+        {
+          "type": "projectile_hit",
+          "id": "entities.rattle_bullet.hit"
+        }
+      ]
+    }
+  ],
+  "loot_bundles": [
+    {
+      "id": "none",
+      "type": "null"
+    },
+    {
+      "id": "loot.entities.cow.kill",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.cow_meat_raw",
+          "minamount": 1,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.entities.sheep.kill",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.sheep_meat_raw",
+          "minamount": 1,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.entities.pig.kill",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.pig_meat_raw",
+          "minamount": 1,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.dirt.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.dirt",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.stone.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.stone",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.sand.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.sand",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.malachite_ore.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.malachite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.azurite_ore.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.azurite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.hematite_ore.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.hematite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.gtiles.magnetite_ore.mine.any",
+      "type": "weighted",
+      "objects": [
+        {
+          "type": "loot_bundle",
+          "weight": 1,
+          "loot_bundle": {
+            "type": "chanced",
+            "objects": [
+              {
+                "type": "item",
+                "chance": 0.5,
+                "id": "items.magnetite_chunk",
+                "amount": 1
+              },
+              {
+                "type": "item",
+                "chance": 1,
+                "id": "items.lodestone",
+                "amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "type": "item",
+          "weight": 14,
+          "id": "items.magnetite_chunk",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.tree.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 0,
+          "maxamount": 2
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.log",
+          "minamount": 2,
+          "maxamount": 4
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.sapling",
+          "minamount": 0,
+          "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.basic_bin.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 5,
+          "maxamount": 9
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.basic_conveyor.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.iron_ingot",
+          "minamount": 3,
+          "maxamount": 4
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.berry_bush.collect.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.berry",
+          "minamount": 0,
+          "maxamount": 2
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.fence.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 5,
+          "maxamount": 10
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.burner_furnace_mk1.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stone",
+          "minamount": 3,
+          "maxamount": 4
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.torch.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 2,
+          "maxamount": 6
+        }
+      ]
+    }
   ],
   "cursors": [
     {
-      "id": 3,
-      "texture_id": 8,
-      "hotx": 7,
-      "hoty": 4
+      "id": "error",
+      "texture": "cursor.error",
+      "hotx": 16,
+      "hoty": 16
     },
     {
-      "id": 4,
-      "texture_id": 9,
-      "hotx": 5,
-      "hoty": 20
+      "id": "pickaxe",
+      "texture": "cursor.pickaxe",
+      "hotx": 16,
+      "hoty": 16
     },
     {
-      "id": 5,
-      "texture_id": 10,
-      "hotx": 9,
-      "hoty": 5
+      "id": "shovel",
+      "texture": "cursor.shovel",
+      "hotx": 16,
+      "hoty": 16
     },
     {
-      "id": 6,
-      "texture_id": 11,
-      "hotx": 9,
-      "hoty": 5
+      "id": "axe",
+      "texture": "cursor.axe",
+      "hotx": 16,
+      "hoty": 16
+    },
+    {
+      "id": "melee",
+      "texture": "cursor.melee",
+      "hotx": 16,
+      "hoty": 16
+    },
+    {
+      "id": "ranged",
+      "texture": "cursor.ranged",
+      "hotx": 16,
+      "hoty": 16
+    },
+    {
+      "id": "use",
+      "texture": "cursor.use",
+      "hotx": 16,
+      "hoty": 16
+    }
+  ],
+  "tiles": [
+    {
+      "id": "tiles.air",
+      "name": "Air"
+    },
+    {
+      "id": "tiles.tree",
+      "name": "Tree",
+      "tool": "axe",
+      "textures": [
+        "tex.tiles.tree/0",
+        "tex.tiles.tree/1",
+        "tex.tiles.tree/2",
+        "tex.tiles.tree/3"
+      ],
+      "drops": "loot.tiles.tree.mine.any",
+      "mining_resistance": 5
+    },
+    {
+      "id": "tiles.basic_conveyor",
+      "name": "Basic Conveyor",
+      "tool": "pickaxe",
+      "textures": [
+        "tex.tiles.basic_conveyor/north/0",
+        "tex.tiles.basic_conveyor/north/1",
+        "tex.tiles.basic_conveyor/north/2",
+        "tex.tiles.basic_conveyor/north/3",
+        "tex.tiles.basic_conveyor/east/0",
+        "tex.tiles.basic_conveyor/east/1",
+        "tex.tiles.basic_conveyor/east/2",
+        "tex.tiles.basic_conveyor/east/3",
+        "tex.tiles.basic_conveyor/south/0",
+        "tex.tiles.basic_conveyor/south/1",
+        "tex.tiles.basic_conveyor/south/2",
+        "tex.tiles.basic_conveyor/south/3",
+        "tex.tiles.basic_conveyor/west/0",
+        "tex.tiles.basic_conveyor/west/1",
+        "tex.tiles.basic_conveyor/west/2",
+        "tex.tiles.basic_conveyor/west/3"
+      ],
+      "drops": "loot.tiles.basic_conveyor.mine.any",
+      "mining_resistance": 5,
+      "conveyor_speed": 0.02,
+      "conveyor_max_items": 2,
+      "conveyor_item_dist": 0.5
+    },
+    {
+      "id": "tiles.torch",
+      "name": "Torch",
+      "tool": "axe",
+      "texture": "tex.tiles.torch",
+      "drops": "loot.tiles.torch.mine.any",
+      "mining_resistance": 3,
+      "brightness": 768.0
+    },
+    {
+      "id": "tiles.berry_bush",
+      "name": "Berry Bush",
+      "tool": "axe",
+      "textures": [
+        "tex.tiles.berry_bush/0",
+        "tex.tiles.berry_bush/1"
+      ],
+      "drops": "loot.tiles.berry_bush.mine.any",
+      "collection_drops": "loot.tiles.berry_bush.collect.any",
+      "mining_resistance": 3
+    },
+    {
+      "id": "tiles.fence",
+      "name": "Fence",
+      "tool": "axe",
+      "mining_resistance": 10,
+      "textures": [
+        "tex.tiles.fence/0",
+        "tex.tiles.fence/1",
+        "tex.tiles.fence/2",
+        "tex.tiles.fence/3",
+        "tex.tiles.fence/4",
+        "tex.tiles.fence/5",
+        "tex.tiles.fence/6",
+        "tex.tiles.fence/7",
+        "tex.tiles.fence/8",
+        "tex.tiles.fence/9",
+        "tex.tiles.fence/10",
+        "tex.tiles.fence/11",
+        "tex.tiles.fence/12",
+        "tex.tiles.fence/13",
+        "tex.tiles.fence/14",
+        "tex.tiles.fence/15",
+        "tex.tiles.fence/16"
+      ],
+      "drops": "loot.tiles.fence.mine.any"
+    },
+    {
+      "id": "tiles.burner_furnace_mk1",
+      "name": "Burner Furnace",
+      "tool": "pickaxe",
+      "textures": [
+        "tex.tiles.burner_furnace_mk1/0",
+        "tex.tiles.burner_furnace_mk1/1"
+      ],
+      "drops": "loot.tiles.burner_furnace_mk1.mine.any",
+      "mining_resistance": 8,
+      "brightness": 512.0
+    },
+    {
+      "id": "tiles.basic_bin",
+      "mining_resistance": 5,
+      "name": "Basic Bin",
+      "tool": "axe",
+      "texture": "tex.tiles.basic_bin",
+      "drops": "loot.tiles.basic_bin.mine.any"
+    },
+    {
+      "id": "tiles.brick_wall",
+      "mining_resistance": 10,
+      "name": "Brick Wall",
+      "tool": "pickaxe",
+      "texture": "tex.tiles.brick_wall",
+      "drops": "loot.gtiles.stone.mine.any"
+    },
+    {
+      "id": "tiles.stone_brick_wall",
+      "mining_resistance": 10,
+      "name": "Stone Brick Wall",
+      "tool": "pickaxe",
+      "texture": "tex.tiles.stone_brick_wall",
+      "drops": "loot.gtiles.stone.mine.any"
     }
   ],
   "ground_tiles": [
     {
-      "id": 1,
+      "id": "gtiles.grass",
       "name": "Grass",
-      "type": 1,
-      "resistance": 5,
-      "drops": 1,
-      "texture_id": 2
+      "tool": "shovel",
+      "mining_resistance": 3,
+      "drops": "loot.gtiles.dirt.mine.any",
+      "texture": "tex.gtiles.grass",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.dirt.walk"
+        }
+      ]
     },
     {
-      "id": 2,
+      "id": "gtiles.dirt",
       "name": "Dirt",
-      "type": 1,
-      "resistance": 5,
-      "drops": 2,
-      "texture_id": 3
+      "tool": "shovel",
+      "mining_resistance": 2,
+      "drops": "loot.gtiles.dirt.mine.any",
+      "texture": "tex.gtiles.dirt",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.dirt.walk"
+        }
+      ]
     },
     {
-      "id": 3,
+      "id": "gtiles.stone",
       "name": "Stone",
-      "type": 0,
-      "resistance": 15,
-      "drops": 3,
-      "texture_id": 4
+      "tool": "pickaxe",
+      "mining_resistance": 4,
+      "drops": "loot.gtiles.stone.mine.any",
+      "texture": "tex.gtiles.stone"
+    },
+    {
+      "id": "gtiles.sand",
+      "name": "Sand",
+      "tool": "shovel",
+      "mining_resistance": 4,
+      "drops": "loot.gtiles.sand.mine.any",
+      "texture": "tex.gtiles.sand",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.sand.walk"
+        }
+      ]
+    },
+    {
+      "id": "gtiles.water",
+      "name": "Water",
+      "tool": "none",
+      "mining_resistance": 4,
+      "drops": "none",
+      "texture": "tex.gtiles.water"
+    },
+    {
+      "id": "gtiles.malachite_ore",
+      "name": "Malachite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 10,
+      "drops": "loot.gtiles.malachite_ore.mine.any",
+      "texture": "tex.gtiles.malachite_ore"
+    },
+    {
+      "id": "gtiles.azurite_ore",
+      "name": "Azurite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 10,
+      "drops": "loot.gtiles.azurite_ore.mine.any",
+      "texture": "tex.gtiles.azurite_ore"
+    },
+    {
+      "id": "gtiles.hematite_ore",
+      "name": "Hematite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 15,
+      "drops": "loot.gtiles.hematite_ore.mine.any",
+      "texture": "tex.gtiles.hematite_ore"
+    },
+    {
+      "id": "gtiles.magnetite_ore",
+      "name": "Magnetite Ore",
+      "tool": "pickaxe",
+      "mining_resistance": 15,
+      "drops": "loot.gtiles.magnetite_ore.mine.any",
+      "texture": "tex.gtiles.magnetite_ore"
     }
   ],
   "items": [
     {
-      "id": 1,
+      "id": "items.glass_slab",
+      "name": "Glass Slab",
+      "description": "A slab of glass. Can be produced by melting glass in a furnace. Can be used to construct many things.",
+      "texture": "tex.items.glass_slab"
+    },
+    {
+      "id": "items.basic_bin",
+      "name": "Basic Bin",
+      "description": "A wooden bin that can be used to store a few items.",
+      "texture": "tex.items.basic_bin",
+      "tile": "tiles.basic_bin"
+    },
+    {
+      "id": "items.cast_iron_ingot",
+      "name": "Cast Iron Ingot",
+      "description": "An ingot of cast iron, that is much harder, and has a much higher melting point than iron. Made by processing steel metal with coal.",
+      "texture": "tex.items.cast_iron_ingot"
+    },
+    {
+      "id": "items.steel_ingot",
+      "name": "Steel Ingot",
+      "description": "An ingot of steel metal, that is harder, and has a higher melting point than iron. Made by processing iron metal with coal.",
+      "texture": "tex.items.steel_ingot"
+    },
+    {
+      "id": "items.basic_conveyor",
+      "name": "Basic Conveyor",
+      "description": "A basic conveyor that can be used to move items slowly.",
+      "texture": "tex.items.basic_conveyor",
+      "tile": "tiles.basic_conveyor"
+    },
+    {
+      "id": "items.bone",
+      "name": "Bone",
+      "description": "A bone taken from the corpse of an animal. Has many uses.",
+      "texture": "tex.items.bone"
+    },
+    {
+      "id": "items.cow_meat_raw",
+      "name": "Raw Beef",
+      "description": "A juicy piece of steak, that can be cooked to become a very nutricious meal.",
+      "texture": "tex.items.cow_meat_raw",
+      "health": -5,
+      "hunger": 15,
+      "water": 15
+    },
+    {
+      "id": "items.pig_meat_raw",
+      "name": "Raw Pork",
+      "description": "A juicy piece of pork, that can be cooked to become a very nutricious meal.",
+      "texture": "tex.items.pig_meat_raw",
+      "health": -5,
+      "hunger": 15,
+      "water": 5
+    },
+    {
+      "id": "items.sheep_meat_raw",
+      "name": "Raw Mutton",
+      "description": "A juicy piece of mutton, that can be cooked to become a very nutricious meal.",
+      "texture": "tex.items.sheep_meat_raw",
+      "health": -5,
+      "hunger": 15,
+      "water": 5
+    },
+    {
+      "id": "items.cow_meat_cooked",
+      "name": "Cooked Beef",
+      "description": "A juicy piece of steak. Cooked to perfection.",
+      "texture": "tex.items.cow_meat_cooked",
+      "health": 15,
+      "hunger": 60,
+      "water": 20
+    },
+    {
+      "id": "items.pig_meat_cooked",
+      "name": "Cooked Pork",
+      "description": "A juicy piece of pork. Cooked to perfection.",
+      "texture": "tex.items.pig_meat_cooked",
+      "health": 15,
+      "hunger": 60,
+      "water": 20
+    },
+    {
+      "id": "items.sheep_meat_cooked",
+      "name": "Cooked Mutton",
+      "description": "A juicy piece of mutton. Cooked to perfection.",
+      "texture": "tex.items.sheep_meat_cooked",
+      "health": 15,
+      "hunger": 60,
+      "water": 20
+    },
+    {
+      "id": "items.charcoal",
+      "name": "Charcoal",
+      "description": "A piece of wood that has been heated to remove impurities. Serves as an excelent fuel.",
+      "texture": "tex.items.charcoal",
+      "burn_time": 2500,
+      "burn_heat": 800
+    },
+    {
+      "id": "items.grass",
       "name": "Grass",
-      "texture_id": 2
+      "description": "",
+      "texture": "tex.gtiles.dirt"
     },
     {
-      "id": 2,
+      "id": "items.dirt",
       "name": "Dirt",
-      "texture_id": 3
+      "description": "A common resource. Can be used in agriculture or be further processed to be used as construction meterial.",
+      "texture": "tex.items.dirt"
     },
     {
-      "id": 3,
+      "id": "items.stone",
       "name": "Stone",
-      "texture_id": 4
+      "description": "JuSt A nOrMa1 r0cK",
+      "texture": "tex.items.stone"
     },
     {
-      "id": 4,
-      "name": "Pickaxe",
-      "texture_id": 9,
-      "mine_damage": 2
+      "id": "items.stick",
+      "name": "Stick",
+      "description": "Can be found in trees or produced from Logs. Has many uses.",
+      "texture": "tex.items.stick",
+      "burn_time": 500,
+      "burn_heat": 400
     },
     {
-      "id": 5,
-      "name": "Shovel",
-      "texture_id": 8,
-      "mine_damage": 2
+      "id": "items.sand",
+      "name": "Sand",
+      "description": "Can be gathered from beaches, near lakes. Can be molten to produce glass.",
+      "texture": "tex.items.sand"
     },
     {
-      "id": 6,
-      "name": "Axe",
-      "texture_id": 10,
-      "mine_damage": 2
+      "id": "items.wooden_sword",
+      "name": "Wooden Sword",
+      "description": "Wooden Sword",
+      "texture": "tex.items.wooden_sword",
+      "rangesq": 4,
+      "damage": 10
+    },
+    {
+      "id": "items.wooden_shovel",
+      "name": "Wooden Shovel",
+      "description": "Wooden Shovel",
+      "texture": "tex.items.wooden_shovel",
+      "damage": 2,
+      "level": 1,
+      "type": "shovel"
+    },
+    {
+      "id": "items.wooden_pickaxe",
+      "name": "Wooden Pickaxe",
+      "description": "Wooden Pickaxe",
+      "texture": "tex.items.wooden_pickaxe",
+      "damage": 2,
+      "level": 1,
+      "type": "pickaxe"
+    },
+    {
+      "id": "items.wooden_axe",
+      "name": "Wooden Axe",
+      "description": "Wooden Axe",
+      "texture": "tex.items.wooden_axe",
+      "damage": 2,
+      "level": 1,
+      "type": "axe"
+    },
+    {
+      "id": "items.gun",
+      "name": "Gun",
+      "texture": "tex.items.stone",
+      "texture0": "tex.entities.red_bullet",
+      "damage": 2.5,
+      "projectile_speed": 0.1,
+      "audio": [
+        {
+          "type": "projectile_hit",
+          "id": "entities.generic_bullet.hit"
+        }
+      ]
+    },
+    {
+      "id": "items.berry",
+      "name": "Berry",
+      "texture": "tex.items.berry",
+      "description": "A fruit commonly found in forests. Mmm, very tasty...",
+      "health": 5.0,
+      "hunger": 20.0,
+      "water": 10.0
+    },
+    {
+      "id": "items.anthracite_coal_chunk",
+      "name": "Anthracite Coal Chunk",
+      "texture": "tex.items.anthracite_coal_chunk",
+      "description": "A chunk of high-grade (85-95%) coal ore. Is the hardest coal ore, and the one with the greatest heat content.",
+      "burn_time": 6000,
+      "burn_heat": 900
+    },
+    {
+      "id": "items.lignite_coal_chunk",
+      "name": "Lignite Coal Chunk",
+      "texture": "tex.items.lignite_coal_chunk",
+      "burn_time": 1500,
+      "burn_heat": 550
+    },
+    {
+      "id": "items.malachite_chunk",
+      "name": "Malachite Ore Chunk",
+      "description": "A piece of copper rich ore. Can be mined from Malachite Ore. Can be molten to produce copper metal.",
+      "texture": "tex.items.malachite_chunk"
+    },
+    {
+      "id": "items.azurite_chunk",
+      "name": "Azurite Ore Chunk",
+      "description": "A piece of copper rich ore. Can be mined from Azurite Ore. Can be molten to produce copper metal, or cut to form decorative gems.",
+      "texture": "tex.items.azurite_chunk"
+    },
+    {
+      "id": "items.hematite_chunk",
+      "name": "Hematite Ore Chunk",
+      "description": "A piece of iron rich ore. Can be mined from Hematite Ore. Can be molten to produce iron metal.",
+      "texture": "tex.items.hematite_chunk"
+    },
+    {
+      "id": "items.magnetite_chunk",
+      "name": "Magnetite Ore Chunk",
+      "description": "A piece of iron rich ore. Can be mined from Magnetite Ore. Can be molten to produce iron metal.",
+      "texture": "tex.items.magnetite_chunk"
+    },
+    {
+      "id": "items.lodestone",
+      "name": "Lodestone",
+      "description": "A naturally magnetized piece of Magnetite Ore, is rarely obtained by mining Magnetite Ore, alongside Magnetite Ore Chunks. Can be used as a primitive magnet, or molten to produce metal.",
+      "texture": "tex.items.lodestone"
+    },
+    {
+      "id": "items.sapling",
+      "name": "Sapling",
+      "description": "A sapling that was found near a tree that was cut down. Plant it again, so that it may grow to become a tree. May be occasionally found when cutting trees.",
+      "texture": "tex.items.sapling",
+      "tile": "tiles.sapling"
+    },
+    {
+      "id": "items.fence",
+      "name": "Fence",
+      "description": "A fence created from wood. May be placed to block the path of players or other entities.",
+      "texture": "tex.items.fence",
+      "tile": "tiles.fence"
+    },
+    {
+      "id": "items.torch",
+      "name": "Torch",
+      "description": "A torch created from wood. Can be used to provide light at nighttime.",
+      "texture": "tex.items.torch",
+      "tile": "tiles.torch"
+    },
+    {
+      "id": "items.brick_wall",
+      "name": "Brick Wall",
+      "description": "A wall created from fired clay bricks.",
+      "texture": "tex.tiles.brick_wall",
+      "tile": "tiles.brick_wall"
+    },
+    {
+      "id": "items.stone_brick_wall",
+      "name": "Stone Brick Wall",
+      "description": "A wall created from stone bricks put together.",
+      "texture": "tex.tiles.stone_brick_wall",
+      "tile": "tiles.stone_brick_wall"
+    },
+    {
+      "id": "items.burner_furnace_mk1",
+      "name": "Burner Furnace Mk1",
+      "description": "A furnace that can be used to melt ore.",
+      "texture": "tex.items.burner_furnace_mk1",
+      "tile": "tiles.burner_furnace_mk1"
+    },
+    {
+      "id": "items.log",
+      "name": "Log",
+      "description": "A wooden log taken from a cut tree. Has many uses.",
+      "texture": "tex.items.log",
+      "burn_time": 1000,
+      "burn_heat": 600
+    },
+    {
+      "id": "items.flask",
+      "name": "Flask",
+      "description": "A metal flask that can store water or some other liquid. Very convenient for staying hydrated far from lakes.",
+      "texture": "tex.items.flask",
+      "health": 0.0,
+      "hunger": 0.0,
+      "water": 5.0,
+      "durability": 40
+    },
+    {
+      "id": "items.iron_ingot",
+      "name": "Iron Ingot",
+      "description": "A ingot of iron metal. Has many uses.",
+      "texture": "tex.items.iron_ingot"
+    },
+    {
+      "id": "items.copper_ingot",
+      "name": "Copper Ingot",
+      "description": "A ingot of copper metal. Has many uses.",
+      "texture": "tex.items.copper_ingot"
     }
   ],
   "fonts": [
     {
-      "id": 1,
+      "id": "default",
       "font": "FONT.ttf"
+    },
+    {
+      "id": "alt",
+      "font": "ALTFONT.ttf"
     }
   ],
-  "recipes": [
-    {
-      "input_items": [],
-      "output_items": []
-    }
-  ],
-  "quests": [
-    {
-      "id": 1,
-      "name": "MINE EVERY TILE TYPE",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 1,
-          "goal": 1
+  "recipes": {
+    "crafting": [
+      {
+        "id": "craft.fence_from_sticks",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 15
+          }
+        ],
+        "output": [
+          {
+            "id": "items.fence",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.wooden_pickaxe_from_wood",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 10
+          },
+          {
+            "id": "items.log",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.wooden_pickaxe",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.wooden_shovel_from_wood",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 10
+          },
+          {
+            "id": "items.log",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.wooden_shovel",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.wooden_axe_from_wood",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 10
+          },
+          {
+            "id": "items.log",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.wooden_axe",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.brick_wall_from_stone",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 8
+          }
+        ],
+        "output": [
+          {
+            "id": "items.brick_wall",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.stone_brick_wall_from_stone",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 6
+          }
+        ],
+        "output": [
+          {
+            "id": "items.stone_brick_wall",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.torch_from_sticks",
+        "input": [
+          {
+            "id": "items.stick",
+            "amount": 8
+          }
+        ],
+        "output": [
+          {
+            "id": "items.torch",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.sticks_from_logs",
+        "input": [
+          {
+            "id": "items.log",
+            "amount": 1
+          }
+        ],
+        "output": [
+          {
+            "id": "items.stick",
+            "amount": 3
+          }
+        ]
+      },
+      {
+        "id": "craft.burner_furnace_mk1",
+        "input": [
+          {
+            "id": "items.stone",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.burner_furnace_mk1",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "craft.flask",
+        "input": [
+          {
+            "id": "items.iron_ingot",
+            "amount": 10
+          },
+          {
+            "id": "items.stick",
+            "amount": 5
+          }
+        ],
+        "output": [
+          {
+            "id": "items.flask",
+            "amount": 1
+          }
+        ]
+      }
+    ],
+    "smelting": [
+      {
+        "id": "smelt.cast_iron_ingot_from_steel_ingot",
+        "duration": 1000,
+        "input": {
+          "id": "items.steel_ingot",
+          "amount": 1
         },
-        {
-          "id": 2,
-          "goal": 1
+        "output": {
+          "id": "items.cast_iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.steel_ingot_from_iron_ingot",
+        "duration": 1000,
+        "input": {
+          "id": "items.iron_ingot",
+          "amount": 1
         },
-        {
-          "id": 3,
-          "goal": 1
+        "output": {
+          "id": "items.steel_ingot",
+          "amount": 1
         }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "MINE 10 GRASS",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 1,
-          "goal": 10
+      },
+      {
+        "id": "smelt.iron_ingot_from_hematite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.hematite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.iron_ingot",
+          "amount": 1
         }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "MINE 10 DIRT",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 2,
-          "goal": 10
+      },
+      {
+        "id": "smelt.charcoal_from_wood",
+        "duration": 1000,
+        "input": {
+          "id": "items.log",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.charcoal",
+          "amount": 1
         }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "MINE 10 STONE",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 3,
-          "goal": 10
+      },
+      {
+        "id": "smelt.iron_ingot_from_magnetite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.magnetite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.iron_ingot",
+          "amount": 1
         }
-      ]
-    },
-    {
-      "id": 5,
-      "name": "QUEST WITH A REALLY LONG NAME",
-      "unlocked": true,
-      "completed": false,
-      "tile_mine": [
-        {
-          "id": 1,
-          "goal": 1
+      },
+      {
+        "id": "smelt.copper_ingot_from_azurite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.azurite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.copper_ingot",
+          "amount": 1
         }
-      ]
-    }
-  ]
+      },
+      {
+        "id": "smelt.copper_ingot_from_malachite_chunk",
+        "duration": 1000,
+        "input": {
+          "id": "items.malachite_chunk",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.copper_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.iron_ingot_from_lodestone",
+        "duration": 1000,
+        "input": {
+          "id": "items.lodestone",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.iron_ingot",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.cook_pig_meat",
+        "duration": 500,
+        "input": {
+          "id": "items.pig_meat_raw",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.pig_meat_cooked",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.cook_cow_meat",
+        "duration": 500,
+        "input": {
+          "id": "items.cow_meat_raw",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.cow_meat_cooked",
+          "amount": 1
+        }
+      },
+      {
+        "id": "smelt.cook_sheep_meat",
+        "duration": 500,
+        "input": {
+          "id": "items.sheep_meat_raw",
+          "amount": 1
+        },
+        "output": {
+          "id": "items.sheep_meat_cooked",
+          "amount": 1
+        }
+      }
+    ]
+  }
 }

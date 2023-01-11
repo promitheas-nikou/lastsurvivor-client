@@ -1,5 +1,7 @@
 #include "WorldChunk.h"
 #include "World.h"
+#define _WORLD_CHUNK_TILE_PTR(x,y) (tiles[y*CHUNK_SIZE_Y+x])
+#define _WORLD_CHUNK_GTILE_PTR(x,y) (ground_tiles[y*CHUNK_SIZE_Y+x])
 
 void WorldChunk::Generate()
 {
@@ -9,35 +11,72 @@ void WorldChunk::Generate()
         {
             tmpx = CHUNK_SIZE_X * chunkX + x;
             tmpy = CHUNK_SIZE_Y * chunkY + y;
-            groundTiles[y][x] = world->GenerateGroundTile(tmpx, tmpy);
-            tiles[y][x] = world->GenerateTile(tmpx, tmpy);
+            _WORLD_CHUNK_GTILE_PTR(x,y) = world->GenerateGroundTile(tmpx, tmpy);
+            _WORLD_CHUNK_TILE_PTR(x,y) = world->GenerateTile(tmpx, tmpy);
         }
 }
 
 void WorldChunk::Tick()
 {
-    for (int y = 0; y < CHUNK_SIZE_Y; y++)
-        for (int x = 0; x < CHUNK_SIZE_X; x++)
-            groundTiles[y][x]->TickUpdate();
+    for (Tile* t : tickingTiles)
+        t->TickUpdate(world->GetGameTimeAbsolute());
+    _WORLD_CHUNK_TILE_PTR(rand() % CHUNK_SIZE_X, rand() % CHUNK_SIZE_Y)->RandomTickUpdate();
+}
+
+GroundTile*& WorldChunk::GetGroundTileRef(int x, int y)
+{
+    return _WORLD_CHUNK_GTILE_PTR(x,y);
 }
 
 GroundTile* WorldChunk::GetGroundTile(int x, int y) const
 {
-    return groundTiles[y][x];
+    return _WORLD_CHUNK_GTILE_PTR(x, y);
+}
+
+GroundTile* WorldChunk::SetGroundTile(GroundTile* gtile, int x, int y)
+{
+    GroundTile* tmp = _WORLD_CHUNK_GTILE_PTR(x,y);
+    _WORLD_CHUNK_GTILE_PTR(x, y) = gtile;
+    return tmp;
 }
 
 Tile* WorldChunk::GetTile(int x, int y) const
 {
-    return tiles[y][x];
+    return _WORLD_CHUNK_TILE_PTR(x, y);
 }
 
-void WorldChunk::RemoveTile(int x, int y)
+Tile*& WorldChunk::GetTileRef(int x, int y)
 {
-    tiles[y][x] = MakeTile(world, 0, x, y);
+    return _WORLD_CHUNK_TILE_PTR(x, y);
 }
 
-WorldChunk::WorldChunk(World* w, int x, int y): world(w), chunkX(x), chunkY(y)
+Tile* WorldChunk::SetTile(Tile* tile, int x, int y)
 {
-    Generate();
+    Tile* tmp = _WORLD_CHUNK_TILE_PTR(x, y);
+    _WORLD_CHUNK_TILE_PTR(x, y) = tile;
+    return tmp;
+}
+
+Tile* WorldChunk::RemoveTile(int x, int y)
+{
+    Tile* tmp = _WORLD_CHUNK_TILE_PTR(x, y);
+    _WORLD_CHUNK_TILE_PTR(x, y) = MakeTile(world, "tiles.air", x, y);
+    return tmp;
+}
+
+void WorldChunk::AddTickingTile(Tile* t)
+{
+    tickingTiles.insert(t);
+}
+
+void WorldChunk::RemoveTickingTile(Tile* t)
+{
+    tickingTiles.erase(t);
+}
+
+WorldChunk::WorldChunk(World* w, int x, int y, bool generate): world(w), chunkX(x), chunkY(y)
+{
+    if(generate)
+        Generate();
 }
 

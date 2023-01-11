@@ -1,23 +1,43 @@
 #include "Tile.h"
 #include "AirTile.h"
-
-Tile::Tile(World* w, int x, int y, ToolType t, int m, std::string n) : world(w), xpos(x), ypos(y), optimalToolType(t), miningResistance(m), name(n)
-{}
+#include "TreeTile.h"
+#include "BerryBushTile.h"
+#include "FenceTile.h"
 
 Tile::Tile(World* w, int x, int y): world(w), xpos(x), ypos(y)
 {}
 
-ALLEGRO_BITMAP* Tile::GetTexture() const
+Item* Tile::PushItem(Item * i, Direction d, ItemIOInterface * from)
+{
+	return i;
+}
+
+Item* Tile::PullItem(Direction d, ItemIOInterface* to)
 {
 	return nullptr;
 }
 
-std::string Tile::GetName() const
+void Tile::LoadAdditionalDataFromFile(std::ifstream &file)
 {
-	return name;
+	return;
 }
 
-void Tile::TickUpdate()
+void Tile::WriteAdditionalDataToFile(std::ofstream& file)
+{
+	return;
+}
+
+bool Tile::DoesTickUpdates() const
+{
+	return false;
+}
+
+void Tile::TickUpdate(uint64_t T)
+{
+	return;
+}
+
+void Tile::RandomTickUpdate()
 {
 	return;
 }
@@ -27,10 +47,22 @@ void Tile::TileUpdate()
 	return;
 }
 
-void Tile::Draw() const
+void Tile::DrawOver() const
+{}
+
+bool Tile::CanWalkThrough() const
 {
-	al_draw_bitmap(GetTexture(), xpos * 128, ypos * 128, 0);
-	//al_draw_text(loaded_font, al_map_rgb(255, 255, 255), xpos * 128, ypos * 128, 0, std::format("{}:{}", xpos, ypos).c_str());
+	return this->IsEmpty();
+}
+
+bool Tile::canSwimThrough() const
+{
+	return false;
+}
+
+bool Tile::canFlyThrough() const
+{
+	return true;
 }
 
 bool Tile::IsTransparent() const
@@ -43,33 +75,36 @@ bool Tile::IsEmpty() const
 	return false;
 }
 
-Item* Tile::MineTile()
+Direction Tile::GetDirection() const
+{
+	return Direction::GetDefaultDirection();
+}
+
+void Tile::InitForWorld(World* w)
+{
+	return;
+}
+
+void Tile::Use(PlayerEntity* user)
+{}
+
+bool Tile::MineWithTool(Tool* tool)
+{
+	if ((tool!=nullptr)&&(static_cast<char>(tool->GetToolType()) & static_cast<char>(this->GetOptimalToolType())))
+		miningDamageDone += tool->GetMiningDamage();
+	else
+		miningDamageDone++;
+	return miningDamageDone >= this->GetMiningResistance();
+}
+
+const ItemBundle* Tile::GetMiningResult(Tool* tool) const
 {
 	return nullptr;
 }
 
-bool Tile::MineWithTool(Tool* tool)
-{
-	if ((tool!=nullptr)&&(tool->GetMiningType() == optimalToolType))
-		miningDamageDone += tool->GetMiningDamage();
-	else
-		miningDamageDone++;
-	return miningDamageDone >= miningResistance;
-}
-
-int Tile::GetMiningResistance() const
-{
-	return miningResistance;
-}
-
-int Tile::GetMiningDamageDone() const
+float Tile::GetMiningDamageDone() const
 {
 	return miningDamageDone;
-}
-
-ToolType Tile::GetOptimalToolType() const
-{
-	return optimalToolType;
 }
 
 int Tile::GetXpos() const
@@ -82,7 +117,21 @@ int Tile::GetYpos() const
 	return ypos;
 }
 
-Tile* MakeTile(World* world, int id, int x, int y)
+void Tile::RegisterLights()
+{}
+
+std::unordered_map<std::string, const Tile*> prototype_tiles;
+
+Tile* MakeTile(World* world, std::string id, int x, int y, Direction d)
 {
-	return new AirTile(world, x, y);
+	const Tile* t = prototype_tiles[id];
+	if (t == nullptr)
+		return nullptr;
+	return t->Clone(world, x, y, d);
+}
+
+void InitAllTilesForWorld(World* w)
+{
+	for (const std::pair<std::string, const Tile*>& tile : prototype_tiles)
+		const_cast<Tile*>(tile.second)->InitForWorld(w);
 }

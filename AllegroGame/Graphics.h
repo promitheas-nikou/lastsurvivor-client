@@ -11,6 +11,8 @@ extern int SCREEN_HEIGHT;
 
 void init_graphics();
 
+void init_sound();
+
 void init_window();
 
 void config_window();

@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\CppReflections">
-      <UniqueIdentifier>{54ac8374-8c81-4bb3-8845-c4ce2fb67f2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CppReflections">
-      <UniqueIdentifier>{b80c3c7d-e614-48d9-a650-e949048715cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{9ee4c608-0010-4888-8dec-ea71b15ed2a8}</UniqueIdentifier>
     </Filter>
@@ -30,9 +24,6 @@
     </Filter>
     <Filter Include="Header Files\Data">
       <UniqueIdentifier>{bee39314-7088-4462-b494-5f7499265509}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{2cb7b838-4d0e-46d9-a474-d6adea4e98d9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Data">
       <UniqueIdentifier>{e544ab06-a238-4edd-bd70-a7fc0d07f225}</UniqueIdentifier>
@@ -48,9 +39,6 @@
     </Filter>
     <Filter Include="Header Files\Game\World">
       <UniqueIdentifier>{1a116064-6840-4b3c-a850-f056649bf61f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\GUI">
-      <UniqueIdentifier>{97310782-4213-4225-b4c0-07576b1b825c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\GUI">
       <UniqueIdentifier>{a924a83b-4256-49ff-8cd5-25b63ee58270}</UniqueIdentifier>
@@ -79,13 +67,205 @@
     <Filter Include="Source Files\Game\Tools">
       <UniqueIdentifier>{20ec4f6d-20ae-4a87-b82d-de764e5c6f34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems">
+      <UniqueIdentifier>{26854926-a858-46df-a7a8-6217e5b37689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems\PickaxeToolItems">
+      <UniqueIdentifier>{1a4aa84e-d04a-4379-bf5f-fa941b5f065c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems">
+      <UniqueIdentifier>{6c1df708-3c91-4754-a18a-45f1866a39df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems\ShovelToolItems">
+      <UniqueIdentifier>{8ac0694f-b3c1-4ec9-bfa2-952a3ce31fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems\PickaxeToolItems">
+      <UniqueIdentifier>{23408dae-57a5-4478-b80a-6888a4542039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems\ShovelToolItems">
+      <UniqueIdentifier>{710cfc3e-5a8a-4628-b8a8-127aa9e86e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ResourceItems">
+      <UniqueIdentifier>{ba4ee3d3-ebba-4796-a2ce-02be695d38c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents">
+      <UniqueIdentifier>{24ae7c38-7a0d-42ab-907a-4a792e7b244f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{2cb7b838-4d0e-46d9-a474-d6adea4e98d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents">
+      <UniqueIdentifier>{244e323f-19b0-4fe7-8a19-833837f5b47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\DefaultGUIs">
+      <UniqueIdentifier>{8f48ee45-22a5-41f1-8d43-745ffa618b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ItemBundles">
+      <UniqueIdentifier>{8d6d839b-0096-4388-99e3-3176bebee5cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ItemBundles">
+      <UniqueIdentifier>{72208e2e-c6ea-4303-ab04-92a9739550cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua">
+      <UniqueIdentifier>{d4657ef7-8fb1-4a2d-8645-868d2cd911a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua">
+      <UniqueIdentifier>{d83c37e6-50bf-43e0-bfa7-f7325d4145bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Recipes">
+      <UniqueIdentifier>{4798f04d-1169-4bfe-8503-9773a0241dfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Recipes">
+      <UniqueIdentifier>{31dc2f07-6d1c-4f2c-b188-f4310bf62371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Quests">
+      <UniqueIdentifier>{4d248cfe-7ec3-4278-afe6-a9ae4ed3686b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Quests">
+      <UniqueIdentifier>{8420b426-ef3a-4737-a826-af410028b48b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI">
+      <UniqueIdentifier>{97310782-4213-4225-b4c0-07576b1b825c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents">
+      <UniqueIdentifier>{d733548f-64f8-4b63-be10-b7e12df1607c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents">
+      <UniqueIdentifier>{d607a566-c917-4c82-9183-f8a5174fe0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\DefaultGUIs">
+      <UniqueIdentifier>{f56fd56d-a3bf-4563-96ab-39af5f72a2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Weapons">
+      <UniqueIdentifier>{e9f5aa29-de0e-4286-9ba8-8a5670ed9172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Weapons">
+      <UniqueIdentifier>{0f1c23e4-17a1-4589-a267-33ff06c31c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\WeaponItems">
+      <UniqueIdentifier>{b6eef291-5c32-4df4-9d5e-0ae49aa78760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities\Projectiles">
+      <UniqueIdentifier>{e5f57002-7e05-42a2-8386-d203535065d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities\Projectiles">
+      <UniqueIdentifier>{15f9ffff-6dda-4eb2-be13-83bbbfcaa3c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Consumables">
+      <UniqueIdentifier>{b410703f-37b4-44ec-8c66-42c1e1ebd889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Audio">
+      <UniqueIdentifier>{2e57a837-2047-4c7a-8708-8cbaff4a19b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Audio">
+      <UniqueIdentifier>{4eb12b8c-d116-40d5-a38e-d54a9e5c1316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tiles\ConnectingTiles">
+      <UniqueIdentifier>{4f0d42c6-1eff-47ff-a80a-5545d10355a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\UsableItems">
+      <UniqueIdentifier>{bf9d5536-d684-4f51-b09d-58ae6d0bc0ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles\ConnectingTile">
+      <UniqueIdentifier>{fa1fc606-3ea3-41ce-93cd-a2546fe24398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Usables">
+      <UniqueIdentifier>{1aaa0a78-42f2-4645-89fa-95cc52d8b256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Usables\Consumables">
+      <UniqueIdentifier>{60c3c52b-9795-4622-81b7-af78ffd8874e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\UsableItems">
+      <UniqueIdentifier>{1752a683-6042-455a-8fd9-f272ecf77255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Usables">
+      <UniqueIdentifier>{7cbf6497-4d4e-4b13-8049-154c9dfa35fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\FuelItems">
+      <UniqueIdentifier>{9bbdba08-f15f-4e9e-a11a-e30e999309c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GroundTiles\OreGroundTiles">
+      <UniqueIdentifier>{1d2c79d8-f356-4e37-8d47-f22dd06de74b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GroundTiles\OreGroundTiles">
+      <UniqueIdentifier>{7e54bfd1-2067-49a9-b601-0fd032d916a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\VDD-Docs">
+      <UniqueIdentifier>{eeb81b88-d722-4504-b0fe-44188bd9c897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\PlaceableItems">
+      <UniqueIdentifier>{daf75c74-4a97-410a-ad93-1f384bb3927e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ResourceItems">
+      <UniqueIdentifier>{0c64ce5c-6d51-4913-b768-5157f4a4d61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\FuelItems">
+      <UniqueIdentifier>{5e85b7fd-a13d-463f-98a1-c6744212e099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\WeaponItems">
+      <UniqueIdentifier>{ea1c721d-7d5a-4f65-ba85-73e0a50fc232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\PlaceableItems">
+      <UniqueIdentifier>{b0bdaac4-6b12-4647-b1db-6045f7a7373f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tiles\MachineTiles">
+      <UniqueIdentifier>{347bab62-47ce-4d5e-9ac8-cc76623bd0e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents">
+      <UniqueIdentifier>{74b75a74-9a9d-44c3-8524-131e731d3624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents">
+      <UniqueIdentifier>{b44ad2e3-c6e5-471e-b670-eedb68ab3b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents">
+      <UniqueIdentifier>{501fe346-fd2c-4ea9-8c94-3309000f1877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents">
+      <UniqueIdentifier>{1b29ad21-a2d8-402c-8d01-2e8cd847bc19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ConsumableItems">
+      <UniqueIdentifier>{c6e67361-db15-4d69-aa72-14efb2deeea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ConsumableItems">
+      <UniqueIdentifier>{44e43d30-97bd-4a81-95a4-b328bc291263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities\PassiveEntities">
+      <UniqueIdentifier>{5735f1f3-58cf-4280-b541-742217442564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities\PassiveEntities">
+      <UniqueIdentifier>{9a3699e0-6ce9-48a9-9f3a-48b5adef893e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities\HostileEntities">
+      <UniqueIdentifier>{a8e46696-f716-4d19-9b2d-eb1ef4adf33c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities\HostileEntities">
+      <UniqueIdentifier>{1cabb623-ed31-4206-88f1-35484cbe17c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Automation">
+      <UniqueIdentifier>{7e22ea8d-3e07-466e-bfc2-eaf47bd1dcb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Automation">
+      <UniqueIdentifier>{f83ce84d-9308-45bc-a589-b97ba06f312d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles\MachineTiles">
+      <UniqueIdentifier>{d8c9bb90-85e3-42c6-afe0-91b4aa99f1df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles\StorageTiles">
+      <UniqueIdentifier>{c0c541d2-59a0-4ffb-9cc2-23fbe670b6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Tiles\StorageTiles">
+      <UniqueIdentifier>{cae74a3a-8a39-45ef-8877-90474e164469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Items\ToolItems\AxeToolItems">
+      <UniqueIdentifier>{a3eab837-391d-4162-8be5-e04051961d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Items\ToolItems\AxeToolItem">
+      <UniqueIdentifier>{15810015-28c8-41bb-9a39-aa0a811e7ec8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroGame.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Reflection.cpp">
-      <Filter>Source Files\CppReflections</Filter>
     </ClCompile>
     <ClCompile Include="Graphics.cpp">
       <Filter>Source Files\Graphics</Filter>
@@ -135,8 +315,464 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Game\Items</Filter>
     </ClCompile>
+    <ClCompile Include="ToolItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems</Filter>
+    </ClCompile>
     <ClCompile Include="Tool.cpp">
+      <Filter>Source Files\Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleToolItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangularUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleButtonUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventory.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleInventoryGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventory.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="DirtItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundTileMiner.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexNoise.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaInterface.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemIndex.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Recipe.cpp">
+      <Filter>Source Files\Game\Recipes</Filter>
+    </ClCompile>
+    <ClCompile Include="zip.c">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SandGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeListGUI.cpp">
+      <Filter>Source Files\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="StickItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SandItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestCollection.cpp">
+      <Filter>Source Files\Game\Quests</Filter>
+    </ClCompile>
+    <ClCompile Include="Quest.cpp">
+      <Filter>Source Files\Game\Quests</Filter>
+    </ClCompile>
+    <ClCompile Include="DeathGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Source Files\Game\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMeleeWeapon.cpp">
+      <Filter>Source Files\Game\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMeleeWeaponItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleSword.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeaponItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeaponItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="GunItem.cpp">
+      <Filter>Source Files\Game\Items\WeaponItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\Game\Entities\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Consumable.cpp">
+      <Filter>Source Files\Game\Usables\Consumables</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleConsumable.cpp">
+      <Filter>Source Files\Game\Usables\Consumables</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BerryBushTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSampleInstanceMultiTrack.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundType.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioMultiTrackCollection.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSampleMultiTrack.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioMultiTrack.cpp">
+      <Filter>Source Files\Game\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="FenceTile.cpp">
+      <Filter>Source Files\Game\Tiles\ConnectingTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectingTile.cpp">
+      <Filter>Source Files\Game\Tiles\ConnectingTile</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestGUI.cpp">
+      <Filter>Source Files\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BerryItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Usable.cpp">
+      <Filter>Source Files\Game\Usables</Filter>
+    </ClCompile>
+    <ClCompile Include="UsableItem.cpp">
+      <Filter>Source Files\Game\Items\UsableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="PhantomUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTextDrawUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleCallbackTextDrawUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="TextUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleCraftingGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="LootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleLootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="ChancedLootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="HematiteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MalachiteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="AzuriteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MagnetiteOreGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MalachiteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="AzuriteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="HematiteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="LodestoneItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="MagnetiteChunkItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleRecipeListGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableAmountItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WeightedLootBundle.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="LootObject.cpp">
+      <Filter>Source Files\Game\Items\ItemBundles</Filter>
+    </ClCompile>
+    <ClCompile Include="FenceItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SaplingItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaceableItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="AnthraciteCoalChunkItem.cpp">
+      <Filter>Source Files\Game\Items\FuelItems</Filter>
+    </ClCompile>
+    <ClCompile Include="FuelItem.cpp">
+      <Filter>Source Files\Game\Items\FuelItems</Filter>
+    </ClCompile>
+    <ClCompile Include="TorchTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TorchItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerFurnaceMk1Item.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTextButtonUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTextInputUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LogItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickWallTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBrickWallTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="FlaskItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGUIs.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleNumberInputUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryViewStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryCallbackSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryGenericStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryFuelStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CopperIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="IronIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryConsumableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleUsableConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\UsableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="UsableConsumableItem.cpp">
+      <Filter>Source Files\Game\Items\UsableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryUsableStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CharcoalItem.cpp">
+      <Filter>Source Files\Game\Items\FuelItems</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBrickWallItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickWallItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CreativeItemGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteSheet.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="PassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="CowPassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieEntity.cpp">
+      <Filter>Source Files\Game\Entities\HostileEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="HostileEntity.cpp">
+      <Filter>Source Files\Game\Entities\HostileEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="CactusBossEntity.cpp">
+      <Filter>Source Files\Game\Entities\HostileEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepPassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="PigPassiveEntity.cpp">
+      <Filter>Source Files\Game\Entities\PassiveEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="RawCowMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RawSheepMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="RawPigMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CookedPigMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CookedSheepMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CoopedCowMeatItem.cpp">
+      <Filter>Source Files\Game\Items\ConsumableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicConveyorItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="CastIronIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="SteelIngotItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="FixedQueue.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Directions.cpp">
+      <Filter>Source Files\Game\World</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicConveyorTile.cpp">
+      <Filter>Source Files\Game\Tiles\MachineTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBinTile.cpp">
+      <Filter>Source Files\Game\Tiles\StorageTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBinItem.cpp">
+      <Filter>Source Files\Game\Items\PlaceableItems</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectedTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestEditingGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerFurnaceMk1Tile.cpp">
+      <Filter>Source Files\Game\Tiles\MachineTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="HazardWarnings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTool.cpp">
+      <Filter>Source Files\Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventoryStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.cpp">
+      <Filter>Source Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="GlassSlabItem.cpp">
+      <Filter>Source Files\Game\Items\ResourceItems</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenShovelItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\ShovelToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenAxeItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\AxeToolItems</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenPickaxeItem.cpp">
+      <Filter>Source Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +781,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="world_shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lua-api\LuaDefault.lua">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -165,9 +804,6 @@
     </ClInclude>
     <ClInclude Include="ResourceLoader.h">
       <Filter>Header Files\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Reflection.h">
-      <Filter>Header Files\CppReflections</Filter>
     </ClInclude>
     <ClInclude Include="GroundTile.h">
       <Filter>Header Files\Game\GroundTiles</Filter>
@@ -208,8 +844,482 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files\Game\Items</Filter>
     </ClInclude>
+    <ClInclude Include="ToolItem.h">
+      <Filter>Header Files\Game\Items\ToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleToolItem.h">
+      <Filter>Header Files\Game\Items\ToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
     <ClInclude Include="Tool.h">
+      <Filter>Header Files\Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangularUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleInventoryGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventory.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventory.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundTileMiner.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DirtItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteSheet.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexNoise.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaInterface.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemIndex.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Recipe.h">
+      <Filter>Header Files\Game\Recipes</Filter>
+    </ClInclude>
+    <ClInclude Include="zip.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="miniz.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SandGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeListGUI.h">
+      <Filter>Header Files\Game\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleRecipeListGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="SandItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="StickItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Quest.h">
+      <Filter>Header Files\Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestCollection.h">
+      <Filter>Header Files\Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Header Files\Game\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMeleeWeapon.h">
+      <Filter>Header Files\Game\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTool.h">
+      <Filter>Header Files\Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeaponItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMeleeWeaponItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleSword.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Header Files\Game\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="GunItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeaponItem.h">
+      <Filter>Header Files\Game\Items\WeaponItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\Game\Entities\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleConsumable.h">
+      <Filter>Header Files\Game\Consumables</Filter>
+    </ClInclude>
+    <ClInclude Include="Consumable.h">
+      <Filter>Header Files\Game\Consumables</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsumableItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleConsumableItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BerryItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BerryBushTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSampleInstanceMultiTrack.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundType.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioMultiTrackCollection.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSampleMultiTrack.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioMultiTrack.h">
+      <Filter>Header Files\Game\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectingTile.h">
+      <Filter>Header Files\Game\Tiles\ConnectingTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestGUI.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="FenceTile.h">
+      <Filter>Header Files\Game\Tiles\ConnectingTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Usable.h">
+      <Filter>Header Files\Game\Usables</Filter>
+    </ClInclude>
+    <ClInclude Include="UsableItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="PhantomUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTextDrawUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleCallbackTextDrawUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FuelItem.h">
+      <Filter>Header Files\Game\Items\FuelItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleCraftingGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="TextUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnthraciteCoalChunkItem.h">
+      <Filter>Header Files\Game\Items\FuelItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="LootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="ChancedLootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleLootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="LootObject.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="WeightedLootBundle.h">
+      <Filter>Header Files\Game\Items\ItemBundles</Filter>
+    </ClInclude>
+    <ClInclude Include="HematiteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AzuriteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MagnetiteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MalachiteOreGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles\OreGroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="LodestoneItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="MagnetiteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="MalachiteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="AzuriteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="HematiteChunkItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableAmountItem.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="TorchTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TorchItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SaplingItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerFurnaceMk1Item.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerFurnaceMk1Tile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTextInputUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTextButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ListAllItems.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LogItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="ListAllTiles.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickWallTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneBrickWallTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="FlaskItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleNumberInputUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGUIs.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleToggleTextButtonUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryCallbackSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryFuelStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryGenericStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryPlaceableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryViewStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\DynamicItemInventorySlotUIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CopperIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="IronIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryConsumableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="UsableConsumableItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleUsableConsumableItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryUsableStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="CharcoalItem.h">
+      <Filter>Header Files\Game\Items\FuelItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickWallItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneBrickWallItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CreativeItemGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="AllegroGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="CowPassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="CactusBossEntity.h">
+      <Filter>Header Files\Game\Entities\HostileEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="HostileEntity.h">
+      <Filter>Header Files\Game\Entities\HostileEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieEntity.h">
+      <Filter>Header Files\Game\Entities\HostileEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="PigPassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepPassiveEntity.h">
+      <Filter>Header Files\Game\Entities\PassiveEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="RawCowMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RawSheepMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="RawPigMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CookedCowMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CookedSheepMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CookedPigMeatItem.h">
+      <Filter>Header Files\Game\Items\ConsumableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Directions.h">
+      <Filter>Header Files\Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemIOInterface.h">
+      <Filter>Header Files\Game\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="FenceItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaceableItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicConveyorItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="CastIronIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SteelIngotItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedQueue.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicConveyorTile.h">
+      <Filter>Header Files\Game\Tiles\MachineTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicBinTile.h">
+      <Filter>Header Files\Game\Tiles\StorageTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicBinItem.h">
+      <Filter>Header Files\Game\Items\PlaceableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectedTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestEditingGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="HazardWarnings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventoryStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryShovelToolStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryAxeToolStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItemInventoryPickaxeToolStorageSlotUIComponent.h">
+      <Filter>Header Files\Game\GUI\UIComponents\DefaultUIComponents\ItemInventorySlotUIComponenents</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassSlabItem.h">
+      <Filter>Header Files\Game\Items\ResourceItems</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenShovelItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\ShovelToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenPickaxeItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenAxeItem.h">
+      <Filter>Header Files\Game\Items\ToolItems\AxeToolItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,43 +1,198 @@
 #pragma once
 #include "Entity.h"
-#include "Tool.h"
+#include "InventoryGUI.h"
+#include "GroundTileMiner.h"
+#include "ItemInventory.h"
+#include "SimpleInventoryGUI.h"
+#include "RecipeListGUI.h"
+#include "DeathGUI.h"
+#include <list>
+#include <deque>
+#include "Consumable.h"
+#include "ConsumableItem.h"
+#include "SimpleToggleTextButtonUIComponent.h"
+#include "ToolItem.h"
+#include "ItemBundle.h"
+#include "QuestGUI.h"
+#include "SimpleCraftingGUI.h"
+//#include "WeaponItem.h"
+class MeleeWeaponItem;
+class RangedWeaponItem;
 #include "GUI.h"
+#include "LuaInterface.h"
+#include "PlaceableItem.h"
+#include "AudioMultiTrackCollection.h"
+#include "CreativeItemGUI.h"
+#include "QuestEditingGUI.h"
+#undef PlaySound
 
-static enum GUI_STATE {WORLD};
+enum class PLAYER_GUI_STATE { WORLD, PAUSE, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE, CREATIVE, QUEST_EDIT };
 
-class PlayerEntity :
-    public Entity,
-	public GUI
+class WaterGroundTile;
+
+class World;
+class WorldChunk;
+
+class PlayerNotification
 {
 private:
-	GUI_STATE guistate;
-	char keys_pressed;
+	ALLEGRO_BITMAP* content;
+	int timer;
 
-	Tool* pickaxeTool;
-	Tool* axeTool;
-	Tool* shovelTool;
-	Tool* pumpTool;
+	PlayerNotification(int t, int w, int h);
 
 public:
-	void DrawThisGUI() final;
+	void Draw(int x, int y, int width, int height, int new_timer);
+	bool ShouldBeRemoved(int new_timer);
+	static PlayerNotification* MakeTextNotification(std::string txt, int w, int h, int t, int fontsize = 30);
+	~PlayerNotification();
+	friend class PlayerEntity;
+};
+
+class PlayerEntity:
+    public Entity,
+	public GUI,
+	public GroundTileMiner
+{
+public:
+	enum PlayerActionMode {
+		COMBAT,
+		BUILDING,
+		MINING,
+		USE,
+		CONSUME,
+		CONFIGURATION
+	};
+private:
+	bool godMode = false;
+	class PauseMenuGUI :
+		public GUI
+	{
+	public:
+		SimpleToggleTextButtonUIComponent* godmode_tb;
+		SimpleToggleTextButtonUIComponent* tile_tick_tb;
+		SimpleToggleTextButtonUIComponent* entity_tick_tb;
+		virtual void PreDrawThisGUI() final;
+		PauseMenuGUI(PlayerEntity* p);
+	};
+
+	std::string buf;
+	char debug = 0;
+	bool infoMenu = false;
+	bool showHitbox = false;
+	bool showCursorInfoBox = false;
+	mutable std::deque<std::pair<ALLEGRO_COLOR,std::string>> history;
+	static ALLEGRO_BITMAP* TEXTURE;
+	LuaInterface* luaInterface;
+	enum class PLAYER_GUI_STATE guistate;
+	Direction buildRotation = Direction::NORTH;
+	int historyViewIndex;
+	int GUItimer;
+	char keys_pressed;
+	int selectedHotbarSlot;
+	InventoryGUI* inventoryGUI;
+	RecipeListGUI* recipeGUI;
+	SimpleCraftingGUI* craftingGUI;
+	InventoryGUI* hotbarGUI;
+	InventoryGUI* consumableHotbarGUI;
+	InventoryGUI* usableHotbarGUI;
+	InventoryGUI* placeableHotbarGUI;
+	PauseMenuGUI* pauseGUI;
+	QuestGUI* questGUI;
+	CreativeItemGUI* creativeGUI;
+	QuestEditingGUI* questEditingGUI;
+	ItemInventory* inventory;
+	ItemInventory* usablesInventory;
+	ItemInventory* consumablesInventory;
+	ItemInventory* placeablesInventory;
+	DeathGUI* deathgui;
+	Item* pickaxeTool;
+	Item* axeTool;
+	Item* shovelTool;
+	Item* pumpTool;
+	Item* meleeWeapon;
+	Item* rangedWeapon;
+
+	static std::string NAME;
+	static float RANGESQ;
+	float hunger;
+	static float MAX_HUNGER;
+	static float HUNGER_LOSS_PER_TICK;
+	static float HEALTH_LOSS_FROM_HUNGER_PER_TICK;
+	float water;
+	static float MAX_WATER;
+	static float WATER_LOSS_PER_TICK;
+	static float HEALTH_LOSS_FROM_WATER_PER_TICK;
+	static AudioMultiTrackCollection AUDIO_TRACKS;
+
+
+	char mode;
+
+	std::list<PlayerNotification*> notifications;
+
+	virtual void AddResult(const ItemBundle* b) override;
+
+public:
+
+	virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
+	virtual void WriteAdditionalDataToFile(std::ofstream& file) override;
+
+	virtual Entity* Clone(World* world, float x, float y) const override;
+
+	void EntityKilledRemote(Entity* e);
+
+	const static std::string ID;
+
+	virtual bool Mine();
+
+	virtual std::string GetID() const final;
+
+	void LogToConsole(std::string txt) const;
+
+	void PreDrawThisGUI() final;
+	void PostDrawThisGUI() final;
 	void Draw() final;
 
-	void KeyDown(ALLEGRO_KEYBOARD_EVENT &event) final;
-	void KeyUp(ALLEGRO_KEYBOARD_EVENT &event) final;
+	bool KeyDown(ALLEGRO_KEYBOARD_EVENT &event) final;
+	bool KeyUp(ALLEGRO_KEYBOARD_EVENT &event) final;
 
-	void MouseButtonDown(ALLEGRO_MOUSE_EVENT &event) final;
-	void MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
-	void MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
+	bool MouseButtonDown(ALLEGRO_MOUSE_EVENT &event) final;
+	bool MouseButtonUp(ALLEGRO_MOUSE_EVENT &event) final;
+	bool MouseButtonMove(ALLEGRO_MOUSE_EVENT &event) final;
 
-	void PlaceTile(int x, int y);
+	bool KeyChar(ALLEGRO_KEYBOARD_EVENT& event) override;
+
+	void UseTile(int x, int y);
 	void MineTile(int x, int y);
+
+	Direction GetBuildingRotation() const;
+
+	void GiveConstItem(const Item* item);
+	Item* GiveItem(Item* item);
+	void GiveConstItemBundle(const ItemBundle* bundle);
 
 	void Tick() final;
 
-	PlayerEntity(World* world);
+	static void Init(nlohmann::json data);
+
+	void ResetAfterDeath();
+
+	virtual void PlaySound(SoundType t) const final;
+
+	void PushNotification(std::string txt, int fontsize = 30);
+	void DisplayTileGUI(Tile* t, GUI* g);
+
+	InventoryGUI* GetMainInventoryGUI(int offsetx, int offsety);
+
+	PlayerEntity(World* world, float xpos, float ypos);
+
+	virtual ~PlayerEntity() = default;
 
 	friend WorldChunk;
 	friend World;
+	friend PauseMenuGUI;
 	friend int main();
+	friend WaterGroundTile;
+	friend class Consumable;
 };
 

@@ -1,22 +1,44 @@
 #pragma once
 #include <allegro5/allegro5.h>
 
+#include "UIComponent.h"
+#include <vector>
+
 class GUI
 {
 protected:
-	GUI* activeSubGUI;
+	GUI* activeSubGUI = nullptr;
+	bool typing = false;
+	std::vector<UIComponent*> UIcomponents;
+	UIComponent* selectedComponent;
 public:
-	virtual void DrawThisGUI() = 0;
+	virtual void PreDrawThisGUI();
+	virtual void PostDrawThisGUI();
+
+	UIComponent* GetSelectedComponent();
+
+	bool IsTyping() const;
+	void ToggleTyping();
 
 	virtual void DrawGUI();
 
-	virtual void KeyDown(ALLEGRO_KEYBOARD_EVENT& event) = 0;
-	virtual void KeyUp(ALLEGRO_KEYBOARD_EVENT& event) = 0;
-	
-	virtual void MouseButtonDown(ALLEGRO_MOUSE_EVENT& event) = 0;
-	virtual void MouseButtonUp(ALLEGRO_MOUSE_EVENT& event) = 0;
-	virtual void MouseButtonMove(ALLEGRO_MOUSE_EVENT& event) = 0;
 
-	virtual void HandleEvent(ALLEGRO_EVENT& event);
+	virtual bool ClickRightDown(int xRel, int yRel);
+	virtual bool ClickLeftDown(int xRel, int yRel);
+	virtual bool ClickRightUp(int xRel, int yRel);
+	virtual bool ClickLeftUp(int xRel, int yRel);
+	
+	virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& event);
+	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& event);
+
+	void SetActiveSubGUI(GUI* gui);
+
+	virtual bool KeyChar(ALLEGRO_KEYBOARD_EVENT& event);
+
+	virtual bool MouseButtonDown(ALLEGRO_MOUSE_EVENT& event);
+	virtual bool MouseButtonUp(ALLEGRO_MOUSE_EVENT& event);
+	virtual bool MouseButtonMove(ALLEGRO_MOUSE_EVENT& event);
+
+	virtual bool HandleEvent(ALLEGRO_EVENT& event);
 };
 
