@@ -38,6 +38,21 @@ void DirtGroundTile::Draw() const
 	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
+void DirtGroundTile::Till()
+{
+	isTilled = !isTilled;
+}
+
+bool DirtGroundTile::IsTillable() const
+{
+	return true;
+}
+
+bool DirtGroundTile::DoesSupportPlants() const
+{
+	return isTilled;
+}
+
 const ItemBundle* DirtGroundTile::GetMiningResult(Tool* tool) const
 {
 	return DROP->ConstCollapseToItemBundle();

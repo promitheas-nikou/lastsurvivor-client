@@ -456,6 +456,7 @@ void init_items()
 		_INIT_ITEM(WoodenShovelItem)
 		_INIT_ITEM(WoodenAxeItem)
 		_INIT_ITEM(WoodenPickaxeItem)
+		_INIT_ITEM(WoodenHoeItem)
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

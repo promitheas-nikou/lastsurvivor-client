@@ -15,6 +15,7 @@ private:
 	static int MINING_RESISTANCE;
 	static ToolType TOOL_TYPE;
 	static AudioMultiTrackCollection AUDIO_TRACKS;
+	bool isTilled = false;
 public:
 	static const std::string ID;
 
@@ -26,6 +27,10 @@ public:
 
 	static void Init(nlohmann::json data);
 	void Draw() const final;
+
+	virtual void Till() final;
+	virtual bool IsTillable() const final;
+	virtual bool DoesSupportPlants() const final;
 
 	const ItemBundle* GetMiningResult(Tool* tool) const final;
 

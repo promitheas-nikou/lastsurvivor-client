@@ -58,6 +58,10 @@ public:
 
 	virtual void InitForWorld(World* w);
 
+	virtual void Till();
+	virtual bool IsTillable() const;
+	virtual bool DoesSupportPlants() const;
+
 	virtual void PlaySound(SoundType t) const;
 
 	virtual void RegisterLights();

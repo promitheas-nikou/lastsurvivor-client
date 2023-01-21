@@ -341,6 +341,7 @@
     <ClCompile Include="VariableAmountItem.cpp" />
     <ClCompile Include="WeightedLootBundle.cpp" />
     <ClCompile Include="WoodenAxeItem.cpp" />
+    <ClCompile Include="WoodenHoeItem.cpp" />
     <ClCompile Include="WoodenPickaxeItem.cpp" />
     <ClCompile Include="WoodenShovelItem.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
@@ -527,6 +528,7 @@
     <ClInclude Include="VariableAmountItem.h" />
     <ClInclude Include="WeightedLootBundle.h" />
     <ClInclude Include="WoodenAxeItem.h" />
+    <ClInclude Include="WoodenHoeItem.h" />
     <ClInclude Include="WoodenPickaxeItem.h" />
     <ClInclude Include="WoodenShovelItem.h" />
     <ClInclude Include="ZombieEntity.h" />

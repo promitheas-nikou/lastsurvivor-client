@@ -30,7 +30,7 @@ void GrassGroundTile::Init(nlohmann::json data)
 
 void GrassGroundTile::Draw() const
 {
-	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
+	al_draw_bitmap(isTilled?loaded_bitmaps["tex.gtiles.dirt"]:TEXTURE, xpos * 128, ypos * 128, 0);
 }
 
 GroundTile* GrassGroundTile::Clone(World* w, int x, int y) const
@@ -46,6 +46,21 @@ const ItemBundle* GrassGroundTile::GetMiningResult(Tool* tool) const
 int GrassGroundTile::GetMiningResistance() const
 {
 	return MINING_RESISTANCE;
+}
+
+void GrassGroundTile::Till()
+{
+	isTilled = !isTilled;
+}
+
+bool GrassGroundTile::IsTillable() const
+{
+	return true;
+}
+
+bool GrassGroundTile::DoesSupportPlants() const
+{
+	return isTilled;
 }
 
 void GrassGroundTile::PlaySound(SoundType t) const
