@@ -62,11 +62,11 @@ Tile* FenceTile::Clone(World* w, int x, int y, Direction d) const
 void FenceTile::Init(nlohmann::json data)
 {
     for (int i = 0; i < 16; i++)
-        TEXTURES[i] = loaded_bitmaps[data[DATA_JSON_TEXTURE_LIST_KEY][i]];
+        TEXTURES[i] = game_GetTexture(data[DATA_JSON_TEXTURE_LIST_KEY][i]);
     MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
     TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
     NAME = data[DATA_JSON_NAME_KEY];
-    DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+    DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 }
 
 FenceTile::FenceTile(World* w, int x, int y, char connections) : ConnectingTile(w, x, y, connections)

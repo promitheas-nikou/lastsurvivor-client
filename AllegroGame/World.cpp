@@ -696,6 +696,20 @@ void zip_walk(struct zip_t* zip, const char* path) {
     closedir(dir);
 }
 
+extern std::map<uint32_t, std::string> tile_ids_to_keys;
+extern std::map<uint32_t, std::string> gtile_ids_to_keys;
+extern std::map<uint32_t, std::string> item_ids_to_keys;
+extern std::map<uint32_t, std::string> entity_ids_to_keys;
+extern std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> item_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> entity_keys_to_ids;
+
+extern std::string game_name;
+extern std::string game_version_name;
+extern int game_version_major;
+extern int game_version_minor;
+
 void World::SaveToFile(std::string filename)
 {
     std::filesystem::path dir = std::filesystem::temp_directory_path() / "LastSurvivorTemp";
@@ -797,7 +811,7 @@ void World::SaveToFile(std::string filename)
 
 void World::Init()
 {
-    nullTileBitmap = loaded_bitmaps["tex.tiles.null"];
+    nullTileBitmap = game_GetTexture("tex.tiles.null");
 }
 
 #include "CactusBossEntity.h"

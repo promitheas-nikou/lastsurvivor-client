@@ -22,6 +22,6 @@ void AudioMultiTrackCollection::LoadFromJSON(nlohmann::json data)
 {
 	for (nlohmann::json audio : data)
 	{
-		Link(GetSoundTypeFromString(audio[DATA_JSON_SOUND_TYPE_KEY]), loaded_audio_multi_tracks[audio[DATA_JSON_ID_KEY]]);
+		Link(GetSoundTypeFromString(audio[DATA_JSON_SOUND_TYPE_KEY]), game_GetAudioMultiTrack(audio[DATA_JSON_ID_KEY]));
 	}
 }

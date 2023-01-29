@@ -31,21 +31,21 @@ void SimpleTextInputUIComponent::Draw(int plane)
     {
         al_draw_filled_rectangle(0, 0, GetWidth(), GetHeight(), alert_background_color);
         if (flags == ALLEGRO_ALIGN_LEFT)
-            al_draw_textf(loaded_fonts["default"][30], alert_text_color, 0, GetHeight() / 2 - 15, flags, "%s", edit_text.c_str());
+            al_draw_textf(game_GetFont("default", 30), alert_text_color, 0, GetHeight() / 2 - 15, flags, "%s", edit_text.c_str());
         else if (flags == ALLEGRO_ALIGN_CENTER)
-            al_draw_textf(loaded_fonts["default"][30], alert_text_color, GetWidth() / 2, GetHeight() / 2 - 15, flags, "%s", edit_text.c_str());
+            al_draw_textf(game_GetFont("default", 30), alert_text_color, GetWidth() / 2, GetHeight() / 2 - 15, flags, "%s", edit_text.c_str());
         else if (flags == ALLEGRO_ALIGN_RIGHT)
-            al_draw_textf(loaded_fonts["default"][30], alert_text_color, GetWidth(), GetHeight() / 2 - 15, flags, "%s", edit_text.c_str());
+            al_draw_textf(game_GetFont("default", 30), alert_text_color, GetWidth(), GetHeight() / 2 - 15, flags, "%s", edit_text.c_str());
     }
     else
     {
         al_draw_filled_rectangle(0, 0, GetWidth(), GetHeight(), background_color);
         if (flags == ALLEGRO_ALIGN_LEFT)
-            al_draw_textf(loaded_fonts["default"][30], text_color, 0, GetHeight() / 2 - 15, flags, "%s%s%s", pre_text.c_str(), edit_text.c_str(), post_text.c_str());
+            al_draw_textf(game_GetFont("default", 30), text_color, 0, GetHeight() / 2 - 15, flags, "%s%s%s", pre_text.c_str(), edit_text.c_str(), post_text.c_str());
         else if (flags == ALLEGRO_ALIGN_CENTER)
-            al_draw_textf(loaded_fonts["default"][30], text_color, GetWidth() / 2, GetHeight() / 2 - 15, flags, "%s%s%s", pre_text.c_str(), edit_text.c_str(), post_text.c_str());
+            al_draw_textf(game_GetFont("default", 30), text_color, GetWidth() / 2, GetHeight() / 2 - 15, flags, "%s%s%s", pre_text.c_str(), edit_text.c_str(), post_text.c_str());
         else if (flags == ALLEGRO_ALIGN_RIGHT)
-            al_draw_textf(loaded_fonts["default"][30], text_color, GetWidth(), GetHeight() / 2 - 15, flags, "%s%s%s", pre_text.c_str(), edit_text.c_str(), post_text.c_str());
+            al_draw_textf(game_GetFont("default", 30), text_color, GetWidth(), GetHeight() / 2 - 15, flags, "%s%s%s", pre_text.c_str(), edit_text.c_str(), post_text.c_str());
     }
 }
 

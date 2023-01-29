@@ -8,7 +8,7 @@ void SimpleTextButtonUIComponent::Draw(int plane)
 	if (plane != 1)
 		return;
 	al_draw_filled_rectangle(0, 0, GetWidth(), GetHeight(), background_color);
-	al_draw_text(loaded_fonts["default"][30], text_color, GetWidth() / 2, GetHeight() / 2 - 15, ALLEGRO_ALIGN_CENTER, text.c_str());
+	al_draw_text(game_GetFont("default", 30), text_color, GetWidth() / 2, GetHeight() / 2 - 15, ALLEGRO_ALIGN_CENTER, text.c_str());
 }
 
 bool SimpleTextButtonUIComponent::ClickLeftUp(int xRel, int yRel)

@@ -223,11 +223,11 @@ const ItemBundle* BasicConveyorTile::GetMiningResult(Tool* tool) const
 void BasicConveyorTile::Init(nlohmann::json data)
 {
 	for (int i = 0; i < 16; i++)
-		TEXTURES[i] = loaded_bitmaps[data[DATA_JSON_TEXTURE_LIST_KEY][i]];
+		TEXTURES[i] = game_GetTexture(data[DATA_JSON_TEXTURE_LIST_KEY][i]);
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 	NAME = data[DATA_JSON_NAME_KEY];
-	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+	DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 	CONVEYOR_ITEMS_DIST = data[DATA_JSON_CONVEYOR_ITEM_DISTANCE_KEY];
 	CONVEYOR_SPEED = data[DATA_JSON_CONVEYOR_SPEED_KEY];
 	CONVEYOR_MAX_ITEMS = data[DATA_JSON_CONVEYOR_MAX_ITEMS_KEY];
