@@ -1321,6 +1321,9 @@
     <ClInclude Include="WoodenAxeItem.h">
       <Filter>Header Files\Game\Items\ToolItems\AxeToolItem</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">

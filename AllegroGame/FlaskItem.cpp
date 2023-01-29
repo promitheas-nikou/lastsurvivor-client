@@ -95,7 +95,7 @@ void FlaskItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
 	HEALTH = data[DATA_JSON_HEALTH_KEY];
 	HUNGER = data[DATA_JSON_HUNGER_KEY];
 	WATER = data[DATA_JSON_WATER_KEY];

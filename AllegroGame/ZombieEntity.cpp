@@ -49,7 +49,7 @@ void ZombieEntity::Init(nlohmann::json data)
 	DAMAGE = data[DATA_JSON_DAMAGE_KEY];
 	REACHSQ = data[DATA_JSON_RANGESQ_KEY];
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
 }
 
 ZombieEntity::ZombieEntity(World* world, float xpos, float ypos) : HostileEntity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f)

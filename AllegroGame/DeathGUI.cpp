@@ -12,10 +12,10 @@ void deathguicallback()
 	player->ResetAfterDeath();
 }
 
-DeathGUI::DeathGUI(PlayerEntity* p) : TEXTURE{ loaded_bitmaps["tex.gui.death"] }
+DeathGUI::DeathGUI(PlayerEntity* p) : TEXTURE{ game_GetTexture("tex.gui.death") }
 {
 	player = p;
-	UIcomponents.push_back(new SimpleButtonUIComponent(SCREEN_WIDTH / 2 - 512, SCREEN_HEIGHT / 2 - 256, 1024, 512, loaded_bitmaps["tex.gui.death"], &deathguicallback));
+	UIcomponents.push_back(new SimpleButtonUIComponent(SCREEN_WIDTH / 2 - 512, SCREEN_HEIGHT / 2 - 256, 1024, 512, game_GetTexture("tex.gui.death"), &deathguicallback));
 }
 
 void DeathGUI::PreDrawThisGUI()

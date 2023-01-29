@@ -21,8 +21,8 @@ SandGroundTile::SandGroundTile(World* w, int x, int y) : GroundTile(w, x, y, NAM
 void SandGroundTile::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
-	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
+	DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 	AUDIO_TRACKS.LoadFromJSON(data[DATA_JSON_AUDIO_COLLECTION_KEY]);
