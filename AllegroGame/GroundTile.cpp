@@ -81,6 +81,19 @@ void GroundTile::InitForWorld(World* w)
     return;
 }
 
+void GroundTile::Till()
+{}
+
+bool GroundTile::IsTillable() const
+{
+    return false;
+}
+
+bool GroundTile::DoesSupportPlants() const
+{
+    return false;
+}
+
 void GroundTile::PlaySound(SoundType t) const
 {}
 
