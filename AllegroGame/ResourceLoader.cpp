@@ -101,14 +101,18 @@ std::unordered_map<std::string, json> tile_data;
 std::unordered_map<std::string, json> item_data;
 std::unordered_map<std::string, json> entity_data;
 
-std::map<uint32_t, std::string> tile_ids_to_keys;
-std::map<uint32_t, std::string> gtile_ids_to_keys;
-std::map<uint32_t, std::string> item_ids_to_keys;
-std::map<uint32_t, std::string> entity_ids_to_keys;
-std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
-std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
-std::unordered_map<std::string, uint32_t> item_keys_to_ids;
-std::unordered_map<std::string, uint32_t> entity_keys_to_ids;
+std::map<game_tileID_t, game_tileKey_t> tile_ids_to_keys;
+std::map<game_gtileID_t, game_gtileKey_t> gtile_ids_to_keys;
+std::map<game_itemID_t, game_itemKey_t> item_ids_to_keys;
+std::map<game_entityID_t, game_entityKey_t> entity_ids_to_keys;
+std::map<game_texID_t, game_texKey_t> texture_ids_to_keys;
+std::map<game_strID_t, game_strKey_t> string_ids_to_keys;
+std::unordered_map<game_tileKey_t, game_tileID_t> tile_keys_to_ids;
+std::unordered_map<game_gtileKey_t, game_gtileID_t> gtile_keys_to_ids;
+std::unordered_map<game_itemKey_t, game_itemID_t> item_keys_to_ids;
+std::unordered_map<game_entityKey_t, game_entityID_t> entity_keys_to_ids;
+std::unordered_map<game_texKey_t, game_texID_t> texture_keys_to_ids;
+std::unordered_map<game_strKey_t, game_strID_t> string_keys_to_ids;
 
 std::string game_name;
 std::string game_version_name;
@@ -220,6 +224,91 @@ void gen_tex_atlas() {
 		new_textures[desc.key] = al_create_sub_bitmap(global_texture_atlas, desc.xpos, desc.ypos, desc.width, desc.height);
 	}
 	loaded_bitmaps = new_textures;
+}
+
+game_texID_t game_GetTextureIDFromKey(game_texKey_t key)
+{
+	return texture_keys_to_ids[key];
+}
+
+game_strID_t game_GetStringIDFromKey(game_strKey_t key)
+{
+	return string_keys_to_ids[key];
+}
+
+game_itemID_t game_GetItemIDFromKey(game_itemKey_t key)
+{
+	return item_keys_to_ids[key];
+}
+
+game_tileID_t game_GetTileIDFromKey(game_tileKey_t key)
+{
+	return tile_keys_to_ids[key];
+}
+
+game_gtileID_t game_GetGroundTileIDFromKey(game_gtileKey_t key)
+{
+	return gtile_keys_to_ids[key];
+}
+
+game_entityID_t game_GetEntityIDFromKey(game_entityKey_t key)
+{
+	return entity_keys_to_ids[key];
+}
+
+ALLEGRO_BITMAP* game_GetTexture(std::string texID)
+{
+	return loaded_bitmaps[texID];
+}
+
+ALLEGRO_MOUSE_CURSOR* game_GetMouseCursor(std::string mcurID)
+{
+	return loaded_cursors[mcurID];
+}
+
+ALLEGRO_FONT* game_GetFont(std::string fontID, int fontSize)
+{
+	return loaded_fonts[fontID][fontSize];
+}
+
+AudioMultiTrack* game_GetAudioMultiTrack(std::string mtrackID)
+{
+	return loaded_audio_multi_tracks[mtrackID];
+}
+
+LootBundle* game_GetLootBundle(std::string lbID)
+{
+	return loaded_loot_bundles[lbID];
+}
+
+game_texKey_t game_GetTextureKeyFromID(game_texID_t id)
+{
+	return texture_ids_to_keys[id];
+}
+
+game_strKey_t game_GetStringKeyFromID(game_strID_t id)
+{
+	return string_ids_to_keys[id];
+}
+
+game_itemKey_t game_GetItemKeyFromID(game_itemID_t id)
+{
+	return item_ids_to_keys[id];
+}
+
+game_tileKey_t game_GetTileKeyFromID(game_tileID_t id)
+{
+	return tile_ids_to_keys[id];
+}
+
+game_gtileKey_t game_GetGroundTileKeyFromID(game_gtileID_t id)
+{
+	return gtile_ids_to_keys[id];
+}
+
+game_entityKey_t game_GetEntityKeyFromID(game_entityID_t id)
+{
+	return entity_ids_to_keys[id];
 }
 
 void load_resources()

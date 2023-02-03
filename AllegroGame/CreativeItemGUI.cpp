@@ -8,7 +8,7 @@ void CreativeItemGUI::DrawItem(const Item* item, int x, int y, int tw, int th, i
 {
 	al_draw_filled_rectangle(x, y, x + tw, y + th, gameconfig::SOLID_BACKGROUND_COLOR_0);
 	item->Draw(x, y, rw, rh);
-	item->DrawText(x + rw + 10, y + 10, loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, ALLEGRO_ALIGN_LEFT);
+	item->DrawText(x + rw + 10, y + 10, game_GetFont("default", 30), gameconfig::SOLID_TEXT_COLOR_NORMAL, ALLEGRO_ALIGN_LEFT);
 }
 
 void CreativeItemGUI::PreDrawThisGUI()

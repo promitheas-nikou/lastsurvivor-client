@@ -10,7 +10,7 @@ class DirtGroundTile :
 {
 private:
 	static std::string NAME;
-	static ALLEGRO_BITMAP* TEXTURE;
+	static ALLEGRO_BITMAP* TEXTURES[2];
 	static const LootBundle* DROP;
 	static int MINING_RESISTANCE;
 	static ToolType TOOL_TYPE;

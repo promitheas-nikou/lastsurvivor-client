@@ -20,8 +20,8 @@ MagnetiteOreGroundTile::MagnetiteOreGroundTile(World* w, int x, int y) : GroundT
 void MagnetiteOreGroundTile::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
-	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
+	DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 }

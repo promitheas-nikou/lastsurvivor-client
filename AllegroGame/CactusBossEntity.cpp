@@ -69,13 +69,13 @@ void CactusBossEntity::Init(nlohmann::json data)
 	int i;
 	i = 0;
 	for (std::string id : data["textures_left"])
-		LEFT_TEXTURES[i++] = loaded_bitmaps[id];
+		LEFT_TEXTURES[i++] = game_GetTexture(id);
 	i = 0;
 	for (std::string id : data["textures_front"])
-		FRONT_TEXTURES[i++] = loaded_bitmaps[id];
+		FRONT_TEXTURES[i++] = game_GetTexture(id);
 	i = 0;
 	for (std::string id : data["textures_right"])
-		RIGHT_TEXTURES[i++] = loaded_bitmaps[id];
+		RIGHT_TEXTURES[i++] = game_GetTexture(id);
 	MAX_HEALTH = data[DATA_JSON_MAX_HEALTH_KEY];
 }
 
@@ -142,7 +142,7 @@ void CactusBossEntity::RattleProjectile::Init(nlohmann::json data)
 {
 	int i = 0;
 	for (std::string s : data[DATA_JSON_TEXTURE_LIST_KEY])
-		BULLET_TEXTURES[i++] = loaded_bitmaps[s];
+		BULLET_TEXTURES[i++] = game_GetTexture(s);
 	DAMAGE = data[DATA_JSON_DAMAGE_KEY];
 	FIRE_SPEED = data[DATA_JSON_FIRE_SPEED_KEY];
 	AUDIO_TRACKS.LoadFromJSON(data[DATA_JSON_AUDIO_COLLECTION_KEY]);

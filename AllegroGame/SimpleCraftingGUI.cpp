@@ -13,7 +13,7 @@ void SimpleCraftingGUI::DrawRecipe(const CraftingRecipe* recipe, int x, int y, i
 	int b = out->GetSize();
 	for (int i = 0; i < a; i++)
 		in->GetItem(i)->Draw(x + i * (rw + 4), y, rw, rh);
-	al_draw_scaled_bitmap(loaded_bitmaps["tex.gui.crafting_arrow"], 0, 0, 128, 128, x+tw/2-64, y, rw, rh, 0);
+	al_draw_scaled_bitmap(game_GetTexture("tex.gui.crafting_arrow"), 0, 0, 128, 128, x+tw/2-64, y, rw, rh, 0);
 	for (int i = 0; i < b; i++)
 		out->GetItem(i)->Draw(x+tw/2+68 + i * (rw + 4), y, rw, rh);
 }
@@ -25,7 +25,7 @@ void SimpleCraftingGUI::PreDrawThisGUI()
 	al_draw_filled_rectangle(128, 128, SCREEN_WIDTH - 128, SCREEN_HEIGHT - 128, gameconfig::SOLID_BACKGROUND_COLOR_1);
 	const char* header = "CRAFTING MENU";
 	al_draw_filled_rectangle(132, 132, SCREEN_WIDTH - 132, 200, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	TextUtils::DrawCenteredText(loaded_fonts["default"][30],SCREEN_WIDTH/2,132,header,gameconfig::SOLID_TEXT_COLOR_NORMAL);
+	TextUtils::DrawCenteredText(game_GetFont("default", 30),SCREEN_WIDTH/2,132,header,gameconfig::SOLID_TEXT_COLOR_NORMAL);
 	for (int i = 0; i < std::min((unsigned long long) pageHeight,recipes.size()-scroll); i++)
 		DrawRecipe(recipes[i+scroll], 148, 214 + i * 148, SCREEN_WIDTH - 296, 128, 128, 128);
 }
@@ -124,8 +124,8 @@ void SimpleCraftingGUI::SingleRecipeExecutionGUI::PreDrawThisGUI()
 	al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 20, 220, SCREEN_WIDTH - 360, SCREEN_HEIGHT - 340, gameconfig::SOLID_BACKGROUND_COLOR_0);
 	al_draw_filled_rectangle(360, 160, SCREEN_WIDTH / 2 - 20, 200, gameconfig::SOLID_BACKGROUND_COLOR_0);
 	al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 20, 160, SCREEN_WIDTH - 360, 200, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	TextUtils::DrawCenteredText(loaded_fonts["default"][35], (SCREEN_WIDTH / 4) + 170, 160, "INGREDIENTS", gameconfig::SOLID_TEXT_COLOR_NORMAL);
-	TextUtils::DrawCenteredText(loaded_fonts["default"][35], (3*SCREEN_WIDTH / 4) - 170, 160, "RESULT", gameconfig::SOLID_TEXT_COLOR_NORMAL);
+	TextUtils::DrawCenteredText(game_GetFont("default", 35), (SCREEN_WIDTH / 4) + 170, 160, "INGREDIENTS", gameconfig::SOLID_TEXT_COLOR_NORMAL);
+	TextUtils::DrawCenteredText(game_GetFont("default", 35), (3*SCREEN_WIDTH / 4) - 170, 160, "RESULT", gameconfig::SOLID_TEXT_COLOR_NORMAL);
 	const ItemBundle* in = recipe->GetInputItems();
 	const ItemBundle* out = recipe->GetOutputItems();
 	for (int i = 0; i < in->GetSize(); i++)
@@ -148,13 +148,13 @@ SimpleCraftingGUI::SingleRecipeExecutionGUI::SingleRecipeExecutionGUI(SimpleCraf
 	ALLEGRO_BITMAP* b3 = al_create_bitmap(384, 128);
 	al_set_target_bitmap(b1);
 	al_draw_filled_rectangle(0, 0, 384, 128, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	TextUtils::DrawCenteredText(loaded_fonts["default"][30], 192, 48, "CRAFT ONE",gameconfig::SOLID_TEXT_COLOR_NORMAL);
+	TextUtils::DrawCenteredText(game_GetFont("default", 30), 192, 48, "CRAFT ONE",gameconfig::SOLID_TEXT_COLOR_NORMAL);
 	al_set_target_bitmap(b2);
 	al_draw_filled_rectangle(0, 0, 384, 128, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	TextUtils::DrawCenteredText(loaded_fonts["default"][30], 192, 48, "CRAFT FIVE",gameconfig::SOLID_TEXT_COLOR_NORMAL);
+	TextUtils::DrawCenteredText(game_GetFont("default", 30), 192, 48, "CRAFT FIVE",gameconfig::SOLID_TEXT_COLOR_NORMAL);
 	al_set_target_bitmap(b3);
 	al_draw_filled_rectangle(0, 0, 384, 128, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	TextUtils::DrawCenteredText(loaded_fonts["default"][30], 192, 48, "CRAFT MAX",gameconfig::SOLID_TEXT_COLOR_NORMAL);
+	TextUtils::DrawCenteredText(game_GetFont("default", 30), 192, 48, "CRAFT MAX",gameconfig::SOLID_TEXT_COLOR_NORMAL);
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	GUI::UIcomponents.push_back(new SimpleButtonUIComponent(360, SCREEN_HEIGHT-300, 384, 128, b1, [&]() {
 		recipe->PerformOnInventories(inventory, inventory);

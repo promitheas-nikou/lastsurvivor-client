@@ -28,7 +28,7 @@ void SimpleSword::Draw(int x, int y, int width, int height) const
 void SimpleSword::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
 	DAMAGE = data[DATA_JSON_DAMAGE_KEY];
 	RANGESQ = data[DATA_JSON_RANGESQ_KEY];
 }

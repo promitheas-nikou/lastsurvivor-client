@@ -1327,6 +1327,9 @@
     <ClInclude Include="WoodenHoeItem.h">
       <Filter>Header Files\Game\Items\UsableItems</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">

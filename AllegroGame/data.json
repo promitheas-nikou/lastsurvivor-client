@@ -247,12 +247,20 @@
       "filename": "lodestone.png"
     },
     {
-      "id": "tex.gtiles.grass",
+      "id": "tex.gtiles.grass/0",
       "filename": "grass.png"
     },
     {
-      "id": "tex.gtiles.dirt",
+      "id": "tex.gtiles.grass/1",
+      "filename": "farmland_dirt.png"
+    },
+    {
+      "id": "tex.gtiles.dirt/0",
       "filename": "dirt.png"
+    },
+    {
+      "id": "tex.gtiles.dirt/1",
+      "filename": "farmland_dirt.png"
     },
     {
       "id": "tex.gtiles.stone",
@@ -1313,7 +1321,10 @@
       "tool": "shovel",
       "mining_resistance": 3,
       "drops": "loot.gtiles.dirt.mine.any",
-      "texture": "tex.gtiles.grass",
+      "textures": [
+        "tex.gtiles.grass/0",
+        "tex.gtiles.grass/1"
+      ],
       "audio": [
         {
           "type": "tile_walk",
@@ -1327,7 +1338,10 @@
       "tool": "shovel",
       "mining_resistance": 2,
       "drops": "loot.gtiles.dirt.mine.any",
-      "texture": "tex.gtiles.dirt",
+      "textures": [
+        "tex.gtiles.dirt/0",
+        "tex.gtiles.dirt/1"
+      ],
       "audio": [
         {
           "type": "tile_walk",

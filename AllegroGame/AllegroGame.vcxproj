@@ -462,6 +462,7 @@
     <ClInclude Include="RawCowMeatItem.h" />
     <ClInclude Include="RawPigMeatItem.h" />
     <ClInclude Include="RawSheepMeatItem.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="SaplingItem.h" />
     <ClInclude Include="SheepPassiveEntity.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />

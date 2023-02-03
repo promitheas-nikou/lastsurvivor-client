@@ -36,8 +36,8 @@ void GunItem::Draw(int x, int y, int width, int height) const
 void GunItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
-	BULLET_TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE0_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
+	BULLET_TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE0_KEY]);
 	DAMAGE = data[DATA_JSON_DAMAGE_KEY];
 	FIRE_SPEED = data[DATA_JSON_FIRE_SPEED_KEY];
 	AUDIO_TRACKS.LoadFromJSON(data[DATA_JSON_AUDIO_COLLECTION_KEY]);
