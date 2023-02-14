@@ -475,6 +475,8 @@ void init_tiles()
 		_INIT_TILE(StoneBrickWallTile)
 		_INIT_TILE(BasicConveyorTile)
 		_INIT_TILE(BasicBinTile)
+		_INIT_TILE(GrassBushTile)
+		_INIT_TILE(WheatCropTile)
 
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
 	/* }
@@ -546,6 +548,8 @@ void init_items()
 		_INIT_ITEM(WoodenAxeItem)
 		_INIT_ITEM(WoodenPickaxeItem)
 		_INIT_ITEM(WoodenHoeItem)
+		_INIT_ITEM(WheatSeedsItem)
+		_INIT_ITEM(WheatItem)
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

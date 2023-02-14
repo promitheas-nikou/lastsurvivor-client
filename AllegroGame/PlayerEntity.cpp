@@ -1282,7 +1282,7 @@ PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, in
 {
 	PlayerNotification* p = new PlayerNotification(t, w, h);
 	al_set_target_bitmap(p->content);
-	al_draw_filled_rectangle(0, 0, w, h, al_map_rgba(200, 200, 20, 170));
+	al_clear_to_color(al_map_rgba(200, 200, 20, 170));
 	al_draw_multiline_text(game_GetFont("default", fontsize), al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	return p;

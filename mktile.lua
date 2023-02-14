@@ -28,7 +28,7 @@ class ${classname} :
     public Tile
 {
 private:
-    static int MINING_RESISTANCE;
+    static float MINING_RESISTANCE;
     static ToolType TOOL_TYPE;
     static std::string NAME;
     static ALLEGRO_BITMAP* TEXTURE;
@@ -41,10 +41,10 @@ public:
     virtual bool CanWalkThrough() const final;
 
     virtual ToolType GetOptimalToolType() const final;
-    virtual int GetMiningResistance() const final;
+    virtual float GetMiningResistance() const final;
     virtual std::string GetName() const final;
 
-    virtual Tile* Clone(World* w, int x, int y) const final;
+    virtual Tile* Clone(World* w, int x, int y, Direction d) const final;
 
     void Draw() const final;
 
@@ -108,7 +108,7 @@ std::string ${classname}::GetName() const
     return NAME;
 }
 
-Tile* ${classname}::Clone(World* w, int x, int y) const
+Tile* ${classname}::Clone(World* w, int x, int y, Direction d) const
 {
     return new ${classname}(w, x, y);
 }
@@ -125,11 +125,11 @@ void ${classname}::Draw() const
 
 void ${classname}::Init(nlohmann::json data)
 {
-    TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+    TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
     MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
     TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
     NAME = data[DATA_JSON_NAME_KEY];
-    DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+    DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 }
 
 
