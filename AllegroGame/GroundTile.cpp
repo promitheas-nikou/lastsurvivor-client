@@ -73,7 +73,7 @@ const ItemBundle* GroundTile::GetMiningResult(Tool* tool) const
 
 float GroundTile::GetFrictionModifier() const
 {
-    return 1.0f;
+    return .4f;
 }
 
 void GroundTile::InitForWorld(World* w)
