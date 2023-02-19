@@ -28,6 +28,8 @@
 #include "AzuriteOreGroundTile.h"
 #include "HematiteOreGroundTile.h"
 #include "MagnetiteOreGroundTile.h"
+#include "IceGroundTile.h"
+#include "SnowGroundTile.h"
 #include "TorchTile.h"
 #include "BurnerFurnaceMk1Tile.h"
 #define _INIT_TILE(classname){classname::Init(tile_data[classname::ID]);prototype_tiles[classname::ID] = new classname(nullptr, 0, 0);}
@@ -465,6 +467,8 @@ void init_tiles()
 		_INIT_GTILE(MalachiteOreGroundTile)
 		_INIT_GTILE(HematiteOreGroundTile)
 		_INIT_GTILE(MagnetiteOreGroundTile)
+		_INIT_GTILE(IceGroundTile)
+		_INIT_GTILE(SnowGroundTile)
 
 		_INIT_TILE(TreeTile)
 		_INIT_TILE(BerryBushTile)

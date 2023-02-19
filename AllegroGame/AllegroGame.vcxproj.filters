@@ -774,6 +774,12 @@
     <ClCompile Include="WoodenPickaxeItem.cpp">
       <Filter>Source Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
     </ClCompile>
+    <ClCompile Include="SnowGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="IceGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1324,10 +1330,16 @@
     <ClInclude Include="Resources.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
+    <ClInclude Include="SnowGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="IceGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files\Game\GroundTiles</Filter>
     </Xsd>
   </ItemGroup>
 </Project>
