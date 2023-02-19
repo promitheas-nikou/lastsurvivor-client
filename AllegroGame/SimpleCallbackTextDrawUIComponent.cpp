@@ -4,5 +4,5 @@
 void SimpleCallbackTextDrawUIComponent::Draw()
 {
 	int s = sizeCallback();
-	al_draw_multiline_text(loaded_fonts["default"][s], colorCallback(), 0, 0, GetWidth(), s, 0, textCallback().c_str());
+	al_draw_multiline_text(game_GetFont("default", s), colorCallback(), 0, 0, GetWidth(), s, 0, textCallback().c_str());
 }

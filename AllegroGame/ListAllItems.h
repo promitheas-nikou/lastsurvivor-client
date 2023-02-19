@@ -51,4 +51,7 @@
 #include "WoodenShovelItem.h"
 #include "WoodenPickaxeItem.h"
 #include "WoodenAxeItem.h"
+#include "WoodenHoeItem.h"
 
+#include "WheatSeedsItem.h"
+#include "WheatItem.h"

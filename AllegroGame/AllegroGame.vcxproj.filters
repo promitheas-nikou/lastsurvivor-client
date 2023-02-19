@@ -774,6 +774,27 @@
     <ClCompile Include="WoodenPickaxeItem.cpp">
       <Filter>Source Files\Game\Items\ToolItems\PickaxeToolItems</Filter>
     </ClCompile>
+    <ClCompile Include="SnowGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="IceGroundTile.cpp">
+      <Filter>Source Files\Game\GroundTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenHoeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassBushTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatSeedsItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatCropTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1321,10 +1342,34 @@
     <ClInclude Include="WoodenAxeItem.h">
       <Filter>Header Files\Game\Items\ToolItems\AxeToolItem</Filter>
     </ClInclude>
+    <ClInclude Include="WoodenHoeItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassBushTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatSeedsItem.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatCropTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatItem.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="IceGroundTile.h">
+      <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files\Game\GroundTiles</Filter>
     </Xsd>
   </ItemGroup>
 </Project>

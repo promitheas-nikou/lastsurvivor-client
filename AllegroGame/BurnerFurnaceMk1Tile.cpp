@@ -180,16 +180,16 @@ void BurnerFurnaceMk1Tile::Draw() const
 void BurnerFurnaceMk1Tile::Init(nlohmann::json data)
 {
     for (int i = 0; i < 2; i++)
-        TEXTURES[i] = loaded_bitmaps[data[DATA_JSON_TEXTURE_LIST_KEY][i]];
+        TEXTURES[i] = game_GetTexture(data[DATA_JSON_TEXTURE_LIST_KEY][i]);
     MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
     TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
     NAME = data[DATA_JSON_NAME_KEY];
-    DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+    DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
     BRIGHTNESS = data[DATA_JSON_BRIGHTNESS_KEY];
-    BURN_ICON_OFF = loaded_bitmaps["tex.gui.burn_icon/0"];
-    BURN_ICON_ON = loaded_bitmaps["tex.gui.burn_icon/1"];
-    PROGRESS_ICON_OFF = loaded_bitmaps["tex.gui.progress_icon/0"];
-    PROGRESS_ICON_ON = loaded_bitmaps["tex.gui.progress_icon/1"];
+    BURN_ICON_OFF = game_GetTexture("tex.gui.burn_icon/0");
+    BURN_ICON_ON = game_GetTexture("tex.gui.burn_icon/1");
+    PROGRESS_ICON_OFF = game_GetTexture("tex.gui.progress_icon/0");
+    PROGRESS_ICON_ON = game_GetTexture("tex.gui.progress_icon/1");
 }
 
 void BurnerFurnaceMk1Tile::InitForWorld(World* w)
@@ -240,24 +240,24 @@ void BurnerFurnaceMk1Tile::TileGUI::PostDrawThisGUI()
     if (util_rect_includes_point(SCREEN_WIDTH / 2 - 64, 228, SCREEN_WIDTH / 2 + 64, 356, s.x, s.y))
     {
         al_draw_filled_rectangle(s.x, s.y, s.x + 250, s.y + 80, al_map_rgba(10, 30, 50, 200));
-        al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Burntime for this: %.2fs", parentTile->burnTimeRemaining / TPS);
-        al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Burntime per item: %.2fs", parentTile->burnTimeFull / TPS);
-        al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Max left: %.2fs", ((f?f->GetBurnTime() * f->GetAmount():0) + parentTile->burnTimeRemaining)/TPS);
+        al_draw_textf(game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Burntime for this: %.2fs", parentTile->burnTimeRemaining / TPS);
+        al_draw_textf(game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Burntime per item: %.2fs", parentTile->burnTimeFull / TPS);
+        al_draw_textf(game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Max left: %.2fs", ((f?f->GetBurnTime() * f->GetAmount():0) + parentTile->burnTimeRemaining)/TPS);
     }
     else if (util_rect_includes_point(SCREEN_WIDTH / 2 - 64, 100, SCREEN_WIDTH / 2 + 64, 228, s.x, s.y))
     {
         al_draw_filled_rectangle(s.x, s.y, s.x + 250, s.y + 80, al_map_rgba(10, 30, 50, 200));
         if (parentTile->currentRecipe == nullptr)
         {
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Current progress: N/A");
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Progress per second: N/A");
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Time until done: N/As");
+            al_draw_textf(game_GetFont("default",20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Current progress: N/A");
+            al_draw_textf(game_GetFont("default",20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Progress per second: N/A");
+            al_draw_textf(game_GetFont("default",20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Time until done: N/As");
         }
         else
         {
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Current progress: %.1f%%", parentTile->progress * 100);
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Progress per second: %.1f%%", parentTile->progressPerTick);
-            al_draw_textf(loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Time until done: %.1fs", ((1.f - parentTile->progress) * parentTile->currentRecipe->GetDuration()) / TPS);
+            al_draw_textf(game_GetFont("default",20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 5, 0, "Current progress: %.1f%%", parentTile->progress * 100);
+            al_draw_textf(game_GetFont("default",20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 30, 0, "Progress per second: %.1f%%", parentTile->progressPerTick);
+            al_draw_textf(game_GetFont("default",20), al_map_rgba(255, 255, 255, 255), s.x + 10, s.y + 55, 0, "Time until done: %.1fs", ((1.f - parentTile->progress) * parentTile->currentRecipe->GetDuration()) / TPS);
         }
     }
 }

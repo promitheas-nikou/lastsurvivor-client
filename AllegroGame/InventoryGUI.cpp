@@ -309,24 +309,24 @@ void InventoryGUI::DrawGUI()
 
 void InventoryGUI::Init()
 {
-	INVENTORY_SLOT_GENERIC = loaded_bitmaps["tex.gui.inventory_slot"];
-	INVENTORY_SLOT_CALLBACK = loaded_bitmaps["tex.gui.inventory_slot_function"];
-	INVENTORY_SLOT_TRASH = loaded_bitmaps["tex.gui.inventory_slot_trash"];
-	INVENTORY_SLOT_SHOVEL = loaded_bitmaps["tex.gui.inventory_slot_shovel"];
-	INVENTORY_SLOT_PICKAXE = loaded_bitmaps["tex.gui.inventory_slot_pickaxe"];
-	INVENTORY_SLOT_AXE = loaded_bitmaps["tex.gui.inventory_slot_axe"];
-	INVENTORY_SLOT_MELEE = loaded_bitmaps["tex.gui.inventory_slot_melee"];
-	INVENTORY_SLOT_RANGED = loaded_bitmaps["tex.gui.inventory_slot_ranged"];
-	INVENTORY_SLOT_CONSUMABLE = loaded_bitmaps["tex.gui.inventory_slot_consumable"];
-	INVENTORY_SLOT_USABLE = loaded_bitmaps["tex.gui.inventory_slot_usable"];
-	INVENTORY_SLOT_PLACEABLE = loaded_bitmaps["tex.gui.inventory_slot_placeable"];
-	INVENTORY_SLOT_AUTO_IN_0 = loaded_bitmaps["tex.gui.automation_slot.in/0"];
-	INVENTORY_SLOT_AUTO_IN_1 = loaded_bitmaps["tex.gui.automation_slot.in/1"];
-	INVENTORY_SLOT_AUTO_IN_2 = loaded_bitmaps["tex.gui.automation_slot.in/2"];
-	INVENTORY_SLOT_AUTO_OUT_0 = loaded_bitmaps["tex.gui.automation_slot.out/0"];
-	INVENTORY_SLOT_AUTO_OUT_1 = loaded_bitmaps["tex.gui.automation_slot.out/1"];
-	INVENTORY_SLOT_AUTO_OUT_2 = loaded_bitmaps["tex.gui.automation_slot.out/2"];
-	INVENTORY_SLOT_AUTO_FUEL = loaded_bitmaps["tex.gui.automation_slot.fuel"];
+	INVENTORY_SLOT_GENERIC = game_GetTexture("tex.gui.inventory_slot");
+	INVENTORY_SLOT_CALLBACK = game_GetTexture("tex.gui.inventory_slot_function");
+	INVENTORY_SLOT_TRASH = game_GetTexture("tex.gui.inventory_slot_trash");
+	INVENTORY_SLOT_SHOVEL = game_GetTexture("tex.gui.inventory_slot_shovel");
+	INVENTORY_SLOT_PICKAXE = game_GetTexture("tex.gui.inventory_slot_pickaxe");
+	INVENTORY_SLOT_AXE = game_GetTexture("tex.gui.inventory_slot_axe");
+	INVENTORY_SLOT_MELEE = game_GetTexture("tex.gui.inventory_slot_melee");
+	INVENTORY_SLOT_RANGED = game_GetTexture("tex.gui.inventory_slot_ranged");
+	INVENTORY_SLOT_CONSUMABLE = game_GetTexture("tex.gui.inventory_slot_consumable");
+	INVENTORY_SLOT_USABLE = game_GetTexture("tex.gui.inventory_slot_usable");
+	INVENTORY_SLOT_PLACEABLE = game_GetTexture("tex.gui.inventory_slot_placeable");
+	INVENTORY_SLOT_AUTO_IN_0 = game_GetTexture("tex.gui.automation_slot.in/0");
+	INVENTORY_SLOT_AUTO_IN_1 = game_GetTexture("tex.gui.automation_slot.in/1");
+	INVENTORY_SLOT_AUTO_IN_2 = game_GetTexture("tex.gui.automation_slot.in/2");
+	INVENTORY_SLOT_AUTO_OUT_0 = game_GetTexture("tex.gui.automation_slot.out/0");
+	INVENTORY_SLOT_AUTO_OUT_1 = game_GetTexture("tex.gui.automation_slot.out/1");
+	INVENTORY_SLOT_AUTO_OUT_2 = game_GetTexture("tex.gui.automation_slot.out/2");
+	INVENTORY_SLOT_AUTO_FUEL = game_GetTexture("tex.gui.automation_slot.fuel");
 }
 
 void InventoryGUI::PreDrawThisGUI()

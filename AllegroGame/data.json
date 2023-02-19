@@ -61,6 +61,30 @@
       ]
     },
     {
+      "id": "gtiles.ice.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
+      "id": "gtiles.snow.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
       "id": "gtiles.sand.walk",
       "wait": true,
       "type": "tile_passive",
@@ -72,6 +96,33 @@
         "sand_walk_4.wav",
         "sand_walk_5.wav",
         "sand_walk_6.wav"
+      ]
+    },
+    {
+      "id": "gtiles.snow.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "snow_walk_0.wav",
+        "snow_walk_1.wav",
+        "snow_walk_2.wav",
+        "snow_walk_3.wav",
+        "snow_walk_4.wav",
+        "snow_walk_5.wav",
+        "snow_walk_6.wav"
+      ]
+    },
+    {
+      "id": "gtiles.ice.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "ice_walk_0.wav",
+        "ice_walk_1.wav",
+        "ice_walk_2.wav",
+        "ice_walk_3.wav",
+        "ice_walk_4.wav",
+        "ice_walk_5.wav"
       ]
     },
     {
@@ -109,6 +160,22 @@
     {
       "id": "tex.items.charcoal",
       "filename": "charcoal_item.png"
+    },
+    {
+      "id": "tex.items.wheat",
+      "filename": "wheat_item.png"
+    },
+    {
+      "id": "tex.tiles.wheat_crop",
+      "filename": "wheat_crop.png"
+    },
+    {
+      "id": "tex.tiles.grass_bush",
+      "filename": "grass_bush.png"
+    },
+    {
+      "id": "tex.items.wheat_seeds",
+      "filename": "wheat_seeds.png"
     },
     {
       "id": "tex.items.wooden_sword",
@@ -247,12 +314,28 @@
       "filename": "lodestone.png"
     },
     {
-      "id": "tex.gtiles.grass",
+      "id": "tex.gtiles.ice",
+      "filename": "ice_gtile.png"
+    },
+    {
+      "id": "tex.gtiles.snow",
+      "filename": "snow_gtile.png"
+    },
+    {
+      "id": "tex.gtiles.grass/0",
       "filename": "grass.png"
     },
     {
-      "id": "tex.gtiles.dirt",
+      "id": "tex.gtiles.grass/1",
+      "filename": "farmland_dirt.png"
+    },
+    {
+      "id": "tex.gtiles.dirt/0",
       "filename": "dirt.png"
+    },
+    {
+      "id": "tex.gtiles.dirt/1",
+      "filename": "farmland_dirt.png"
     },
     {
       "id": "tex.gtiles.stone",
@@ -798,10 +881,10 @@
       "max_health": 100,
       "max_water": 100,
       "max_hunger": 100,
-      "water_loss_per_tick": 0.025,
-      "hunger_loss_per_tick": 0.01,
-      "health_loss_from_water_per_tick": 0.05,
-      "health_loss_from_hunger_per_tick": 0.05,
+      "water_loss_per_tick": 0.001,
+      "hunger_loss_per_tick": 0.0005,
+      "health_loss_from_water_per_tick": 0.025,
+      "health_loss_from_hunger_per_tick": 0.015,
       "rangesq": 9,
       "audio": [
         {
@@ -948,6 +1031,18 @@
       ]
     },
     {
+      "id": "loot.gtiles.ice.mine.any",
+      "type": "simple",
+      "objects": [
+      ]
+    },
+    {
+      "id": "loot.gtiles.snow.mine.any",
+      "type": "simple",
+      "objects": [
+      ]
+    },
+    {
       "id": "loot.gtiles.stone.mine.any",
       "type": "simple",
       "objects": [
@@ -1056,6 +1151,48 @@
           "id": "items.sapling",
           "minamount": 0,
           "maxamount": 3
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.grass_bush.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 0,
+          "maxamount": 1
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.wheat_seeds",
+          "minamount": 0,
+          "maxamount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.wheat_crop.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 0,
+          "maxamount": 1
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.wheat_seeds",
+          "minamount": 1,
+          "maxamount": 3
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.wheat",
+          "minamount": 1,
+          "maxamount": 2
         }
       ]
     },
@@ -1182,6 +1319,14 @@
       "name": "Air"
     },
     {
+      "id": "tiles.grass_bush",
+      "mining_resistance": 1,
+      "name": "Grass Bush",
+      "tool": "axe",
+      "texture": "tex.tiles.grass_bush",
+      "drops": "loot.tiles.grass_bush.mine.any"
+    },
+    {
       "id": "tiles.tree",
       "name": "Tree",
       "tool": "axe",
@@ -1290,6 +1435,14 @@
       "drops": "loot.tiles.basic_bin.mine.any"
     },
     {
+      "id": "tiles.wheat_crop",
+      "mining_resistance": 3,
+      "name": "Wheat Crop",
+      "tool": "axe",
+      "texture": "tex.tiles.wheat_crop",
+      "drops": "loot.tiles.wheat_crop.mine.any"
+    },
+    {
       "id": "tiles.brick_wall",
       "mining_resistance": 10,
       "name": "Brick Wall",
@@ -1313,11 +1466,42 @@
       "tool": "shovel",
       "mining_resistance": 3,
       "drops": "loot.gtiles.dirt.mine.any",
-      "texture": "tex.gtiles.grass",
+      "textures": [
+        "tex.gtiles.grass/0",
+        "tex.gtiles.grass/1"
+      ],
       "audio": [
         {
           "type": "tile_walk",
           "id": "gtiles.dirt.walk"
+        }
+      ]
+    },
+    {
+      "id": "gtiles.ice",
+      "name": "Ice",
+      "tool": "pickaxe",
+      "mining_resistance": 5,
+      "drops": "loot.gtiles.ice.mine.any",
+      "texture": "tex.gtiles.ice",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.ice.walk"
+        }
+      ]
+    },
+    {
+      "id": "gtiles.snow",
+      "name": "Snow",
+      "tool": "shovel",
+      "mining_resistance": 2,
+      "drops": "loot.gtiles.snow.mine.any",
+      "texture": "tex.gtiles.snow",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.snow.walk"
         }
       ]
     },
@@ -1327,7 +1511,10 @@
       "tool": "shovel",
       "mining_resistance": 2,
       "drops": "loot.gtiles.dirt.mine.any",
-      "texture": "tex.gtiles.dirt",
+      "textures": [
+        "tex.gtiles.dirt/0",
+        "tex.gtiles.dirt/1"
+      ],
       "audio": [
         {
           "type": "tile_walk",
@@ -1400,10 +1587,23 @@
   ],
   "items": [
     {
+      "id": "items.wheat_seeds",
+      "name": "Wheat Seeds",
+      "description": "Some seeds that can be planted to grow into wheat.",
+      "texture": "tex.items.wheat_seeds",
+      "tile": "tiles.wheat_crop"
+    },
+    {
       "id": "items.glass_slab",
       "name": "Glass Slab",
       "description": "A slab of glass. Can be produced by melting glass in a furnace. Can be used to construct many things.",
       "texture": "tex.items.glass_slab"
+    },
+    {
+      "id": "items.wooden_hoe",
+      "name": "Wooden Hoe",
+      "description": "A primitive hoe that can be used to till land and prepare it for planting.",
+      "texture": "tex.items.wooden_hoe"
     },
     {
       "id": "items.basic_bin",
@@ -1693,6 +1893,12 @@
       "hunger": 0.0,
       "water": 5.0,
       "durability": 40
+    },
+    {
+      "id": "items.wheat",
+      "name": "Wheat",
+      "description": "A useful crop.",
+      "texture": "tex.items.wheat"
     },
     {
       "id": "items.iron_ingot",

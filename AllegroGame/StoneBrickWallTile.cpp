@@ -57,11 +57,11 @@ void StoneBrickWallTile::Draw() const
 
 void StoneBrickWallTile::Init(nlohmann::json data)
 {
-    TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+    TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
     MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
     TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
     NAME = data[DATA_JSON_NAME_KEY];
-    DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+    DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 }
 
 

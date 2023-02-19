@@ -13,7 +13,7 @@ void QuestEditingGUI::DrawQuestIcon(const Quest* quest, int x, int y, int tw, in
 	al_draw_filled_rectangle(x, y, x + tw, y + th, gameconfig::SOLID_BACKGROUND_COLOR_0);
 	ALLEGRO_BITMAP* bmp = quest->GetIcon();
 	al_draw_scaled_bitmap(quest->GetIcon(), 0, 0, al_get_bitmap_width(bmp), al_get_bitmap_height(bmp), x + 5, y + 5, rw-10, rh-10, 0);
-	al_draw_textf(loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, x + rw, y + rh / 2 - 15, 0, "\"%s\"", quest->GetName().c_str());
+	al_draw_textf(game_GetFont("default", 30), gameconfig::SOLID_TEXT_COLOR_NORMAL, x + rw, y + rh / 2 - 15, 0, "\"%s\"", quest->GetName().c_str());
 }
 
 void QuestEditingGUI::PreDrawThisGUI()
@@ -24,7 +24,7 @@ void QuestEditingGUI::PreDrawThisGUI()
 	for (int i = 0; i < std::min(pageHeight, questCollection->GetQuestCount() - scroll); i++)
 		DrawQuestIcon(questCollection->GetQuest(i + scroll), 148, 148 + i * 148, SCREEN_WIDTH - 296, 138, 138, 138);
 	//al_draw_filled_rectangle(148, SCREEN_HEIGHT-276, SCREEN_WIDTH - 148, SCREEN_HEIGHT-148, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	//al_draw_text(loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, 158, SCREEN_HEIGHT - 276 + 49, 0, "CREATE NEW QUEST");
+	//al_draw_text(game_GetFont("default", 30), gameconfig::SOLID_TEXT_COLOR_NORMAL, 158, SCREEN_HEIGHT - 276 + 49, 0, "CREATE NEW QUEST");
 }
 
 void QuestEditingGUI::PostDrawThisGUI()
@@ -91,6 +91,9 @@ bool QuestEditingGUI::NewQuestCreationGUI::MouseButtonDown(ALLEGRO_MOUSE_EVENT& 
 {
 	return true;
 }
+
+
+extern std::unordered_map<std::string, ALLEGRO_BITMAP*> loaded_bitmaps;
 
 QuestEditingGUI::NewQuestCreationGUI::NewQuestCreationGUI(QuestEditingGUI* par) : parent{ par }
 {
@@ -200,7 +203,7 @@ void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::SetQu
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::TileQuestRequirementEditingGUI::DrawRequirementIcon(const Quest::TileMineRequirement& req, int x, int y, int lw, int lh)
 {
 	al_draw_filled_rectangle(x, y, x + lw, y + lh, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	al_draw_textf(loaded_fonts["default"][30],gameconfig::SOLID_TEXT_COLOR_NORMAL, x+10, y+lh/2-15, 0, "MINE %d \"%s\" (#%s) [CLICK TO DELETE]", req.count, prototype_tiles.count(req.tileid)?prototype_tiles[req.tileid]->GetName().c_str():"<INVALID>", req.tileid.c_str());
+	al_draw_textf(game_GetFont("default", 30),gameconfig::SOLID_TEXT_COLOR_NORMAL, x+10, y+lh/2-15, 0, "MINE %d \"%s\" (#%s) [CLICK TO DELETE]", req.count, prototype_tiles.count(req.tileid)?prototype_tiles[req.tileid]->GetName().c_str():"<INVALID>", req.tileid.c_str());
 }
 
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::TileQuestRequirementEditingGUI::PreDrawThisGUI()
@@ -277,7 +280,7 @@ QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::TileQuestR
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::GroundTileQuestRequirementEditingGUI::DrawRequirementIcon(const Quest::GroundTileMineRequirement& req, int x, int y, int lw, int lh)
 {
 	al_draw_filled_rectangle(x, y, x + lw, y + lh, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	al_draw_textf(loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, x + 10, y + lh / 2 - 15, 0, "MINE %d \"%s\" (#%s) [CLICK TO DELETE]", req.count, prototype_gtiles.count(req.gtileid) ? prototype_gtiles[req.gtileid]->GetName().c_str() : "<INVALID>", req.gtileid.c_str());
+	al_draw_textf(game_GetFont("default", 30), gameconfig::SOLID_TEXT_COLOR_NORMAL, x + 10, y + lh / 2 - 15, 0, "MINE %d \"%s\" (#%s) [CLICK TO DELETE]", req.count, prototype_gtiles.count(req.gtileid) ? prototype_gtiles[req.gtileid]->GetName().c_str() : "<INVALID>", req.gtileid.c_str());
 }
 
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::GroundTileQuestRequirementEditingGUI::PreDrawThisGUI()
@@ -354,7 +357,7 @@ QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::GroundTile
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::EntityKillQuestRequirementEditingGUI::DrawRequirementIcon(const Quest::EntityKillRequirement& req, int x, int y, int lw, int lh)
 {
 	al_draw_filled_rectangle(x, y, x + lw, y + lh, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	al_draw_textf(loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, x + 10, y + lh / 2 - 15, 0, "KILL %d \"%s\" (#%s) [CLICK TO DELETE]", req.count, prototype_tiles.count(req.entityid) ? prototype_gtiles[req.entityid]->GetName().c_str() : "<INVALID>", req.entityid.c_str());
+	al_draw_textf(game_GetFont("default", 30), gameconfig::SOLID_TEXT_COLOR_NORMAL, x + 10, y + lh / 2 - 15, 0, "KILL %d \"%s\" (#%s) [CLICK TO DELETE]", req.count, prototype_tiles.count(req.entityid) ? prototype_gtiles[req.entityid]->GetName().c_str() : "<INVALID>", req.entityid.c_str());
 }
 
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::EntityKillQuestRequirementEditingGUI::PreDrawThisGUI()
@@ -434,7 +437,7 @@ bool QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::Entit
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::QuestCompletionQuestRequirementEditingGUI::DrawRequirementIcon(const Quest::QuestCompletionRequirement& req, int x, int y, int lw, int lh)
 {
 	al_draw_filled_rectangle(x, y, x + lw, y + lh, gameconfig::SOLID_BACKGROUND_COLOR_0);
-	al_draw_textf(loaded_fonts["default"][30], gameconfig::SOLID_TEXT_COLOR_NORMAL, x + 10, y + lh / 2 - 15, 0, "COMPLETE QUEST \"%s\" (#%s) [CLICK TO DELETE]", req.targetquest->GetName().c_str(), req.id.c_str());
+	al_draw_textf(game_GetFont("default", 30), gameconfig::SOLID_TEXT_COLOR_NORMAL, x + 10, y + lh / 2 - 15, 0, "COMPLETE QUEST \"%s\" (#%s) [CLICK TO DELETE]", req.targetquest->GetName().c_str(), req.id.c_str());
 }
 
 void QuestEditingGUI::ExistingQuestEditingGUI::QuestRequirementEditingGUI::QuestCompletionQuestRequirementEditingGUI::PreDrawThisGUI()

@@ -47,7 +47,7 @@ void WoodenShovelItem::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
 	DESCRIPTION = data[DATA_JSON_DESCRIPTION_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
 	MINING_DAMAGE = data[DATA_JSON_MINING_DAMAGE_KEY];
 	MINING_LEVEL = data[DATA_JSON_MINING_LEVEL_KEY];
 	MINING_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_MINING_TYPE_KEY]);

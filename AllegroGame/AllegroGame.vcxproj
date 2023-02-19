@@ -245,6 +245,7 @@
     <ClCompile Include="FuelItem.cpp" />
     <ClCompile Include="GlassSlabItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GrassBushTile.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
@@ -253,6 +254,7 @@
     <ClCompile Include="HematiteChunkItem.cpp" />
     <ClCompile Include="HematiteOreGroundTile.cpp" />
     <ClCompile Include="HostileEntity.cpp" />
+    <ClCompile Include="IceGroundTile.cpp" />
     <ClCompile Include="InventoryGUI.cpp" />
     <ClCompile Include="IronIngotItem.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -328,6 +330,7 @@
     <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SimpleUsableConsumableItem.cpp" />
+    <ClCompile Include="SnowGroundTile.cpp" />
     <ClCompile Include="SoundType.cpp" />
     <ClCompile Include="SteelIngotItem.cpp" />
     <ClCompile Include="StoneBrickWallItem.cpp" />
@@ -340,7 +343,11 @@
     <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="VariableAmountItem.cpp" />
     <ClCompile Include="WeightedLootBundle.cpp" />
+    <ClCompile Include="WheatCropTile.cpp" />
+    <ClCompile Include="WheatItem.cpp" />
+    <ClCompile Include="WheatSeedsItem.cpp" />
     <ClCompile Include="WoodenAxeItem.cpp" />
+    <ClCompile Include="WoodenHoeItem.cpp" />
     <ClCompile Include="WoodenPickaxeItem.cpp" />
     <ClCompile Include="WoodenShovelItem.cpp" />
     <ClCompile Include="ZombieEntity.cpp" />
@@ -427,11 +434,13 @@
     <ClInclude Include="FuelItem.h" />
     <ClInclude Include="GlassSlabItem.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GrassBushTile.h" />
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GunItem.h" />
     <ClInclude Include="HazardWarnings.h" />
+    <ClInclude Include="IceGroundTile.h" />
     <ClInclude Include="ItemIOInterface.h" />
     <ClInclude Include="HematiteChunkItem.h" />
     <ClInclude Include="HematiteOreGroundTile.h" />
@@ -461,6 +470,7 @@
     <ClInclude Include="RawCowMeatItem.h" />
     <ClInclude Include="RawPigMeatItem.h" />
     <ClInclude Include="RawSheepMeatItem.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="SaplingItem.h" />
     <ClInclude Include="SheepPassiveEntity.h" />
     <ClInclude Include="SimpleCraftingGUI.h" />
@@ -514,6 +524,7 @@
     <ClInclude Include="SimpleToggleTextButtonUIComponent.h" />
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SimpleUsableConsumableItem.h" />
+    <ClInclude Include="SnowGroundTile.h" />
     <ClInclude Include="SoundType.h" />
     <ClInclude Include="SteelIngotItem.h" />
     <ClInclude Include="StoneBrickWallItem.h" />
@@ -526,7 +537,11 @@
     <ClInclude Include="UsableItem.h" />
     <ClInclude Include="VariableAmountItem.h" />
     <ClInclude Include="WeightedLootBundle.h" />
+    <ClInclude Include="WheatCropTile.h" />
+    <ClInclude Include="WheatItem.h" />
+    <ClInclude Include="WheatSeedsItem.h" />
     <ClInclude Include="WoodenAxeItem.h" />
+    <ClInclude Include="WoodenHoeItem.h" />
     <ClInclude Include="WoodenPickaxeItem.h" />
     <ClInclude Include="WoodenShovelItem.h" />
     <ClInclude Include="ZombieEntity.h" />

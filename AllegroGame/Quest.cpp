@@ -72,7 +72,7 @@ bool Quest::EntityKillRequirement::Check() const
 
 Quest::Quest(std::string id, std::string n, std::string iid, int xpos, int ypos, bool c, bool u) : id{ id }, name{ n }, iconid{ iid }, x{ xpos }, y{ ypos }, completed{ c }, unlocked{ u }
 {
-    icon = loaded_bitmaps[iconid];
+    icon = game_GetTexture(iconid);
 }
 
 bool Quest::IsCompleted() const
@@ -290,7 +290,7 @@ void Quest::Modify(std::string n, std::string iid, int xpos, int ypos, bool c, b
 {
     name = n;
     iconid = iid;
-    icon = loaded_bitmaps[iid];
+    icon = game_GetTexture(iid);
     x = xpos;
     y = ypos;
     completed = c;

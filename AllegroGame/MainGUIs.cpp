@@ -13,7 +13,7 @@
 void MainMenuGUI::PreDrawThisGUI()
 {
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
-	al_draw_text(loaded_fonts["default"][200], al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 2, 250, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
+	al_draw_text(game_GetFont("default", 200), al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 2, 250, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
 }
 
 void EXIT_GAME();
@@ -29,7 +29,7 @@ MainMenuGUI::MainMenuGUI()
 void PlayMenuGUI::PreDrawThisGUI()
 {
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
-	al_draw_text(loaded_fonts["default"][200], al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 2, 250, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
+	al_draw_text(game_GetFont("default", 200), al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 2, 250, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
 }
 
 PlayMenuGUI::PlayMenuGUI()
@@ -135,7 +135,7 @@ WorldCreationMenuGUI::WorldCreationMenuGUI()
 				al_draw_filled_rectangle(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 - 100, SCREEN_WIDTH / 4 + SCREEN_WIDTH * (progress / 2), SCREEN_HEIGHT / 2, al_map_rgba(255, 255, 255, 255));
 				al_draw_filled_rectangle(SCREEN_WIDTH / 4 + SCREEN_WIDTH * (progress / 2), SCREEN_HEIGHT / 2 - 100, 3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, al_map_rgba(50, 80, 255, 255));
 				al_draw_filled_rectangle(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 + 100, 3 * SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2 + 140,al_map_rgba(50,80,255,255));
-				al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 + 100, ALLEGRO_ALIGN_LEFT, "[%d%% DONE] Generating Chunk (%d,%d)...", (int)(progress * 100), cx, cy);
+				al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 + 100, ALLEGRO_ALIGN_LEFT, "[%d%% DONE] Generating Chunk (%d,%d)...", (int)(progress * 100), cx, cy);
 				al_flip_display();
 			});
 		}
@@ -155,21 +155,21 @@ WorldCreationMenuGUI::WorldCreationMenuGUI()
 void CreditsMenuGUI::PreDrawThisGUI()
 {
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
-	al_draw_text(loaded_fonts["default"][50],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 100, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
-	al_draw_text(loaded_fonts["default"][40],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 160, ALLEGRO_ALIGN_CENTER, "THE TEAM:");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 300, ALLEGRO_ALIGN_LEFT, "LEAD (AND CURRENTLY ONLY) DEVELOPPER:");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 300, ALLEGRO_ALIGN_CENTER, "PROMITHEAS NIKOU");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 440, ALLEGRO_ALIGN_LEFT, "TEXTURES AND LEVEL DESIGN:");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 440, ALLEGRO_ALIGN_CENTER, "GIORGOS MPOTTAS");
-	//al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 480, ALLEGRO_ALIGN_LEFT, "TEXTURES AND LEVEL DESIGN:");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 480, ALLEGRO_ALIGN_CENTER, "TAXIARCHIS SENEKIS");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 620, ALLEGRO_ALIGN_LEFT, "ORIGINAL MUSIC:");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 620, ALLEGRO_ALIGN_CENTER, "THEOFILOS MYSTIDIS");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), 100, 760, ALLEGRO_ALIGN_LEFT, "SPECIAL THANKS TO:");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 760, ALLEGRO_ALIGN_CENTER, "APOSTOLOS ADAMOS");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 800, ALLEGRO_ALIGN_CENTER, "MARKELLA SENEKH");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 840, ALLEGRO_ALIGN_CENTER, "DIMITRIS IGNATIADHS");
-	al_draw_text(loaded_fonts["default"][30],al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 880, ALLEGRO_ALIGN_CENTER, "LAZAROS TZHMKAS");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 100, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 160, ALLEGRO_ALIGN_CENTER, "THE TEAM:");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), 100, 300, ALLEGRO_ALIGN_LEFT, "LEAD (AND CURRENTLY ONLY) DEVELOPPER:");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 300, ALLEGRO_ALIGN_CENTER, "PROMITHEAS NIKOU");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), 100, 440, ALLEGRO_ALIGN_LEFT, "TEXTURES AND LEVEL DESIGN:");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 440, ALLEGRO_ALIGN_CENTER, "GIORGOS MPOTTAS");
+	//al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), 100, 480, ALLEGRO_ALIGN_LEFT, "TEXTURES AND LEVEL DESIGN:");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 480, ALLEGRO_ALIGN_CENTER, "TAXIARCHIS SENEKIS");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), 100, 620, ALLEGRO_ALIGN_LEFT, "ORIGINAL MUSIC:");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 620, ALLEGRO_ALIGN_CENTER, "THEOFILOS MYSTIDIS");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), 100, 760, ALLEGRO_ALIGN_LEFT, "SPECIAL THANKS TO:");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 760, ALLEGRO_ALIGN_CENTER, "APOSTOLOS ADAMOS");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 800, ALLEGRO_ALIGN_CENTER, "MARKELLA SENEKH");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 840, ALLEGRO_ALIGN_CENTER, "DIMITRIS IGNATIADHS");
+	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 880, ALLEGRO_ALIGN_CENTER, "LAZAROS TZHMKAS");
 }
 
 CreditsMenuGUI::CreditsMenuGUI()

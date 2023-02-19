@@ -10,3 +10,7 @@
 #include "StoneBrickWallTile.h"
 #include "BasicConveyorTile.h"
 #include "BasicBinTile.h"
+
+#include "GrassBushTile.h"
+
+#include "WheatCropTile.h"

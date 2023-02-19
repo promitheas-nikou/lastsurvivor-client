@@ -28,6 +28,8 @@
 #include "AzuriteOreGroundTile.h"
 #include "HematiteOreGroundTile.h"
 #include "MagnetiteOreGroundTile.h"
+#include "IceGroundTile.h"
+#include "SnowGroundTile.h"
 #include "TorchTile.h"
 #include "BurnerFurnaceMk1Tile.h"
 #define _INIT_TILE(classname){classname::Init(tile_data[classname::ID]);prototype_tiles[classname::ID] = new classname(nullptr, 0, 0);}
@@ -101,14 +103,18 @@ std::unordered_map<std::string, json> tile_data;
 std::unordered_map<std::string, json> item_data;
 std::unordered_map<std::string, json> entity_data;
 
-std::map<uint32_t, std::string> tile_ids_to_keys;
-std::map<uint32_t, std::string> gtile_ids_to_keys;
-std::map<uint32_t, std::string> item_ids_to_keys;
-std::map<uint32_t, std::string> entity_ids_to_keys;
-std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
-std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
-std::unordered_map<std::string, uint32_t> item_keys_to_ids;
-std::unordered_map<std::string, uint32_t> entity_keys_to_ids;
+std::map<game_tileID_t, game_tileKey_t> tile_ids_to_keys;
+std::map<game_gtileID_t, game_gtileKey_t> gtile_ids_to_keys;
+std::map<game_itemID_t, game_itemKey_t> item_ids_to_keys;
+std::map<game_entityID_t, game_entityKey_t> entity_ids_to_keys;
+std::map<game_texID_t, game_texKey_t> texture_ids_to_keys;
+std::map<game_strID_t, game_strKey_t> string_ids_to_keys;
+std::unordered_map<game_tileKey_t, game_tileID_t> tile_keys_to_ids;
+std::unordered_map<game_gtileKey_t, game_gtileID_t> gtile_keys_to_ids;
+std::unordered_map<game_itemKey_t, game_itemID_t> item_keys_to_ids;
+std::unordered_map<game_entityKey_t, game_entityID_t> entity_keys_to_ids;
+std::unordered_map<game_texKey_t, game_texID_t> texture_keys_to_ids;
+std::unordered_map<game_strKey_t, game_strID_t> string_keys_to_ids;
 
 std::string game_name;
 std::string game_version_name;
@@ -220,6 +226,91 @@ void gen_tex_atlas() {
 		new_textures[desc.key] = al_create_sub_bitmap(global_texture_atlas, desc.xpos, desc.ypos, desc.width, desc.height);
 	}
 	loaded_bitmaps = new_textures;
+}
+
+game_texID_t game_GetTextureIDFromKey(game_texKey_t key)
+{
+	return texture_keys_to_ids[key];
+}
+
+game_strID_t game_GetStringIDFromKey(game_strKey_t key)
+{
+	return string_keys_to_ids[key];
+}
+
+game_itemID_t game_GetItemIDFromKey(game_itemKey_t key)
+{
+	return item_keys_to_ids[key];
+}
+
+game_tileID_t game_GetTileIDFromKey(game_tileKey_t key)
+{
+	return tile_keys_to_ids[key];
+}
+
+game_gtileID_t game_GetGroundTileIDFromKey(game_gtileKey_t key)
+{
+	return gtile_keys_to_ids[key];
+}
+
+game_entityID_t game_GetEntityIDFromKey(game_entityKey_t key)
+{
+	return entity_keys_to_ids[key];
+}
+
+ALLEGRO_BITMAP* game_GetTexture(std::string texID)
+{
+	return loaded_bitmaps[texID];
+}
+
+ALLEGRO_MOUSE_CURSOR* game_GetMouseCursor(std::string mcurID)
+{
+	return loaded_cursors[mcurID];
+}
+
+ALLEGRO_FONT* game_GetFont(std::string fontID, int fontSize)
+{
+	return loaded_fonts[fontID][fontSize];
+}
+
+AudioMultiTrack* game_GetAudioMultiTrack(std::string mtrackID)
+{
+	return loaded_audio_multi_tracks[mtrackID];
+}
+
+LootBundle* game_GetLootBundle(std::string lbID)
+{
+	return loaded_loot_bundles[lbID];
+}
+
+game_texKey_t game_GetTextureKeyFromID(game_texID_t id)
+{
+	return texture_ids_to_keys[id];
+}
+
+game_strKey_t game_GetStringKeyFromID(game_strID_t id)
+{
+	return string_ids_to_keys[id];
+}
+
+game_itemKey_t game_GetItemKeyFromID(game_itemID_t id)
+{
+	return item_ids_to_keys[id];
+}
+
+game_tileKey_t game_GetTileKeyFromID(game_tileID_t id)
+{
+	return tile_ids_to_keys[id];
+}
+
+game_gtileKey_t game_GetGroundTileKeyFromID(game_gtileID_t id)
+{
+	return gtile_ids_to_keys[id];
+}
+
+game_entityKey_t game_GetEntityKeyFromID(game_entityID_t id)
+{
+	return entity_ids_to_keys[id];
 }
 
 void load_resources()
@@ -376,6 +467,8 @@ void init_tiles()
 		_INIT_GTILE(MalachiteOreGroundTile)
 		_INIT_GTILE(HematiteOreGroundTile)
 		_INIT_GTILE(MagnetiteOreGroundTile)
+		_INIT_GTILE(IceGroundTile)
+		_INIT_GTILE(SnowGroundTile)
 
 		_INIT_TILE(TreeTile)
 		_INIT_TILE(BerryBushTile)
@@ -386,6 +479,8 @@ void init_tiles()
 		_INIT_TILE(StoneBrickWallTile)
 		_INIT_TILE(BasicConveyorTile)
 		_INIT_TILE(BasicBinTile)
+		_INIT_TILE(GrassBushTile)
+		_INIT_TILE(WheatCropTile)
 
 		prototype_tiles[AirTile::ID] = new AirTile(nullptr, 0, 0);
 	/* }
@@ -456,6 +551,9 @@ void init_items()
 		_INIT_ITEM(WoodenShovelItem)
 		_INIT_ITEM(WoodenAxeItem)
 		_INIT_ITEM(WoodenPickaxeItem)
+		_INIT_ITEM(WoodenHoeItem)
+		_INIT_ITEM(WheatSeedsItem)
+		_INIT_ITEM(WheatItem)
 		lsg_write_to_session_log(INFO, "LOADING %d LOOT BUNDLES... ", __loot_bundles.size());
 		for (nlohmann::json data : __loot_bundles)
 		{

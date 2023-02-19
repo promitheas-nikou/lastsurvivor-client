@@ -43,8 +43,8 @@ void CowPassiveEntity::Init(nlohmann::json data)
 	MASS = data[DATA_JSON_MASS_KEY];
 	MAX_HEALTH = data[DATA_JSON_MAX_HEALTH_KEY];
 	NAME = data[DATA_JSON_NAME_KEY];
-	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
+	DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
 }
 
 CowPassiveEntity::CowPassiveEntity(World* world, float xpos, float ypos) : PassiveEntity(world, xpos, ypos, 50, 1, 0, 0)

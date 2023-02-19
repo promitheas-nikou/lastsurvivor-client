@@ -20,8 +20,8 @@ WaterGroundTile::WaterGroundTile(World* w, int x, int y) : GroundTile(w, x, y, N
 void WaterGroundTile::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
-	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+	TEXTURE = game_GetTexture(data[DATA_JSON_TEXTURE_KEY]);
+	DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 }
@@ -53,5 +53,5 @@ int WaterGroundTile::GetMiningResistance() const
 
 float WaterGroundTile::GetFrictionModifier() const
 {
-    return 0.5f;
+    return .70f;
 }

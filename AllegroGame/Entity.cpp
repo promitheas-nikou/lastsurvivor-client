@@ -245,7 +245,7 @@ void Entity::Tick()
     else
     {
         if(GetHasFriction())
-            xvel *= getFriction()*u->GetFrictionModifier();
+            xvel *= 1 - getFriction()*u->GetFrictionModifier();
     }
     ypos += yvel;
     a = containingWorld->GetTile(util_floor(xpos - xsize / 2), util_floor(ypos - ysize / 2));
@@ -270,7 +270,7 @@ void Entity::Tick()
     else
     {
         if (GetHasFriction())
-            yvel *= getFriction() * u->GetFrictionModifier();
+            yvel *= 1 - getFriction() * u->GetFrictionModifier();
     }
     if (health <= 0)
         dead = true;
@@ -313,7 +313,7 @@ void Entity::Heal(float hl) const
 
 float Entity::getFriction() const
 {
-    return .8f;
+    return .5f;
 }
 
 void Entity::PlaySound(SoundType st) const

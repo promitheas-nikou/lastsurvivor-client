@@ -144,9 +144,9 @@ void PlayerEntity::PreDrawThisGUI()
 	if (debug >= 1)
 	{
 		al_draw_filled_rectangle(100, 50, 300, 180, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_0);
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 55, 0, "TIME: %d", GetContainingWorld()->gametime);
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 135, 0, "FPS: %.1lf", DebugInfo::framesEnd.empty() ? 0 : DebugInfo::FRAMES_RECORD_NUM / (DebugInfo::framesEnd.back() - DebugInfo::framesEnd.front()));
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 55, 0, "TIME: %d", GetContainingWorld()->gametime);
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 95, 0, "TPS: %.1lf", GetContainingWorld()->GetMeasuredTPS());
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 135, 0, "FPS: %.1lf", DebugInfo::framesEnd.empty() ? 0 : DebugInfo::FRAMES_RECORD_NUM / (DebugInfo::framesEnd.back() - DebugInfo::framesEnd.front()));
 	}
 
 	float x = GET_MOUSE_XPOS(mouseState);
@@ -154,8 +154,8 @@ void PlayerEntity::PreDrawThisGUI()
 	if (debug >= 2)
 	{
 		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 500, 50, SCREEN_WIDTH / 2 - 270, 250, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_1);
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 490), 60, 0, "Chunk X: %d", (int)util_floor(x / WorldChunk::CHUNK_SIZE_X));
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 490), 95, 0, "Chunk Y: %d", (int)util_floor(y / WorldChunk::CHUNK_SIZE_Y));
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 490), 60, 0, "Chunk X: %d", (int)util_floor(x / WorldChunk::CHUNK_SIZE_X));
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 490), 95, 0, "Chunk Y: %d", (int)util_floor(y / WorldChunk::CHUNK_SIZE_Y));
 	}
 
 	Tile* targetedTile = containingWorld->GetTile(floor(x), floor(y));
@@ -165,26 +165,26 @@ void PlayerEntity::PreDrawThisGUI()
 	{
 		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 250, 50, SCREEN_WIDTH / 2 + 250, 250, al_map_rgba(0, 150, 255, 150));
 
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", GetXpos());
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", GetYpos());
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
-		al_draw_textf(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s", targetedTile==nullptr?"<NULL>":targetedTile->GetName().c_str());
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 60, 0, "Player:");
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 60, 0, "X: %.3lf", GetXpos());
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 60, 0, "Y: %.3lf", GetYpos());
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 90, 0, "Targeted Tile:");
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 20), 90, 0, "X: %d", (int)floor(x));
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 + 110), 90, 0, "Y: %d", (int)floor(y));
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 230), 150, 0, "Tile:");
+		al_draw_textf(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 150), (SCREEN_WIDTH / 2 - 50), 150, 0, "%s", targetedTile==nullptr?"<NULL>":targetedTile->GetName().c_str());
 	}
 
 	if (debug >= 3)
 	{
 		al_draw_filled_rectangle(SCREEN_WIDTH / 2 + 270, 50, SCREEN_WIDTH / 2 + 600, 250, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_2);
-		al_draw_text(loaded_fonts["default"][25], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
-		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
-		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
-		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
-		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
-		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
-		al_draw_textf(loaded_fonts["default"][20], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
+		al_draw_text(game_GetFont("default", 25), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 60, 0, "WORLD GENERATION INFO");
+		al_draw_textf(game_GetFont("default", 20), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 90, 0, "Height: %.4f", containingWorld->GenerateGetLevelHeight(x, y));
+		al_draw_textf(game_GetFont("default", 20), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 115, 0, "Humidity: %.4f", containingWorld->GenerateGetLevelHumidity(x, y));
+		al_draw_textf(game_GetFont("default", 20), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 140, 0, "Temperature: %.4f", containingWorld->GenerateGetLevelTemperature(x, y));
+		al_draw_textf(game_GetFont("default", 20), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 165, 0, "Randomness: %.4f", containingWorld->GenerateGetLevelTileRandomness(x, y));
+		al_draw_textf(game_GetFont("default", 20), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 190, 0, "Ore Density: %.4f", containingWorld->GenerateGetLevelOreDensityFactor(x, y));
+		al_draw_textf(game_GetFont("default", 20), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, SCREEN_WIDTH / 2 + 280, 215, 0, "Ore Quality: %.4f", containingWorld->GenerateGetLevelOreQualityFactor(x, y));
 	}
 	if (infoMenu) {
 		if (targetedTile != nullptr) {
@@ -208,10 +208,10 @@ void PlayerEntity::PreDrawThisGUI()
 			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 155, (SCREEN_WIDTH / 2 + 245), 175, al_map_rgba(150, 150, 150, 150));
 			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 125, (SCREEN_WIDTH / 2 + 245), 145, al_map_rgba(150, 150, 150, 150));
 		}
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", targetedGroundTile==nullptr?"<NULL>":targetedGroundTile->GetName().c_str());
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
-		al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity != nullptr) ? targetedEntity->GetName().c_str() : "None");
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 230), 120, 0, "Ground Tile:");
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 50), 120, 0, "%s", targetedGroundTile==nullptr?"<NULL>":targetedGroundTile->GetName().c_str());
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 230), 185, 0, "Entity:");
+		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, (SCREEN_WIDTH / 2 - 100), 185, 0, "%s", (targetedEntity != nullptr) ? targetedEntity->GetName().c_str() : "None");
 		if (targetedEntity != nullptr)
 		{
 			al_draw_filled_rectangle((SCREEN_WIDTH / 2 + 55), 185, (SCREEN_WIDTH / 2 + 55 + 190), 205, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0);
@@ -256,7 +256,7 @@ void PlayerEntity::PreDrawThisGUI()
 		m = "CONSUME";
 		break;
 	}
-	al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s (%s)", m, buildRotation.ToString().c_str());
+	al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 32, SCREEN_HEIGHT-42, 0, "CURRENT MODE: %s (%s)", m, buildRotation.ToString().c_str());
 
 	switch(guistate)
 	{
@@ -268,13 +268,13 @@ void PlayerEntity::PreDrawThisGUI()
 		case PlayerActionMode::COMBAT:
 		{
 			if (targetedEntity == nullptr)
-				al_set_mouse_cursor(main_display, loaded_cursors["ranged"]);
+				al_set_mouse_cursor(main_display, game_GetMouseCursor("ranged"));
 			else
-				al_set_mouse_cursor(main_display, loaded_cursors["melee"]);
+				al_set_mouse_cursor(main_display, game_GetMouseCursor("melee"));
 			break;
 		}
 		case PlayerActionMode::CONFIGURATION:
-			al_set_mouse_cursor(main_display, loaded_cursors["wrench"]);
+			al_set_mouse_cursor(main_display, game_GetMouseCursor("wrench"));
 			break;
 		case PlayerActionMode::MINING:
 		{
@@ -282,7 +282,7 @@ void PlayerEntity::PreDrawThisGUI()
 			float b = y - GetYpos();
 			if (a * a + b * b > RANGESQ)
 			{
-				al_set_mouse_cursor(main_display, loaded_cursors["error"]);
+				al_set_mouse_cursor(main_display, game_GetMouseCursor("error"));
 				break;
 			}
 			ToolType t;
@@ -298,13 +298,13 @@ void PlayerEntity::PreDrawThisGUI()
 			switch (t)
 			{
 			case ToolType::PICKAXE:
-				al_set_mouse_cursor(main_display, loaded_cursors["pickaxe"]);
+				al_set_mouse_cursor(main_display, game_GetMouseCursor("pickaxe"));
 				break;
 			case ToolType::SHOVEL:
-				al_set_mouse_cursor(main_display, loaded_cursors["shovel"]);
+				al_set_mouse_cursor(main_display, game_GetMouseCursor("shovel"));
 				break;
 			case ToolType::AXE:
-				al_set_mouse_cursor(main_display, loaded_cursors["axe"]);
+				al_set_mouse_cursor(main_display, game_GetMouseCursor("axe"));
 				break;
 			}
 
@@ -312,25 +312,25 @@ void PlayerEntity::PreDrawThisGUI()
 				if (targetedTile || targetedGroundTile)
 				{
 					al_draw_filled_rectangle(mouseState.x, mouseState.y, mouseState.x + 200, mouseState.y + 100, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_0);
-					al_draw_textf(loaded_fonts["default"][30], gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, mouseState.x + 100, mouseState.y + 10, ALLEGRO_ALIGN_CENTER, "[%c]%s", targetedTile && !targetedTile->IsEmpty() ? 'T' : 'G', targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetName().c_str() : targetedGroundTile->GetName().c_str());
+					al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, mouseState.x + 100, mouseState.y + 10, ALLEGRO_ALIGN_CENTER, "[%c]%s", targetedTile && !targetedTile->IsEmpty() ? 'T' : 'G', targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetName().c_str() : targetedGroundTile->GetName().c_str());
 					float a = targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetMiningDamageDone() : ((targetedGroundTile == GroundTileMiner::GetTarget()) ? GroundTileMiner::GetMiningDamageDone() : 0);
 					float b = targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetMiningResistance() : targetedGroundTile->GetMiningResistance();
-					DrawUtils::DrawProgressBarWriteValue(mouseState.x + 10, mouseState.y + 70, mouseState.x + 190, mouseState.y + 90, gameconfig::PLAYER_MENU_PROGBAR_FILL_COLOR_0, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0, loaded_fonts["default"][20], al_map_rgba(255, 255, 255, 255), DRAW_UTILS_WRITE_PERCENTAGE_NUMBER_FORMAT_FLOAT_RATIO, b-a, b);
+					DrawUtils::DrawProgressBarWriteValue(mouseState.x + 10, mouseState.y + 70, mouseState.x + 190, mouseState.y + 90, gameconfig::PLAYER_MENU_PROGBAR_FILL_COLOR_0, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0, game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), DRAW_UTILS_WRITE_PERCENTAGE_NUMBER_FORMAT_FLOAT_RATIO, b-a, b);
 				}
 			
 			break;
 		}
 		case PlayerActionMode::CONSUME:
-			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
+			al_set_mouse_cursor(main_display, game_GetMouseCursor("use"));
 			al_draw_rectangle(SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + 128 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 + 128 + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, al_map_rgba(255,0,0,255), SELECTED_HOTBAR_SLOT_RECT_WIDTH);
 			break;
 		case PlayerActionMode::BUILDING:
-			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
+			al_set_mouse_cursor(main_display, game_GetMouseCursor("use"));
 			al_draw_rectangle(SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + 128 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 + 128 + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, al_map_rgba(0, 0, 255, 255), SELECTED_HOTBAR_SLOT_RECT_WIDTH);
 			break;
 		case PlayerActionMode::USE:
 			al_draw_rectangle(SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_WIDTH / 2 - 64 * 1 + 128 * selectedHotbarSlot + 128 - SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, SCREEN_HEIGHT - 280 + 128 + SELECTED_HOTBAR_SLOT_RECT_WIDTH / 2, al_map_rgba(0, 255, 0, 255), SELECTED_HOTBAR_SLOT_RECT_WIDTH);
-			al_set_mouse_cursor(main_display, loaded_cursors["use"]);
+			al_set_mouse_cursor(main_display, game_GetMouseCursor("use"));
 			break;
 		}
 
@@ -392,9 +392,9 @@ void PlayerEntity::PreDrawThisGUI()
 		{
 			al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 510, SCREEN_HEIGHT - 870, SCREEN_WIDTH / 2 + 510, SCREEN_HEIGHT - 410, al_map_rgba(100, 100, 100, 100));
 			al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 510, SCREEN_HEIGHT - 410, SCREEN_WIDTH / 2 + 510, SCREEN_HEIGHT - 375, al_map_rgba(50, 50, 50, 150));
-			al_draw_text(loaded_fonts["default"][30], al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 410, 0, buf.c_str());
+			al_draw_text(game_GetFont("default", 30), al_map_rgba(255, 0, 0, 255), SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 410, 0, buf.c_str());
 			for (int i = 0; i < history.size(); i++)
-				al_draw_text(loaded_fonts["default"][30], history.at(i).first, SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 445 - i * 30, 0, history.at(i).second.c_str());
+				al_draw_text(game_GetFont("default", 30), history.at(i).first, SCREEN_WIDTH / 2 - 500, SCREEN_HEIGHT - 445 - i * 30, 0, history.at(i).second.c_str());
 		}
 		al_draw_scaled_bitmap(HEALTH_ICON, 0, 0, al_get_bitmap_width(HEALTH_ICON), al_get_bitmap_height(HEALTH_ICON), 0, SCREEN_HEIGHT / 2 - 364, 64, 64, 0);
 		al_draw_filled_rectangle(0, SCREEN_HEIGHT / 2 - 300, 64, SCREEN_HEIGHT / 2 + 300, al_map_rgba(64, 0, 0, 200));
@@ -902,7 +902,7 @@ void PlayerEntity::AddConstItem(Item* item)
 */
 
 static const float DIAG_MOD = 1.4142135623730950488016887242097 / 2;
-static const float PLAYER_SPEED = 0.01f;
+static const float PLAYER_SPEED = 0.006f;
 
 void PlayerEntity::UseTile(int x, int y)
 {
@@ -1256,10 +1256,10 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	inventoryGUI->AddTrashSlot(SCREEN_WIDTH / 2 + 9*64, SCREEN_HEIGHT - 280, 128, 128);
 	recipeGUI = new SimpleRecipeListGUI(SCREEN_WIDTH/2+576,256,128,128);
 	//recipeGUI->SetRecipeList(loaded_crafting_recipes);
-	TEXTURE = loaded_bitmaps["tex.entities.player"];
-	HEALTH_ICON = loaded_bitmaps["tex.gui.health_icon"];
-	HUNGER_ICON = loaded_bitmaps["tex.gui.hunger_icon"];
-	WATER_ICON = loaded_bitmaps["tex.gui.water_icon"];
+	TEXTURE = game_GetTexture("tex.entities.player");
+	HEALTH_ICON = game_GetTexture("tex.gui.health_icon");
+	HUNGER_ICON = game_GetTexture("tex.gui.hunger_icon");
+	WATER_ICON = game_GetTexture("tex.gui.water_icon");
 }
 
 PlayerNotification::PlayerNotification(int t, int w, int h)
@@ -1282,8 +1282,8 @@ PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, in
 {
 	PlayerNotification* p = new PlayerNotification(t, w, h);
 	al_set_target_bitmap(p->content);
-	al_draw_filled_rectangle(0, 0, w, h, al_map_rgba(200, 200, 20, 170));
-	al_draw_multiline_text(loaded_fonts["default"][fontsize], al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
+	al_clear_to_color(al_map_rgba(200, 200, 20, 170));
+	al_draw_multiline_text(game_GetFont("default", fontsize), al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
 	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
 	return p;
 }

@@ -3,7 +3,7 @@
 #include "Tool.h"
 
 std::string GrassGroundTile::NAME;
-ALLEGRO_BITMAP* GrassGroundTile::TEXTURE;
+ALLEGRO_BITMAP* GrassGroundTile::TEXTURES[2];
 const LootBundle* GrassGroundTile::DROP;
 int GrassGroundTile::MINING_RESISTANCE;
 ToolType GrassGroundTile::TOOL_TYPE;
@@ -21,8 +21,10 @@ GrassGroundTile::GrassGroundTile(World* w, int x, int y) : GroundTile(w, x, y, N
 void GrassGroundTile::Init(nlohmann::json data)
 {
 	NAME = data[DATA_JSON_NAME_KEY];
-	TEXTURE = loaded_bitmaps[data[DATA_JSON_TEXTURE_KEY]];
-	DROP = loaded_loot_bundles[data[DATA_JSON_DROP_KEY]];
+	
+	for (int i = 0; i < 2; i++)
+		TEXTURES[i] = game_GetTexture(data[DATA_JSON_TEXTURE_LIST_KEY][i]);
+	DROP = game_GetLootBundle(data[DATA_JSON_DROP_KEY]);
 	MINING_RESISTANCE = data[DATA_JSON_MINING_RESISTANCE_KEY];
 	TOOL_TYPE = Tool::GetToolTypeFromString(data[DATA_JSON_TOOL_TYPE_KEY]);
 	AUDIO_TRACKS.LoadFromJSON(data[DATA_JSON_AUDIO_COLLECTION_KEY]);
@@ -30,7 +32,7 @@ void GrassGroundTile::Init(nlohmann::json data)
 
 void GrassGroundTile::Draw() const
 {
-	al_draw_bitmap(TEXTURE, xpos * 128, ypos * 128, 0);
+	al_draw_bitmap(TEXTURES[isTilled?1:0], xpos * 128, ypos * 128, 0);
 }
 
 GroundTile* GrassGroundTile::Clone(World* w, int x, int y) const
@@ -46,6 +48,21 @@ const ItemBundle* GrassGroundTile::GetMiningResult(Tool* tool) const
 int GrassGroundTile::GetMiningResistance() const
 {
 	return MINING_RESISTANCE;
+}
+
+void GrassGroundTile::Till()
+{
+	isTilled = !isTilled;
+}
+
+bool GrassGroundTile::IsTillable() const
+{
+	return true;
+}
+
+bool GrassGroundTile::DoesSupportPlants() const
+{
+	return isTilled;
 }
 
 void GrassGroundTile::PlaySound(SoundType t) const

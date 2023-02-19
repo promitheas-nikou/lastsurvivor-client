@@ -83,19 +83,31 @@ void World::UpdateEntityVector()
 
 GroundTile* World::GenerateGroundTile(int x, int y)
 {
-    if (GenerateGetLevelHeight(x, y) < .5)
+    float height = GenerateGetLevelHeight(x, y);
+    float temp = GenerateGetLevelTemperature(x, y);
+    float humidity = GenerateGetLevelHumidity(x, y);
+    float ore_dens = GenerateGetLevelOreDensityFactor(x, y);
+    float ore_qual = GenerateGetLevelOreQualityFactor(x, y);
+    float rand = GenerateGetLevelTileRandomness(x, y);
+    if (height < .5)
     {
-        if (GenerateGetLevelHeight(x, y) < -.4)
+        if (height < -.4)
         {
-            if (GenerateGetLevelHeight(x, y) < -.6)
+            if (height < -.6)
             {
-                return MakeGroundTile(this, "gtiles.water", x, y);
+                if (temp < -.4)
+                    return MakeGroundTile(this, "gtiles.ice", x, y);
+                else
+                    return MakeGroundTile(this, "gtiles.water", x, y);
             }
-            return MakeGroundTile(this, "gtiles.sand", x, y);
+            if(temp<-.4)
+                return MakeGroundTile(this, "gtiles.snow", x, y);
+            else
+                return MakeGroundTile(this, "gtiles.sand", x, y);
         }
-        if (GenerateGetLevelTemperature(x, y) < .5)
+        if (temp < .5)
         {
-            if (GenerateGetLevelHumidity(x, y) < -.5)
+            if (humidity < -.5)
                 return MakeGroundTile(this, "gtiles.sand", x, y);
             else
                 return MakeGroundTile(this, "gtiles.grass", x, y);
@@ -103,24 +115,23 @@ GroundTile* World::GenerateGroundTile(int x, int y)
         else
             return MakeGroundTile(this, "gtiles.dirt", x, y);
     }
-    else if(GenerateGetLevelOreDensityFactor(x,y)>=.85f)
+    else if(ore_dens>=.85f)
     {
-        float o = GenerateGetLevelOreQualityFactor(x, y);
-        if (o >= .8f)
+        if (ore_qual >= .8f)
             return MakeGroundTile(this, "gtiles.malachite_ore", x, y);
-        else if (o <= .8f && o>= .6f)
+        else if (ore_qual <= .8f && ore_qual >= .6f)
             return MakeGroundTile(this, "gtiles.azurite_ore", x, y);
-        else if (o <= .6f && o>= .3f)
+        else if (ore_qual <= .6f && ore_qual >= .3f)
             return MakeGroundTile(this, "gtiles.hematite_ore", x, y);
-        else if (o <= .3f && o>= .1f)
+        else if (ore_qual <= .3f && ore_qual >= .1f)
             return MakeGroundTile(this, "gtiles.azurite_ore", x, y);
-        else if (o <= .1f && o>= -.3f)
+        else if (ore_qual <= .1f && ore_qual >= -.3f)
             return MakeGroundTile(this, "gtiles.stone", x, y);
-        else if (o <= -.3f && o >= -.5f)
+        else if (ore_qual <= -.3f && ore_qual >= -.5f)
             return MakeGroundTile(this, "gtiles.magnetite_ore", x, y);
-        else if (o <= -.5f && o >= -.8f)
+        else if (ore_qual <= -.5f && ore_qual >= -.8f)
             return MakeGroundTile(this, "gtiles.malachite_ore", x, y);
-        else  if (o <= -.8f)
+        else if (ore_qual <= -.8f)
             return MakeGroundTile(this, "gtiles.stone", x, y);
     }
     else
@@ -159,21 +170,27 @@ float World::GenerateGetLevelTileRandomness(int x, int y)
 
 Tile* World::GenerateTile(int x, int y)
 {
-    if (GenerateGetLevelHeight(x, y) < .5)
+    float height = GenerateGetLevelHeight(x, y);
+    float temp = GenerateGetLevelTemperature(x, y);
+    float humidity = GenerateGetLevelHumidity(x, y);
+    float ore_dens = GenerateGetLevelOreDensityFactor(x, y);
+    float ore_qual = GenerateGetLevelOreQualityFactor(x, y);
+    float rand = GenerateGetLevelTileRandomness(x, y);
+    if (height < .5)
     {
-        if (GenerateGetLevelHeight(x, y) < -.4)
+        if (height < -.4)
         {
-            if (GenerateGetLevelHeight(x, y) < -.6)
+            if (height < -.6)
             {
                 return MakeTile(this, "tiles.air", x, y);
             }
             return MakeTile(this, "tiles.air", x, y);
         }
-        if (GenerateGetLevelTemperature(x, y) < .5)
+        if (temp < .5)
         {
-            if (GenerateGetLevelHumidity(x, y) < -.5)
+            if (humidity < -.5)
                 return MakeTile(this, "tiles.air", x, y);
-            else if (GenerateGetLevelHumidity(x, y) < .4)
+            else if (humidity < .4)
             {
                 if(GenerateGetLevelTileRandomness(x,y)>.8)
                     return MakeTile(this, "tiles.berry_bush", x, y);
@@ -696,6 +713,20 @@ void zip_walk(struct zip_t* zip, const char* path) {
     closedir(dir);
 }
 
+extern std::map<uint32_t, std::string> tile_ids_to_keys;
+extern std::map<uint32_t, std::string> gtile_ids_to_keys;
+extern std::map<uint32_t, std::string> item_ids_to_keys;
+extern std::map<uint32_t, std::string> entity_ids_to_keys;
+extern std::unordered_map<std::string, uint32_t> tile_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> gtile_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> item_keys_to_ids;
+extern std::unordered_map<std::string, uint32_t> entity_keys_to_ids;
+
+extern std::string game_name;
+extern std::string game_version_name;
+extern int game_version_major;
+extern int game_version_minor;
+
 void World::SaveToFile(std::string filename)
 {
     std::filesystem::path dir = std::filesystem::temp_directory_path() / "LastSurvivorTemp";
@@ -797,7 +828,7 @@ void World::SaveToFile(std::string filename)
 
 void World::Init()
 {
-    nullTileBitmap = loaded_bitmaps["tex.tiles.null"];
+    nullTileBitmap = game_GetTexture("tex.tiles.null");
 }
 
 #include "CactusBossEntity.h"
