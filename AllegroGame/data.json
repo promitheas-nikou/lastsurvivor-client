@@ -162,6 +162,22 @@
       "filename": "charcoal_item.png"
     },
     {
+      "id": "tex.items.wheat",
+      "filename": "wheat_item.png"
+    },
+    {
+      "id": "tex.tiles.wheat_crop",
+      "filename": "wheat_crop.png"
+    },
+    {
+      "id": "tex.tiles.grass_bush",
+      "filename": "grass_bush.png"
+    },
+    {
+      "id": "tex.items.wheat_seeds",
+      "filename": "wheat_seeds.png"
+    },
+    {
       "id": "tex.items.wooden_sword",
       "filename": "wooden_sword.png"
     },
@@ -1139,6 +1155,48 @@
       ]
     },
     {
+      "id": "loot.tiles.grass_bush.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 0,
+          "maxamount": 1
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.wheat_seeds",
+          "minamount": 0,
+          "maxamount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.wheat_crop.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 0,
+          "maxamount": 1
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.wheat_seeds",
+          "minamount": 1,
+          "maxamount": 3
+        },
+        {
+          "type": "varamount_item",
+          "id": "items.wheat",
+          "minamount": 1,
+          "maxamount": 2
+        }
+      ]
+    },
+    {
       "id": "loot.tiles.basic_bin.mine.any",
       "type": "simple",
       "objects": [
@@ -1261,6 +1319,14 @@
       "name": "Air"
     },
     {
+      "id": "tiles.grass_bush",
+      "mining_resistance": 1,
+      "name": "Grass Bush",
+      "tool": "axe",
+      "texture": "tex.tiles.grass_bush",
+      "drops": "loot.tiles.grass_bush.mine.any"
+    },
+    {
       "id": "tiles.tree",
       "name": "Tree",
       "tool": "axe",
@@ -1367,6 +1433,14 @@
       "tool": "axe",
       "texture": "tex.tiles.basic_bin",
       "drops": "loot.tiles.basic_bin.mine.any"
+    },
+    {
+      "id": "tiles.wheat_crop",
+      "mining_resistance": 3,
+      "name": "Wheat Crop",
+      "tool": "axe",
+      "texture": "tex.tiles.wheat_crop",
+      "drops": "loot.tiles.wheat_crop.mine.any"
     },
     {
       "id": "tiles.brick_wall",
@@ -1512,6 +1586,13 @@
     }
   ],
   "items": [
+    {
+      "id": "items.wheat_seeds",
+      "name": "Wheat Seeds",
+      "description": "Some seeds that can be planted to grow into wheat.",
+      "texture": "tex.items.wheat_seeds",
+      "tile": "tiles.wheat_crop"
+    },
     {
       "id": "items.glass_slab",
       "name": "Glass Slab",
@@ -1812,6 +1893,12 @@
       "hunger": 0.0,
       "water": 5.0,
       "durability": 40
+    },
+    {
+      "id": "items.wheat",
+      "name": "Wheat",
+      "description": "A useful crop.",
+      "texture": "tex.items.wheat"
     },
     {
       "id": "items.iron_ingot",

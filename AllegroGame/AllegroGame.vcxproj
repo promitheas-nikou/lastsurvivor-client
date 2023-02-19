@@ -245,6 +245,7 @@
     <ClCompile Include="FuelItem.cpp" />
     <ClCompile Include="GlassSlabItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GrassBushTile.cpp" />
     <ClCompile Include="GrassGroundTile.cpp" />
     <ClCompile Include="GroundTileMiner.cpp" />
     <ClCompile Include="GUI.cpp" />
@@ -342,6 +343,9 @@
     <ClCompile Include="UsableItem.cpp" />
     <ClCompile Include="VariableAmountItem.cpp" />
     <ClCompile Include="WeightedLootBundle.cpp" />
+    <ClCompile Include="WheatCropTile.cpp" />
+    <ClCompile Include="WheatItem.cpp" />
+    <ClCompile Include="WheatSeedsItem.cpp" />
     <ClCompile Include="WoodenAxeItem.cpp" />
     <ClCompile Include="WoodenHoeItem.cpp" />
     <ClCompile Include="WoodenPickaxeItem.cpp" />
@@ -430,6 +434,7 @@
     <ClInclude Include="FuelItem.h" />
     <ClInclude Include="GlassSlabItem.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GrassBushTile.h" />
     <ClInclude Include="GrassGroundTile.h" />
     <ClInclude Include="GroundTileMiner.h" />
     <ClInclude Include="GUI.h" />
@@ -532,6 +537,9 @@
     <ClInclude Include="UsableItem.h" />
     <ClInclude Include="VariableAmountItem.h" />
     <ClInclude Include="WeightedLootBundle.h" />
+    <ClInclude Include="WheatCropTile.h" />
+    <ClInclude Include="WheatItem.h" />
+    <ClInclude Include="WheatSeedsItem.h" />
     <ClInclude Include="WoodenAxeItem.h" />
     <ClInclude Include="WoodenHoeItem.h" />
     <ClInclude Include="WoodenPickaxeItem.h" />

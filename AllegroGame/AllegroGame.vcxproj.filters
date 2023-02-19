@@ -783,6 +783,18 @@
     <ClCompile Include="WoodenHoeItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GrassBushTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatSeedsItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatCropTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatItem.cpp">
+      <Filter>Source Files\Game\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1335,6 +1347,18 @@
     </ClInclude>
     <ClInclude Include="Resources.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassBushTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatSeedsItem.h">
+      <Filter>Header Files\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatCropTile.h">
+      <Filter>Header Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatItem.h">
+      <Filter>Header Files\Game\Items</Filter>
     </ClInclude>
     <ClInclude Include="SnowGroundTile.h">
       <Filter>Header Files\Game\GroundTiles</Filter>
