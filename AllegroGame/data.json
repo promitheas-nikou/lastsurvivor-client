@@ -61,6 +61,30 @@
       ]
     },
     {
+      "id": "gtiles.ice.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
+      "id": "gtiles.snow.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "dirt_walk_0.wav",
+        "dirt_walk_1.wav",
+        "dirt_walk_2.wav",
+        "dirt_walk_3.wav",
+        "dirt_walk_4.wav"
+      ]
+    },
+    {
       "id": "gtiles.sand.walk",
       "wait": true,
       "type": "tile_passive",
@@ -72,6 +96,33 @@
         "sand_walk_4.wav",
         "sand_walk_5.wav",
         "sand_walk_6.wav"
+      ]
+    },
+    {
+      "id": "gtiles.snow.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "snow_walk_0.wav",
+        "snow_walk_1.wav",
+        "snow_walk_2.wav",
+        "snow_walk_3.wav",
+        "snow_walk_4.wav",
+        "snow_walk_5.wav",
+        "snow_walk_6.wav"
+      ]
+    },
+    {
+      "id": "gtiles.ice.walk",
+      "wait": true,
+      "type": "tile_passive",
+      "filenames": [
+        "ice_walk_0.wav",
+        "ice_walk_1.wav",
+        "ice_walk_2.wav",
+        "ice_walk_3.wav",
+        "ice_walk_4.wav",
+        "ice_walk_5.wav"
       ]
     },
     {
@@ -261,6 +312,14 @@
     {
       "id": "tex.items.lodestone",
       "filename": "lodestone.png"
+    },
+    {
+      "id": "tex.gtiles.ice",
+      "filename": "ice_gtile.png"
+    },
+    {
+      "id": "tex.gtiles.snow",
+      "filename": "snow_gtile.png"
     },
     {
       "id": "tex.gtiles.grass/0",
@@ -822,10 +881,10 @@
       "max_health": 100,
       "max_water": 100,
       "max_hunger": 100,
-      "water_loss_per_tick": 0.025,
-      "hunger_loss_per_tick": 0.01,
-      "health_loss_from_water_per_tick": 0.05,
-      "health_loss_from_hunger_per_tick": 0.05,
+      "water_loss_per_tick": 0.001,
+      "hunger_loss_per_tick": 0.0005,
+      "health_loss_from_water_per_tick": 0.025,
+      "health_loss_from_hunger_per_tick": 0.015,
       "rangesq": 9,
       "audio": [
         {
@@ -969,6 +1028,18 @@
           "id": "items.dirt",
           "amount": 1
         }
+      ]
+    },
+    {
+      "id": "loot.gtiles.ice.mine.any",
+      "type": "simple",
+      "objects": [
+      ]
+    },
+    {
+      "id": "loot.gtiles.snow.mine.any",
+      "type": "simple",
+      "objects": [
       ]
     },
     {
@@ -1403,6 +1474,34 @@
         {
           "type": "tile_walk",
           "id": "gtiles.dirt.walk"
+        }
+      ]
+    },
+    {
+      "id": "gtiles.ice",
+      "name": "Ice",
+      "tool": "pickaxe",
+      "mining_resistance": 5,
+      "drops": "loot.gtiles.ice.mine.any",
+      "texture": "tex.gtiles.ice",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.ice.walk"
+        }
+      ]
+    },
+    {
+      "id": "gtiles.snow",
+      "name": "Snow",
+      "tool": "shovel",
+      "mining_resistance": 2,
+      "drops": "loot.gtiles.snow.mine.any",
+      "texture": "tex.gtiles.snow",
+      "audio": [
+        {
+          "type": "tile_walk",
+          "id": "gtiles.snow.walk"
         }
       ]
     },

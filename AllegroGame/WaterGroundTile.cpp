@@ -53,5 +53,5 @@ int WaterGroundTile::GetMiningResistance() const
 
 float WaterGroundTile::GetFrictionModifier() const
 {
-    return 0.5f;
+    return .70f;
 }

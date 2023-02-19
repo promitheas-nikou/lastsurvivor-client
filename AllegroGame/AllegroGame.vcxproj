@@ -254,6 +254,7 @@
     <ClCompile Include="HematiteChunkItem.cpp" />
     <ClCompile Include="HematiteOreGroundTile.cpp" />
     <ClCompile Include="HostileEntity.cpp" />
+    <ClCompile Include="IceGroundTile.cpp" />
     <ClCompile Include="InventoryGUI.cpp" />
     <ClCompile Include="IronIngotItem.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -329,6 +330,7 @@
     <ClCompile Include="SimpleToggleTextButtonUIComponent.cpp" />
     <ClCompile Include="SimpleTool.cpp" />
     <ClCompile Include="SimpleUsableConsumableItem.cpp" />
+    <ClCompile Include="SnowGroundTile.cpp" />
     <ClCompile Include="SoundType.cpp" />
     <ClCompile Include="SteelIngotItem.cpp" />
     <ClCompile Include="StoneBrickWallItem.cpp" />
@@ -438,6 +440,7 @@
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GunItem.h" />
     <ClInclude Include="HazardWarnings.h" />
+    <ClInclude Include="IceGroundTile.h" />
     <ClInclude Include="ItemIOInterface.h" />
     <ClInclude Include="HematiteChunkItem.h" />
     <ClInclude Include="HematiteOreGroundTile.h" />
@@ -521,6 +524,7 @@
     <ClInclude Include="SimpleToggleTextButtonUIComponent.h" />
     <ClInclude Include="SimpleTool.h" />
     <ClInclude Include="SimpleUsableConsumableItem.h" />
+    <ClInclude Include="SnowGroundTile.h" />
     <ClInclude Include="SoundType.h" />
     <ClInclude Include="SteelIngotItem.h" />
     <ClInclude Include="StoneBrickWallItem.h" />
