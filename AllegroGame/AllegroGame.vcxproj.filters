@@ -780,6 +780,9 @@
     <ClCompile Include="IceGroundTile.cpp">
       <Filter>Source Files\Game\GroundTiles</Filter>
     </ClCompile>
+    <ClCompile Include="WoodenHoeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1326,6 +1329,9 @@
     </ClInclude>
     <ClInclude Include="WoodenAxeItem.h">
       <Filter>Header Files\Game\Items\ToolItems\AxeToolItem</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenHoeItem.h">
+      <Filter>Header Files\Game\Items\UsableItems</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
       <Filter>Header Files\Data</Filter>

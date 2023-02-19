@@ -1519,6 +1519,12 @@
       "texture": "tex.items.glass_slab"
     },
     {
+      "id": "items.wooden_hoe",
+      "name": "Wooden Hoe",
+      "description": "A primitive hoe that can be used to till land and prepare it for planting.",
+      "texture": "tex.items.wooden_hoe"
+    },
+    {
       "id": "items.basic_bin",
       "name": "Basic Bin",
       "description": "A wooden bin that can be used to store a few items.",
