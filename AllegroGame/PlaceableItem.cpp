@@ -11,7 +11,10 @@ bool PlaceableItem::Use(float x, float y, PlayerEntity * p)
 	int Y = std::floorf(y);
 	if (w->GetTile(X, Y)->IsEmpty())
 	{
-		delete w->SetTile(GetTile(w, X, Y, p->GetBuildingRotation()), X, Y);
+		Tile* newTile = GetTile(w, X, Y, p->GetBuildingRotation());
+		if (!newTile)
+			return false;
+		delete w->SetTile(newTile, X, Y);
 		return true;
 	}
 	return false;

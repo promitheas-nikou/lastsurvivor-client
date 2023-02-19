@@ -1,5 +1,6 @@
 #include "WheatSeedsItem.h"
 #include "ResourceLoader.h"
+#include "World.h"
 
 std::string WheatSeedsItem::NAME;
 std::string WheatSeedsItem::DESCRIPTION;
@@ -17,7 +18,10 @@ WheatSeedsItem::WheatSeedsItem(): Item(NAME, DESCRIPTION)
 
 Tile* WheatSeedsItem::GetTile(World * w, int xpos, int ypos, Direction d)
 {
-	return MakeTile(w, TILE_ID, xpos, ypos, d);
+	if (w->GetGroundTile(xpos, ypos)->DoesSupportPlants())
+		return MakeTile(w, TILE_ID, xpos, ypos, d);
+	else
+		return nullptr;
 }
 
 Item* WheatSeedsItem::Clone() const
