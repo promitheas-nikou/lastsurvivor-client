@@ -1,6 +1,6 @@
 ﻿{
   "NAME": "Last Survivor",
-  "VERSION": "ALPHA 3.2",
+  "VERSION": "ALPHA 4.1",
   "VER_MINOR": 2,
   "VER_MAJOR": 3,
   "WINDOW_ICON": "icon",
@@ -166,8 +166,24 @@
       "filename": "wheat_item.png"
     },
     {
-      "id": "tex.tiles.wheat_crop",
-      "filename": "wheat_crop.png"
+      "id": "tex.tiles.wheat_crop/0",
+      "filename": "wheat_crop_0.png"
+    },
+    {
+      "id": "tex.tiles.wheat_crop/1",
+      "filename": "wheat_crop_1.png"
+    },
+    {
+      "id": "tex.tiles.wheat_crop/2",
+      "filename": "wheat_crop_2.png"
+    },
+    {
+      "id": "tex.tiles.wheat_crop/3",
+      "filename": "wheat_crop_3.png"
+    },
+    {
+      "id": "tex.tiles.wheat_crop/4",
+      "filename": "wheat_crop_4.png"
     },
     {
       "id": "tex.tiles.grass_bush",
@@ -1173,7 +1189,18 @@
       ]
     },
     {
-      "id": "loot.tiles.wheat_crop.mine.any",
+      "id": "loot.tiles.wheat_crop.mine.any/0",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "item",
+          "id": "items.wheat_seeds",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.wheat_crop.mine.any/1",
       "type": "simple",
       "objects": [
         {
@@ -1228,6 +1255,18 @@
           "type": "varamount_item",
           "id": "items.berry",
           "minamount": 0,
+          "maxamount": 2
+        }
+      ]
+    },
+    {
+      "id": "loot.tiles.berry_bush.mine.any",
+      "type": "simple",
+      "objects": [
+        {
+          "type": "varamount_item",
+          "id": "items.stick",
+          "minamount": 1,
           "maxamount": 2
         }
       ]
@@ -1439,8 +1478,17 @@
       "mining_resistance": 3,
       "name": "Wheat Crop",
       "tool": "axe",
-      "texture": "tex.tiles.wheat_crop",
-      "drops": "loot.tiles.wheat_crop.mine.any"
+      "textures": [
+        "tex.tiles.wheat_crop/0",
+        "tex.tiles.wheat_crop/1",
+        "tex.tiles.wheat_crop/2",
+        "tex.tiles.wheat_crop/3",
+        "tex.tiles.wheat_crop/4"
+      ],
+      "drops": [
+        "loot.tiles.wheat_crop.mine.any/0",
+        "loot.tiles.wheat_crop.mine.any/1"
+      ]
     },
     {
       "id": "tiles.brick_wall",

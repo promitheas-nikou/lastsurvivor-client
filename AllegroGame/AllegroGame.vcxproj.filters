@@ -1369,7 +1369,7 @@
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">
-      <Filter>Source Files\Game\GroundTiles</Filter>
+      <Filter>Resource Files</Filter>
     </Xsd>
   </ItemGroup>
 </Project>
