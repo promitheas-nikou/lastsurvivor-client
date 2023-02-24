@@ -144,9 +144,9 @@ void BasicConveyorTile::Draw() const
 	al_draw_bitmap(TEXTURES[((uint8_t)direction)*4+(((lastT))%4)], xpos * 128, ypos * 128, 0);
 }
 
-void BasicConveyorTile::WriteAdditionalDataToFile(std::ofstream& file)
+void BasicConveyorTile::SerializeToStream(std::ostream& file)
 {
-	DirectedTile::WriteAdditionalDataToFile(file);
+	DirectedTile::SerializeToStream(file);
 	//save items queue data
 	size_t temp;
 	temp = queue.GetCurSize();
@@ -157,9 +157,9 @@ void BasicConveyorTile::WriteAdditionalDataToFile(std::ofstream& file)
 	}
 }
 
-void BasicConveyorTile::LoadAdditionalDataFromFile(std::ifstream& file)
+void BasicConveyorTile::DeserializeFromStream(std::istream& file)
 {
-	DirectedTile::LoadAdditionalDataFromFile(file);
+	DirectedTile::DeserializeFromStream(file);
 	size_t size;
 	file.read(reinterpret_cast<char*>(&size), sizeof(size_t));
 	for (size_t i = 0; i < size; i++)
@@ -236,7 +236,7 @@ void BasicConveyorTile::Init(nlohmann::json data)
 BasicConveyorTile::ItemDescriptor::ItemDescriptor(float p, Direction f, Item* i) : prog{ p }, from{ f }, item{ i }
 {}
 
-void BasicConveyorTile::ItemDescriptor::SaveToFile(std::ofstream& file)
+void BasicConveyorTile::ItemDescriptor::SaveToFile(std::ostream& file)
 {
 	file.write(reinterpret_cast<char*>(&prog), sizeof(float));
 	uint8_t temp = from;
@@ -244,7 +244,7 @@ void BasicConveyorTile::ItemDescriptor::SaveToFile(std::ofstream& file)
 	Item::SaveToFile(item, file);
 }
 
-BasicConveyorTile::ItemDescriptor BasicConveyorTile::ItemDescriptor::LoadFromFile(std::ifstream& file)
+BasicConveyorTile::ItemDescriptor BasicConveyorTile::ItemDescriptor::LoadFromFile(std::istream& file)
 {
 	ItemDescriptor d;
 	file.read(reinterpret_cast<char*>(&d.prog), sizeof(float));

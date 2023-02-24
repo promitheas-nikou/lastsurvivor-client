@@ -52,10 +52,10 @@ public:
 
 	virtual ItemBundle* ConstCollapseToItemBundle() const final;
 
-	virtual void SaveToFile(std::ofstream &file);
-	static void SaveToFile(Item* item, std::ofstream& file);
-	static Item* LoadFromFile(std::ifstream& file);
-	virtual void LoadAdditionalDataFromFile(std::ifstream &file);
+	virtual void SaveToFile(std::ostream &file);
+	static void SaveToFile(Item* item, std::ostream& file);
+	static Item* LoadFromFile(std::istream& file);
+	virtual void DeserializeFromStream(std::istream &file);
 
 	virtual void AddConstToInventory(ItemInventory* inv) const override;
 

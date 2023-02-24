@@ -13,7 +13,7 @@ public:
 
     int GetSize() const override;
 
-    virtual void OverrideFromFile(std::ifstream& file) final;
+    virtual void OverrideFromFile(std::istream& file) final;
 
     SimpleItemInventory(int size);
 

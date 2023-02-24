@@ -57,8 +57,8 @@ public:
 
     virtual void InitForWorld(World* w) final;
 
-    virtual void WriteAdditionalDataToFile(std::ofstream& file) final;
-    virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
+    virtual void SerializeToStream(std::ostream& file) final;
+    virtual void DeserializeFromStream(std::istream& file) final;
 
     virtual ~BasicBinTile() = default;
 

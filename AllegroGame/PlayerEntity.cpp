@@ -55,9 +55,9 @@ void PlayerEntity::AddResult(const ItemBundle* b)
 		GiveConstItem(b->GetItem(i));
 }
 
-void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
+void PlayerEntity::DeserializeFromStream(std::istream& file)
 {
-	Entity::LoadAdditionalDataFromFile(file);
+	Entity::DeserializeFromStream(file);
 	file.read(reinterpret_cast<char*>(&hunger), sizeof(float));
 	file.read(reinterpret_cast<char*>(&water), sizeof(float));
 
@@ -75,9 +75,9 @@ void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
 	inventory->OverrideFromFile(file);
 }
 
-void PlayerEntity::WriteAdditionalDataToFile(std::ofstream& file)
+void PlayerEntity::SerializeToStream(std::ostream& file)
 {
-	Entity::WriteAdditionalDataToFile(file);
+	Entity::SerializeToStream(file);
 	file.write(reinterpret_cast<char*>(&hunger), sizeof(float));
 	file.write(reinterpret_cast<char*>(&water), sizeof(float));
 	Item::SaveToFile(pickaxeTool, file);

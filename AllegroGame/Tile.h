@@ -36,8 +36,8 @@ class Tile:
 
 		virtual std::string GetID() const = 0;
 
-		virtual void LoadAdditionalDataFromFile(std::ifstream &file);
-		virtual void WriteAdditionalDataToFile(std::ofstream& file);
+		virtual void DeserializeFromStream(std::istream & stream);
+		virtual void SerializeToStream(std::ostream& stream);
 
 		virtual std::string GetName() const = 0;
 

@@ -30,8 +30,8 @@ protected:
 public:
 	virtual std::string GetID() const = 0;
 
-	virtual void LoadAdditionalDataFromFile(std::ifstream& file);
-	virtual void WriteAdditionalDataToFile(std::ofstream& file);
+	virtual void DeserializeFromStream(std::istream& file);
+	virtual void SerializeToStream(std::ostream& file);
 
 	virtual std::string GetName() const;
 

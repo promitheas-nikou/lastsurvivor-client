@@ -88,7 +88,7 @@ void QuestCollection::AddQuest(Quest* q)
 
 #include <iostream>
 
-QuestCollection* QuestCollection::LoadFromFile(std::ifstream& file)
+QuestCollection* QuestCollection::LoadFromFile(std::istream& file)
 {
 	nlohmann::json data;
 	QuestCollection* qc = new QuestCollection();
@@ -109,7 +109,7 @@ QuestCollection* QuestCollection::LoadFromFile(std::ifstream& file)
 	return qc;
 }
 
-void QuestCollection::SaveToFile(std::ofstream& file)
+void QuestCollection::SaveToFile(std::ostream& file)
 {
 	nlohmann::json data = nlohmann::json::object();
 	nlohmann::json questjson = nlohmann::json::array();

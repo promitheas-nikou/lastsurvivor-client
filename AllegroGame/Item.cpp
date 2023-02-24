@@ -91,14 +91,14 @@ ItemBundle* Item::ConstCollapseToItemBundle() const
     return b;
 }
 
-void Item::SaveToFile(std::ofstream &file)
+void Item::SaveToFile(std::ostream &file)
 {
     file.write(reinterpret_cast<char*>(&str_to_id[GetID()]), sizeof(uint32_t));
     uint32_t d = GetAmount();
     file.write(reinterpret_cast<char*>(&d), sizeof(int));
 }
 
-void Item::SaveToFile(Item* item, std::ofstream& file)
+void Item::SaveToFile(Item* item, std::ostream& file)
 {
     constexpr uint32_t nullitemid = 0xFFFFFFFF;
     if (item == nullptr)
@@ -107,7 +107,7 @@ void Item::SaveToFile(Item* item, std::ofstream& file)
         item->SaveToFile(file);
 }
 
-Item* Item::LoadFromFile(std::ifstream &file)
+Item* Item::LoadFromFile(std::istream &file)
 {
     int len = file.tellg();
     uint32_t i;
@@ -118,11 +118,11 @@ Item* Item::LoadFromFile(std::ifstream &file)
     Item* item = MakeItemFromID(id_to_str[i]);
     file.read(reinterpret_cast<char*>(&a), sizeof(int));
     item->SetAmount(a);
-    item->LoadAdditionalDataFromFile(file);
+    item->DeserializeFromStream(file);
     return item;
 }
 
-void Item::LoadAdditionalDataFromFile(std::ifstream& file)
+void Item::DeserializeFromStream(std::istream& file)
 {}
 
 void Item::AddConstToInventory(ItemInventory* inv) const

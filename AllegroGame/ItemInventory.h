@@ -27,9 +27,9 @@ public:
 	virtual ItemBundle* AddItemBundle(ItemBundle* bundle);
 	virtual Item* PullItem();
 	virtual int GetSize() const = 0;
-	virtual void SaveToFile(std::ofstream& file);
-	static ItemInventory* LoadFromFile(std::ifstream& file);
-	virtual void OverrideFromFile(std::ifstream& file) = 0;
+	virtual void SaveToFile(std::ostream& file);
+	static ItemInventory* LoadFromFile(std::istream& file);
+	virtual void OverrideFromFile(std::istream& file) = 0;
 	
 	virtual ~ItemInventory() = default;
 };

@@ -21,8 +21,8 @@ private:
         float prog;
         Direction from;
         Item* item;
-        void SaveToFile(std::ofstream& file);
-        static ItemDescriptor LoadFromFile(std::ifstream& file);
+        void SaveToFile(std::ostream& file);
+        static ItemDescriptor LoadFromFile(std::istream& file);
         ItemDescriptor(float p, Direction f, Item* i);
         ItemDescriptor() = default;
     };
@@ -51,8 +51,8 @@ public:
     void Draw() const final;
     void DrawOver() const final;
 
-    virtual void WriteAdditionalDataToFile(std::ofstream& file) final;
-    virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
+    virtual void SerializeToStream(std::ostream& file) final;
+    virtual void DeserializeFromStream(std::istream& file) final;
 
     const ItemBundle* GetMiningResult(Tool* tool) const override;
 

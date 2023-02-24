@@ -145,7 +145,7 @@ bool Entity::CollidesWith(Entity* e) const
     return cx && cy;
 }
 
-void Entity::LoadAdditionalDataFromFile(std::ifstream& file)
+void Entity::DeserializeFromStream(std::istream& file)
 {
     file.read(reinterpret_cast<char*>(&xpos), sizeof(float));
     file.read(reinterpret_cast<char*>(&ypos), sizeof(float));
@@ -158,7 +158,7 @@ void Entity::LoadAdditionalDataFromFile(std::ifstream& file)
     file.read(reinterpret_cast<char*>(&ysize), sizeof(float));
 }
 
-void Entity::WriteAdditionalDataToFile(std::ofstream& file)
+void Entity::SerializeToStream(std::ostream& file)
 {
     file.write(reinterpret_cast<char*>(&xpos), sizeof(float));
     file.write(reinterpret_cast<char*>(&ypos), sizeof(float));

@@ -11,12 +11,12 @@
 
 GroundTile::GroundTile(World* w, int x, int y, std::string n, Tool::ToolType t) : world{ w }, xpos{ x }, ypos{ y }, name{ n }, requiredTool{ t } {}
 
-void GroundTile::LoadAdditionalDataFromFile(std::ifstream &file)
+void GroundTile::DeserializeFromStream(std::istream &file)
 {
     return;
 }
 
-void GroundTile::WriteAdditionalDataToFile(std::ofstream& file)
+void GroundTile::SerializeToStream(std::ostream& file)
 {
     return;
 }

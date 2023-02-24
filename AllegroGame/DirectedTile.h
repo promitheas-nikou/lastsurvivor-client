@@ -12,7 +12,7 @@ public:
     DirectedTile(World* w, int x, int y, Direction d);
 
     virtual Direction GetDirection() const final;
-    virtual void WriteAdditionalDataToFile(std::ofstream& file);
-    virtual void LoadAdditionalDataFromFile(std::ifstream& file);
+    virtual void SerializeToStream(std::ostream& file);
+    virtual void DeserializeFromStream(std::istream& file);
 };
 

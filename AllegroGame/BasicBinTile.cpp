@@ -120,15 +120,15 @@ void BasicBinTile::InitForWorld(World* w)
     TILE_GUI = new TileGUI(w->GetPlayer(), this);
 }
 
-void BasicBinTile::WriteAdditionalDataToFile(std::ofstream& file)
+void BasicBinTile::SerializeToStream(std::ostream& file)
 {
-    Tile::WriteAdditionalDataToFile(file);
+    Tile::SerializeToStream(file);
     inventory->SaveToFile(file);
 }
 
-void BasicBinTile::LoadAdditionalDataFromFile(std::ifstream& file)
+void BasicBinTile::DeserializeFromStream(std::istream& file)
 {
-    Tile::LoadAdditionalDataFromFile(file);
+    Tile::DeserializeFromStream(file);
     inventory = ItemInventory::LoadFromFile(file);
 }
 

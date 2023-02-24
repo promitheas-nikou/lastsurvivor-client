@@ -20,7 +20,7 @@ int SimpleItemInventory::GetSize() const
     return size;
 }
 
-void SimpleItemInventory::OverrideFromFile(std::ifstream& file)
+void SimpleItemInventory::OverrideFromFile(std::istream& file)
 {
     uint32_t v;
     file.read(reinterpret_cast<char*>(&v), sizeof(uint32_t));

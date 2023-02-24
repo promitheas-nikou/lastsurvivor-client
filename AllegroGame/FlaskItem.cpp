@@ -27,13 +27,13 @@ int FlaskItem::GetMaxStackSize() const
 FlaskItem::FlaskItem() : Item(NAME, DESCRIPTION), durability{ MAX_DURABILITY }
 {}
 
-void FlaskItem::SaveToFile(std::ofstream& file)
+void FlaskItem::SaveToFile(std::ostream& file)
 {
 	Item::SaveToFile(file);
 	file.write(reinterpret_cast<const char*>(&durability), sizeof(int));
 }
 
-void FlaskItem::LoadAdditionalDataFromFile(std::ifstream& file)
+void FlaskItem::DeserializeFromStream(std::istream& file)
 {
 	file.read(reinterpret_cast<char*>(&durability), sizeof(int));
 }

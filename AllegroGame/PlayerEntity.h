@@ -134,8 +134,8 @@ private:
 
 public:
 
-	virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
-	virtual void WriteAdditionalDataToFile(std::ofstream& file) override;
+	virtual void DeserializeFromStream(std::istream& file) override;
+	virtual void SerializeToStream(std::ostream& file) override;
 
 	virtual Entity* Clone(World* world, float x, float y) const override;
 

@@ -31,8 +31,8 @@ public:
 
 	void AddQuest(Quest* q);
 
-	static QuestCollection* LoadFromFile(std::ifstream &file);
-	void SaveToFile(std::ofstream &file);
+	static QuestCollection* LoadFromFile(std::istream &file);
+	void SaveToFile(std::ostream &file);
 	friend Quest;
 	friend class QuestGUI;
 };

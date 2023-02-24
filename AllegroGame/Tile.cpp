@@ -17,12 +17,12 @@ Item* Tile::PullItem(Direction d, ItemIOInterface* to)
 	return nullptr;
 }
 
-void Tile::LoadAdditionalDataFromFile(std::ifstream &file)
+void Tile::DeserializeFromStream(std::istream &file)
 {
 	return;
 }
 
-void Tile::WriteAdditionalDataToFile(std::ofstream& file)
+void Tile::SerializeToStream(std::ostream& file)
 {
 	return;
 }

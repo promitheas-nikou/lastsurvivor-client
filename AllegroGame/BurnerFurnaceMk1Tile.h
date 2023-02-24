@@ -66,8 +66,8 @@ public:
     virtual float GetMiningResistance() const final;
     virtual std::string GetName() const final;
 
-    virtual void WriteAdditionalDataToFile(std::ofstream& file) final;
-    virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
+    virtual void SerializeToStream(std::ostream& file) final;
+    virtual void DeserializeFromStream(std::istream& file) final;
 
     virtual void TickUpdate(uint64_t T) final;
     virtual bool DoesTickUpdates() const final;

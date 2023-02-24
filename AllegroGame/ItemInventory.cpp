@@ -167,7 +167,7 @@ Item* ItemInventory::PullItem()
     return nullptr;
 }
 
-void ItemInventory::SaveToFile(std::ofstream& file)
+void ItemInventory::SaveToFile(std::ostream& file)
 {
     uint32_t v;
     constexpr uint32_t nullitemid = 0xFFFFFFFF;
@@ -184,7 +184,7 @@ void ItemInventory::SaveToFile(std::ofstream& file)
     }
 }
 
-ItemInventory* ItemInventory::LoadFromFile(std::ifstream& file)
+ItemInventory* ItemInventory::LoadFromFile(std::istream& file)
 {
     uint32_t v;
     file.read(reinterpret_cast<char*>(&v), sizeof(uint32_t));

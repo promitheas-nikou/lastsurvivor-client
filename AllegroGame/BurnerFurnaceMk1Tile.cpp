@@ -66,7 +66,7 @@ std::string BurnerFurnaceMk1Tile::GetName() const
     return NAME;
 }
 
-void BurnerFurnaceMk1Tile::WriteAdditionalDataToFile(std::ofstream& file)
+void BurnerFurnaceMk1Tile::SerializeToStream(std::ostream& file)
 {
     file.write(reinterpret_cast<char*>(&burnTimeRemaining),sizeof(float));
     file.write(reinterpret_cast<char*>(&burnTimeFull),sizeof(float));
@@ -76,7 +76,7 @@ void BurnerFurnaceMk1Tile::WriteAdditionalDataToFile(std::ofstream& file)
     fuel->SaveToFile(file);
 }
 
-void BurnerFurnaceMk1Tile::LoadAdditionalDataFromFile(std::ifstream& file)
+void BurnerFurnaceMk1Tile::DeserializeFromStream(std::istream& file)
 {
     file.read(reinterpret_cast<char*>(&burnTimeRemaining), sizeof(float));
     file.read(reinterpret_cast<char*>(&burnTimeFull), sizeof(float));

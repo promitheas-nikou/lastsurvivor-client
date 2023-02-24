@@ -79,8 +79,8 @@ public:
 	
 	virtual bool CollidesWith(Entity* e) const;
 
-	virtual void LoadAdditionalDataFromFile(std::ifstream& file);
-	virtual void WriteAdditionalDataToFile(std::ofstream& file);
+	virtual void DeserializeFromStream(std::istream& file);
+	virtual void SerializeToStream(std::ostream& file);
 
 	virtual bool IsHostile() const;
 	virtual bool IsPassive() const;

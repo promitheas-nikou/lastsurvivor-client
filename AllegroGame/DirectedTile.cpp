@@ -10,16 +10,16 @@ Direction DirectedTile::GetDirection() const
 	return direction;
 }
 
-void DirectedTile::WriteAdditionalDataToFile(std::ofstream& file)
+void DirectedTile::SerializeToStream(std::ostream& file)
 {
-	Tile::WriteAdditionalDataToFile(file);
+	Tile::SerializeToStream(file);
 	uint8_t temp = direction.GetRawValue();
 	file.write(reinterpret_cast<char*>(&temp), sizeof(uint8_t));
 }
 
-void DirectedTile::LoadAdditionalDataFromFile(std::ifstream& file)
+void DirectedTile::DeserializeFromStream(std::istream& file)
 {
-	Tile::LoadAdditionalDataFromFile(file);
+	Tile::DeserializeFromStream(file);
 	uint8_t temp;
 	file.read(reinterpret_cast<char*>(&temp), sizeof(uint8_t));
 	direction = temp;

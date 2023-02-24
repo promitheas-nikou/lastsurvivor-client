@@ -11,15 +11,15 @@ void HostileEntity::Tick()
     damageCooldown--;
 }
 
-void HostileEntity::LoadAdditionalDataFromFile(std::ifstream& file)
+void HostileEntity::DeserializeFromStream(std::istream& file)
 {
-    Entity::LoadAdditionalDataFromFile(file);
+    Entity::DeserializeFromStream(file);
     file.read(reinterpret_cast<char*>(&damageCooldown), sizeof(int));
 }
 
-void HostileEntity::WriteAdditionalDataToFile(std::ofstream& file)
+void HostileEntity::SerializeToStream(std::ostream& file)
 {
-    Entity::WriteAdditionalDataToFile(file);
+    Entity::SerializeToStream(file);
     file.write(reinterpret_cast<char*>(&damageCooldown), sizeof(int));
 }
 

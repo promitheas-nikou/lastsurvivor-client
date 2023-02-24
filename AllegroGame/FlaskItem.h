@@ -25,8 +25,8 @@ public:
 
 	FlaskItem();
 
-	virtual void SaveToFile(std::ofstream& file) final;
-	virtual void LoadAdditionalDataFromFile(std::ifstream& file) final;
+	virtual void SaveToFile(std::ostream& file) final;
+	virtual void DeserializeFromStream(std::istream& file) final;
 
 	virtual float GetHealthBoost() const final;
 	virtual float GetFoodBoost() const final;

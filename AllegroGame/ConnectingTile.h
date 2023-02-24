@@ -31,8 +31,8 @@ public:
 
     virtual bool ShouldConnect(Tile* tile) const;
 
-    virtual void WriteAdditionalDataToFile(std::ofstream& file) override;
-    virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
+    virtual void SerializeToStream(std::ostream& file) override;
+    virtual void DeserializeFromStream(std::istream& file) override;
 
     virtual void TileUpdate() override;
 

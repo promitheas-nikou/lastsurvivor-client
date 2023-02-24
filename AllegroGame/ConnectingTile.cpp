@@ -66,15 +66,15 @@ bool ConnectingTile::ShouldConnect(Tile* tile) const
     return dynamic_cast<ConnectingTile*>(tile)!=nullptr;
 }
 
-void ConnectingTile::WriteAdditionalDataToFile(std::ofstream& file)
+void ConnectingTile::SerializeToStream(std::ostream& file)
 {
-    Tile::WriteAdditionalDataToFile(file);
+    Tile::SerializeToStream(file);
     file.write(&connections, sizeof(char));
 }
 
-void ConnectingTile::LoadAdditionalDataFromFile(std::ifstream& file)
+void ConnectingTile::DeserializeFromStream(std::istream& file)
 {
-    Tile::LoadAdditionalDataFromFile(file);
+    Tile::DeserializeFromStream(file);
     file.read(&connections, sizeof(char));
 }
 

@@ -635,10 +635,10 @@ World* World::LoadWorldFromFile(std::string filename)
                     uint32_t gtileid,tileid;
                     chunkdata.read(reinterpret_cast<char*>(&gtileid), sizeof(uint32_t));
                     chunk->GetGroundTileRef(x, y) = MakeGroundTile(world, cur_gtile_keys[gtileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
-                    chunk->GetGroundTile(x, y)->LoadAdditionalDataFromFile(chunkdata);
+                    chunk->GetGroundTile(x, y)->DeserializeFromStream(chunkdata);
                     chunkdata.read(reinterpret_cast<char*>(&tileid), sizeof(uint32_t));
                     chunk->GetTileRef(x, y) = MakeTile(world, cur_tile_keys[tileid], cx * WorldChunk::CHUNK_SIZE_Y + x, cy * WorldChunk::CHUNK_SIZE_X + y);
-                    chunk->GetTile(x, y)->LoadAdditionalDataFromFile(chunkdata);
+                    chunk->GetTile(x, y)->DeserializeFromStream(chunkdata);
                     if (chunk->GetTile(x,y)->DoesTickUpdates())
                         chunk->AddTickingTile(chunk->GetTile(x,y));
                 }
@@ -652,7 +652,7 @@ World* World::LoadWorldFromFile(std::string filename)
         uint32_t pid;
         playerdata.read(reinterpret_cast<char*>(&pid), sizeof(uint32_t));
         world->player = dynamic_cast<PlayerEntity*>(MakeEntity(world, cur_entities_ids[pid], 0, 0));
-        world->player->LoadAdditionalDataFromFile(playerdata);
+        world->player->DeserializeFromStream(playerdata);
         if(std::filesystem::exists(entitydatadir))
             for (const std::filesystem::directory_entry& entry : std::filesystem::directory_iterator(entitydatadir))
             {
@@ -660,7 +660,7 @@ World* World::LoadWorldFromFile(std::string filename)
                 std::ifstream entitydata(entry, std::ios::binary);
                 entitydata.read(reinterpret_cast<char*>(&eid), sizeof(uint32_t));
                 Entity* e = MakeEntity(world, cur_entities_ids[eid], 0, 0);
-                e->LoadAdditionalDataFromFile(entitydata);
+                e->DeserializeFromStream(entitydata);
                 world->AddEntity(e);
                 entitydata.close();
             }
@@ -778,10 +778,10 @@ void World::SaveToFile(std::string filename)
                 {
                     GroundTile* gt = p2.second->GetGroundTile(x,y);
                     chunkdata.write(reinterpret_cast<char*>(&gtile_keys_to_ids[gt->GetID()]), sizeof(uint32_t));
-                    gt->WriteAdditionalDataToFile(chunkdata);
+                    gt->SerializeToStream(chunkdata);
                     Tile* t = p2.second->GetTile(x, y);
                     chunkdata.write(reinterpret_cast<char*>(&tile_keys_to_ids[t->GetID()]), sizeof(uint32_t));
-                    t->WriteAdditionalDataToFile(chunkdata);
+                    t->SerializeToStream(chunkdata);
                 }
             chunkdata.flush();
             chunkdata.close();
@@ -793,7 +793,7 @@ void World::SaveToFile(std::string filename)
     std::ofstream playerdata(dir / "player" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, std::ios::binary);
     
     playerdata.write(reinterpret_cast<char*>(&entity_keys_to_ids[player->GetID()]), sizeof(uint32_t));
-    player->WriteAdditionalDataToFile(playerdata);
+    player->SerializeToStream(playerdata);
     playerdata.flush();
     playerdata.close();
 
@@ -802,7 +802,7 @@ void World::SaveToFile(std::string filename)
     {
         std::ofstream entitydatafile(entitydatadir / std::format("{}" WORLD_SAVE_ENTITYDATA_FILE_EXTENSION, counter++), std::ios::binary);
         entitydatafile.write(reinterpret_cast<char*>(&entity_keys_to_ids[e->GetID()]), sizeof(uint32_t));
-        e->WriteAdditionalDataToFile(entitydatafile);
+        e->SerializeToStream(entitydatafile);
         entitydatafile.flush();
         entitydatafile.close();
     }
