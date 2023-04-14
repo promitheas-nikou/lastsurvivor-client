@@ -22,7 +22,7 @@ bool WheatCropTile::IsTransparent() const
 
 bool WheatCropTile::CanWalkThrough() const
 {
-    return false;
+    return true;
 }
 
 ToolType WheatCropTile::GetOptimalToolType() const
