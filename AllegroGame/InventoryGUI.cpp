@@ -13,6 +13,7 @@
 #include "SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h"
+#include "PlayerEntity.h"
 
 
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_GENERIC;
@@ -136,6 +137,7 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 void InventoryGUI::SwapItem(Item** slot)
 {
 	Item* tmp = *slot;
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	if (((swapTemp != nullptr) && (tmp != nullptr)) && (swapTemp->GetID() == tmp->GetID()))
 	{
 		swapTemp->SetAmount(tmp->AddAmount(swapTemp->GetAmount()));
@@ -152,6 +154,7 @@ void InventoryGUI::SwapItem(Item** slot)
 
 void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageSlotType t)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	switch (t)
 	{
 	case StorageSlotType::VIEW:
@@ -206,6 +209,7 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 
 void InventoryGUI::AddDynamicSlot(int x, int y, int w, int h, std::function<Item**()> itemslotfunc, StorageSlotType t)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	switch (t)
 	{
 	case StorageSlotType::FUEL:
@@ -242,11 +246,13 @@ void InventoryGUI::AddDynamicSlot(int x, int y, int w, int h, std::function<Item
 
 void InventoryGUI::AddCallbackSlot(int x, int y, int w, int h, std::function<Item* (Item*)> cl, std::function<Item* (Item*)> cr)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	GUI::UIcomponents.push_back(new SimpleItemInventoryCallbackSlotUIComponent(x, y, w, h, INVENTORY_SLOT_CALLBACK, cl, cr, swapTemp));
 }
 
 void InventoryGUI::AddTrashSlot(int x, int y, int w, int h)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	static std::function<Item* (Item*)> callbackleft = [](Item* item) {
 		if (item == nullptr)
 			return (Item*)nullptr;
@@ -272,7 +278,7 @@ void InventoryGUI::SetOffset(int xoff, int yoff)
 	yoffset = yoff;
 }
 
-InventoryGUI::InventoryGUI() : swapTemp{ nullptr }
+InventoryGUI::InventoryGUI()
 {
 }
 
@@ -338,6 +344,7 @@ void InventoryGUI::PreDrawThisGUI()
 void InventoryGUI::PostDrawThisGUI()
 {
 	int x, y;
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	al_get_mouse_cursor_position(&x, &y);
 	if (swapTemp != nullptr)
 		swapTemp->Draw(x - 64, y - 64, 128, 128);

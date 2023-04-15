@@ -1,5 +1,7 @@
 #include "GUI.h"
 
+PlayerEntity* GUI_GLOBAL_PLAYER_OBJECT;
+
 bool GUI::ClickRightDown(int xRel, int yRel)
 {
 	return false;
@@ -175,6 +177,11 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 	return false;
 }
 
+
+PlayerEntity* GUI::GetPlayer()
+{
+	return GUI_GLOBAL_PLAYER_OBJECT;
+}
 
 void GUI::PreDrawThisGUI()
 {}

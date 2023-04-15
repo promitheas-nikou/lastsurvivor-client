@@ -4,6 +4,9 @@
 #include "UIComponent.h"
 #include <vector>
 
+class PlayerEntity;
+extern PlayerEntity* GUI_GLOBAL_PLAYER_OBJECT;
+
 class GUI
 {
 protected:
@@ -12,6 +15,8 @@ protected:
 	std::vector<UIComponent*> UIcomponents;
 	UIComponent* selectedComponent;
 public:
+	static PlayerEntity* GetPlayer();
+
 	virtual void PreDrawThisGUI();
 	virtual void PostDrawThisGUI();
 

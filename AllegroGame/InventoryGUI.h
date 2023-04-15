@@ -31,8 +31,6 @@ public:
 
 protected:
 
-    Item* swapTemp;
-
     int xoffset = 0;
     int yoffset = 0;
 
