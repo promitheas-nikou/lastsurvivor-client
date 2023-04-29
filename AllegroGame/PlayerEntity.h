@@ -112,6 +112,7 @@ private:
 	Item* pumpTool;
 	Item* meleeWeapon;
 	Item* rangedWeapon;
+	Item* stashedItem;
 
 	static std::string NAME;
 	static float RANGESQ;
@@ -133,6 +134,10 @@ private:
 	virtual void AddResult(const ItemBundle* b) override;
 
 public:
+
+	Item* SwapStashedItem(Item* newItem);
+	Item*& GetStashedItem();
+	void SetStashedItem(Item* newItem);
 
 	virtual void LoadAdditionalDataFromFile(std::ifstream& file) override;
 	virtual void WriteAdditionalDataToFile(std::ofstream& file) override;

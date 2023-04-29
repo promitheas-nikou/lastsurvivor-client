@@ -12,7 +12,6 @@ class ItemInventoryStorageSlotUIComponent :
 {
 protected:
 
-    Item*& swapptr;
     Item*& itemptr;
     int mouseXpos, mouseYpos;
 

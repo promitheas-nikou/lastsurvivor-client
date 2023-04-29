@@ -1,7 +1,10 @@
 #include "ItemInventoryStorageSlotUIComponent.h"
+#include "GUI.h"
+#include "PlayerEntity.h"
 
 bool ItemInventoryStorageSlotUIComponent::ClickRightDown(int xRel, int yRel)
 {
+    Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
     if (!ItemCheckPredicate())
         return true;
     if (swapptr != nullptr)
@@ -48,6 +51,7 @@ bool ItemInventoryStorageSlotUIComponent::ClickRightDown(int xRel, int yRel)
 
 bool ItemInventoryStorageSlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
+    Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
     if (!ItemCheckPredicate())
         return true;
     if (swapptr == nullptr)
@@ -104,6 +108,6 @@ void ItemInventoryStorageSlotUIComponent::Draw(int plane)
     }
 }
 
-ItemInventoryStorageSlotUIComponent::ItemInventoryStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptr{ i }, swapptr{ s }
+ItemInventoryStorageSlotUIComponent::ItemInventoryStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, Item*& i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptr{ i }
 {
 }

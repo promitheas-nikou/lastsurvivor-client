@@ -28,7 +28,7 @@ private:
         virtual void PreDrawThisGUI() final;
         virtual void PostDrawThisGUI() final;
 
-        TileGUI(PlayerEntity* p, BurnerFurnaceMk1Tile* s);
+        TileGUI(BurnerFurnaceMk1Tile* s);
     };
 
     static int MINING_RESISTANCE;
@@ -81,8 +81,6 @@ public:
     const ItemBundle* GetMiningResult(Tool* tool) const override;
 
     static void Init(nlohmann::json data);
-
-    virtual void InitForWorld(World* w) final;
 
     virtual ~BurnerFurnaceMk1Tile() = default;
 
