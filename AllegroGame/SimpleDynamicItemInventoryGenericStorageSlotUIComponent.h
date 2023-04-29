@@ -12,7 +12,6 @@ class SimpleDynamicItemInventoryGenericStorageSlotUIComponent :
 {
 protected:
 
-    Item*& swapptr;
     std::function<Item** ()> itemptrfunc;
     int mouseXpos, mouseYpos;
 

@@ -1,7 +1,10 @@
 #include "SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h"
+#include "GUI.h"
+#include "PlayerEntity.h"
 
 bool SimpleDynamicItemInventoryOutputStorageSlotUIComponent::ClickRightDown(int xRel, int yRel)
 {
+    Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
     Item*& itemptr = *(itemptrfunc());
     if (itemptr == nullptr)
         return true;
@@ -36,6 +39,7 @@ bool SimpleDynamicItemInventoryOutputStorageSlotUIComponent::ClickRightDown(int 
 bool SimpleDynamicItemInventoryOutputStorageSlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
     Item*& itemptr = *(itemptrfunc());
+    Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
     if (itemptr == nullptr)
         return true;
 
@@ -85,5 +89,5 @@ void SimpleDynamicItemInventoryOutputStorageSlotUIComponent::Draw(int plane)
     }
 }
 
-SimpleDynamicItemInventoryOutputStorageSlotUIComponent::SimpleDynamicItemInventoryOutputStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, std::function<Item**()> i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptrfunc{ i }, swapptr{ s }
+SimpleDynamicItemInventoryOutputStorageSlotUIComponent::SimpleDynamicItemInventoryOutputStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, std::function<Item**()> i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptrfunc{ i }
 {}

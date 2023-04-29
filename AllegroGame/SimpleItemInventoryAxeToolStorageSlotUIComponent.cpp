@@ -1,8 +1,11 @@
 #include "SimpleItemInventoryAxeToolStorageSlotUIComponent.h"
 #include "ToolItem.h"
+#include "GUI.h"
+#include "PlayerEntity.h"
 
 bool SimpleItemInventoryAxeToolStorageSlotUIComponent::ItemCheckPredicate() const
 {
+	Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
 	if (!swapptr)
 		return true;
 	ToolItem* t = dynamic_cast<ToolItem*>(swapptr);

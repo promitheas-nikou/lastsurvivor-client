@@ -42,6 +42,22 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 			return true;
 	ALLEGRO_MOUSE_STATE state;
 	al_get_mouse_state(&state);
+	switch (event.type) {
+	case ALLEGRO_EVENT_KEY_DOWN:
+		if (event.keyboard.keycode == ALLEGRO_KEY_TAB)
+			if (activeSubGUI == nullptr) {
+				activeSubGUI = GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI;
+				return true;
+			}
+		break;
+	case ALLEGRO_EVENT_KEY_UP:
+		if (event.keyboard.keycode == ALLEGRO_KEY_TAB)
+			if (activeSubGUI == GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI) {
+				activeSubGUI = nullptr;
+				return true;
+			}
+		break;
+	}
 	if (selectedComponent != nullptr)
 		switch (event.type) {
 		case ALLEGRO_EVENT_KEY_DOWN:
@@ -150,6 +166,16 @@ void InventoryGUI::SwapItem(Item** slot)
 	}
 	(*slot) = swapTemp;
 	swapTemp = tmp;
+}
+
+void InventoryGUI::SetShowStashedItem(bool v)
+{
+	showStashedItem = v;
+}
+
+bool InventoryGUI::GetShowStashedItem() const
+{
+	return showStashedItem;
 }
 
 void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageSlotType t)
@@ -343,6 +369,8 @@ void InventoryGUI::PreDrawThisGUI()
 
 void InventoryGUI::PostDrawThisGUI()
 {
+	if (!showStashedItem)
+		return;
 	int x, y;
 	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	al_get_mouse_cursor_position(&x, &y);

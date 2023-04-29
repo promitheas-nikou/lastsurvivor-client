@@ -1,6 +1,7 @@
 #include "GUI.h"
 
 PlayerEntity* GUI_GLOBAL_PLAYER_OBJECT;
+GUI* GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI;
 
 bool GUI::ClickRightDown(int xRel, int yRel)
 {

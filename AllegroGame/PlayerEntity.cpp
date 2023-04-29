@@ -1162,6 +1162,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
+	hotbarGUI->SetShowStashedItem(false);
 	consumableHotbarGUI = new InventoryGUI();
 	usableHotbarGUI = new InventoryGUI();
 	placeableHotbarGUI = new InventoryGUI();
@@ -1278,6 +1279,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	HEALTH_ICON = game_GetTexture("tex.gui.health_icon");
 	HUNGER_ICON = game_GetTexture("tex.gui.hunger_icon");
 	WATER_ICON = game_GetTexture("tex.gui.water_icon");
+	GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI = GetMainInventoryGUI(SCREEN_WIDTH/2-9*64,SCREEN_HEIGHT/2-3*64);
 }
 
 PlayerNotification::PlayerNotification(int t, int w, int h)

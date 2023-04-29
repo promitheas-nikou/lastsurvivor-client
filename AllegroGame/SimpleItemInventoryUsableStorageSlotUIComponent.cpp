@@ -1,9 +1,12 @@
 #include "SimpleItemInventoryUsableStorageSlotUIComponent.h"
 #include "UsableItem.h"
+#include "GUI.h"
+#include "PlayerEntity.h"
 
 
 bool SimpleItemInventoryUsableStorageSlotUIComponent::ItemCheckPredicate() const
 {
+	Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
 	if (!swapptr)
 		return true;
     return dynamic_cast<UsableItem*>(swapptr) != nullptr;

@@ -34,9 +34,14 @@ protected:
     int xoffset = 0;
     int yoffset = 0;
 
+    bool showStashedItem = true;
+
     virtual void SwapItem(Item** slot);
     
 public:
+
+    void SetShowStashedItem(bool v);
+    bool GetShowStashedItem() const;
 
 	enum StorageSlotType {
 		GENERIC,
