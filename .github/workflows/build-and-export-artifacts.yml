@@ -43,4 +43,4 @@ jobs:
     
     - name: DEBEG
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: dir /s
+      run: ls -R
