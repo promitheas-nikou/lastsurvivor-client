@@ -192,17 +192,12 @@ void BurnerFurnaceMk1Tile::Init(nlohmann::json data)
     PROGRESS_ICON_ON = game_GetTexture("tex.gui.progress_icon/1");
 }
 
-void BurnerFurnaceMk1Tile::InitForWorld(World* w)
-{
-    delete TILE_GUI;
-    TILE_GUI = new TileGUI(w->GetPlayer(),this);
-}
-
 BurnerFurnaceMk1Tile::BurnerFurnaceMk1Tile(World* w, int x, int y) : Tile(w, x, y), burnTimeRemaining{ 0 }, burnTimeFull{ 0 }
 {
     input = new SimpleItemInventory(1);
     fuel = new SimpleItemInventory(1);
     output = new SimpleItemInventory(1);
+    TILE_GUI = new BurnerFurnaceMk1Tile::TileGUI(this);
 }
 
 Item*& BurnerFurnaceMk1Tile::TileGUI::InputItemPtrFunc()
@@ -262,10 +257,10 @@ void BurnerFurnaceMk1Tile::TileGUI::PostDrawThisGUI()
     }
 }
 
-BurnerFurnaceMk1Tile::TileGUI::TileGUI(PlayerEntity* p, BurnerFurnaceMk1Tile* s)
+BurnerFurnaceMk1Tile::TileGUI::TileGUI(BurnerFurnaceMk1Tile* s)
 {
     parentTile = s;
-    InventoryGUI* g = p->GetMainInventoryGUI(SCREEN_WIDTH/2-(9*64),SCREEN_HEIGHT-128*4);
+    InventoryGUI* g = new InventoryGUI();
     g->AddDynamicSlot(SCREEN_WIDTH/2-320, 100, 128, 128, [this]() {
         return &this->InputItemPtrFunc();
     }, InventoryGUI::StorageSlotType::AUTO_IN_0);

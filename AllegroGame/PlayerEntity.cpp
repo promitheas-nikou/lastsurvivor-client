@@ -55,6 +55,23 @@ void PlayerEntity::AddResult(const ItemBundle* b)
 		GiveConstItem(b->GetItem(i));
 }
 
+Item* PlayerEntity::SwapStashedItem(Item* newItem)
+{
+	Item* oldItem = GetStashedItem();
+	SetStashedItem(newItem);
+	return oldItem;
+}
+
+Item*& PlayerEntity::GetStashedItem()
+{
+	return stashedItem;
+}
+
+void PlayerEntity::SetStashedItem(Item* newItem)
+{
+	stashedItem = newItem;
+}
+
 void PlayerEntity::LoadAdditionalDataFromFile(std::ifstream& file)
 {
 	Entity::LoadAdditionalDataFromFile(file);
@@ -1127,8 +1144,9 @@ InventoryGUI* PlayerEntity::GetMainInventoryGUI(int offsetx, int offsety)
 	return g;
 }
 
-PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }, selectedHotbarSlot{ 0 }
+PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }, selectedHotbarSlot{ 0 }, stashedItem{ nullptr }
 {
+	GUI_GLOBAL_PLAYER_OBJECT = this;
 	hunger = MAX_HUNGER;
 	water = MAX_WATER;
 	SetName("Player");
@@ -1144,6 +1162,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();
+	hotbarGUI->SetShowStashedItem(false);
 	consumableHotbarGUI = new InventoryGUI();
 	usableHotbarGUI = new InventoryGUI();
 	placeableHotbarGUI = new InventoryGUI();
@@ -1260,6 +1279,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	HEALTH_ICON = game_GetTexture("tex.gui.health_icon");
 	HUNGER_ICON = game_GetTexture("tex.gui.hunger_icon");
 	WATER_ICON = game_GetTexture("tex.gui.water_icon");
+	GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI = GetMainInventoryGUI(SCREEN_WIDTH/2-9*64,SCREEN_HEIGHT/2-3*64);
 }
 
 PlayerNotification::PlayerNotification(int t, int w, int h)

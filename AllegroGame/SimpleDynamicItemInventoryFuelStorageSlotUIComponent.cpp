@@ -1,9 +1,12 @@
 #include "SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h"
 #include "FuelItem.h"
+#include "GUI.h"
+#include "PlayerEntity.h"
 
 bool SimpleDynamicItemInventoryFuelStorageSlotUIComponent::ClickRightDown(int xRel, int yRel)
 {
     Item*& itemptr = *(itemptrfunc());
+    Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
 
     if (swapptr == nullptr)
     {
@@ -50,6 +53,7 @@ bool SimpleDynamicItemInventoryFuelStorageSlotUIComponent::ClickRightDown(int xR
 bool SimpleDynamicItemInventoryFuelStorageSlotUIComponent::ClickLeftDown(int xRel, int yRel)
 {
     Item*& itemptr = *(itemptrfunc());
+    Item*& swapptr = GUI_GLOBAL_PLAYER_OBJECT->GetStashedItem();
 
     if (swapptr == nullptr)
     {
@@ -95,22 +99,26 @@ void SimpleDynamicItemInventoryFuelStorageSlotUIComponent::Draw(int plane)
     {
     case 1:
         BitmapUIComponent::Draw(1);
+        printf("BEGIN1 %p\n", itemptr);
         if (itemptr != nullptr)
         {
-            itemptr->Draw(0, 0, GetWidth(), GetHeight());
+            printf("END1 %p\n", itemptr);
+            itemptr->Draw(0, 0, GetWidth(), GetHeight());   
         }
         break;
     case 2:
+        printf("BEGIN2 %p\n", itemptr);
         if (itemptr != nullptr)
         {
             int x, y;
             al_get_mouse_cursor_position(&x, &y);
             if (0 <= x - GetXpos() && x - GetXpos() < GetWidth() && 0 <= y - GetYpos() && y - GetYpos() < GetHeight())
+                printf("END2 %p\n", itemptr);
                 itemptr->DrawItemDetailsPane(x - GetXpos(), y - GetYpos());
         }
         break;
     }
 }
 
-SimpleDynamicItemInventoryFuelStorageSlotUIComponent::SimpleDynamicItemInventoryFuelStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, std::function<Item** ()> i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptrfunc{ i }, swapptr{ s }
+SimpleDynamicItemInventoryFuelStorageSlotUIComponent::SimpleDynamicItemInventoryFuelStorageSlotUIComponent(int x, int y, int w, int h, ALLEGRO_BITMAP* b, std::function<Item** ()> i, Item*& s) : UIComponent(x, y, w, h), BitmapUIComponent(b), itemptrfunc{ i }
 {}

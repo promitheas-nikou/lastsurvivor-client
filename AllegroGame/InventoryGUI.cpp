@@ -13,6 +13,7 @@
 #include "SimpleDynamicItemInventoryGenericStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryFuelStorageSlotUIComponent.h"
 #include "SimpleDynamicItemInventoryOutputStorageSlotUIComponent.h"
+#include "PlayerEntity.h"
 
 
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_GENERIC;
@@ -41,6 +42,22 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 			return true;
 	ALLEGRO_MOUSE_STATE state;
 	al_get_mouse_state(&state);
+	switch (event.type) {
+	case ALLEGRO_EVENT_KEY_DOWN:
+		if (event.keyboard.keycode == ALLEGRO_KEY_TAB)
+			if (activeSubGUI == nullptr) {
+				activeSubGUI = GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI;
+				return true;
+			}
+		break;
+	case ALLEGRO_EVENT_KEY_UP:
+		if (event.keyboard.keycode == ALLEGRO_KEY_TAB)
+			if (activeSubGUI == GUI_GLOBAL_PLAYER_INVENTORY_HOVER_GUI) {
+				activeSubGUI = nullptr;
+				return true;
+			}
+		break;
+	}
 	if (selectedComponent != nullptr)
 		switch (event.type) {
 		case ALLEGRO_EVENT_KEY_DOWN:
@@ -136,6 +153,7 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 void InventoryGUI::SwapItem(Item** slot)
 {
 	Item* tmp = *slot;
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	if (((swapTemp != nullptr) && (tmp != nullptr)) && (swapTemp->GetID() == tmp->GetID()))
 	{
 		swapTemp->SetAmount(tmp->AddAmount(swapTemp->GetAmount()));
@@ -150,8 +168,19 @@ void InventoryGUI::SwapItem(Item** slot)
 	swapTemp = tmp;
 }
 
+void InventoryGUI::SetShowStashedItem(bool v)
+{
+	showStashedItem = v;
+}
+
+bool InventoryGUI::GetShowStashedItem() const
+{
+	return showStashedItem;
+}
+
 void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageSlotType t)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	switch (t)
 	{
 	case StorageSlotType::VIEW:
@@ -206,6 +235,7 @@ void InventoryGUI::AddSlot(int x, int y, int w, int h, Item*& itemslot, StorageS
 
 void InventoryGUI::AddDynamicSlot(int x, int y, int w, int h, std::function<Item**()> itemslotfunc, StorageSlotType t)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	switch (t)
 	{
 	case StorageSlotType::FUEL:
@@ -242,11 +272,13 @@ void InventoryGUI::AddDynamicSlot(int x, int y, int w, int h, std::function<Item
 
 void InventoryGUI::AddCallbackSlot(int x, int y, int w, int h, std::function<Item* (Item*)> cl, std::function<Item* (Item*)> cr)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	GUI::UIcomponents.push_back(new SimpleItemInventoryCallbackSlotUIComponent(x, y, w, h, INVENTORY_SLOT_CALLBACK, cl, cr, swapTemp));
 }
 
 void InventoryGUI::AddTrashSlot(int x, int y, int w, int h)
 {
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	static std::function<Item* (Item*)> callbackleft = [](Item* item) {
 		if (item == nullptr)
 			return (Item*)nullptr;
@@ -272,7 +304,7 @@ void InventoryGUI::SetOffset(int xoff, int yoff)
 	yoffset = yoff;
 }
 
-InventoryGUI::InventoryGUI() : swapTemp{ nullptr }
+InventoryGUI::InventoryGUI()
 {
 }
 
@@ -337,7 +369,10 @@ void InventoryGUI::PreDrawThisGUI()
 
 void InventoryGUI::PostDrawThisGUI()
 {
+	if (!showStashedItem)
+		return;
 	int x, y;
+	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
 	al_get_mouse_cursor_position(&x, &y);
 	if (swapTemp != nullptr)
 		swapTemp->Draw(x - 64, y - 64, 128, 128);
