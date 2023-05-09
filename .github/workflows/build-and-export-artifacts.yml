@@ -7,6 +7,7 @@ name: Build and Export Artifacts
 
 on:
   workflow_dispatch
+      
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -39,8 +40,28 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform:${{env.BUILD_PLATFORM}} ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=${{env.BUILD_PLATFORM}} ${{env.SOLUTION_FILE_PATH}}
     
-    - name: DEBEG
+    - name: Prepare final export directory and copy files
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: dir /s
+      run: |
+        mkdir release-x64-bundle
+        cp ./x64/Release/* ./release-x64-bundle;
+      
+    - name: Copy additional resource files
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: |
+        cp -R ./AllegroGame/audio ./release-x64-bundle/audio
+        cp -R ./AllegroGame/textures ./release-x64-bundle/textures
+        cp -R ./AllegroGame/lua-api ./release-x64-bundle/lua-api
+        cp ./AllegroGame/*.ttf ./release-x64-bundle/
+        cp ./AllegroGame/*.vert ./release-x64-bundle/
+        cp ./AllegroGame/*.frag ./release-x64-bundle/
+        cp ./AllegroGame/data.json ./release-x64-bundle/data.json
+        
+      
+    - name: Export build results as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-x64-bundle
+        path: ./release-x64-bundle
