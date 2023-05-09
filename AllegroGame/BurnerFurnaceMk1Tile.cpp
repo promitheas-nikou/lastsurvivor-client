@@ -227,10 +227,14 @@ void BurnerFurnaceMk1Tile::TileGUI::PreDrawThisGUI()
     return;
 }
 
+extern int mousex;
+extern int mousey;
+
 void BurnerFurnaceMk1Tile::TileGUI::PostDrawThisGUI()
 {
     ALLEGRO_MOUSE_STATE s;
-    al_get_mouse_state(&s);
+    s.x = mousex;
+    s.y = mousey;
     FuelItem* f = dynamic_cast<FuelItem*>(parentTile->fuel->GetItem(0));
     if (util_rect_includes_point(SCREEN_WIDTH / 2 - 64, 228, SCREEN_WIDTH / 2 + 64, 356, s.x, s.y))
     {

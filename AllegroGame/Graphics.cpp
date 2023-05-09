@@ -4,13 +4,18 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include "Logging.h"
+#include "Config.h"
 
 ALLEGRO_EVENT_QUEUE* event_queue;
 
 ALLEGRO_DISPLAY* main_display;
 
+int PHYSICAL_SCREEN_WIDTH = 1000;
+int PHYSICAL_SCREEN_HEIGHT = 600;
 int SCREEN_WIDTH = 1000;
 int SCREEN_HEIGHT = 600;
+float SCREEN_X_SCALE;
+float SCREEN_Y_SCALE;
 
 void init_graphics()
 {
@@ -66,8 +71,7 @@ void init_window()
 	//al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
 	//al_set_new_display_option(ALLEGRO_SWAP_METHOD, 1, ALLEGRO_REQUIRE);
 	main_display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
-	SCREEN_WIDTH = al_get_display_width(main_display);
-	SCREEN_HEIGHT = al_get_display_height(main_display);
+	update_screen_size();
 	if (main_display == NULL)
 	{
 		lsg_write_to_session_log(FATAL, "FAILED TO INITIALIZE DISPLAY!!! ABORTING!!!");
@@ -88,6 +92,16 @@ void init_window()
 	al_register_event_source(event_queue, al_get_display_event_source(main_display));
 	al_set_separate_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA, ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	lsg_write_to_session_log(INFO, "DISPLAY SUCCESSFULLY CREATED!");
+}
+
+void update_screen_size()
+{
+	SCREEN_WIDTH = 2560;
+	SCREEN_HEIGHT = 1440;
+	PHYSICAL_SCREEN_WIDTH = al_get_display_width(main_display);
+	PHYSICAL_SCREEN_HEIGHT = al_get_display_height(main_display);
+	SCREEN_X_SCALE = ((float)PHYSICAL_SCREEN_WIDTH) / SCREEN_WIDTH;
+	SCREEN_Y_SCALE = ((float)PHYSICAL_SCREEN_HEIGHT) / SCREEN_HEIGHT;
 }
 
 ALLEGRO_EVENT NEXT_EVENT;

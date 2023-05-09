@@ -110,11 +110,9 @@ void SimpleDynamicItemInventoryFuelStorageSlotUIComponent::Draw(int plane)
         printf("BEGIN2 %p\n", itemptr);
         if (itemptr != nullptr)
         {
-            int x, y;
-            al_get_mouse_cursor_position(&x, &y);
-            if (0 <= x - GetXpos() && x - GetXpos() < GetWidth() && 0 <= y - GetYpos() && y - GetYpos() < GetHeight())
+            if (0 <= mousex - GetXpos() && mousex - GetXpos() < GetWidth() && 0 <= mousey - GetYpos() && mousey - GetYpos() < GetHeight())
                 printf("END2 %p\n", itemptr);
-                itemptr->DrawItemDetailsPane(x - GetXpos(), y - GetYpos());
+                itemptr->DrawItemDetailsPane(mousex - GetXpos(), mousey - GetYpos());
         }
         break;
     }

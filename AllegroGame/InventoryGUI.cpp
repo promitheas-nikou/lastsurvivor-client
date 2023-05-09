@@ -35,13 +35,14 @@ ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_CONSUMABLE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_USABLE;
 ALLEGRO_BITMAP* InventoryGUI::INVENTORY_SLOT_PLACEABLE;
 
+extern int mousex;
+extern int mousey;
+
 bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 {
 	if (activeSubGUI != nullptr)
 		if (activeSubGUI->HandleEvent(event))
 			return true;
-	ALLEGRO_MOUSE_STATE state;
-	al_get_mouse_state(&state);
 	switch (event.type) {
 	case ALLEGRO_EVENT_KEY_DOWN:
 		if (event.keyboard.keycode == ALLEGRO_KEY_TAB)
@@ -71,7 +72,7 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 	{
 		UIComponent* tmp = UIcomponents[i];
 
-		if (tmp->ContainsPoint(state.x - xoffset, state.y - yoffset))
+		if (tmp->ContainsPoint(mousex - xoffset, mousey - yoffset))
 		{
 			switch (event.type)
 			{
@@ -103,7 +104,7 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 				}
 				break;
 			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-				if (tmp->Hover(state.x - xoffset, state.y - xoffset))
+				if (tmp->Hover(mousex - xoffset, mousey - xoffset))
 					return true;
 				break;
 				//		case ALLEGRO_EVENT_KEY_CHAR:
@@ -371,10 +372,8 @@ void InventoryGUI::PostDrawThisGUI()
 {
 	if (!showStashedItem)
 		return;
-	int x, y;
 	Item*& swapTemp = GUI::GetPlayer()->GetStashedItem();
-	al_get_mouse_cursor_position(&x, &y);
 	if (swapTemp != nullptr)
-		swapTemp->Draw(x - 64, y - 64, 128, 128);
+		swapTemp->Draw(mousex - 64, mousey - 64, 128, 128);
 }
 

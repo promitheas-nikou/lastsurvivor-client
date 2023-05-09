@@ -420,7 +420,7 @@ void load_shaders()
 {
 	json shaders = json_data["shaders"];
 
-	loaded_shaders["default"] = new Shader("default");
+	loaded_shaders["default"] = new Shader("default","gui_shader.vert","gui_shader.frag");
 
 	for (json texture_data : shaders)
 	{

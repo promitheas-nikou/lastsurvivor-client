@@ -68,6 +68,8 @@ void EXIT_GAME()
 #include <iostream>
 #include "FixedQueue.h"
 
+extern int mousex;
+extern int mousey;
 
 int main()
 {
@@ -119,6 +121,7 @@ int main()
 	creditsMenuGUI = new CreditsMenuGUI();
 	settingsMenuGUI = new SettingsMenuGUI();
 	currentGUI = mainMenuGUI;
+	ALLEGRO_BITMAP* sb = al_create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	while (true)
 	{
 		while (GetNextEvent())
@@ -135,16 +138,36 @@ int main()
 				lsg_close_session_textlog();
 				break;
 			default:
+				switch (NEXT_EVENT.type) {
+				case ALLEGRO_EVENT_MOUSE_AXES:
+				case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+				case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+				case ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY:
+				case ALLEGRO_EVENT_MOUSE_LEAVE_DISPLAY:
+				case ALLEGRO_EVENT_MOUSE_WARPED:
+					NEXT_EVENT.mouse.x /= SCREEN_X_SCALE;
+					NEXT_EVENT.mouse.dx /= SCREEN_X_SCALE;
+					NEXT_EVENT.mouse.y /= SCREEN_Y_SCALE;
+					NEXT_EVENT.mouse.dy /= SCREEN_Y_SCALE;
+					mousex = NEXT_EVENT.mouse.x;
+					mousey = NEXT_EVENT.mouse.y;
+				}
+				if (NEXT_EVENT.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+					printf("%d:%d\n", NEXT_EVENT.mouse.x, NEXT_EVENT.mouse.y);
 				currentGUI->HandleEvent(NEXT_EVENT);
 			}
 		}
-		
+		al_set_target_bitmap(sb);
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		currentGUI->DrawGUI();
-		
 		DebugInfo::framesEnd.push(al_get_time());
 		if (DebugInfo::framesEnd.size() > DebugInfo::FRAMES_RECORD_NUM)
 			DebugInfo::framesEnd.pop();
+
+		//al_draw_filled_rectangle(mousex - 5, mousey - 5, mousex + 5, mousey + 5, al_map_rgba(255, 0, 0, 255));
+		
+		al_set_target_backbuffer(al_get_current_display());
+		al_draw_scaled_bitmap(sb, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, PHYSICAL_SCREEN_WIDTH, PHYSICAL_SCREEN_HEIGHT, 0);
 
 		al_flip_display();
 	}

@@ -73,13 +73,25 @@ bool GUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 	return false;
 }
 
+int mousex;
+int mousey;
+
 bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 {
 	if (activeSubGUI != nullptr)
 		if(activeSubGUI->HandleEvent(event))
 			return true;
-	ALLEGRO_MOUSE_STATE state;
-	al_get_mouse_state(&state);
+	switch (event.type) {
+	case ALLEGRO_EVENT_MOUSE_AXES:
+	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+	case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+	case ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY:
+	case ALLEGRO_EVENT_MOUSE_LEAVE_DISPLAY:
+	case ALLEGRO_EVENT_MOUSE_WARPED:
+		mousex = event.mouse.x;
+		mousey = event.mouse.y;
+		break;
+	}
 	if(selectedComponent!=nullptr)
 		switch (event.type) {
 		case ALLEGRO_EVENT_KEY_DOWN:
@@ -99,7 +111,7 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 	{
 		UIComponent* tmp = UIcomponents[i];
 
-		if(tmp->ContainsPoint(state.x, state.y))
+		if(tmp->ContainsPoint(mousex, mousey))
 		{
 			switch (event.type)
 			{
@@ -131,7 +143,7 @@ bool GUI::HandleEvent(ALLEGRO_EVENT& event)
 				}
 				break;
 			case ALLEGRO_EVENT_MOUSE_AXES: //MOUSE MOVED
-				if (tmp->Hover(state.x, state.y))
+				if (tmp->Hover(event.mouse.x,event.mouse.y))
 					return true;
 				break;
 				//		case ALLEGRO_EVENT_KEY_CHAR:

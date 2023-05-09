@@ -1,10 +1,26 @@
 #include "Shader.h"
 #include <cstdio>
 #include "Logging.h"
+#include "Config.h"
+#include "Graphics.h"
 
 Shader::Shader(std::string id): ID(id)
 {
 	shader = al_create_shader(ALLEGRO_SHADER_GLSL);
+	FILE* file = fopen("default_shader.vert", "w");
+	const char* data = al_get_default_shader_source(ALLEGRO_SHADER_GLSL, ALLEGRO_VERTEX_SHADER);
+	fputs(data, file);
+	fflush(file);
+	fclose(file);
+	file = NULL;
+	file = fopen("default_shader.frag", "w");
+	
+	data = al_get_default_shader_source(ALLEGRO_SHADER_GLSL, ALLEGRO_PIXEL_SHADER);
+	fputs(data, file);
+	fflush(file);
+	fclose(file);
+	file = NULL;
+	lsg_write_to_session_log(INFO, "DUMPING DEFAULT SHADER SOURCES TO default_shader.vert AND default_shader.frag...");
 	al_attach_shader_source(shader, ALLEGRO_VERTEX_SHADER, al_get_default_shader_source(ALLEGRO_SHADER_GLSL, ALLEGRO_VERTEX_SHADER));
 	al_attach_shader_source(shader, ALLEGRO_PIXEL_SHADER, al_get_default_shader_source(ALLEGRO_SHADER_GLSL, ALLEGRO_PIXEL_SHADER));
 	al_build_shader(shader);
@@ -55,4 +71,6 @@ void Shader::Delete()
 void Shader::Use()
 {
 	al_use_shader(shader);
+	al_set_shader_float("input_scalex", SCREEN_X_SCALE);
+	al_set_shader_float("input_scaley", SCREEN_Y_SCALE);
 }

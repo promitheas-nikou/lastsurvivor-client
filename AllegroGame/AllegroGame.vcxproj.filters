@@ -807,6 +807,12 @@
     <None Include="lua-api\LuaDefault.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="gui_shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="gui_shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="FONT.ttf">
@@ -1369,7 +1375,7 @@
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data.json">
-      <Filter>Source Files\Game\GroundTiles</Filter>
+      <Filter>Resource Files</Filter>
     </Xsd>
   </ItemGroup>
 </Project>
