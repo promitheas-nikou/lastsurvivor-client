@@ -553,7 +553,7 @@ void World::Draw()
     al_hold_bitmap_drawing(false);
     if (player->showHitbox)
     {
-        loaded_shaders["default"]->Use();
+        loaded_shaders["gui"]->Use();
         al_draw_rectangle((player->GetXpos() - player->GetXsize() / 2) * 128, (player->GetYpos() - player->GetYsize() / 2) * 128, (player->GetXpos() + player->GetXsize() / 2) * 128, (player->GetYpos() + player->GetYsize() / 2) * 128, al_map_rgba(255, 255, 255, 255), 3.f);
         al_draw_line(player->GetXpos() * 128, player->GetYpos() * 128, player->GetXpos() * 128 - sinf(-player->GetRotation()) * 32, player->GetYpos() * 128 - cosf(-player->GetRotation()) * 32, al_map_rgba(0, 0, 255, 255), 4);
         for (Entity* e : entities)

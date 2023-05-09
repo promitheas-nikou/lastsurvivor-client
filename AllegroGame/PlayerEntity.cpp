@@ -44,8 +44,8 @@ ALLEGRO_BITMAP* WATER_ICON;
 
 int a, b, c;
 
-#define GET_MOUSE_XPOS(E) (E.x / 128.f + GetXpos() - (SCREEN_WIDTH / 256.f))
-#define GET_MOUSE_YPOS(E) (E.y / 128.f + GetYpos() - (SCREEN_HEIGHT / 256.f))
+#define GET_MOUSE_XPOS(E) (E / 128.f + GetXpos() - (SCREEN_WIDTH / 256.f))
+#define GET_MOUSE_YPOS(E) (E / 128.f + GetYpos() - (SCREEN_HEIGHT / 256.f))
 
 void PlayerEntity::AddResult(const ItemBundle* b)
 {
@@ -147,15 +147,24 @@ void PlayerEntity::LogToConsole(std::string txt) const
 
 constexpr int SELECTED_HOTBAR_SLOT_RECT_WIDTH = 6;
 
+extern int mousex;
+extern int mousey;
+
 void PlayerEntity::PreDrawThisGUI()
 {
 	al_lock_mutex(worldMutex);
 	loaded_shaders["world"]->Use();
 	containingWorld->Draw();
-	loaded_shaders["default"]->Use();
-	ALLEGRO_MOUSE_STATE mouseState;
+	loaded_shaders["gui"]->Use();
+	ALLEGRO_TRANSFORM gui_transform;
+	ALLEGRO_TRANSFORM backup_transorm;
+	al_copy_transform(&gui_transform, al_get_current_transform());
+	al_copy_transform(&backup_transorm, al_get_current_transform());
+	//al_scale_transform(&gui_transform, .5, .5);
+	al_use_transform(&gui_transform);
+	//ALLEGRO_MOUSE_STATE mouseState;
 	ALLEGRO_KEYBOARD_STATE keyboardState;
-	al_get_mouse_state(&mouseState);
+	//al_get_mouse_state(&mouseState);
 	al_get_keyboard_state(&keyboardState);
 
 	if (debug >= 1)
@@ -166,8 +175,9 @@ void PlayerEntity::PreDrawThisGUI()
 		al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, 110, 135, 0, "FPS: %.1lf", DebugInfo::framesEnd.empty() ? 0 : DebugInfo::FRAMES_RECORD_NUM / (DebugInfo::framesEnd.back() - DebugInfo::framesEnd.front()));
 	}
 
-	float x = GET_MOUSE_XPOS(mouseState);
-	float y = GET_MOUSE_YPOS(mouseState);
+	
+	float x = GET_MOUSE_XPOS(mousex);
+	float y = GET_MOUSE_YPOS(mousey);
 	if (debug >= 2)
 	{
 		al_draw_filled_rectangle(SCREEN_WIDTH / 2 - 500, 50, SCREEN_WIDTH / 2 - 270, 250, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_1);
@@ -328,11 +338,11 @@ void PlayerEntity::PreDrawThisGUI()
 			if(showCursorInfoBox)
 				if (targetedTile || targetedGroundTile)
 				{
-					al_draw_filled_rectangle(mouseState.x, mouseState.y, mouseState.x + 200, mouseState.y + 100, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_0);
-					al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, mouseState.x + 100, mouseState.y + 10, ALLEGRO_ALIGN_CENTER, "[%c]%s", targetedTile && !targetedTile->IsEmpty() ? 'T' : 'G', targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetName().c_str() : targetedGroundTile->GetName().c_str());
+					al_draw_filled_rectangle(mousex, mousey, mousex + 200, mousey + 100, gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_MENU_COLOR_0);
+					al_draw_textf(game_GetFont("default", 30), gameconfig::PLAYER_MENU_SEMI_TRANSPARENT_TEXT_COLOR_0, mousex + 100, mousey + 10, ALLEGRO_ALIGN_CENTER, "[%c]%s", targetedTile && !targetedTile->IsEmpty() ? 'T' : 'G', targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetName().c_str() : targetedGroundTile->GetName().c_str());
 					float a = targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetMiningDamageDone() : ((targetedGroundTile == GroundTileMiner::GetTarget()) ? GroundTileMiner::GetMiningDamageDone() : 0);
 					float b = targetedTile && !targetedTile->IsEmpty() ? targetedTile->GetMiningResistance() : targetedGroundTile->GetMiningResistance();
-					DrawUtils::DrawProgressBarWriteValue(mouseState.x + 10, mouseState.y + 70, mouseState.x + 190, mouseState.y + 90, gameconfig::PLAYER_MENU_PROGBAR_FILL_COLOR_0, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0, game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), DRAW_UTILS_WRITE_PERCENTAGE_NUMBER_FORMAT_FLOAT_RATIO, b-a, b);
+					DrawUtils::DrawProgressBarWriteValue(mousex + 10, mousey + 70, mousex + 190, mousey + 90, gameconfig::PLAYER_MENU_PROGBAR_FILL_COLOR_0, gameconfig::PLAYER_MENU_PROGBAR_BACK_COLOR_0, game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), DRAW_UTILS_WRITE_PERCENTAGE_NUMBER_FORMAT_FLOAT_RATIO, b-a, b);
 				}
 			
 			break;
@@ -425,6 +435,7 @@ void PlayerEntity::PreDrawThisGUI()
 	}
 	if(guistate==PLAYER_GUI_STATE::WORLD || guistate==PLAYER_GUI_STATE::INVENTORY)
 		GUItimer++;
+	al_use_transform(&backup_transorm);
 	al_unlock_mutex(worldMutex);
 }
 
@@ -673,8 +684,8 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 {
 	if (guistate == PLAYER_GUI_STATE::WORLD)
 	{
-		float x = GET_MOUSE_XPOS(event);
-		float y = GET_MOUSE_YPOS(event);
+		float x = GET_MOUSE_XPOS(event.x);
+		float y = GET_MOUSE_YPOS(event.y);
 		switch (mode)
 		{
 		case PlayerActionMode::COMBAT:
@@ -705,7 +716,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 			break;
 			case 2:
 			{
-				UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
+				UseTile(floor(GET_MOUSE_XPOS(event.x)), floor(GET_MOUSE_YPOS(event.y)));
 				break;
 			}
 			}
@@ -775,7 +786,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 				Item* i = usablesInventory->GetItem(selectedHotbarSlot);
 				Usable* u = dynamic_cast<Usable*>(i);
 				if (u != nullptr)
-					if (u->Use(GET_MOUSE_XPOS(event), GET_MOUSE_YPOS(event), this))
+					if (u->Use(GET_MOUSE_XPOS(event.x), GET_MOUSE_YPOS(event.y), this))
 					{
 						i->RemoveAmount(1);
 						if (i->GetAmount() <= 0)
@@ -789,7 +800,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 			break;
 			case 2:
 			{
-				UseTile(floor(GET_MOUSE_XPOS(event)), floor(GET_MOUSE_YPOS(event)));
+				UseTile(floor(GET_MOUSE_XPOS(event.x)), floor(GET_MOUSE_YPOS(event.y)));
 				break;
 			}
 			}
@@ -819,7 +830,7 @@ bool PlayerEntity::MouseButtonDown(ALLEGRO_MOUSE_EVENT& event)
 				Item* i = consumablesInventory->GetItem(selectedHotbarSlot);
 				Usable* u = dynamic_cast<Usable*>(i);
 				if (u != nullptr) {
-					if (u->Use(GET_MOUSE_XPOS(event), GET_MOUSE_YPOS(event), this))
+					if (u->Use(GET_MOUSE_XPOS(event.x), GET_MOUSE_YPOS(event.y), this))
 					{
 						i->RemoveAmount(1);
 						if (i->GetAmount() <= 0)
@@ -1301,10 +1312,11 @@ bool PlayerNotification::ShouldBeRemoved(int new_timer)
 PlayerNotification* PlayerNotification::MakeTextNotification(std::string txt, int w, int h, int t, int fontsize)
 {
 	PlayerNotification* p = new PlayerNotification(t, w, h);
+	ALLEGRO_BITMAP* b = al_get_target_bitmap();
 	al_set_target_bitmap(p->content);
 	al_clear_to_color(al_map_rgba(200, 200, 20, 170));
 	al_draw_multiline_text(game_GetFont("default", fontsize), al_map_rgba(0, 0, 0, 255), 10, 10, w - 20, h - 20, 0, txt.c_str());
-	al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
+	al_set_target_bitmap(b);
 	return p;
 }
 

@@ -9,6 +9,11 @@
       "id": "world",
       "vertex": "world_shader.vert",
       "fragment": "world_shader.frag"
+    },
+    {
+      "id": "gui",
+      "vertex": "gui_shader.vert",
+      "fragment": "gui_shader.frag"
     }
   ],
   "audio": [

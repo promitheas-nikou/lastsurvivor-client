@@ -373,6 +373,8 @@
     <ClCompile Include="zip.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="gui_shader.frag" />
+    <None Include="gui_shader.vert" />
     <None Include="lua-api\LuaDefault.lua" />
     <None Include="packages.config" />
     <None Include="world_shader.frag" />

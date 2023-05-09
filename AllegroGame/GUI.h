@@ -4,6 +4,9 @@
 #include "UIComponent.h"
 #include <vector>
 
+extern int mousex;
+extern int mousey;
+
 class PlayerEntity;
 class GUI;
 extern PlayerEntity* GUI_GLOBAL_PLAYER_OBJECT;

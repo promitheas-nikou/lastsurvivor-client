@@ -65,6 +65,9 @@ bool QuestGUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 	return false;
 }
 
+extern int mousex;
+extern int mousey;
+
 bool QuestGUI::MouseButtonMove(ALLEGRO_MOUSE_EVENT& event)
 {
 	for (int i = 0; i < questCollection->GetQuestCount(); i++)

@@ -30,3 +30,26 @@ ALLEGRO_COLOR gameconfig::PLAYER_MENU_CONSUMABLES_HOTBAR_COLOR = al_map_rgba(255
 ALLEGRO_COLOR gameconfig::PLAYER_MENU_USABLES_HOTBAR_COLOR = al_map_rgba(0, 255, 0, 255);
 ALLEGRO_COLOR gameconfig::PLAYER_MENU_PLACEABLES_HOTBAR_COLOR = al_map_rgba(0, 0, 255, 255);
 int gameconfig::GUI_DEFAULT_LINE_HEIGHT = 64;
+int gameconfig::GUI_DEFAULT_SLOT_SIZE = 128;
+int gameconfig::GUI_DEFAULT_TEXT_SIZE = 30;
+float gameconfig::GUI_SCALE = 1.0f;
+
+float gameconfig::GetSlotSize()
+{
+	return GUI_DEFAULT_SLOT_SIZE * GUI_SCALE;
+}
+
+int gameconfig::GetTextSize()
+{
+	return GUI_DEFAULT_TEXT_SIZE * GUI_SCALE;
+}
+
+float gameconfig::GetLineHeight()
+{
+	return GUI_DEFAULT_LINE_HEIGHT*GUI_SCALE;
+}
+
+int gameconfig::GetTileSize()
+{
+	return 128;
+}

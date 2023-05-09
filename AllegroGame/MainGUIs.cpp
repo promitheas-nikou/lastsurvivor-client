@@ -12,6 +12,7 @@
 
 void MainMenuGUI::PreDrawThisGUI()
 {
+	loaded_shaders["gui"]->Use();
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
 	al_draw_text(game_GetFont("default", 200), al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 2, 250, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
 }
@@ -28,6 +29,7 @@ MainMenuGUI::MainMenuGUI()
 
 void PlayMenuGUI::PreDrawThisGUI()
 {
+	loaded_shaders["gui"]->Use();
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
 	al_draw_text(game_GetFont("default", 200), al_map_rgba(255, 255, 255, 255), SCREEN_WIDTH / 2, 250, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
 }
@@ -57,6 +59,7 @@ PlayMenuGUI::PlayMenuGUI()
 
 void WorldCreationMenuGUI::PreDrawThisGUI()
 {
+	loaded_shaders["gui"]->Use();
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
 }
 
@@ -154,6 +157,7 @@ WorldCreationMenuGUI::WorldCreationMenuGUI()
 
 void CreditsMenuGUI::PreDrawThisGUI()
 {
+	loaded_shaders["gui"]->Use();
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
 	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 100, ALLEGRO_ALIGN_CENTER, "LAST SURVIVOR");
 	al_draw_text(game_GetFont("default", 30),al_map_rgba(255,255,255,255), SCREEN_WIDTH/2, 160, ALLEGRO_ALIGN_CENTER, "THE TEAM:");
@@ -181,6 +185,7 @@ CreditsMenuGUI::CreditsMenuGUI()
 
 void SettingsMenuGUI::PreDrawThisGUI()
 {
+	loaded_shaders["gui"]->Use();
 	al_clear_to_color(al_map_rgba(50, 80, 255, 255));
 }
 

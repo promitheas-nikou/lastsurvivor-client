@@ -35,6 +35,15 @@ namespace gameconfig {
 
 
 	extern int GUI_DEFAULT_LINE_HEIGHT;
+	extern int GUI_DEFAULT_SLOT_SIZE;
+	extern int GUI_DEFAULT_TEXT_SIZE;
+	extern float GUI_SCALE;
+
+	float GetSlotSize();
+	int GetTextSize();
+	float GetLineHeight();
+
+	int GetTileSize();
 
 };
 
