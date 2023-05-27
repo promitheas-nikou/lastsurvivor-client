@@ -72,3 +72,5 @@ end
 local __print = print
 print = function(v)consoleprint(tostring(v))end
 consoleprint = nil
+
+print("LOADED LuaDefault")

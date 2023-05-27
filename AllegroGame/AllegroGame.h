@@ -6,7 +6,7 @@
 class World;
 class GUI;
 
-extern const float TPS;
+extern float TPS;
 
 extern GUI* playMenuGUI;
 extern GUI* mainMenuGUI;

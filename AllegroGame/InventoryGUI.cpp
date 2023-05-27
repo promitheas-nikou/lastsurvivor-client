@@ -62,11 +62,14 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 	if (selectedComponent != nullptr)
 		switch (event.type) {
 		case ALLEGRO_EVENT_KEY_DOWN:
-			return selectedComponent->KeyDown(event.keyboard);
+			if(selectedComponent->KeyDown(event.keyboard))
+				return true;
 		case ALLEGRO_EVENT_KEY_UP:
-			return selectedComponent->KeyUp(event.keyboard);
+			if (selectedComponent->KeyUp(event.keyboard))
+				return true;
 		case ALLEGRO_EVENT_KEY_CHAR:
-			return selectedComponent->KeyChar(event.keyboard);
+			if (selectedComponent->KeyChar(event.keyboard))
+				return true;
 		}
 	for (int i = 0; i < UIcomponents.size(); i++)
 	{
@@ -110,13 +113,16 @@ bool InventoryGUI::HandleEvent(ALLEGRO_EVENT& event)
 				//		case ALLEGRO_EVENT_KEY_CHAR:
 				//			break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				return this->KeyDown(event.keyboard);
+				if (tmp->KeyDown(event.keyboard))
+					return true;
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
-				return this->KeyUp(event.keyboard);
+				if (tmp->KeyUp(event.keyboard))
+					return true;
 				break;
 			case ALLEGRO_EVENT_KEY_CHAR:
-				return this->KeyChar(event.keyboard);
+				if (tmp->KeyChar(event.keyboard))
+					return true;
 				break;
 			}
 		}
@@ -338,6 +344,18 @@ void InventoryGUI::DrawGUI()
 	al_use_transform(&temp_gui_transform);
 
 	this->PostDrawThisGUI();
+}
+
+bool InventoryGUI::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
+{
+	if (event.keycode == ALLEGRO_KEY_ESCAPE)
+		if (activeSubGUI)
+		{
+			activeSubGUI = nullptr;
+			return true;
+		}
+	return false;
+
 }
 
 void InventoryGUI::Init()

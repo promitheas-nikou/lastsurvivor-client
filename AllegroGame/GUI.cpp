@@ -38,6 +38,11 @@ void GUI::SetActiveSubGUI(GUI* gui)
 	activeSubGUI = gui;
 }
 
+bool GUI::HasActiveSubGUI() const
+{
+	return activeSubGUI!=nullptr;
+}
+
 bool GUI::KeyChar(ALLEGRO_KEYBOARD_EVENT& event)
 {
 	return false;
@@ -235,4 +240,19 @@ void GUI::DrawGUI()
 	if (activeSubGUI != nullptr)
 		activeSubGUI->DrawGUI();
 	this->PostDrawThisGUI();
+}
+
+
+void GUI::OpenGUIHere(GUI* gui) {
+	activeSubGUI = gui;
+}
+
+void GUI::OpenGUITop(GUI* gui)
+{
+	if (this == gui)
+		return;
+	if (activeSubGUI)
+		activeSubGUI->OpenGUITop(gui);
+	else
+		activeSubGUI = gui;
 }

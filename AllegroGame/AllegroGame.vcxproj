@@ -260,6 +260,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemBundle.cpp" />
     <ClCompile Include="ItemIndex.cpp" />
+    <ClCompile Include="ItemInfoGUI.cpp" />
     <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="LodestoneItem.cpp" />
     <ClCompile Include="Logging.cpp" />
@@ -443,6 +444,7 @@
     <ClInclude Include="GunItem.h" />
     <ClInclude Include="HazardWarnings.h" />
     <ClInclude Include="IceGroundTile.h" />
+    <ClInclude Include="ItemInfoGUI.h" />
     <ClInclude Include="ItemIOInterface.h" />
     <ClInclude Include="HematiteChunkItem.h" />
     <ClInclude Include="HematiteOreGroundTile.h" />

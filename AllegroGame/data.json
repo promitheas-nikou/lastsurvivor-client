@@ -323,6 +323,18 @@
       "filename": "ice_gtile.png"
     },
     {
+      "id": "tex.gtiles.emerald_ore",
+      "filename": "emerald_ore.png"
+    },
+    {
+      "id": "tex.gtiles.ruby_ore",
+      "filename": "ruby_ore.png"
+    },
+    {
+      "id": "tex.gtiles.diamond_ore",
+      "filename": "diamond_ore.png"
+    },
+    {
       "id": "tex.gtiles.snow",
       "filename": "snow_gtile.png"
     },
@@ -749,22 +761,6 @@
     {
       "id": "tex.items.fence",
       "filename": "fence1111.png"
-    },
-    {
-      "id": "tex.gui.itemicon",
-      "filename": "itemicon.png"
-    },
-    {
-      "id": "tex.gui.tilesicon",
-      "filename": "tilesicon.png"
-    },
-    {
-      "id": "tex.gui.gtilesicon",
-      "filename": "gtilesicon.png"
-    },
-    {
-      "id": "tex.gui.entitiesicon",
-      "filename": "entitiesicon.png"
     },
     {
       "id": "tex.items.anthracite_coal_chunk",

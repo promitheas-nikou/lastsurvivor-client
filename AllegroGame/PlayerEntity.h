@@ -24,6 +24,7 @@ class RangedWeaponItem;
 #include "AudioMultiTrackCollection.h"
 #include "CreativeItemGUI.h"
 #include "QuestEditingGUI.h"
+#include "ItemInfoGUI.h"
 #undef PlaySound
 
 enum class PLAYER_GUI_STATE { WORLD, PAUSE, INVENTORY, CRAFTING, DEATH, QUEST, INFO, TILE, CREATIVE, QUEST_EDIT };
@@ -106,6 +107,7 @@ private:
 	ItemInventory* consumablesInventory;
 	ItemInventory* placeablesInventory;
 	DeathGUI* deathgui;
+	ItemInfoGUI* itemInfoGUI;
 	Item* pickaxeTool;
 	Item* axeTool;
 	Item* shovelTool;
@@ -188,6 +190,8 @@ public:
 	void DisplayTileGUI(Tile* t, GUI* g);
 
 	InventoryGUI* GetMainInventoryGUI(int offsetx, int offsety);
+
+	void ShowItemDescription(const Item* i);
 
 	PlayerEntity(World* world, float xpos, float ypos);
 

@@ -99,19 +99,15 @@ void SimpleDynamicItemInventoryFuelStorageSlotUIComponent::Draw(int plane)
     {
     case 1:
         BitmapUIComponent::Draw(1);
-        printf("BEGIN1 %p\n", itemptr);
         if (itemptr != nullptr)
         {
-            printf("END1 %p\n", itemptr);
             itemptr->Draw(0, 0, GetWidth(), GetHeight());   
         }
         break;
     case 2:
-        printf("BEGIN2 %p\n", itemptr);
         if (itemptr != nullptr)
         {
             if (0 <= mousex - GetXpos() && mousex - GetXpos() < GetWidth() && 0 <= mousey - GetYpos() && mousey - GetYpos() < GetHeight())
-                printf("END2 %p\n", itemptr);
                 itemptr->DrawItemDetailsPane(mousex - GetXpos(), mousey - GetYpos());
         }
         break;

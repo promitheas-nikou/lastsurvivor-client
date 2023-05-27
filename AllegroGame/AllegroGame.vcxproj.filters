@@ -795,6 +795,9 @@
     <ClCompile Include="WheatItem.cpp">
       <Filter>Source Files\Game\Items</Filter>
     </ClCompile>
+    <ClCompile Include="ItemInfoGUI.cpp">
+      <Filter>Source Files\Game\GUI\DefaultGUIs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1371,6 +1374,9 @@
     </ClInclude>
     <ClInclude Include="IceGroundTile.h">
       <Filter>Header Files\Game\GroundTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInfoGUI.h">
+      <Filter>Header Files\Game\GUI\DefaultGUIs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

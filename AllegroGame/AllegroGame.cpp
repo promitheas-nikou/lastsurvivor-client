@@ -21,7 +21,8 @@
 
 //ALLEGRO_THREAD* 
 
-const float TPS = 50.f;
+float TPS = 50.f;
+bool TPS_updated = false;
 
 GUI* currentGUI;
 GUI* mainMenuGUI;
@@ -44,6 +45,11 @@ void *WorldTickerFunc(ALLEGRO_THREAD* thr, void* nothing)
 	al_start_timer(timer);
 	while (!al_get_thread_should_stop(thr))
 	{
+		if (TPS_updated)
+		{
+			TPS_updated = false;
+			al_set_timer_speed(timer, 1 / TPS);
+		}
 		al_wait_for_event(queue, &evt);
 		if (evt.type != ALLEGRO_EVENT_TIMER)
 			continue;
@@ -152,8 +158,6 @@ int main()
 					mousex = NEXT_EVENT.mouse.x;
 					mousey = NEXT_EVENT.mouse.y;
 				}
-				if (NEXT_EVENT.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
-					printf("%d:%d\n", NEXT_EVENT.mouse.x, NEXT_EVENT.mouse.y);
 				currentGUI->HandleEvent(NEXT_EVENT);
 			}
 		}

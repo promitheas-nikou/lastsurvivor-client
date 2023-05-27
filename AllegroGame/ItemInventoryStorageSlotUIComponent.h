@@ -20,6 +20,7 @@ public:
     virtual bool ClickRightDown(int xRel, int yRel) override;
     virtual bool ClickLeftDown(int xRel, int yRel) override;
     virtual bool Hover(int xRel, int yRel) override;
+    virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& e) override;
 
     virtual void Draw(int plane) override;
 

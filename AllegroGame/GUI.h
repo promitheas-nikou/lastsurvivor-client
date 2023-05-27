@@ -32,6 +32,8 @@ public:
 
 	virtual void DrawGUI();
 
+	virtual void OpenGUIHere(GUI* gui);
+	virtual void OpenGUITop(GUI* gui);
 
 	virtual bool ClickRightDown(int xRel, int yRel);
 	virtual bool ClickLeftDown(int xRel, int yRel);
@@ -42,6 +44,7 @@ public:
 	virtual bool KeyUp(ALLEGRO_KEYBOARD_EVENT& event);
 
 	void SetActiveSubGUI(GUI* gui);
+	bool HasActiveSubGUI() const;
 
 	virtual bool KeyChar(ALLEGRO_KEYBOARD_EVENT& event);
 

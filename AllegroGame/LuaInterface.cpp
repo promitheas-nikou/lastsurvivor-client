@@ -40,7 +40,9 @@ LuaInterface::LuaInterface(World* world, bool privileged) : world{ world }
 		lua_pushlightuserdata(state, this);
 		lua_pushcclosure(state, &lua_SpawnEntity, 1);
 		lua_setglobal(state, "spawn");
-		luaL_dofile(state, "LuaDefault.lua");
+		lua_pushcclosure(state, &lua_SetTPS, 1);
+		lua_setglobal(state, "settps");
+		luaL_dofile(state, "lua-api/LuaDefault.lua");
 	}
 
 }
@@ -128,6 +130,16 @@ int LuaInterface::lua_SpawnEntity(lua_State* state)
 {
 	LuaInterface* ptr = (LuaInterface*)lua_topointer(state, lua_upvalueindex(1));
 	ptr->world->AddEntity(MakeEntity(ptr->world, lua_tostring(state, 1), lua_tonumber(state, 2), lua_tonumber(state, 3)));
+	return 0;
+}
+
+extern float TPS;
+extern bool TPS_updated;
+
+int LuaInterface::lua_SetTPS(lua_State* state)
+{
+	TPS = (float)lua_tonumber(state, 1);
+	TPS_updated = true;
 	return 0;
 }
 

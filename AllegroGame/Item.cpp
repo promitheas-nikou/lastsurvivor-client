@@ -77,11 +77,12 @@ void Item::DrawItemDetailsPane(int x, int y)
     
     MLBUF = 0;
     al_do_multiline_text(game_GetFont("default", 20), w, GetDescription().c_str(), &DrawItemDetailsPaneMultilineCB, NULL);
-    int h = (MLBUF + 1) * 23 + 53;
+    int h = (MLBUF + 1) * 23 + 53 + 25;
     al_draw_filled_rectangle(x, y, x + w + 25, y + h, al_map_rgba(10, 30, 50, 200));
     al_draw_text(game_GetFont("default", 30), al_map_rgba(255, 255, 255, 255), x + 10, y + 10, 0, GetName().c_str());
     al_draw_text(game_GetFont("default", 20), al_map_rgba(150, 150, 150, 255), x + w1 + 15, y + 20, 0, id.c_str());
-    al_draw_multiline_text(game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), x + 10, y + 45, w, 23, 0, GetDescription().c_str());
+    al_draw_text(game_GetFont("default", 20), al_map_rgba(200, 200, 200, 255), x + 10, y + 45, 0, "Press G to view details");
+    al_draw_multiline_text(game_GetFont("default", 20), al_map_rgba(255, 255, 255, 255), x + 10, y + 70, w, 23, 0, GetDescription().c_str());
 }
 
 ItemBundle* Item::ConstCollapseToItemBundle() const

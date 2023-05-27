@@ -518,6 +518,12 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 		}
 		else if (guistate == PLAYER_GUI_STATE::INVENTORY)
 		{
+			if (inventoryGUI->HasActiveSubGUI())
+			{
+			
+				inventoryGUI->SetActiveSubGUI(nullptr);
+				break;
+			}
 			guistate = PLAYER_GUI_STATE::WORLD;
 			activeSubGUI = nullptr;
 		}
@@ -532,17 +538,20 @@ bool PlayerEntity::KeyDown(ALLEGRO_KEYBOARD_EVENT& event)
 			doWorldTick = false;
 			activeSubGUI = pauseGUI;
 		}
-		else
+		else if (guistate == PLAYER_GUI_STATE::PAUSE)
 		{
-			if (guistate == PLAYER_GUI_STATE::PAUSE)
-			{
-				doWorldTick = true;
-				godMode = pauseGUI->godmode_tb->GetIsToggledOn();
-				GetContainingWorld()->doTileTick = pauseGUI->tile_tick_tb->GetIsToggledOn();
-				GetContainingWorld()->doEntityTick = pauseGUI->entity_tick_tb->GetIsToggledOn();
-			}
+			doWorldTick = true;
+			godMode = pauseGUI->godmode_tb->GetIsToggledOn();
+			GetContainingWorld()->doTileTick = pauseGUI->tile_tick_tb->GetIsToggledOn();
+			GetContainingWorld()->doEntityTick = pauseGUI->entity_tick_tb->GetIsToggledOn();
 			guistate = PLAYER_GUI_STATE::WORLD;
 			activeSubGUI = nullptr;
+		}
+		else {
+			if (activeSubGUI) {
+				activeSubGUI = nullptr;
+				guistate = PLAYER_GUI_STATE::WORLD;
+			}
 		}
 		break;
 	case ALLEGRO_KEY_F4:
@@ -1155,6 +1164,12 @@ InventoryGUI* PlayerEntity::GetMainInventoryGUI(int offsetx, int offsety)
 	return g;
 }
 
+void PlayerEntity::ShowItemDescription(const Item* i)
+{
+	itemInfoGUI->SetTargetItem(i);
+	OpenGUITop(itemInfoGUI);
+}
+
 PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world, xpos, ypos, 100.f, 1.f, 0.f, 0.f, .5f, .5f), GUItimer{ 0 }, axeTool{ nullptr }, pickaxeTool{ nullptr }, shovelTool{ nullptr }, pumpTool{ nullptr }, guistate{ PLAYER_GUI_STATE::WORLD }, keys_pressed{ 0b00000000 }, GroundTileMiner(nullptr, nullptr, containingWorld, 0, 0), mode{ PlayerActionMode::MINING }, selectedHotbarSlot{ 0 }, stashedItem{ nullptr }
 {
 	GUI_GLOBAL_PLAYER_OBJECT = this;
@@ -1170,6 +1185,7 @@ PlayerEntity::PlayerEntity(World* world, float xpos, float ypos) : Entity(world,
 	placeablesInventory = new SimpleItemInventory(5);
 	meleeWeapon = nullptr;
 	rangedWeapon = nullptr;
+	itemInfoGUI = new ItemInfoGUI();
 	GroundTileMiner::SetTargetItemInventory(inventory);
 	inventoryGUI = new InventoryGUI();
 	hotbarGUI = new InventoryGUI();

@@ -69,6 +69,8 @@ public:
 
     virtual void DrawGUI() override;
 
+    virtual bool KeyDown(ALLEGRO_KEYBOARD_EVENT& event) final;
+
     virtual void PreDrawThisGUI() override;
     virtual void PostDrawThisGUI() override;
 

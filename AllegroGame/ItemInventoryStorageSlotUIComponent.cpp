@@ -85,6 +85,27 @@ bool ItemInventoryStorageSlotUIComponent::Hover(int xRel, int yRel)
     return true;
 }
 
+bool ItemInventoryStorageSlotUIComponent::KeyDown(ALLEGRO_KEYBOARD_EVENT& e)
+{
+    if (e.keycode == ALLEGRO_KEY_V)
+    {
+        ConsumableItem* ci = dynamic_cast<ConsumableItem*>(itemptr);
+        if (!ci)
+            return true;
+        ci->Consume(GUI_GLOBAL_PLAYER_OBJECT->GetXpos(), GUI_GLOBAL_PLAYER_OBJECT->GetYpos(), GUI_GLOBAL_PLAYER_OBJECT);
+        ci->RemoveAmount(1);
+        if (ci->GetAmount() <= 0)
+            itemptr = nullptr;
+        return true;
+    }
+    if (e.keycode == ALLEGRO_KEY_G) {
+        if(itemptr)
+            GUI_GLOBAL_PLAYER_OBJECT->ShowItemDescription(itemptr);
+        return true;
+    }
+    return false;
+}
+
 void ItemInventoryStorageSlotUIComponent::Draw(int plane)
 {
     switch (plane)

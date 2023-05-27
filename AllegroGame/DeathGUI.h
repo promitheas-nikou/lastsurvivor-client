@@ -13,6 +13,6 @@ public:
 	DeathGUI(PlayerEntity* p);
 
 	virtual void PreDrawThisGUI() final;
-	void PostDrawThisGUI() final;
+	virtual void PostDrawThisGUI() final;
 };
 
